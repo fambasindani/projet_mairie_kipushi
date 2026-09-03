@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin · Bootstrap</title>
+  <!-- Bootstrap 5 + Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      height: 100vh;
+      background: #f4f6f9;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+    .wrapper {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+    /* SIDEBAR */
+    .sidebar {
+      width: 260px;
+      background: #0b1a2f;
+      color: #e6edf5;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      box-shadow: 2px 0 12px rgba(0,0,0,0.08);
+    }
+    .sidebar-brand {
+      padding: 1.5rem 1.25rem;
+      font-weight: 600;
+      font-size: 1.4rem;
+      letter-spacing: -0.3px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sidebar-brand i {
+      font-size: 1.8rem;
+      color: #5f9eff;
+    }
+    .sidebar-nav {
+      flex: 1;
+      padding: 1.2rem 0.75rem;
+      overflow-y: auto;
+    }
+    .sidebar-nav .nav-item {
+      margin-bottom: 4px;
+    }
+    .sidebar-nav .nav-link {
+      color: #b6c9e0;
+      border-radius: 10px;
+      padding: 0.7rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 450;
+      transition: 0.2s;
+      text-decoration: none;
+    }
+    .sidebar-nav .nav-link i {
+      font-size: 1.25rem;
+      width: 24px;
+      text-align: center;
+    }
+    .sidebar-nav .nav-link:hover,
+    .sidebar-nav .nav-link.active {
+      background: rgba(95, 158, 255, 0.15);
+      color: #fff;
+    }
+    .sidebar-nav .nav-link.active {
+      background: #1a3350;
+      color: white;
+      box-shadow: inset 3px 0 0 #5f9eff;
+    }
+    .sidebar-footer {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.85rem;
+      color: #7a93b0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    /* MAIN */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    /* HEADER */
+    .header {
+      background: #ffffff;
+      padding: 0.8rem 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      border-bottom: 1px solid #e9edf2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .header-left .toggle-sidebar {
+      background: transparent;
+      border: none;
+      font-size: 1.6rem;
+      color: #1f2a41;
+      padding: 0 4px;
+    }
+    .header-left .page-title {
+      font-weight: 600;
+      font-size: 1.25rem;
+      color: #1f2a41;
+      margin: 0;
+      letter-spacing: -0.2px;
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .header-right .icon-btn {
+      background: #f2f5fa;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1f2a41;
+      font-size: 1.2rem;
+      transition: 0.2s;
+      position: relative;
+    }
+    .header-right .icon-btn:hover {
+      background: #e6edf6;
+    }
+    .header-right .badge-dot {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 10px;
+      height: 10px;
+      background: #e74c5e;
+      border-radius: 10px;
+      border: 2px solid #fff;
+    }
+    /* dropdown profil */
+    .dropdown-profile .dropdown-toggle::after {
+      display: none;
+    }
+    .dropdown-profile .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 40px;
+      background: #1f2a41;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .dropdown-profile .avatar:hover {
+      background: #2c3d60;
+    }
+    .dropdown-menu-profile {
+      border: none;
+      border-radius: 16px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+      padding: 0.5rem 0;
+      min-width: 200px;
+      margin-top: 10px !important;
+      border: 1px solid #eef2f7;
+    }
+    .dropdown-menu-profile .dropdown-item {
+      padding: 0.6rem 1.2rem;
+      font-weight: 450;
+      color: #1f2a41;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .dropdown-menu-profile .dropdown-item i {
+      font-size: 1.1rem;
+      width: 22px;
+      color: #576f8b;
+    }
+    .dropdown-menu-profile .dropdown-item:hover {
+      background: #f1f6fd;
+      color: #0b1a2f;
+    }
+    .dropdown-divider {
+      margin: 0.3rem 0;
+      border-color: #eaedf2;
+    }
+    /* CONTENT */
+    .content {
+      flex: 1;
+      padding: 2rem 2rem 1.5rem;
+      overflow-y: auto;
+      background: #f4f6f9;
+    }
+    .content .card {
+      border: none;
+      border-radius: 20px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.02);
+      background: white;
+      padding: 1.8rem 2rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid #edf2f8;
+    }
+    .content .card h5 {
+      font-weight: 600;
+      color: #1a2b3e;
+    }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.2rem;
+      margin-top: 1.2rem;
+    }
+    .stat-card {
+      background: #f9fbfe;
+      padding: 1.2rem 1rem;
+      border-radius: 18px;
+      border: 1px solid #eef3fa;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .stat-card i {
+      font-size: 2rem;
+      color: #2d7aff;
+      background: #e3edfe;
+      padding: 10px;
+      border-radius: 14px;
+    }
+    .stat-card .info h6 {
+      margin: 0;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #5b6f89;
+    }
+    .stat-card .info span {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #0b1a2f;
+    }
+    /* FOOTER */
+    .footer {
+      background: white;
+      padding: 0.8rem 2rem;
+      border-top: 1px solid #e9edf2;
+      color: #5f738f;
+      font-size: 0.9rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer a {
+      color: #2d7aff;
+      text-decoration: none;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+    /* responsive */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: 1000;
+        height: 100%;
+        transition: width 0.2s;
+      }
+      .sidebar.show {
+        width: 260px;
+        box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+      }
+      .header {
+        padding: 0.6rem 1.2rem;
+      }
+      .content {
+        padding: 1.2rem;
+      }
+      .stat-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <i class="bi bi-grid-1x2-fill"></i>
+      <span>AdminKit</span>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item">
+        <a href="#" class="nav-link active"><i class="bi bi-house-fill"></i> Tableau de bord</a>
+      </div>
+      <div class="nav-item">
+        <a href="#" class="nav-link"><i class="bi bi-bar-chart-fill"></i> Statistiques</a>
+      </div>
+      <div class="nav-item">
+        <a href="#" class="nav-link"><i class="bi bi-people-fill"></i> Utilisateurs</a>
+      </div>
+      <div class="nav-item">
+        <a href="#" class="nav-link"><i class="bi bi-file-earmark-text-fill"></i> Rapports</a>
+      </div>
+      <div class="nav-item">
+        <a href="#" class="nav-link"><i class="bi bi-gear-fill"></i> Paramètres</a>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <i class="bi bi-box-arrow-right"></i> <span>v2.0.1</span>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-left">
+        <button class="toggle-sidebar" id="toggleSidebar" aria-label="Toggle sidebar">
+          <i class="bi bi-list"></i>
+        </button>
+        <h2 class="page-title">Dashboard</h2>
+      </div>
+      <div class="header-right">
+        <button class="icon-btn" aria-label="Notifications">
+          <i class="bi bi-bell-fill"></i>
+          <span class="badge-dot"></span>
+        </button>
+        <button class="icon-btn" aria-label="Messages">
+          <i class="bi bi-envelope-fill"></i>
+        </button>
+        <!-- DROPDOWN PROFIL -->
+        <div class="dropdown dropdown-profile">
+          <a class="dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="avatar">JD</div>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-profile dropdown-menu-end">
+            <li><a class="dropdown-item" href="#"><i class="bi bi-person-circle"></i> Profil</a></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-sliders2"></i> Paramètres</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right"></i> Déconnecter</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <section class="content">
+      <div class="card">
+        <h5><i class="bi bi-speedometer2 me-2" style="color:#2d7aff;"></i> Bienvenue, Jean Dupont</h5>
+        <p style="color:#4d627d;">Voici un aperçu de votre activité récente.</p>
+        <div class="stat-grid">
+          <div class="stat-card">
+            <i class="bi bi-people"></i>
+            <div class="info">
+              <h6>Utilisateurs</h6>
+              <span>1,284</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <i class="bi bi-currency-dollar"></i>
+            <div class="info">
+              <h6>Revenus</h6>
+              <span>$8,240</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <i class="bi bi-graph-up-arrow"></i>
+            <div class="info">
+              <h6>Taux de conversion</h6>
+              <span>12.5%</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <i class="bi bi-clock-history"></i>
+            <div class="info">
+              <h6>Visites</h6>
+              <span>4,721</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="background:#fafcff;">
+        <div class="d-flex justify-content-between align-items-center">
+          <span><i class="bi bi-calendar3 me-2" style="color:#2d7aff;"></i> <strong>Activité récente</strong></span>
+          <span class="badge bg-light text-dark border">Aujourd'hui</span>
+        </div>
+        <hr class="my-3">
+        <ul class="list-unstyled" style="color:#2d3f5a;">
+          <li class="py-2 d-flex align-items-center gap-3"><i class="bi bi-check-circle-fill text-success"></i> 3 nouvelles commandes</li>
+          <li class="py-2 d-flex align-items-center gap-3"><i class="bi bi-person-plus-fill text-primary"></i> 2 nouveaux comptes</li>
+          <li class="py-2 d-flex align-items-center gap-3"><i class="bi bi-exclamation-triangle-fill text-warning"></i> 1 alerte de sécurité</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <span>© 2026 AdminKit — Tous droits réservés.</span>
+      <span>
+        <i class="bi bi-heart-fill text-danger" style="font-size:0.75rem;"></i> 
+        <a href="#">Mentions légales</a> · 
+        <a href="#">Confidentialité</a>
+      </span>
+    </footer>
+  </div>
+</div>
+
+<!-- Bootstrap JS (pour dropdown et toggle) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  (function() {
+    // toggle sidebar (mobile)
+    const toggleBtn = document.getElementById('toggleSidebar');
+    const sidebar = document.getElementById('sidebar');
+    if (toggleBtn && sidebar) {
+      toggleBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        sidebar.classList.toggle('show');
+      });
+      // clic à l'extérieur ferme le sidebar (mobile)
+      document.addEventListener('click', function(event) {
+        const isClickInside = sidebar.contains(event.target) || toggleBtn.contains(event.target);
+        if (!isClickInside && window.innerWidth < 768) {
+          sidebar.classList.remove('show');
+        }
+      });
+      // fermer automatiquement en cas de redimensionnement > 768px
+      window.addEventListener('resize', function() {
+        if (window.innerWidth >= 768) {
+          sidebar.classList.remove('show');
+        }
+      });
+    }
+
+    // Optionnel: forcer la fermeture du dropdown au clic extérieur (géré par Bootstrap)
+    // Pour un style plus propre, on ajoute un petit effet sur les icônes du header
+    document.querySelectorAll('.icon-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        // petit retour haptique
+        this.style.transform = 'scale(0.94)';
+        setTimeout(() => this.style.transform = '', 120);
+      });
+    });
+  })();
+</script>
+</body>
+</html>
