@@ -23,6 +23,7 @@ import Button from '../components/ui/Button';
 import { FactureDocument } from '../components/PDFFacture';
 import { factureService } from '../services/factureService';
 import type { Facture, PaginatedResponse } from '../types';
+import { useAuth } from '../context/AuthContext';
 
 const statutBadge: Record<string, 'info' | 'success' | 'neutral'> = {
   emise: 'info',
@@ -36,16 +37,18 @@ const statutLabels: Record<string, string> = {
   annulee: 'Annulée',
 };
 
-const formatMontant = (val: number, devise = 'CDF') =>
+const formatMontant = (val: number | string, devise = 'CDF') =>
   new Intl.NumberFormat('fr-CD', {
     style: 'currency',
     currency: devise,
     currencyDisplay: 'code',
     minimumFractionDigits: 0,
-  }).format(val);
+  }).format(Number(val) || 0);
 
 export default function Factures() {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const isOperateur = user?.roles?.some((r) => r.nom === 'Operateur');
   const [factures, setFactures] = useState<Facture[]>([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({ currentPage: 1, lastPage: 1, total: 0, perPage: 20 });
@@ -278,9 +281,11 @@ export default function Factures() {
         title="Factures"
         subtitle="Gestion des factures et documents de facturation"
         actions={
-          <Button icon={<Plus size={16} />} onClick={() => navigate('/factures/nouveau')}>
-            Nouvelle facture
-          </Button>
+          !isOperateur ? (
+            <Button icon={<Plus size={16} />} onClick={() => navigate('/factures/nouveau')}>
+              Nouvelle facture
+            </Button>
+          ) : undefined
         }
       />
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\OperateurScope;
 use App\Models\Vehicule;
 use App\Models\Personne;
 use Illuminate\Http\Request;
@@ -9,12 +10,15 @@ use Illuminate\Support\Facades\Validator;
 
 class VehiculeController extends Controller
 {
+    use OperateurScope;
+
     /**
      * Liste des véhicules avec pagination et recherche
      */
     public function index(Request $request)
     {
         $query = Vehicule::with('proprietaire');
+        $this->scopeOperateur($query, $request, 'proprietaire_id');
 
         // Recherche
         if ($request->has('search') && !empty($request->search)) {
@@ -285,11 +289,14 @@ class VehiculeController extends Controller
      */
     public function statistiques(Request $request)
     {
+        $query = Vehicule::query();
+        $this->scopeOperateur($query, $request, 'proprietaire_id');
+
         $stats = [
-            'total' => Vehicule::count(),
-            'actifs' => Vehicule::where('est_actif', true)->count(),
-            'inactifs' => Vehicule::where('est_actif', false)->count(),
-            'par_type' => Vehicule::select('type_vehicule')
+            'total' => (clone $query)->count(),
+            'actifs' => (clone $query)->where('est_actif', true)->count(),
+            'inactifs' => (clone $query)->where('est_actif', false)->count(),
+            'par_type' => (clone $query)->select('type_vehicule')
                 ->selectRaw('count(*) as total')
                 ->groupBy('type_vehicule')
                 ->orderBy('total', 'desc')
@@ -309,7 +316,7 @@ class VehiculeController extends Controller
                         'total' => $item->total
                     ];
                 }),
-            'par_marque' => Vehicule::select('marque')
+            'par_marque' => (clone $query)->select('marque')
                 ->selectRaw('count(*) as total')
                 ->whereNotNull('marque')
                 ->where('marque', '!=', '')
@@ -317,7 +324,7 @@ class VehiculeController extends Controller
                 ->orderBy('total', 'desc')
                 ->limit(10)
                 ->get(),
-            'par_proprietaire' => Vehicule::select('proprietaire_id')
+            'par_proprietaire' => (clone $query)->select('proprietaire_id')
                 ->with('proprietaire')
                 ->selectRaw('count(*) as total')
                 ->groupBy('proprietaire_id')
@@ -330,10 +337,10 @@ class VehiculeController extends Controller
                         'total' => $item->total
                     ];
                 }),
-            'annee_moyenne' => Vehicule::avg('annee_fabrication'),
-            'poids_moyen' => Vehicule::avg('poids'),
-            'places_total' => Vehicule::sum('nombre_places'),
-            'annees_distribution' => Vehicule::select('annee_fabrication')
+            'annee_moyenne' => (clone $query)->avg('annee_fabrication'),
+            'poids_moyen' => (clone $query)->avg('poids'),
+            'places_total' => (clone $query)->sum('nombre_places'),
+            'annees_distribution' => (clone $query)->select('annee_fabrication')
                 ->selectRaw('count(*) as total')
                 ->whereNotNull('annee_fabrication')
                 ->groupBy('annee_fabrication')

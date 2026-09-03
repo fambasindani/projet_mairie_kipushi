@@ -18,6 +18,7 @@ import ConfirmModal from '../components/ui/ConfirmModal';
 import Button from '../components/ui/Button';
 import { bienService } from '../services/bienService';
 import type { BienImmobilier, PaginatedResponse } from '../types';
+import { useAuth } from '../context/AuthContext';
 
 const typeBienBadge: Record<string, 'info' | 'success' | 'warning' | 'danger' | 'neutral'> = {
   terrain: 'info',
@@ -39,13 +40,15 @@ const typeBienLabels: Record<string, string> = {
   autre: 'Autre',
 };
 
-const formatMontant = (val: number | null) =>
+const formatMontant = (val: number | string | null) =>
   val != null
-    ? new Intl.NumberFormat('fr-CD', { style: 'currency', currency: 'CDF', currencyDisplay: 'code', minimumFractionDigits: 0 }).format(val)
+    ? new Intl.NumberFormat('fr-CD', { style: 'currency', currency: 'CDF', currencyDisplay: 'code', minimumFractionDigits: 0 }).format(Number(val) || 0)
     : '-';
 
 export default function Biens() {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const isOperateur = user?.roles?.some((r) => r.nom === 'Operateur');
   const [biens, setBiens] = useState<BienImmobilier[]>([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({ currentPage: 1, lastPage: 1, total: 0, perPage: 20 });
@@ -184,6 +187,7 @@ export default function Biens() {
       key: 'actions',
       label: 'Actions',
       render: (item: BienImmobilier) => (
+        isOperateur ? null : (
         <div className="flex items-center gap-1">
           <button
             onClick={(e) => { e.stopPropagation(); navigate(`/biens/${item.id}/modifier`); }}
@@ -208,6 +212,7 @@ export default function Biens() {
             <Trash2 size={16} />
           </button>
         </div>
+        )
       ),
     },
   ];
@@ -218,9 +223,11 @@ export default function Biens() {
         title="Biens immobiliers"
         subtitle="Gestion du patrimoine immobilier"
         actions={
-          <Button icon={<Plus size={16} />} onClick={() => navigate('/biens/nouveau')}>
-            Nouveau bien
-          </Button>
+          !isOperateur ? (
+            <Button icon={<Plus size={16} />} onClick={() => navigate('/biens/nouveau')}>
+              Nouveau bien
+            </Button>
+          ) : undefined
         }
       />
 

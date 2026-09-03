@@ -4,18 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Models\Facture;
 use App\Models\DeclarationPaiement;
+use App\Traits\OperateurScope;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 
 class FactureController extends Controller
 {
+    use OperateurScope;
+
     /**
      * Liste des factures avec pagination et recherche
      */
     public function index(Request $request)
     {
         $query = Facture::with(['declarationPaiement.personne', 'declarationPaiement.taxe']);
+
+        $this->scopeOperateur($query, $request, 'declaration_paiement_id', function ($query, $personneId) {
+            $query->whereHas('declarationPaiement', fn($q) => $q->where('personne_id', $personneId));
+        });
 
         // Recherche
         if ($request->has('search') && !empty($request->search)) {
@@ -278,6 +285,10 @@ class FactureController extends Controller
     public function statistiques(Request $request)
     {
         $query = Facture::query();
+
+        $this->scopeOperateur($query, $request, 'declaration_paiement_id', function ($query, $personneId) {
+            $query->whereHas('declarationPaiement', fn($q) => $q->where('personne_id', $personneId));
+        });
 
         if ($request->has('date_debut')) {
             $query->whereDate('created_at', '>=', $request->date_debut);

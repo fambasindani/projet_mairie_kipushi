@@ -22,8 +22,13 @@ const styles = StyleSheet.create({
   qrLabel: { fontSize: 8, color: '#6b7280', marginTop: 4 },
 });
 
-const formatCdf = (val: number) =>
-  new Intl.NumberFormat('fr-CD', { style: 'currency', currency: 'CDF', currencyDisplay: 'code', minimumFractionDigits: 0 }).format(val);
+const formatCdf = (val: number | string) => {
+  const num = Math.round(Number(val) || 0);
+  const str = num.toString();
+  const parts = str.split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  return parts.join('.') + ' CDF';
+};
 
 interface Props {
   facture: Facture;

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\OperateurScope;
 use App\Models\BienImmobilier;
 use App\Models\Personne;
 use Illuminate\Http\Request;
@@ -9,12 +10,15 @@ use Illuminate\Support\Facades\Validator;
 
 class BienImmobilierController extends Controller
 {
+    use OperateurScope;
+
     /**
      * Liste des biens immobiliers avec pagination et recherche
      */
     public function index(Request $request)
     {
         $query = BienImmobilier::with('proprietaire');
+        $this->scopeOperateur($query, $request, 'proprietaire_id');
 
         // Recherche
         if ($request->has('search') && !empty($request->search)) {
@@ -314,11 +318,14 @@ class BienImmobilierController extends Controller
      */
     public function statistiques(Request $request)
     {
+        $query = BienImmobilier::query();
+        $this->scopeOperateur($query, $request, 'proprietaire_id');
+
         $stats = [
-            'total' => BienImmobilier::count(),
-            'actifs' => BienImmobilier::where('est_actif', true)->count(),
-            'inactifs' => BienImmobilier::where('est_actif', false)->count(),
-            'par_type' => BienImmobilier::select('type_bien')
+            'total' => (clone $query)->count(),
+            'actifs' => (clone $query)->where('est_actif', true)->count(),
+            'inactifs' => (clone $query)->where('est_actif', false)->count(),
+            'par_type' => (clone $query)->select('type_bien')
                 ->selectRaw('count(*) as total')
                 ->groupBy('type_bien')
                 ->orderBy('total', 'desc')
@@ -329,7 +336,7 @@ class BienImmobilierController extends Controller
                         'total' => $item->total
                     ];
                 }),
-            'par_commune' => BienImmobilier::select('commune')
+            'par_commune' => (clone $query)->select('commune')
                 ->selectRaw('count(*) as total')
                 ->whereNotNull('commune')
                 ->where('commune', '!=', '')
@@ -337,7 +344,7 @@ class BienImmobilierController extends Controller
                 ->orderBy('total', 'desc')
                 ->limit(10)
                 ->get(),
-            'par_proprietaire' => BienImmobilier::select('proprietaire_id')
+            'par_proprietaire' => (clone $query)->select('proprietaire_id')
                 ->with('proprietaire')
                 ->selectRaw('count(*) as total')
                 ->groupBy('proprietaire_id')
@@ -350,13 +357,13 @@ class BienImmobilierController extends Controller
                         'total' => $item->total
                     ];
                 }),
-            'superficie_totale' => BienImmobilier::sum('superficie'),
-            'superficie_moyenne' => BienImmobilier::avg('superficie'),
-            'valeur_locative_totale' => BienImmobilier::sum('valeur_locative'),
-            'valeur_locative_moyenne' => BienImmobilier::avg('valeur_locative'),
-            'valeur_venale_totale' => BienImmobilier::sum('valeur_venale'),
-            'valeur_venale_moyenne' => BienImmobilier::avg('valeur_venale'),
-            'par_classement' => BienImmobilier::select('classement')
+            'superficie_totale' => (clone $query)->sum('superficie'),
+            'superficie_moyenne' => (clone $query)->avg('superficie'),
+            'valeur_locative_totale' => (clone $query)->sum('valeur_locative'),
+            'valeur_locative_moyenne' => (clone $query)->avg('valeur_locative'),
+            'valeur_venale_totale' => (clone $query)->sum('valeur_venale'),
+            'valeur_venale_moyenne' => (clone $query)->avg('valeur_venale'),
+            'par_classement' => (clone $query)->select('classement')
                 ->selectRaw('count(*) as total')
                 ->whereNotNull('classement')
                 ->groupBy('classement')

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\OperateurScope;
 use App\Models\DeclarationPaiement;
 use App\Models\Personne;
 use App\Models\Taxe;
@@ -13,12 +14,15 @@ use Illuminate\Support\Facades\DB;
 
 class DeclarationPaiementController extends Controller
 {
+    use OperateurScope;
+
     /**
      * Liste des déclarations avec pagination et recherche
      */
     public function index(Request $request)
     {
         $query = DeclarationPaiement::with(['personne', 'taxe', 'facture']);
+        $this->scopeOperateur($query, $request);
 
         // Recherche
         if ($request->has('search') && !empty($request->search)) {
@@ -339,32 +343,35 @@ class DeclarationPaiementController extends Controller
      */
     public function statistiques(Request $request)
     {
+        $query = DeclarationPaiement::query();
+        $this->scopeOperateur($query, $request);
+
         $stats = [
-            'total' => DeclarationPaiement::count(),
-            'en_attente' => DeclarationPaiement::where('statut', 'en_attente')->count(),
-            'paye' => DeclarationPaiement::where('statut', 'paye')->count(),
-            'en_retard' => DeclarationPaiement::where('statut', 'en_retard')->count(),
-            'conteste' => DeclarationPaiement::where('statut', 'conteste')->count(),
-            'annule' => DeclarationPaiement::where('statut', 'annule')->count(),
-            'exonere' => DeclarationPaiement::where('statut', 'exonere')->count(),
-            'montant_total' => DeclarationPaiement::sum('montant_total'),
-            'montant_paye' => DeclarationPaiement::where('statut', 'paye')->sum('montant_total'),
-            'montant_en_attente' => DeclarationPaiement::where('statut', 'en_attente')->sum('montant_total'),
-            'montant_penalites' => DeclarationPaiement::sum('penalites'),
-            'par_mois' => DeclarationPaiement::selectRaw('DATE_FORMAT(created_at, "%Y-%m") as mois')
+            'total' => (clone $query)->count(),
+            'en_attente' => (clone $query)->where('statut', 'en_attente')->count(),
+            'paye' => (clone $query)->where('statut', 'paye')->count(),
+            'en_retard' => (clone $query)->where('statut', 'en_retard')->count(),
+            'conteste' => (clone $query)->where('statut', 'conteste')->count(),
+            'annule' => (clone $query)->where('statut', 'annule')->count(),
+            'exonere' => (clone $query)->where('statut', 'exonere')->count(),
+            'montant_total' => (clone $query)->sum('montant_total'),
+            'montant_paye' => (clone $query)->where('statut', 'paye')->sum('montant_total'),
+            'montant_en_attente' => (clone $query)->where('statut', 'en_attente')->sum('montant_total'),
+            'montant_penalites' => (clone $query)->sum('penalites'),
+            'par_mois' => (clone $query)->selectRaw('DATE_FORMAT(created_at, "%Y-%m") as mois')
                 ->selectRaw('count(*) as total, sum(montant_total) as montant')
                 ->groupBy('mois')
                 ->orderBy('mois', 'desc')
                 ->limit(12)
                 ->get(),
-            'par_taxe' => DeclarationPaiement::with('taxe')
+            'par_taxe' => (clone $query)->with('taxe')
                 ->select('taxe_id')
                 ->selectRaw('count(*) as total, sum(montant_total) as montant')
                 ->groupBy('taxe_id')
                 ->orderBy('montant', 'desc')
                 ->limit(10)
                 ->get(),
-            'par_statut' => DeclarationPaiement::select('statut')
+            'par_statut' => (clone $query)->select('statut')
                 ->selectRaw('count(*) as total, sum(montant_total) as montant')
                 ->groupBy('statut')
                 ->get(),

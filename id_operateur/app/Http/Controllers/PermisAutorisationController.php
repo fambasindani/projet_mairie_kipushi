@@ -5,16 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\PermisAutorisation;
 use App\Models\Personne;
 use Illuminate\Http\Request;
+use App\Traits\OperateurScope;
 use Illuminate\Support\Facades\Validator;
 
 class PermisAutorisationController extends Controller
 {
+    use OperateurScope;
     /**
      * Liste des permis avec pagination et recherche
      */
     public function index(Request $request)
     {
         $query = PermisAutorisation::with('personne');
+        $this->scopeOperateur($query, $request);
 
         // Recherche
         if ($request->has('search') && !empty($request->search)) {
@@ -294,15 +297,18 @@ class PermisAutorisationController extends Controller
     /**
      * Statistiques des permis
      */
-    public function statistiques()
+    public function statistiques(Request $request)
     {
+        $query = PermisAutorisation::query();
+        $this->scopeOperateur($query, $request);
+
         $stats = [
-            'total' => PermisAutorisation::count(),
-            'valides' => PermisAutorisation::where('est_valide', true)->count(),
-            'invalides' => PermisAutorisation::where('est_valide', false)->count(),
-            'expires' => PermisAutorisation::where('date_expiration', '<', now())->count(),
-            'renouveles' => PermisAutorisation::where('est_renouvele', true)->count(),
-            'par_type' => PermisAutorisation::select('type_permis')
+            'total' => (clone $query)->count(),
+            'valides' => (clone $query)->where('est_valide', true)->count(),
+            'invalides' => (clone $query)->where('est_valide', false)->count(),
+            'expires' => (clone $query)->where('date_expiration', '<', now())->count(),
+            'renouveles' => (clone $query)->where('est_renouvele', true)->count(),
+            'par_type' => (clone $query)->select('type_permis')
                 ->selectRaw('count(*) as total')
                 ->groupBy('type_permis')
                 ->orderBy('total', 'desc')
@@ -322,7 +328,7 @@ class PermisAutorisationController extends Controller
                         'total' => $item->total
                     ];
                 }),
-            'expiration_proche' => PermisAutorisation::where('date_expiration', '>=', now())
+            'expiration_proche' => (clone $query)->where('date_expiration', '>=', now())
                 ->where('date_expiration', '<=', now()->addDays(30))
                 ->count(),
         ];

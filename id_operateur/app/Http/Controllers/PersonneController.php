@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\OperateurScope;
 use App\Models\Personne;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class PersonneController extends Controller
 {
+    use OperateurScope;
+
     /**
      * Liste des personnes (opérateurs) avec pagination et recherche
      */
     public function index(Request $request)
     {
         $query = Personne::query();
+        $this->scopeOperateur($query, $request, 'id');
 
         // ============================================================
         // RECHERCHE

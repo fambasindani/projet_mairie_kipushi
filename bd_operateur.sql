@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `biens_immobiliers` (
   KEY `biens_immobiliers_id_quartier_foreign` (`id_quartier`),
   CONSTRAINT `biens_immobiliers_id_quartier_foreign` FOREIGN KEY (`id_quartier`) REFERENCES `quartiers` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT,
   CONSTRAINT `biens_immobiliers_proprietaire_id_foreign` FOREIGN KEY (`proprietaire_id`) REFERENCES `personnes` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table bd_operateur.biens_immobiliers : ~7 rows (environ)
 INSERT INTO `biens_immobiliers` (`id`, `proprietaire_id`, `adresse`, `quartier`, `commune`, `id_quartier`, `parcelle_id`, `type_bien`, `superficie`, `valeur_locative`, `valeur_venale`, `classement`, `est_actif`, `created_at`, `updated_at`) VALUES
@@ -73,7 +73,8 @@ INSERT INTO `biens_immobiliers` (`id`, `proprietaire_id`, `adresse`, `quartier`,
 	(4, 2, '78 Avenue du Commerce', 'Gombe', 'Gombe', NULL, 'PAR-004-2024', 'local_commercial', 150.00, 2000000.00, 35000000.00, 1, 1, '2026-09-03 07:03:45', '2026-09-03 07:03:45'),
 	(5, 1, '100 Avenue de l\'Indépendance', 'Gombe', 'Gombe', NULL, 'PAR-005-2024', 'immeuble', 800.00, 5000000.00, 80000000.00, 1, 1, '2026-09-03 07:04:02', '2026-09-03 07:04:02'),
 	(6, 2, 'Zone Industrielle, Parcelle 12', 'Masina', 'Masina', NULL, 'PAR-006-2024', 'entrepot', 1200.00, 3000000.00, 45000000.00, 2, 1, '2026-09-03 07:04:21', '2026-09-03 07:04:21'),
-	(7, 9, 'av kimoto 4', 'Matoto', 'KAMALONDO', 3, 'PAR-85464', 'entrepot', 100.00, 2000.00, 2300.00, 1, 1, '2026-09-03 17:45:27', '2026-09-03 17:45:27');
+	(7, 9, 'av kimoto 4', 'Matoto', 'KAMALONDO', 3, 'PAR-85464', 'entrepot', 100.00, 2000.00, 2300.00, 1, 1, '2026-09-03 17:45:27', '2026-09-03 17:45:27'),
+	(8, 25, 'KWALO 4', NULL, 'KAMALONDO', NULL, '1458', 'appartement', 100.00, 22000.00, 25000.00, 1, 1, '2026-09-03 20:07:01', '2026-09-03 20:07:01');
 
 -- Listage de la structure de table bd_operateur. communes
 CREATE TABLE IF NOT EXISTS `communes` (
@@ -132,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `declarations_paiements` (
   CONSTRAINT `declarations_paiements_personne_id_foreign` FOREIGN KEY (`personne_id`) REFERENCES `personnes` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `declarations_paiements_taxe_id_foreign` FOREIGN KEY (`taxe_id`) REFERENCES `taxes` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `declarations_paiements_vehicule_id_foreign` FOREIGN KEY (`vehicule_id`) REFERENCES `vehicules` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table bd_operateur.declarations_paiements : ~6 rows (environ)
 INSERT INTO `declarations_paiements` (`id`, `personne_id`, `taxe_id`, `bien_immobilier_id`, `vehicule_id`, `permis_id`, `exercice`, `periode_debut`, `periode_fin`, `montant_base`, `montant_taxe`, `penalites`, `montant_total`, `date_limite_paiement`, `date_paiement`, `statut`, `reference_paiement`, `justificatif`, `observations`, `created_at`, `updated_at`) VALUES
@@ -141,7 +142,8 @@ INSERT INTO `declarations_paiements` (`id`, `personne_id`, `taxe_id`, `bien_immo
 	(3, 2, 2, NULL, NULL, NULL, '2025', '2026-02-01', '2026-11-10', 4000.00, 5000.00, 0.00, 9000.00, '2026-11-10', '2026-09-03', 'paye', 'PAY-6A99BB4DD4650', NULL, NULL, '2026-09-03 16:21:25', '2026-09-03 16:24:13'),
 	(4, 2, 1, NULL, NULL, NULL, '2026', '2026-01-01', '2026-12-31', 100000.00, 15000.00, 0.00, 115000.00, '2026-12-31', '2026-09-03', 'paye', 'PAY-6A99BBAE6315D', NULL, NULL, '2026-09-03 16:25:41', '2026-09-03 16:25:50'),
 	(5, 2, 1, NULL, NULL, NULL, '2026', '2026-01-01', '2026-12-31', 100000.00, 15000.00, 0.00, 115000.00, '2026-12-31', '2026-09-03', 'paye', 'PAY-6A99BBFAD342C', NULL, NULL, '2026-09-03 16:27:00', '2026-09-03 16:27:06'),
-	(6, 13, 1, NULL, NULL, NULL, '2026', '2026-01-01', '2026-12-31', 200000.00, 30000.00, 0.00, 230000.00, '2026-12-31', '2026-09-03', 'paye', 'PAY-6A99BD67B3AC0', NULL, NULL, '2026-09-03 16:27:17', '2026-09-03 16:33:11');
+	(6, 13, 1, NULL, NULL, NULL, '2026', '2026-01-01', '2026-12-31', 200000.00, 30000.00, 0.00, 230000.00, '2026-12-31', '2026-09-03', 'paye', 'PAY-6A99BD67B3AC0', NULL, NULL, '2026-09-03 16:27:17', '2026-09-03 16:33:11'),
+	(7, 25, 5, NULL, NULL, NULL, '2026', '2026-09-08', '2026-09-10', 4000.00, 4000.00, 0.00, 8000.00, '2026-09-08', '2026-09-03', 'paye', 'PAY-6A99F48713F1F', NULL, NULL, '2026-09-03 20:28:11', '2026-09-03 20:28:23');
 
 -- Listage de la structure de table bd_operateur. documents
 CREATE TABLE IF NOT EXISTS `documents` (
@@ -189,7 +191,7 @@ CREATE TABLE IF NOT EXISTS `factures` (
   KEY `factures_numero_facture_index` (`numero_facture`),
   KEY `factures_statut_index` (`statut`),
   CONSTRAINT `factures_declaration_paiement_id_foreign` FOREIGN KEY (`declaration_paiement_id`) REFERENCES `declarations_paiements` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table bd_operateur.factures : ~5 rows (environ)
 INSERT INTO `factures` (`id`, `declaration_paiement_id`, `numero_facture`, `date_emission`, `montant_ht`, `montant_tva`, `montant_total`, `devise`, `chemin_pdf`, `statut`, `observations`, `created_at`, `updated_at`) VALUES
@@ -197,7 +199,8 @@ INSERT INTO `factures` (`id`, `declaration_paiement_id`, `numero_facture`, `date
 	(2, 3, 'FAC-2026-09-00002', '2026-09-03 18:24:13', 9000.00, 1440.00, 10440.00, 'CDF', NULL, 'payee', NULL, '2026-09-03 16:24:13', '2026-09-03 16:24:13'),
 	(3, 4, 'FAC-2026-09-00003', '2026-09-03 18:25:50', 115000.00, 18400.00, 133400.00, 'CDF', NULL, 'payee', NULL, '2026-09-03 16:25:50', '2026-09-03 16:25:50'),
 	(4, 5, 'FAC-2026-09-00004', '2026-09-03 18:27:06', 115000.00, 18400.00, 133400.00, 'CDF', NULL, 'payee', NULL, '2026-09-03 16:27:06', '2026-09-03 16:27:06'),
-	(5, 6, 'FAC-2026-09-00005', '2026-09-03 18:33:11', 230000.00, 36800.00, 266800.00, 'CDF', NULL, 'payee', NULL, '2026-09-03 16:33:11', '2026-09-03 16:33:11');
+	(5, 6, 'FAC-2026-09-00005', '2026-09-03 18:33:11', 230000.00, 36800.00, 266800.00, 'CDF', NULL, 'payee', NULL, '2026-09-03 16:33:11', '2026-09-03 16:33:11'),
+	(6, 7, 'FAC-2026-09-00006', '2026-09-03 22:28:23', 8000.00, 1280.00, 9280.00, 'CDF', NULL, 'payee', NULL, '2026-09-03 20:28:23', '2026-09-03 20:28:23');
 
 -- Listage de la structure de table bd_operateur. identifiants_officiels
 CREATE TABLE IF NOT EXISTS `identifiants_officiels` (
@@ -241,7 +244,7 @@ CREATE TABLE IF NOT EXISTS `logs_audit` (
   KEY `logs_audit_action_index` (`action`),
   KEY `logs_audit_table_cible_index` (`table_cible`),
   CONSTRAINT `logs_audit_utilisateur_id_foreign` FOREIGN KEY (`utilisateur_id`) REFERENCES `utilisateurs` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table bd_operateur.logs_audit : ~28 rows (environ)
 INSERT INTO `logs_audit` (`id`, `utilisateur_id`, `action`, `table_cible`, `enregistrement_id`, `anciennes_valeurs`, `nouvelles_valeurs`, `adresse_ip`, `user_agent`, `created_at`, `updated_at`) VALUES
@@ -272,7 +275,34 @@ INSERT INTO `logs_audit` (`id`, `utilisateur_id`, `action`, `table_cible`, `enre
 	(25, 1, 'UPDATE', 'personnes', 1, '{"avatar": "avatars/1/ApTv49zsI0xEra4sxMYdSDVh4t7MxC8Cpxh8oCha.jpg", "updated_at": "2026-09-03T20:07:53.000000Z"}', '{"avatar": "avatars/1/Fa8yJ1JWqYcpFAAO5QGZLkLdhF9er0elGCPlmvYi.jpg", "updated_at": "2026-09-03 20:08:55"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-03 18:08:55', '2026-09-03 18:08:55'),
 	(26, 1, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-03T19:29:37.000000Z", "mot_de_passe_hash": "$2y$12$LDlSrepN5/mCvkF0kLY5XuZO1hn0t5/kcX5cvmseZdGDcaG6Gz.pi"}', '{"updated_at": "2026-09-03 20:18:03", "mot_de_passe_hash": "$2y$12$AG4Vzn7EV73AlATnG9FKGexUHP0CAW/7mdbslHE1mL9HL4fSbhnye"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-03 18:18:03', '2026-09-03 18:18:03'),
 	(27, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-03T20:18:03.000000Z", "derniere_connexion": "2026-09-03T19:29:37.000000Z"}', '{"updated_at": "2026-09-03 20:32:58", "derniere_connexion": "2026-09-03 20:32:58"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0', '2026-09-03 18:32:58', '2026-09-03 18:32:58'),
-	(28, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0', '2026-09-03 18:32:58', '2026-09-03 18:32:58');
+	(28, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0', '2026-09-03 18:32:58', '2026-09-03 18:32:58'),
+	(29, 1, 'CREATE', 'roles', 8, NULL, '{"id": 8, "nom": "TestCustom", "created_at": "2026-09-03 21:29:05", "updated_at": "2026-09-03 21:29:05", "description": "test"}', '127.0.0.1', 'curl/8.21.0', '2026-09-03 19:29:05', '2026-09-03 19:29:05'),
+	(30, 1, 'UPDATE', 'roles', 8, '{"nom": "TestCustom", "updated_at": "2026-09-03T21:29:05.000000Z", "description": "test"}', '{"nom": "TestCustomRenamed", "updated_at": "2026-09-03 21:29:11", "description": "updated"}', '127.0.0.1', 'curl/8.21.0', '2026-09-03 19:29:11', '2026-09-03 19:29:11'),
+	(31, 1, 'DELETE', 'roles', 8, '{"id": 8, "nom": "TestCustomRenamed", "created_at": "2026-09-03 21:29:05", "updated_at": "2026-09-03 21:29:11", "description": "updated"}', NULL, '127.0.0.1', 'curl/8.21.0', '2026-09-03 19:29:17', '2026-09-03 19:29:17'),
+	(32, NULL, 'UPDATE', 'utilisateurs', 3, '{"tentatives_connexion": 0}', '{"tentatives_connexion": 1}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0', '2026-09-03 19:37:37', '2026-09-03 19:37:37'),
+	(33, 1, 'CREATE', 'personnes', 25, NULL, '{"id": 25, "nom": "SALAMA", "sexe": "M", "type": "physique", "email": "salama@gmail.com", "ville": "Kinshasa", "prenom": "Pascal", "adresse": "KWANGO 45", "commune": "Kintambo", "id_ville": 2, "province": "Kinshasa", "quartier": "Misau", "est_actif": true, "telephone": "0898596501", "created_at": "2026-09-03 21:40:05", "updated_at": "2026-09-03 21:40:05", "id_province": 1, "id_quartier": 2, "nationalite": "Congolaise", "est_formalise": false, "date_naissance": "1992-04-02 00:00:00", "lieu_naissance": "Goma"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-03 19:40:05', '2026-09-03 19:40:05'),
+	(34, 1, 'CREATE', 'utilisateurs', 6, NULL, '{"id": 6, "email": "salama@gmail.com", "est_actif": true, "created_at": "2026-09-03 21:41:20", "updated_at": "2026-09-03 21:41:20", "personne_id": 25, "nom_utilisateur": "salama", "mot_de_passe_hash": "$2y$12$SbnUxdCSwxng31TqninpD.a95v/mbZMX/vdvq5oDO12gC/rydn3cq"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-03 19:41:20', '2026-09-03 19:41:20'),
+	(35, NULL, 'UPDATE', 'utilisateurs', 6, '{"tentatives_connexion": 0}', '{"tentatives_connexion": 1}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0', '2026-09-03 19:41:59', '2026-09-03 19:41:59'),
+	(36, NULL, 'UPDATE', 'utilisateurs', 6, '{"tentatives_connexion": 1}', '{"tentatives_connexion": 2}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0', '2026-09-03 19:42:10', '2026-09-03 19:42:10'),
+	(37, 1, 'DELETE', 'utilisateurs', 6, '{"id": 6, "email": "salama@gmail.com", "est_actif": 1, "created_at": "2026-09-03 21:41:20", "updated_at": "2026-09-03 21:42:10", "personne_id": 25, "est_verrouille": 0, "nom_utilisateur": "salama", "mot_de_passe_hash": "$2y$12$SbnUxdCSwxng31TqninpD.a95v/mbZMX/vdvq5oDO12gC/rydn3cq", "derniere_connexion": null, "tentatives_connexion": 2, "date_expiration_mot_de_passe": null}', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-03 19:44:22', '2026-09-03 19:44:22'),
+	(38, 1, 'CREATE', 'utilisateurs', 7, NULL, '{"id": 7, "email": "salama@gmail.com", "est_actif": true, "created_at": "2026-09-03 21:45:08", "updated_at": "2026-09-03 21:45:08", "personne_id": 25, "nom_utilisateur": "salama", "mot_de_passe_hash": "$2y$12$FMUkxiWabCPslNAmwgAd5O7oSQeppw9S1FvL1WFeNcK2ZvD8zzd6a"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-03 19:45:08', '2026-09-03 19:45:08'),
+	(39, NULL, 'UPDATE', 'utilisateurs', 7, '{"tentatives_connexion": 0}', '{"tentatives_connexion": 1}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0', '2026-09-03 19:45:14', '2026-09-03 19:45:14'),
+	(40, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-03T20:32:58.000000Z", "derniere_connexion": "2026-09-03T20:32:58.000000Z"}', '{"updated_at": "2026-09-03 21:46:26", "derniere_connexion": "2026-09-03 21:46:26"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-03 19:46:26', '2026-09-03 19:46:26'),
+	(41, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-03 19:46:26', '2026-09-03 19:46:26'),
+	(42, NULL, 'UPDATE', 'utilisateurs', 7, '{"tentatives_connexion": 1}', '{"tentatives_connexion": 2}', '127.0.0.1', 'curl/8.21.0', '2026-09-03 19:50:28', '2026-09-03 19:50:28'),
+	(43, NULL, 'UPDATE', 'utilisateurs', 7, '{"updated_at": "2026-09-03T21:50:28.000000Z", "derniere_connexion": null}', '{"updated_at": "2026-09-03 21:51:20", "derniere_connexion": "2026-09-03 21:51:20"}', '127.0.0.1', 'curl/8.21.0', '2026-09-03 19:51:20', '2026-09-03 19:51:20'),
+	(44, 7, 'LOGIN', 'utilisateurs', 7, NULL, '{"email": "salama@gmail.com"}', '127.0.0.1', 'curl/8.21.0', '2026-09-03 19:51:20', '2026-09-03 19:51:20'),
+	(45, NULL, 'UPDATE', 'utilisateurs', 7, '{"updated_at": "2026-09-03T21:51:20.000000Z", "derniere_connexion": "2026-09-03T21:51:20.000000Z"}', '{"updated_at": "2026-09-03 21:51:27", "derniere_connexion": "2026-09-03 21:51:27"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0', '2026-09-03 19:51:28', '2026-09-03 19:51:28'),
+	(46, 7, 'LOGIN', 'utilisateurs', 7, NULL, '{"email": "salama@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0', '2026-09-03 19:51:28', '2026-09-03 19:51:28'),
+	(47, NULL, 'UPDATE', 'utilisateurs', 7, '{"updated_at": "2026-09-03T21:51:27.000000Z", "derniere_connexion": "2026-09-03T21:51:27.000000Z"}', '{"updated_at": "2026-09-03 21:56:25", "derniere_connexion": "2026-09-03 21:56:25"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0', '2026-09-03 19:56:25', '2026-09-03 19:56:25'),
+	(48, 7, 'LOGIN', 'utilisateurs', 7, NULL, '{"email": "salama@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0', '2026-09-03 19:56:25', '2026-09-03 19:56:25'),
+	(49, NULL, 'UPDATE', 'utilisateurs', 7, '{"updated_at": "2026-09-03T21:56:25.000000Z", "derniere_connexion": "2026-09-03T21:56:25.000000Z"}', '{"updated_at": "2026-09-03 21:58:55", "derniere_connexion": "2026-09-03 21:58:55"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0', '2026-09-03 19:58:55', '2026-09-03 19:58:55'),
+	(50, 7, 'LOGIN', 'utilisateurs', 7, NULL, '{"email": "salama@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0', '2026-09-03 19:58:55', '2026-09-03 19:58:55'),
+	(51, NULL, 'UPDATE', 'utilisateurs', 7, '{"updated_at": "2026-09-03T21:58:55.000000Z", "derniere_connexion": "2026-09-03T21:58:55.000000Z"}', '{"updated_at": "2026-09-03 22:03:47", "derniere_connexion": "2026-09-03 22:03:47"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0', '2026-09-03 20:03:47', '2026-09-03 20:03:47'),
+	(52, 7, 'LOGIN', 'utilisateurs', 7, NULL, '{"email": "salama@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36 Edg/152.0.0.0', '2026-09-03 20:03:47', '2026-09-03 20:03:47'),
+	(53, 1, 'CREATE', 'biens_immobiliers', 8, NULL, '{"id": 8, "adresse": "KWALO 4", "commune": "KAMALONDO", "quartier": null, "est_actif": true, "type_bien": "appartement", "classement": 1, "created_at": "2026-09-03 22:07:01", "superficie": 100, "updated_at": "2026-09-03 22:07:01", "id_quartier": null, "parcelle_id": "1458", "valeur_venale": 25000, "proprietaire_id": 25, "valeur_locative": 22000}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-03 20:07:01', '2026-09-03 20:07:01'),
+	(54, 1, 'CREATE', 'permis_autorisations', 3, NULL, '{"id": 3, "numero": "PERM-58741", "created_at": "2026-09-03 22:21:17", "est_valide": true, "updated_at": "2026-09-03 22:21:17", "personne_id": 25, "type_permis": "construire", "est_renouvele": false, "date_delivrance": "2026-09-10 00:00:00", "date_expiration": "2026-09-26 00:00:00"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-03 20:21:18', '2026-09-03 20:21:18'),
+	(55, 1, 'CREATE', 'taxes', 5, NULL, '{"id": 5, "nom": "Construction", "code": "TAX-4587", "taux": 4000, "unite": "montant_fixe", "categorie": "permis_construire", "est_actif": true, "created_at": "2026-09-03 22:25:52", "est_locale": false, "updated_at": "2026-09-03 22:25:52", "description": "Taxe pour permis de construire", "periodicite": "annuelle"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-03 20:25:52', '2026-09-03 20:25:52');
 
 -- Listage de la structure de table bd_operateur. migrations
 CREATE TABLE IF NOT EXISTS `migrations` (
@@ -366,7 +396,7 @@ CREATE TABLE IF NOT EXISTS `parametres` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `parametres_cle_unique` (`cle`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table bd_operateur.parametres : ~10 rows (environ)
 INSERT INTO `parametres` (`id`, `cle`, `valeur`, `description`, `est_modifiable`, `created_at`, `updated_at`) VALUES
@@ -379,7 +409,8 @@ INSERT INTO `parametres` (`id`, `cle`, `valeur`, `description`, `est_modifiable`
 	(7, 'email_notifications', 'true', 'Activer les notifications par email', 1, '2026-09-03 16:07:52', '2026-09-03 16:07:52'),
 	(8, 'logo_url', '/logo.png', 'URL du logo de l\'application', 1, '2026-09-03 16:07:52', '2026-09-03 16:07:52'),
 	(9, 'version_api', '1.0.0', 'Version actuelle de l\'API', 0, '2026-09-03 16:07:53', '2026-09-03 16:07:53'),
-	(10, 'maintenance_mode', 'false', 'Mode maintenance activé/désactivé', 0, '2026-09-03 16:07:53', '2026-09-03 16:07:53');
+	(10, 'maintenance_mode', 'false', 'Mode maintenance activé/désactivé', 0, '2026-09-03 16:07:53', '2026-09-03 16:07:53'),
+	(11, 'taux_tva', '16', 'Taux de la Taxe sur la Valeur Ajoutée (TVA) en %', 1, '2026-09-03 20:30:41', '2026-09-03 20:30:41');
 
 -- Listage de la structure de table bd_operateur. permissions
 CREATE TABLE IF NOT EXISTS `permissions` (
@@ -444,12 +475,13 @@ CREATE TABLE IF NOT EXISTS `permis_autorisations` (
   KEY `permis_autorisations_personne_id_index` (`personne_id`),
   KEY `permis_autorisations_est_valide_index` (`est_valide`),
   CONSTRAINT `permis_autorisations_personne_id_foreign` FOREIGN KEY (`personne_id`) REFERENCES `personnes` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table bd_operateur.permis_autorisations : ~2 rows (environ)
 INSERT INTO `permis_autorisations` (`id`, `personne_id`, `type_permis`, `numero`, `date_delivrance`, `date_expiration`, `est_valide`, `est_renouvele`, `document_scan`, `created_at`, `updated_at`) VALUES
 	(1, 9, 'construire', 'PERM-58744', '2026-09-03', '2026-10-23', 1, 0, NULL, '2026-09-03 17:52:16', '2026-09-03 17:52:16'),
-	(2, 1, 'patente', 'PERM-TEST-002', '2026-01-15', '2027-01-15', 1, 0, NULL, '2026-09-03 17:54:30', '2026-09-03 17:58:46');
+	(2, 1, 'patente', 'PERM-TEST-002', '2026-01-15', '2027-01-15', 1, 0, NULL, '2026-09-03 17:54:30', '2026-09-03 17:58:46'),
+	(3, 25, 'construire', 'PERM-58741', '2026-09-10', '2026-09-26', 1, 0, NULL, '2026-09-03 20:21:17', '2026-09-03 20:21:17');
 
 -- Listage de la structure de table bd_operateur. personal_access_tokens
 CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
@@ -466,7 +498,7 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table bd_operateur.personal_access_tokens : ~18 rows (environ)
 INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `name`, `token`, `abilities`, `last_used_at`, `expires_at`, `created_at`, `updated_at`) VALUES
@@ -480,14 +512,20 @@ INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `n
 	(8, 'App\\Models\\Utilisateur', 1, 'auth_token', '5012946a80fdf663e41fcdd9ae07e828f2d89d4569164fa512184515de6868ec', '["*"]', '2026-09-03 09:19:40', NULL, '2026-09-03 09:09:18', '2026-09-03 09:19:40'),
 	(9, 'App\\Models\\Utilisateur', 1, 'auth_token', '4990e677b34ee72d2291e62fcde5dd5ea5e990a6007c0ad0fec24e067b154901', '["*"]', '2026-09-03 09:20:14', NULL, '2026-09-03 09:20:10', '2026-09-03 09:20:14'),
 	(10, 'App\\Models\\Utilisateur', 1, 'auth_token', 'f3c16ed1654be3146fd6fe7ebd3d8781846ac060f484545b6edfeed0e47ea09a', '["*"]', '2026-09-03 09:23:25', NULL, '2026-09-03 09:21:27', '2026-09-03 09:23:25'),
-	(11, 'App\\Models\\Utilisateur', 1, 'auth_token', '9850e0bef11146cbd6d6dee3787cd9834cfbdd245377da59c54f64ffa5a6b2d2', '["*"]', '2026-09-03 18:09:19', NULL, '2026-09-03 09:23:58', '2026-09-03 18:09:19'),
+	(11, 'App\\Models\\Utilisateur', 1, 'auth_token', '9850e0bef11146cbd6d6dee3787cd9834cfbdd245377da59c54f64ffa5a6b2d2', '["*"]', '2026-09-03 20:31:05', NULL, '2026-09-03 09:23:58', '2026-09-03 20:31:05'),
 	(12, 'App\\Models\\Utilisateur', 1, 'auth_token', '369c4601a6ade9e57fbac670da26de89e107e60e09e1bed19797c3dcdc62449e', '["*"]', '2026-09-03 12:30:14', NULL, '2026-09-03 10:32:57', '2026-09-03 12:30:14'),
 	(13, 'App\\Models\\Utilisateur', 1, 'auth_token', 'b64287a95f73de091a922963d25eecf2549966772a4cdc8041f36a4aa321a2c7', '["*"]', '2026-09-03 15:27:23', NULL, '2026-09-03 15:19:29', '2026-09-03 15:27:23'),
 	(14, 'App\\Models\\Utilisateur', 1, 'auth_token', '6a60dbd32893f0eddda38dbb6659c68d5baf02ff8f2c56075cd8081b5c7ce640', '["*"]', '2026-09-03 15:53:30', NULL, '2026-09-03 15:27:32', '2026-09-03 15:53:30'),
 	(15, 'App\\Models\\Utilisateur', 1, 'auth_token', '4a19aacd6df05677de1e81622766287bdd22f334b318f240175e6e761d2111f7', '["*"]', '2026-09-03 16:02:08', NULL, '2026-09-03 15:53:53', '2026-09-03 16:02:08'),
 	(16, 'App\\Models\\Utilisateur', 1, 'auth_token', 'fb8b1d0c2a0c498e4b7260ced5827a5fe85965f58130688b9bcb3d2b23bbce0d', '["*"]', '2026-09-03 17:28:37', NULL, '2026-09-03 16:02:24', '2026-09-03 17:28:37'),
-	(17, 'App\\Models\\Utilisateur', 1, 'auth_token', 'bed76a62aded35ab4838cfc10d9f8e53e4a8e1576af0caf7bf133d3407faf3f3', '["*"]', '2026-09-03 18:48:36', NULL, '2026-09-03 17:29:37', '2026-09-03 18:48:36'),
-	(18, 'App\\Models\\Utilisateur', 1, 'auth_token', '69221308f0dc4214950f4ede84f76b38d8ae71555e3a6153e5edb9d37d216328', '["*"]', '2026-09-03 18:48:35', NULL, '2026-09-03 18:32:58', '2026-09-03 18:48:35');
+	(17, 'App\\Models\\Utilisateur', 1, 'auth_token', 'bed76a62aded35ab4838cfc10d9f8e53e4a8e1576af0caf7bf133d3407faf3f3', '["*"]', '2026-09-03 19:45:57', NULL, '2026-09-03 17:29:37', '2026-09-03 19:45:57'),
+	(18, 'App\\Models\\Utilisateur', 1, 'auth_token', '69221308f0dc4214950f4ede84f76b38d8ae71555e3a6153e5edb9d37d216328', '["*"]', '2026-09-03 19:37:35', NULL, '2026-09-03 18:32:58', '2026-09-03 19:37:35'),
+	(19, 'App\\Models\\Utilisateur', 1, 'auth_token', '51381de09fe64ede611adc5934135e347e4a3734d381164807f0103b2e9cfc54', '["*"]', '2026-09-03 20:37:32', NULL, '2026-09-03 19:46:26', '2026-09-03 20:37:32'),
+	(20, 'App\\Models\\Utilisateur', 7, 'auth_token', '910bdeebcb7461d95e142202a29d7d30d24f0415d2d8d90437a01f90542f3529', '["*"]', '2026-09-03 20:21:56', NULL, '2026-09-03 19:51:20', '2026-09-03 20:21:56'),
+	(21, 'App\\Models\\Utilisateur', 7, 'auth_token', 'c3d2ed19e37f3a475fbf30735131bc07270119afc70454f539393bedecb53bee', '["*"]', '2026-09-03 19:55:29', NULL, '2026-09-03 19:51:28', '2026-09-03 19:55:29'),
+	(22, 'App\\Models\\Utilisateur', 7, 'auth_token', '66f7ecb3e5ee57cacad9c5c4e02b5b57b83d2d5e5ab5346aabecb6a90ef2f537', '["*"]', '2026-09-03 19:58:26', NULL, '2026-09-03 19:56:25', '2026-09-03 19:58:26'),
+	(23, 'App\\Models\\Utilisateur', 7, 'auth_token', 'deb6b9e262121761412e3b2b6cde78a8f3cb0cf73757dae24d95471e800a7141', '["*"]', '2026-09-03 20:02:10', NULL, '2026-09-03 19:58:55', '2026-09-03 20:02:10'),
+	(24, 'App\\Models\\Utilisateur', 7, 'auth_token', 'b9b69c608018571d12b8365f686aecc607b198899aa0292b67199669ff9cc1f4', '["*"]', '2026-09-03 20:37:45', NULL, '2026-09-03 20:03:47', '2026-09-03 20:37:45');
 
 -- Listage de la structure de table bd_operateur. personnes
 CREATE TABLE IF NOT EXISTS `personnes` (
@@ -535,7 +573,7 @@ CREATE TABLE IF NOT EXISTS `personnes` (
   CONSTRAINT `personnes_id_province_foreign` FOREIGN KEY (`id_province`) REFERENCES `provinces` (`id`) ON DELETE SET NULL,
   CONSTRAINT `personnes_id_quartier_foreign` FOREIGN KEY (`id_quartier`) REFERENCES `quartiers` (`id`) ON DELETE SET NULL,
   CONSTRAINT `personnes_id_ville_foreign` FOREIGN KEY (`id_ville`) REFERENCES `villes` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table bd_operateur.personnes : ~9 rows (environ)
 INSERT INTO `personnes` (`id`, `type`, `nom`, `prenom`, `date_naissance`, `lieu_naissance`, `nationalite`, `sexe`, `cni_numero`, `denomination_sociale`, `forme_juridique`, `date_creation`, `adresse`, `quartier`, `id_quartier`, `id_province`, `id_ville`, `commune`, `ville`, `province`, `telephone`, `telephone_2`, `email`, `site_web`, `est_actif`, `est_formalise`, `date_formalisation`, `latitude`, `longitude`, `avatar`, `created_at`, `updated_at`) VALUES
@@ -547,7 +585,8 @@ INSERT INTO `personnes` (`id`, `type`, `nom`, `prenom`, `date_naissance`, `lieu_
 	(9, 'morale', 'BAMBALI', 'Joseph', '1978-06-04', NULL, NULL, 'M', 'CNI-001234', 'ASBL', 'ASBL', NULL, 'Kinshasa, Gombe', 'Gombe', 1, 1, 2, 'Kinshasa', 'Kinshasa', 'Kinshasa', '+243811234567', NULL, 'ngongo@email.com', NULL, 1, 0, NULL, NULL, NULL, NULL, '2026-09-02 19:33:21', '2026-09-03 11:44:30'),
 	(13, 'physique', 'NGUZA', 'David', '1992-02-02', 'Kolwezi', 'Congolaise', 'M', NULL, NULL, NULL, NULL, 'KWANGO 45', 'Misau', 2, 1, 2, 'Kintambo', 'Kinshasa', 'Kinshasa', '0978596501', '5478', 'nguza@gmail.com', NULL, 1, 0, NULL, NULL, NULL, NULL, '2026-09-03 11:40:04', '2026-09-03 12:01:12'),
 	(23, 'physique', 'Dupont', 'Jean', NULL, NULL, NULL, 'M', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, '2026-09-03 15:55:04', '2026-09-03 15:55:04'),
-	(24, 'physique', 'Martin', 'Marie', NULL, NULL, NULL, 'F', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, '2026-09-03 15:55:04', '2026-09-03 15:55:04');
+	(24, 'physique', 'Martin', 'Marie', NULL, NULL, NULL, 'F', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, '2026-09-03 15:55:04', '2026-09-03 15:55:04'),
+	(25, 'physique', 'SALAMA', 'Pascal', '1992-04-02', 'Goma', 'Congolaise', 'M', NULL, NULL, NULL, NULL, 'KWANGO 45', 'Misau', 2, 1, 2, 'Kintambo', 'Kinshasa', 'Kinshasa', '0898596501', NULL, 'salama@gmail.com', NULL, 1, 0, NULL, NULL, NULL, NULL, '2026-09-03 19:40:05', '2026-09-03 19:40:05');
 
 -- Listage de la structure de table bd_operateur. personne_activites
 CREATE TABLE IF NOT EXISTS `personne_activites` (
@@ -618,7 +657,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `roles_nom_unique` (`nom`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table bd_operateur.roles : ~6 rows (environ)
 INSERT INTO `roles` (`id`, `nom`, `description`, `created_at`, `updated_at`) VALUES
@@ -689,6 +728,11 @@ INSERT INTO `roles_permissions` (`role_id`, `permission_id`, `created_at`, `upda
 	(4, 12, '2026-09-02 18:35:16', '2026-09-02 18:35:16'),
 	(4, 14, '2026-09-02 18:35:16', '2026-09-02 18:35:16'),
 	(4, 15, '2026-09-02 18:35:16', '2026-09-02 18:35:16'),
+	(5, 2, NULL, NULL),
+	(5, 3, NULL, NULL),
+	(5, 11, NULL, NULL),
+	(5, 15, NULL, NULL),
+	(5, 19, NULL, NULL),
 	(6, 2, '2026-09-02 18:35:16', '2026-09-02 18:35:16'),
 	(6, 7, '2026-09-02 18:35:16', '2026-09-02 18:35:16'),
 	(6, 11, '2026-09-02 18:35:16', '2026-09-02 18:35:16'),
@@ -715,13 +759,14 @@ CREATE TABLE IF NOT EXISTS `taxes` (
   UNIQUE KEY `taxes_code_unique` (`code`),
   KEY `taxes_categorie_index` (`categorie`),
   KEY `taxes_est_actif_index` (`est_actif`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table bd_operateur.taxes : ~3 rows (environ)
 INSERT INTO `taxes` (`id`, `code`, `nom`, `categorie`, `description`, `taux`, `unite`, `periodicite`, `bareme`, `est_actif`, `est_locale`, `created_at`, `updated_at`) VALUES
 	(1, 'PAT-2024', 'Patente 2024', 'patente', 'Taxe annuelle due par tout opérateur économique', 4000.0000, 'montant_fixe', 'annuelle', '{"categories": {"A": {"label": "Grand commerce", "montant": 500000}, "B": {"label": "Moyen commerce", "montant": 200000}, "C": {"label": "Petit commerce", "montant": 50000}}}', 1, 1, '2026-09-02 20:02:43', '2026-09-03 16:19:17'),
 	(2, 'PAT-2025', 'Patente 2025', 'patente', 'Taxe annuelle due par tout opérateur économique', 5000.0000, 'montant_fixe', 'annuelle', '{"categories": {"A": {"label": "Grand commerce", "montant": 500000}, "B": {"label": "Moyen commerce", "montant": 200000}, "C": {"label": "Petit commerce", "montant": 50000}}}', 1, 1, '2026-09-02 20:03:27', '2026-09-03 16:18:53'),
-	(3, 'FON-2025', 'Impôt foncier 2024', 'foncier', 'Taxe sur les propriétés bâties et non bâties', 5.0000, 'pourcentage', 'annuelle', NULL, 1, 1, '2026-09-02 20:04:03', '2026-09-03 16:14:13');
+	(3, 'FON-2025', 'Impôt foncier 2024', 'foncier', 'Taxe sur les propriétés bâties et non bâties', 5.0000, 'pourcentage', 'annuelle', NULL, 1, 1, '2026-09-02 20:04:03', '2026-09-03 16:14:13'),
+	(5, 'TAX-4587', 'Construction', 'permis_construire', 'Taxe pour permis de construire', 4000.0000, 'montant_fixe', 'annuelle', NULL, 1, 0, '2026-09-03 20:25:52', '2026-09-03 20:25:52');
 
 -- Listage de la structure de table bd_operateur. utilisateurs
 CREATE TABLE IF NOT EXISTS `utilisateurs` (
@@ -742,14 +787,15 @@ CREATE TABLE IF NOT EXISTS `utilisateurs` (
   UNIQUE KEY `utilisateurs_nom_utilisateur_unique` (`nom_utilisateur`),
   UNIQUE KEY `utilisateurs_email_unique` (`email`),
   CONSTRAINT `utilisateurs_personne_id_foreign` FOREIGN KEY (`personne_id`) REFERENCES `personnes` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table bd_operateur.utilisateurs : ~4 rows (environ)
 INSERT INTO `utilisateurs` (`id`, `personne_id`, `nom_utilisateur`, `mot_de_passe_hash`, `email`, `est_actif`, `est_verrouille`, `tentatives_connexion`, `derniere_connexion`, `date_expiration_mot_de_passe`, `created_at`, `updated_at`) VALUES
-	(1, 1, 'admin', '$2y$12$AG4Vzn7EV73AlATnG9FKGexUHP0CAW/7mdbslHE1mL9HL4fSbhnye', 'pierrepapy@gmail.com', 1, 0, 0, '2026-09-03 20:32:58', NULL, '2026-09-02 18:29:47', '2026-09-03 18:32:58'),
+	(1, 1, 'admin', '$2y$12$AG4Vzn7EV73AlATnG9FKGexUHP0CAW/7mdbslHE1mL9HL4fSbhnye', 'pierrepapy@gmail.com', 1, 0, 0, '2026-09-03 21:46:26', NULL, '2026-09-02 18:29:47', '2026-09-03 19:46:26'),
 	(2, 2, 'jean.dupont', '$2y$12$OFHiT3XeNufyvt7aeEHhCO5.3IzHWABXV/jS5pgGejLVfn4f3CYkm', 'jean.dupont@email.com', 1, 0, 0, NULL, NULL, '2026-09-02 18:35:49', '2026-09-02 18:35:49'),
-	(3, 3, 'marie.mbala', '$2y$12$Armb/thc0jcIs0DjEfWZkeHsVYRvSYFUbHykRr19TgCqp8v.0QXnK', 'marie.mbala@email.com', 1, 0, 0, NULL, NULL, '2026-09-02 18:35:49', '2026-09-02 18:35:49'),
-	(4, 13, 'NGOMA Paul', '$2y$12$TstGZHCHUJivND1oCcWjauM3t3qwYLaRVKEsBaLq/gs9JxXSxW16i', 'ngoma@gmail.com', 1, 0, 0, NULL, NULL, '2026-09-02 18:53:45', '2026-09-03 12:08:02');
+	(3, 3, 'marie.mbala', '$2y$12$Armb/thc0jcIs0DjEfWZkeHsVYRvSYFUbHykRr19TgCqp8v.0QXnK', 'marie.mbala@email.com', 1, 0, 1, NULL, NULL, '2026-09-02 18:35:49', '2026-09-03 19:37:37'),
+	(4, 13, 'NGOMA Paul', '$2y$12$TstGZHCHUJivND1oCcWjauM3t3qwYLaRVKEsBaLq/gs9JxXSxW16i', 'ngoma@gmail.com', 1, 0, 0, NULL, NULL, '2026-09-02 18:53:45', '2026-09-03 12:08:02'),
+	(7, 25, 'salama', '$2y$12$Eyy1aKAHCMPE0GX1lWMjOOKCTZXG4P0SXG2S1H2oRmtRANWLI0gJ.', 'salama@gmail.com', 1, 0, 0, '2026-09-03 22:03:47', NULL, '2026-09-03 19:45:08', '2026-09-03 20:03:47');
 
 -- Listage de la structure de table bd_operateur. utilisateurs_roles
 CREATE TABLE IF NOT EXISTS `utilisateurs_roles` (
@@ -768,7 +814,8 @@ INSERT INTO `utilisateurs_roles` (`utilisateur_id`, `role_id`, `created_at`, `up
 	(1, 1, '2026-09-02 18:47:17', '2026-09-02 18:47:17'),
 	(2, 3, '2026-09-02 18:35:49', '2026-09-02 18:35:49'),
 	(3, 5, '2026-09-02 18:35:49', '2026-09-02 18:35:49'),
-	(4, 2, '2026-09-02 18:53:45', '2026-09-02 18:53:45');
+	(4, 2, '2026-09-02 18:53:45', '2026-09-02 18:53:45'),
+	(7, 5, '2026-09-03 19:45:08', '2026-09-03 19:45:08');
 
 -- Listage de la structure de table bd_operateur. vehicules
 CREATE TABLE IF NOT EXISTS `vehicules` (

@@ -104,6 +104,14 @@ class RoleController extends Controller
             ], 404);
         }
 
+        $systemRoles = ['Administrateur', 'Operateur'];
+        if (in_array($role->nom, $systemRoles)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Impossible de modifier un rôle système'
+            ], 403);
+        }
+
         $validator = Validator::make($request->all(), [
             'nom' => 'sometimes|string|max:50|unique:roles,nom,' . $id,
             'description' => 'nullable|string|max:255',
@@ -146,7 +154,7 @@ class RoleController extends Controller
         }
 
         // Empêcher la suppression des rôles système
-        $systemRoles = ['Administrateur', 'Agent_Mairie', 'Agent_Recensement', 'Agent_Recouvrement', 'Operateur', 'Auditeur'];
+        $systemRoles = ['Administrateur', 'Operateur'];
         if (in_array($role->nom, $systemRoles)) {
             return response()->json([
                 'success' => false,
@@ -172,6 +180,14 @@ class RoleController extends Controller
                 'success' => false,
                 'message' => 'Rôle non trouvé'
             ], 404);
+        }
+
+        $systemRoles = ['Administrateur', 'Operateur'];
+        if (in_array($role->nom, $systemRoles)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Impossible de modifier les permissions d\'un rôle système'
+            ], 403);
         }
 
         $validator = Validator::make($request->all(), [

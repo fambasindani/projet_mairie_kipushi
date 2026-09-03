@@ -72,7 +72,7 @@ class UtilisateurController extends Controller
         $utilisateur = Utilisateur::create([
             'personne_id' => $request->personne_id,
             'nom_utilisateur' => $request->nom_utilisateur,
-            'mot_de_passe_hash' => Hash::make($request->password),
+            'mot_de_passe_hash' => $request->password,
             'email' => $request->email,
             'est_actif' => $request->est_actif ?? true
         ]);
@@ -151,7 +151,7 @@ class UtilisateurController extends Controller
         }
 
         if ($request->has('password') && !empty($request->password)) {
-            $data['mot_de_passe_hash'] = Hash::make($request->password);
+            $data['mot_de_passe_hash'] = $request->password;
         }
 
         $utilisateur->update($data);

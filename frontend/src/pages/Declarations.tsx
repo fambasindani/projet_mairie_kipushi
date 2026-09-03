@@ -21,6 +21,7 @@ import ConfirmModal from '../components/ui/ConfirmModal';
 import Button from '../components/ui/Button';
 import { declarationService } from '../services/declarationService';
 import type { DeclarationPaiement, PaginatedResponse } from '../types';
+import { useAuth } from '../context/AuthContext';
 
 const statutBadge: Record<string, 'warning' | 'success' | 'danger' | 'neutral' | 'info'> = {
   en_attente: 'warning',
@@ -40,11 +41,13 @@ const statutLabels: Record<string, string> = {
   exonere: 'Exonéré',
 };
 
-const formatMontant = (val: number) =>
-  new Intl.NumberFormat('fr-CD', { style: 'currency', currency: 'CDF', currencyDisplay: 'code', minimumFractionDigits: 0 }).format(val);
+const formatMontant = (val: number | string) =>
+  new Intl.NumberFormat('fr-CD', { style: 'currency', currency: 'CDF', currencyDisplay: 'code', minimumFractionDigits: 0 }).format(Number(val) || 0);
 
 export default function Declarations() {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const isOperateur = user?.roles?.some((r) => r.nom === 'Operateur');
   const [declarations, setDeclarations] = useState<DeclarationPaiement[]>([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({ currentPage: 1, lastPage: 1, total: 0, perPage: 20 });
@@ -233,9 +236,11 @@ export default function Declarations() {
         title="Déclarations de paiement"
         subtitle="Gestion des déclarations et paiements de taxes"
         actions={
-          <Button icon={<Plus size={16} />} onClick={() => navigate('/declarations/nouveau')}>
-            Nouvelle déclaration
-          </Button>
+          !isOperateur ? (
+            <Button icon={<Plus size={16} />} onClick={() => navigate('/declarations/nouveau')}>
+              Nouvelle déclaration
+            </Button>
+          ) : undefined
         }
       />
 

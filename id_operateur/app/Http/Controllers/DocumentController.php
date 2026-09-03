@@ -6,16 +6,19 @@ use App\Models\Document;
 use App\Models\Personne;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Traits\OperateurScope;
 use Illuminate\Support\Facades\Storage;
 
 class DocumentController extends Controller
 {
+    use OperateurScope;
     /**
      * Liste des documents
      */
     public function index(Request $request)
     {
         $query = Document::with('personne');
+        $this->scopeOperateur($query, $request);
 
         if ($request->has('personne_id') && !empty($request->personne_id)) {
             $query->where('personne_id', $request->personne_id);

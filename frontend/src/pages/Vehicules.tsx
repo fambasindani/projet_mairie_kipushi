@@ -18,6 +18,7 @@ import ConfirmModal from '../components/ui/ConfirmModal';
 import Button from '../components/ui/Button';
 import { vehiculeService } from '../services/vehiculeService';
 import type { Vehicule, PaginatedResponse } from '../types';
+import { useAuth } from '../context/AuthContext';
 
 const typeVehiculeBadge: Record<string, 'info' | 'success' | 'warning' | 'danger' | 'neutral'> = {
   voiture: 'info',
@@ -41,6 +42,8 @@ const typeVehiculeLabels: Record<string, string> = {
 
 export default function Vehicules() {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const isOperateur = user?.roles?.some((r) => r.nom === 'Operateur');
   const [vehicules, setVehicules] = useState<Vehicule[]>([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({ currentPage: 1, lastPage: 1, total: 0, perPage: 20 });
@@ -194,6 +197,7 @@ export default function Vehicules() {
       key: 'actions',
       label: 'Actions',
       render: (item: Vehicule) => (
+        isOperateur ? null : (
         <div className="flex items-center gap-1">
           <button
             onClick={(e) => { e.stopPropagation(); navigate(`/vehicules/${item.id}/modifier`); }}
@@ -218,6 +222,7 @@ export default function Vehicules() {
             <Trash2 size={16} />
           </button>
         </div>
+        )
       ),
     },
   ];
@@ -228,9 +233,11 @@ export default function Vehicules() {
         title="Véhicules"
         subtitle="Gestion du parc automobile"
         actions={
-          <Button icon={<Plus size={16} />} onClick={() => navigate('/vehicules/nouveau')}>
-            Nouveau véhicule
-          </Button>
+          !isOperateur ? (
+            <Button icon={<Plus size={16} />} onClick={() => navigate('/vehicules/nouveau')}>
+              Nouveau véhicule
+            </Button>
+          ) : undefined
         }
       />
 

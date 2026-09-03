@@ -15,6 +15,7 @@ import {
   Landmark,
   UserCircle,
 } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
 
 interface SubItem {
   label: string;
@@ -139,7 +140,23 @@ function getOpenGroup(pathname: string): string {
 
 export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
   const location = useLocation();
+  const { user } = useAuth();
   const isOpen = !collapsed;
+
+  const isOperateur = user?.roles?.some((r) => r.nom === "Operateur");
+
+  const visibleGroups = isOperateur
+    ? navGroups.filter((g) => ["notifications", "profil"].includes(g.key)).concat(
+        navGroups.filter((g) => ["fiscalite", "patrimoine"].includes(g.key)).map((g) => ({
+          ...g,
+          children: g.children.filter((c) =>
+            g.key === "fiscalite"
+              ? c.path === "/declarations" || c.path === "/factures"
+              : true
+          ),
+        }))
+      )
+    : navGroups;
 
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() => {
     const active = getOpenGroup(location.pathname);
@@ -208,7 +225,7 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
         </div>
 
         <nav className="flex-1 overflow-y-auto py-3 px-3 space-y-1">
-          {navGroups.map((group) => {
+          {visibleGroups.map((group) => {
             if (group.standalone) {
               const active = isActiveChild(group.path!);
               return (

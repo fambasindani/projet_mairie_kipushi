@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { Plus, Shield, Users, Key, Pencil, Trash2, Settings } from 'lucide-react';
+import { Plus, Shield, Users, Key, Pencil, Trash2, Settings, Lock } from 'lucide-react';
 import PageHeader from '../components/ui/PageHeader';
 import Badge from '../components/ui/Badge';
 import DataTable from '../components/ui/DataTable';
@@ -10,6 +10,8 @@ import ConfirmModal from '../components/ui/ConfirmModal';
 import { roleService } from '../services/roleService';
 import { permissionService } from '../services/permissionService';
 import type { Role, Permission, PaginatedResponse } from '../types';
+
+const SYSTEM_ROLES = ['Administrateur', 'Operateur'];
 
 export default function Roles() {
   const navigate = useNavigate();
@@ -67,12 +69,24 @@ export default function Roles() {
 
   const permCount = (role: Role) => role.permissions?.length ?? 0;
 
+  const isSystemRole = (role: Role) => SYSTEM_ROLES.includes(role.nom);
+
   const columns = [
     {
       key: 'nom',
       label: 'Nom',
       sortable: true,
-      render: (item: Role) => <span className="font-medium text-gray-800">{item.nom}</span>,
+      render: (item: Role) => (
+        <div className="flex items-center gap-2">
+          <span className="font-medium text-gray-800">{item.nom}</span>
+          {isSystemRole(item) && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-xs font-semibold text-amber-700 ring-1 ring-amber-200">
+              <Lock size={10} />
+              Système
+            </span>
+          )}
+        </div>
+      ),
     },
     {
       key: 'description',
@@ -87,16 +101,27 @@ export default function Roles() {
     {
       key: 'actions',
       label: 'Actions',
-      render: (item: Role) => (
-        <div className="flex items-center gap-1">
-          <button onClick={(e) => { e.stopPropagation(); navigate(`/roles/${item.id}/modifier`); }} className="p-1.5 rounded-lg hover:bg-blue-50 text-gray-500 hover:text-blue-600 transition-colors cursor-pointer" title="Modifier">
-            <Pencil size={16} />
-          </button>
-          <button onClick={(e) => { e.stopPropagation(); setConfirmModal({ isOpen: true, item }); }} className="p-1.5 rounded-lg hover:bg-red-50 text-gray-500 hover:text-red-600 transition-colors cursor-pointer" title="Supprimer">
-            <Trash2 size={16} />
-          </button>
-        </div>
-      ),
+      render: (item: Role) => {
+        if (isSystemRole(item)) {
+          return (
+            <div className="flex items-center justify-center">
+              <span className="inline-flex items-center gap-1 text-xs text-gray-400" title="Rôle système — protégé">
+                <Lock size={14} />
+              </span>
+            </div>
+          );
+        }
+        return (
+          <div className="flex items-center gap-1">
+            <button onClick={(e) => { e.stopPropagation(); navigate(`/roles/${item.id}/modifier`); }} className="p-1.5 rounded-lg hover:bg-blue-50 text-gray-500 hover:text-blue-600 transition-colors cursor-pointer" title="Modifier">
+              <Pencil size={16} />
+            </button>
+            <button onClick={(e) => { e.stopPropagation(); setConfirmModal({ isOpen: true, item }); }} className="p-1.5 rounded-lg hover:bg-red-50 text-gray-500 hover:text-red-600 transition-colors cursor-pointer" title="Supprimer">
+              <Trash2 size={16} />
+            </button>
+          </div>
+        );
+      },
     },
   ];
 
@@ -134,7 +159,7 @@ export default function Roles() {
         data={roles}
         loading={loading}
         emptyMessage="Aucun rôle trouvé"
-        onRowClick={(item) => navigate(`/roles/${item.id}/modifier`)}
+        onRowClick={(item) => { if (!isSystemRole(item)) navigate(`/roles/${item.id}/modifier`); }}
         searchable
         searchPlaceholder="Rechercher un rôle..."
         onSearch={handleSearch}

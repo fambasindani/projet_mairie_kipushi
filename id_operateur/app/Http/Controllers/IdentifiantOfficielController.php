@@ -5,16 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\IdentifiantOfficiel;
 use App\Models\Personne;
 use Illuminate\Http\Request;
+use App\Traits\OperateurScope;
 use Illuminate\Support\Facades\Validator;
 
 class IdentifiantOfficielController extends Controller
 {
+    use OperateurScope;
     /**
      * Liste des identifiants officiels
      */
     public function index(Request $request)
     {
         $query = IdentifiantOfficiel::with('personne');
+        $this->scopeOperateur($query, $request);
 
         if ($request->has('personne_id') && !empty($request->personne_id)) {
             $query->where('personne_id', $request->personne_id);

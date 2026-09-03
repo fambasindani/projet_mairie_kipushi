@@ -19,6 +19,7 @@ import ConfirmModal from '../components/ui/ConfirmModal';
 import Button from '../components/ui/Button';
 import { permisService } from '../services/permisService';
 import type { PermisAutorisation, PaginatedResponse } from '../types';
+import { useAuth } from '../context/AuthContext';
 
 const typePermisBadge: Record<string, 'info' | 'success' | 'warning' | 'danger' | 'neutral'> = {
   patente: 'info',
@@ -53,6 +54,8 @@ function isExpiringSoon(dateStr: string): boolean {
 
 export default function Permis() {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const isOperateur = user?.roles?.some((r) => r.nom === 'Operateur');
   const [permis, setPermis] = useState<PermisAutorisation[]>([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({
@@ -212,6 +215,7 @@ export default function Permis() {
       key: 'actions',
       label: 'Actions',
       render: (item: PermisAutorisation) => (
+        isOperateur ? null : (
         <div className="flex items-center gap-1">
           <button
             onClick={(e) => { e.stopPropagation(); navigate(`/permis/${item.id}/modifier`); }}
@@ -236,6 +240,7 @@ export default function Permis() {
             <Trash2 size={16} />
           </button>
         </div>
+        )
       ),
     },
   ];
@@ -246,9 +251,11 @@ export default function Permis() {
         title="Permis & Autorisations"
         subtitle="Gestion des permis et autorisations"
         actions={
-          <Button icon={<Plus size={16} />} onClick={() => navigate('/permis/nouveau')}>
-            Nouveau permis
-          </Button>
+          !isOperateur ? (
+            <Button icon={<Plus size={16} />} onClick={() => navigate('/permis/nouveau')}>
+              Nouveau permis
+            </Button>
+          ) : undefined
         }
       />
 

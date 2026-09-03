@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { ArrowLeft, Save, Shield, Key, CheckSquare, Square, Eye, Plus, Pencil, Trash2 } from 'lucide-react';
+import { ArrowLeft, Save, Shield, Key, CheckSquare, Square, Eye, Plus, Pencil, Trash2, Lock } from 'lucide-react';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
 import { roleService } from '../services/roleService';
 import { permissionService } from '../services/permissionService';
 import type { Permission } from '../types';
 import { FormSkeleton } from '../components/ui/Skeletons';
+
+const SYSTEM_ROLES = ['Administrateur', 'Operateur'];
 
 export default function RoleForm() {
   const { id } = useParams<{ id: string }>();
@@ -21,6 +23,7 @@ export default function RoleForm() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [loading, setLoading] = useState(isEdit);
+  const [isSystemRole, setIsSystemRole] = useState(false);
 
   useEffect(() => {
     permissionService.all().then((data) => setPermissions(data)).catch(() => {});
@@ -29,6 +32,7 @@ export default function RoleForm() {
         setNom(role.nom);
         setDescription(role.description ?? '');
         setSelectedPerms(role.permissions?.map((p) => p.id) ?? []);
+        setIsSystemRole(SYSTEM_ROLES.includes(role.nom));
         setLoading(false);
       }).catch(() => {
         toast.error('Rôle non trouvé');
@@ -119,6 +123,17 @@ export default function RoleForm() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
+        {isSystemRole && (
+          <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 text-amber-600">
+              <Lock size={18} />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-amber-800">Rôle système — lecture seule</p>
+              <p className="text-xs text-amber-600">Ce rôle est protégé et ne peut pas être modifié ni supprimé.</p>
+            </div>
+          </div>
+        )}
         <div className="rounded-2xl bg-white shadow-sm ring-1 ring-slate-200/60 p-6">
           <div className="flex items-center gap-3 mb-5">
             <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 ring-1 ring-indigo-100">
@@ -128,8 +143,8 @@ export default function RoleForm() {
           </div>
           <div className="rounded-xl border border-slate-100 bg-slate-50/50 p-5">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Input label="Nom *" value={nom} onChange={(e) => { setNom(e.target.value); if (errors.nom) setErrors((p) => ({ ...p, nom: '' })); }} error={errors.nom} placeholder="Ex: Administrateur" />
-              <Input label="Description" value={description} onChange={(e) => setDescription(e.target.value)} error={errors.description} placeholder="Description du rôle..." />
+              <Input label="Nom *" value={nom} onChange={(e) => { setNom(e.target.value); if (errors.nom) setErrors((p) => ({ ...p, nom: '' })); }} error={errors.nom} placeholder="Ex: Administrateur" disabled={isSystemRole} />
+              <Input label="Description" value={description} onChange={(e) => setDescription(e.target.value)} error={errors.description} placeholder="Description du rôle..." disabled={isSystemRole} />
             </div>
           </div>
         </div>
@@ -146,12 +161,16 @@ export default function RoleForm() {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Button type="button" variant="secondary" onClick={selectAll} className="!py-1.5 !px-3 !text-xs">
-                <CheckSquare size={14} className="mr-1" /> Tout cocher
-              </Button>
-              <Button type="button" variant="secondary" onClick={deselectAll} className="!py-1.5 !px-3 !text-xs">
-                <Square size={14} className="mr-1" /> Tout décocher
-              </Button>
+              {!isSystemRole && (
+                <>
+                  <Button type="button" variant="secondary" onClick={selectAll} className="!py-1.5 !px-3 !text-xs">
+                    <CheckSquare size={14} className="mr-1" /> Tout cocher
+                  </Button>
+                  <Button type="button" variant="secondary" onClick={deselectAll} className="!py-1.5 !px-3 !text-xs">
+                    <Square size={14} className="mr-1" /> Tout décocher
+                  </Button>
+                </>
+              )}
             </div>
           </div>
 
@@ -179,8 +198,8 @@ export default function RoleForm() {
                 <div key={ressource} className={`rounded-xl border transition-all duration-200 ${all ? 'border-indigo-200 bg-indigo-50/30' : partial ? 'border-indigo-200 bg-indigo-50/20' : 'border-slate-100 bg-slate-50/30 hover:border-slate-200'}`}>
                   <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100/80">
                     <div className="flex items-center gap-2.5">
-                      <button type="button" onClick={() => all ? deselectRessource(ressource) : selectRessource(ressource)}
-                        className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all duration-200 cursor-pointer ${all ? 'bg-indigo-600 border-indigo-600 text-white shadow-sm shadow-indigo-200' : partial ? 'bg-indigo-200 border-indigo-400 text-indigo-700' : 'border-slate-300 bg-white hover:border-indigo-400'}`}>
+                      <button type="button" onClick={() => all ? deselectRessource(ressource) : selectRessource(ressource)} disabled={isSystemRole}
+                        className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all duration-200 cursor-pointer ${isSystemRole ? 'opacity-50 cursor-not-allowed' : ''} ${all ? 'bg-indigo-600 border-indigo-600 text-white shadow-sm shadow-indigo-200' : partial ? 'bg-indigo-200 border-indigo-400 text-indigo-700' : 'border-slate-300 bg-white hover:border-indigo-400'}`}>
                         {all ? <CheckSquare size={13} /> : partial ? <div className="w-2 h-0.5 bg-indigo-600 rounded" /> : null}
                       </button>
                       <span className="text-lg leading-none">{icon}</span>
@@ -207,8 +226,8 @@ export default function RoleForm() {
                       };
                       const colors = actionColors[p.action] || (active ? actionColors.create : actionColors.create.inactive);
                       return (
-                        <button key={p.id} type="button" onClick={() => togglePerm(p.id)}
-                          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 cursor-pointer ${active ? colors.active : colors.inactive}`}>
+                        <button key={p.id} type="button" onClick={() => togglePerm(p.id)} disabled={isSystemRole}
+                          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 cursor-pointer ${isSystemRole ? 'opacity-50 cursor-not-allowed' : ''} ${active ? colors.active : colors.inactive}`}>
                           {actionIcons[p.action] || null}
                           {p.action}
                         </button>
@@ -222,8 +241,8 @@ export default function RoleForm() {
         </div>
 
         <div className="flex items-center justify-end gap-3 pt-5 border-t border-slate-100">
-          <Button variant="secondary" type="button" onClick={() => navigate('/roles')}>Annuler</Button>
-          <Button type="submit" loading={submitting} icon={<Save size={16} />}>{isEdit ? 'Modifier' : 'Créer'}</Button>
+          <Button variant="secondary" type="button" onClick={() => navigate('/roles')}>Retour</Button>
+          {!isSystemRole && <Button type="submit" loading={submitting} icon={<Save size={16} />}>{isEdit ? 'Modifier' : 'Créer'}</Button>}
         </div>
       </form>
     </div>
