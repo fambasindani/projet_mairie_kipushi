@@ -18,12 +18,20 @@ class FacturesPage extends StatefulWidget {
 }
 
 class _FacturesPageState extends State<FacturesPage> {
+  final _searchController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<PaiementProvider>().load(refresh: true);
     });
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -37,24 +45,59 @@ class _FacturesPageState extends State<FacturesPage> {
           tooltip: 'Accueil',
         ),
       ),
-      body: Consumer<PaiementProvider>(
-        builder: (_, provider, __) {
-          if (provider.loading && provider.declarations.isEmpty) {
-            return const Center(child: CircularProgressIndicator(color: AppColors.primary));
-          }
-          final payees = provider.declarations.where((d) => d.isPaye).toList();
-          if (payees.isEmpty) {
-            return const EmptyState(icon: Icons.receipt_long, title: 'Aucune facture', subtitle: 'Les factures sont générées après paiement');
-          }
-          return RefreshIndicator(
-            onRefresh: () => provider.load(refresh: true),
-            child: ListView.builder(
-              padding: const EdgeInsets.all(12),
-              itemCount: payees.length,
-              itemBuilder: (_, index) => _FactureTile(declaration: payees[index]),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+            child: TextField(
+              controller: _searchController,
+              style: const TextStyle(color: AppColors.textPrimary),
+              decoration: InputDecoration(
+                hintText: 'Rechercher une facture...',
+                prefixIcon: const Icon(Icons.search, color: AppColors.textMuted, size: 20),
+                filled: true,
+                fillColor: AppColors.bgInput,
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: BorderSide.none),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                suffixIcon: _searchController.text.isNotEmpty
+                    ? IconButton(
+                        icon: const Icon(Icons.clear, color: AppColors.textMuted, size: 20),
+                        onPressed: () { setState(() => _searchController.clear()); },
+                      )
+                    : null,
+              ),
+              onChanged: (_) => setState(() {}),
             ),
-          );
-        },
+          ),
+          Expanded(
+            child: Consumer<PaiementProvider>(
+              builder: (_, provider, __) {
+                if (provider.loading && provider.declarations.isEmpty) {
+                  return const Center(child: CircularProgressIndicator(color: AppColors.primary));
+                }
+                final query = _searchController.text.toLowerCase();
+                final payees = provider.declarations.where((d) {
+                  if (!d.isPaye) return false;
+                  if (query.isEmpty) return true;
+                  return (d.taxe?.nom ?? '').toLowerCase().contains(query) ||
+                      (d.personne?.displayName ?? '').toLowerCase().contains(query) ||
+                      'FAC-${d.id.toString().padLeft(5, '0')}'.toLowerCase().contains(query);
+                }).toList();
+                if (payees.isEmpty) {
+                  return const EmptyState(icon: Icons.receipt_long, title: 'Aucune facture', subtitle: 'Les factures sont générées après paiement');
+                }
+                return RefreshIndicator(
+                  onRefresh: () => provider.load(refresh: true),
+                  child: ListView.builder(
+                    padding: const EdgeInsets.all(12),
+                    itemCount: payees.length,
+                    itemBuilder: (_, index) => _FactureTile(declaration: payees[index]),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

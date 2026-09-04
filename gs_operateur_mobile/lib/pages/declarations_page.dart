@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import '../config/theme.dart';
 import '../services/paiement_service.dart';
 import '../models/declaration.dart';
+import '../providers/auth_provider.dart';
 import '../widgets/widgets.dart';
 import '../utils/helpers.dart';
 import '../utils/formatters.dart';
@@ -17,6 +19,7 @@ class DeclarationsPage extends StatefulWidget {
 class _DeclarationsPageState extends State<DeclarationsPage> {
   bool _loading = true;
   List<DeclarationPaiement> _declarations = [];
+  final _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -24,16 +27,10 @@ class _DeclarationsPageState extends State<DeclarationsPage> {
     _load();
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _load();
-  }
-
   void _load() async {
     setState(() => _loading = true);
     try {
-      final data = await PaiementService().list();
+      final data = await PaiementService().list(search: _searchController.text);
       if (mounted) setState(() { _declarations = data; _loading = false; });
     } catch (e) {
       if (mounted) {
@@ -41,6 +38,12 @@ class _DeclarationsPageState extends State<DeclarationsPage> {
         showAppSnackBar(context, 'Erreur: $e', isError: true);
       }
     }
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   void _showDetails(DeclarationPaiement d) {
@@ -115,6 +118,8 @@ class _DeclarationsPageState extends State<DeclarationsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isOperateur = context.watch<AuthProvider>().isOperateur;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mes Déclarations'),
@@ -124,58 +129,86 @@ class _DeclarationsPageState extends State<DeclarationsPage> {
           tooltip: 'Accueil',
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: isOperateur ? null : FloatingActionButton.extended(
         onPressed: () => context.push('/declarations/ajouter'),
         icon: const Icon(Icons.add),
         label: const Text('Déclarer'),
       ),
-      body: _loading
-          ? const Center(child: CircularProgressIndicator(color: AppColors.primary))
-          : _declarations.isEmpty
-              ? const EmptyState(icon: Icons.receipt_long, title: 'Aucune déclaration', subtitle: 'Créez votre première déclaration de taxe')
-              : RefreshIndicator(
-                  onRefresh: () async => _load(),
-                  child: ListView.builder(
-                    padding: const EdgeInsets.all(12),
-                    itemCount: _declarations.length,
-                    itemBuilder: (_, index) {
-                      final d = _declarations[index];
-                      final statut = d.statut;
-                      return AppCard(
-                        onTap: () => _showDetails(d),
-                        child: Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: _statusColor(statut).withValues(alpha: 0.15),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Icon(_statusIcon(statut), color: _statusColor(statut)),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+            child: TextField(
+              controller: _searchController,
+              style: const TextStyle(color: AppColors.textPrimary),
+              decoration: InputDecoration(
+                hintText: 'Rechercher une déclaration...',
+                prefixIcon: const Icon(Icons.search, color: AppColors.textMuted, size: 20),
+                filled: true,
+                fillColor: AppColors.bgInput,
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: BorderSide.none),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                suffixIcon: _searchController.text.isNotEmpty
+                    ? IconButton(
+                        icon: const Icon(Icons.clear, color: AppColors.textMuted, size: 20),
+                        onPressed: () { _searchController.clear(); _load(); },
+                      )
+                    : null,
+              ),
+              onChanged: (_) => _load(),
+            ),
+          ),
+          Expanded(
+            child: _loading
+                ? const Center(child: CircularProgressIndicator(color: AppColors.primary))
+                : _declarations.isEmpty
+                    ? const EmptyState(icon: Icons.receipt_long, title: 'Aucune déclaration', subtitle: 'Créez votre première déclaration de taxe')
+                    : RefreshIndicator(
+                        onRefresh: () async => _load(),
+                        child: ListView.builder(
+                          padding: const EdgeInsets.all(12),
+                          itemCount: _declarations.length,
+                          itemBuilder: (_, index) {
+                            final d = _declarations[index];
+                            final statut = d.statut;
+                            return AppCard(
+                              onTap: () => _showDetails(d),
+                              child: Row(
                                 children: [
-                                  Text(d.taxe?.nom ?? 'Déclaration', style: const TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.w600)),
-                                  Text('${d.exercice ?? '-'} • ${d.periodeDebut ?? '-'}', style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
+                                  Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      color: _statusColor(statut).withValues(alpha: 0.15),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Icon(_statusIcon(statut), color: _statusColor(statut)),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(d.taxe?.nom ?? 'Déclaration', style: const TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.w600)),
+                                        Text('${d.exercice ?? '-'} • ${d.periodeDebut ?? '-'}', style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
+                                      ],
+                                    ),
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(formatMontant(d.montantTotal), style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 16)),
+                                      _StatusBadge(statut: statut),
+                                    ],
+                                  ),
                                 ],
                               ),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(formatMontant(d.montantTotal), style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 16)),
-                                _StatusBadge(statut: statut),
-                              ],
-                            ),
-                          ],
+                            );
+                          },
                         ),
-                      );
-                    },
-                  ),
-                ),
+                      ),
+          ),
+        ],
+      ),
     );
   }
 

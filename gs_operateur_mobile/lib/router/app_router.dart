@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import '../pages/splash_page.dart';
 import '../pages/login_page.dart';
 import '../pages/home_page.dart';
@@ -13,9 +15,23 @@ import '../pages/notifications_page.dart';
 import '../pages/profil_page.dart';
 import '../pages/taxes_page.dart';
 import '../pages/documents_page.dart';
+import '../providers/auth_provider.dart';
 
 final GoRouter appRouter = GoRouter(
   initialLocation: '/',
+  redirect: (context, state) {
+    final auth = context.read<AuthProvider>();
+    final isLoggedIn = auth.isAuthenticated;
+    final isLoginRoute = state.matchedLocation == '/login';
+    final isSplashRoute = state.matchedLocation == '//';
+
+    if (isSplashRoute) return null;
+
+    if (!isLoggedIn && !isLoginRoute) return '/login';
+    if (isLoggedIn && isLoginRoute) return '/home';
+
+    return null;
+  },
   routes: [
     GoRoute(path: '/', builder: (_, __) => const SplashPage()),
     GoRoute(path: '/login', builder: (_, __) => const LoginPage()),

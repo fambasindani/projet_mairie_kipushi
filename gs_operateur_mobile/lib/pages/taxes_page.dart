@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import '../config/theme.dart';
 import '../services/taxe_service.dart';
 import '../models/taxe.dart';
+import '../providers/auth_provider.dart';
 import '../widgets/widgets.dart';
 import '../utils/helpers.dart';
 
@@ -155,6 +157,8 @@ class _TaxesPageState extends State<TaxesPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isOperateur = context.watch<AuthProvider>().isOperateur;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Taxes'),
@@ -164,7 +168,8 @@ class _TaxesPageState extends State<TaxesPage> {
           tooltip: 'Accueil',
         ),
         actions: [
-          IconButton(onPressed: _showCreateTaxe, icon: const Icon(Icons.add_circle_outline)),
+          if (!isOperateur)
+            IconButton(onPressed: _showCreateTaxe, icon: const Icon(Icons.add_circle_outline)),
         ],
       ),
       body: _loading
