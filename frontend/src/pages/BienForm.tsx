@@ -135,7 +135,7 @@ export default function BienForm() {
                 setForm((prev) => ({ ...prev, commune: commune.nom }));
 
                 if (commune.id_ville) {
-                  const vs = await villeService.list({ per_page: 100, id_province: commune.ville?.id_province });
+                  const vs = await villeService.list({ per_page: 100, ...(commune.ville?.id_province != null ? { id_province: commune.ville.id_province } : {}) });
                   setVilles(vs.data);
                   const ville = vs.data.find((v) => v.id === commune.id_ville);
                   if (ville) {

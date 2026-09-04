@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Traits\OperateurScope;
 use App\Models\Personne;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class PersonneController extends Controller
@@ -120,10 +121,27 @@ class PersonneController extends Controller
         
         $personnes = $query->with(['utilisateur', 'activites'])->paginate($perPage);
 
+        $items = collect($personnes->items())->map(function ($personne) {
+            $data = $personne->toArray();
+            $data['avatar_url'] = null;
+            if (!empty($data['avatar'])) {
+                try {
+                    if (Storage::disk('public')->exists($data['avatar'])) {
+                        $file = Storage::disk('public')->get($data['avatar']);
+                        $mime = Storage::disk('public')->mimeType($data['avatar']);
+                        $data['avatar_url'] = 'data:' . $mime . ';base64,' . base64_encode($file);
+                    }
+                } catch (\Exception $e) {
+                    $data['avatar_url'] = null;
+                }
+            }
+            return $data;
+        });
+
         // Ajouter les métadonnées de pagination
         return response()->json([
             'success' => true,
-            'data' => $personnes->items(),
+            'data' => $items,
             'pagination' => [
                 'current_page' => $personnes->currentPage(),
                 'per_page' => $personnes->perPage(),

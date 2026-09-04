@@ -6,6 +6,7 @@ use App\Models\Utilisateur;
 use App\Models\Personne;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
@@ -18,11 +19,28 @@ class ProfileController extends Controller
         $user = $request->user();
         $user->load(['personne', 'roles.permissions']);
 
+        $personneData = $user->personne ? $user->personne->toArray() : null;
+        if ($personneData && !empty($personneData['avatar'])) {
+            try {
+                if (Storage::disk('public')->exists($personneData['avatar'])) {
+                    $file = Storage::disk('public')->get($personneData['avatar']);
+                    $mime = Storage::disk('public')->mimeType($personneData['avatar']);
+                    $personneData['avatar_url'] = 'data:' . $mime . ';base64,' . base64_encode($file);
+                } else {
+                    $personneData['avatar_url'] = null;
+                }
+            } catch (\Exception $e) {
+                $personneData['avatar_url'] = null;
+            }
+        } elseif ($personneData) {
+            $personneData['avatar_url'] = null;
+        }
+
         return response()->json([
             'success' => true,
             'data' => [
                 'utilisateur' => $user,
-                'personne' => $user->personne,
+                'personne' => $personneData,
                 'roles' => $user->roles,
                 'permissions' => $user->roles->flatMap->permissions->unique('nom')->values()
             ]
@@ -141,7 +159,7 @@ class ProfileController extends Controller
             'success' => true,
             'message' => 'Photo de profil mise à jour',
             'data' => [
-                'avatar' => asset('storage/' . $chemin)
+                'avatar' => '/profile/avatar/' . $user->id
             ]
         ]);
     }
@@ -184,6 +202,27 @@ class ProfileController extends Controller
             'success' => true,
             'data' => $stats
         ]);
+    }
+
+    /**
+     * Servir l'avatar d'un utilisateur
+     */
+    public function avatar($userId)
+    {
+        $user = Utilisateur::find($userId);
+        if (!$user || !$user->personne || !$user->personne->avatar) {
+            return response()->json(['success' => false, 'message' => 'Avatar non trouvé'], 404);
+        }
+
+        $path = $user->personne->avatar;
+        if (!Storage::disk('public')->exists($path)) {
+            return response()->json(['success' => false, 'message' => 'Fichier non trouvé'], 404);
+        }
+
+        $file = Storage::disk('public')->get($path);
+        $mime = Storage::disk('public')->mimeType($path);
+
+        return response($file, 200)->header('Content-Type', $mime)->header('Cache-Control', 'public, max-age=86400');
     }
 
     /**

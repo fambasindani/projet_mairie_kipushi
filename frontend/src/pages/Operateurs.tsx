@@ -140,10 +140,14 @@ export default function Operateurs() {
       const qrData = JSON.stringify({ type: 'GS_OPERATEUR_ID', id: item.id, nom: item.nom, prenom: item.prenom, type_personne: item.type });
       const qrDataUrl = await QRCode.toDataURL(qrData, { width: 150, margin: 1, color: { dark: '#1e293b', light: '#ffffff' } });
       let photoDataUrl: string | null = null;
-      if (item.avatar) {
+      if (item.avatar_url) {
+        photoDataUrl = item.avatar_url;
+      } else if (item.avatar) {
         try {
-          const url = item.avatar.startsWith('http') ? item.avatar : `/storage/${item.avatar}`;
-          const resp = await fetch(url);
+          const base = (import.meta.env.VITE_API_URL || '/api').replace(/\/+$/, '');
+          const url = item.avatar.startsWith('http') ? item.avatar : `${base}/profile/avatar/${item.id}`;
+          const token = localStorage.getItem('token');
+          const resp = await fetch(url, { headers: token ? { Authorization: `Bearer ${token}` } : {} });
           const blob = await resp.blob();
           photoDataUrl = await new Promise<string>((resolve) => {
             const reader = new FileReader();

@@ -523,10 +523,13 @@ Route::middleware('auth:sanctum')->group(function () {
     // GESTION DES NOTIFICATIONS
     // ============================================================
     Route::prefix('notifications')->name('notifications.')->group(function () {
+        Route::middleware(['auth:sanctum'])->group(function () {
+            Route::get('/non-lues', [NotificationController::class, 'nonLues'])->name('non-lues');
+        });
+
         Route::middleware(['permission:operateur:read'])->group(function () {
             Route::get('/', [NotificationController::class, 'index'])->name('index');
             Route::get('/{id}', [NotificationController::class, 'show'])->name('show');
-            Route::get('/non-lues', [NotificationController::class, 'nonLues'])->name('non-lues');
         });
 
         Route::middleware(['permission:operateur:update'])->group(function () {
@@ -669,6 +672,7 @@ Route::prefix('profile')->name('profile.')->group(function () {
         Route::get('/statistiques', [ProfileController::class, 'statistiques'])->name('statistiques');
         Route::get('/historique-connexions', [ProfileController::class, 'historiqueConnexions'])->name('historique-connexions');
     });
+    Route::get('/avatar/{userId}', [ProfileController::class, 'avatar'])->name('avatar');
 });
 
 // ============================================================

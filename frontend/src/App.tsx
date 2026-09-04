@@ -41,7 +41,7 @@ import Rapports from "./pages/Rapports";
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/mairie">
       <AuthProvider>
         <Toaster
           position="top-right"

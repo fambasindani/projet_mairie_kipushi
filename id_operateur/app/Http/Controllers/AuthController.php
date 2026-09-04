@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LogAudit;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Utilisateur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -131,10 +132,31 @@ class AuthController extends Controller
         $utilisateur = $request->user();
         $utilisateur->load(['personne', 'roles.permissions']);
 
+        $personneData = $utilisateur->personne ? $utilisateur->personne->toArray() : null;
+        $avatarUrl = null;
+        if ($personneData && !empty($personneData['avatar'])) {
+            try {
+                $diskPath = Storage::disk('public')->path($personneData['avatar']);
+                if (Storage::disk('public')->exists($personneData['avatar'])) {
+                    $file = Storage::disk('public')->get($personneData['avatar']);
+                    $mime = Storage::disk('public')->mimeType($personneData['avatar']);
+                    $avatarUrl = 'data:' . $mime . ';base64,' . base64_encode($file);
+                } else {
+                    \Log::warning('Avatar file not found: ' . $diskPath);
+                }
+            } catch (\Exception $e) {
+                \Log::error('Avatar read error: ' . $e->getMessage());
+            }
+        }
+        if ($personneData) {
+            $personneData['avatar_url'] = $avatarUrl;
+        }
+
         return response()->json([
             'success' => true,
             'data' => [
                 'utilisateur' => $utilisateur,
+                'personne' => $personneData,
                 'roles' => $utilisateur->roles->map(function ($role) {
                     return [
                         'id' => $role->id,

@@ -7,6 +7,18 @@ interface RequestOptions extends RequestInit {
 function buildUrl(endpoint: string, params?: Record<string, string | number | boolean | undefined>): string {
   const base = BASE_URL.replace(/\/+$/, "");
   const ep = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
+  const isAbsolute = base.startsWith("http");
+  if (isAbsolute) {
+    const url = new URL(`${base}${ep}`);
+    if (params) {
+      Object.entries(params).forEach(([key, value]) => {
+        if (value !== undefined) {
+          url.searchParams.append(key, String(value));
+        }
+      });
+    }
+    return url.toString();
+  }
   const fullUrl = `${base}${ep}`;
   const url = new URL(fullUrl, window.location.origin);
   if (params) {

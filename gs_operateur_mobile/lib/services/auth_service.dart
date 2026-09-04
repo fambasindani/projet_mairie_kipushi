@@ -26,6 +26,15 @@ class AuthService {
       final userData = data['utilisateur'] ?? data;
       final rolesData = data['roles'] ?? userData['roles'];
       userData['roles'] = rolesData;
+      final personne = data['personne'];
+      if (personne is Map<String, dynamic>) {
+        if (personne['avatar_url'] != null) {
+          userData['avatar_url'] = personne['avatar_url'];
+        }
+        if (userData['avatar'] == null && personne['avatar'] != null) {
+          userData['avatar'] = personne['avatar'];
+        }
+      }
       return User.fromJson(userData);
     }
     throw Exception(response['message'] ?? 'Erreur lors du chargement du profil');

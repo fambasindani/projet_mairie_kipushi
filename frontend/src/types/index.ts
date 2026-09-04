@@ -75,6 +75,7 @@ export interface Personne {
   latitude: number | null;
   longitude: number | null;
   avatar: string | null;
+  avatar_url?: string | null;
   id_quartier: number | null;
   id_province: number | null;
   id_ville: number | null;

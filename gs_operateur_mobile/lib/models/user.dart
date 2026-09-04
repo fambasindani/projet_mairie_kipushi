@@ -6,6 +6,7 @@ class User {
   final String? adresse;
   final String? cni;
   final String? avatar;
+  final String? avatarUrl;
   final int? personneId;
   final DateTime? derniereConnexion;
   final DateTime? createdAt;
@@ -20,6 +21,7 @@ class User {
     this.adresse,
     this.cni,
     this.avatar,
+    this.avatarUrl,
     this.personneId,
     this.derniereConnexion,
     this.createdAt,
@@ -36,6 +38,7 @@ class User {
       adresse: json['adresse'],
       cni: json['cni'],
       avatar: json['avatar'],
+      avatarUrl: json['avatar_url'],
       personneId: json['personne_id'],
       derniereConnexion: json['derniere_connexion'] != null
           ? DateTime.tryParse(json['derniere_connexion'])

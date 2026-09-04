@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../config/theme.dart';
+import '../models/user.dart';
 import '../providers/auth_provider.dart';
 import '../widgets/widgets.dart';
 import '../utils/formatters.dart';
@@ -46,14 +48,7 @@ class ProfilPage extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  CircleAvatar(
-                    radius: 40,
-                    backgroundColor: Colors.white.withValues(alpha: 0.2),
-                    child: Text(
-                      (user?.nomUtilisateur.isNotEmpty == true ? user!.nomUtilisateur[0] : 'U').toUpperCase(),
-                      style: const TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                  _AvatarWidget(user: user),
                   const SizedBox(height: 12),
                   Text(user?.nomUtilisateur ?? '-', style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 4),
@@ -115,6 +110,32 @@ class ProfilPage extends StatelessWidget {
           Expanded(child: Text(value, style: const TextStyle(color: AppColors.textPrimary, fontSize: 14))),
         ],
       ),
+    );
+  }
+}
+
+class _AvatarWidget extends StatelessWidget {
+  final User? user;
+  const _AvatarWidget({required this.user});
+
+  @override
+  Widget build(BuildContext context) {
+    final hasAvatar = user?.avatarUrl != null && user!.avatarUrl!.isNotEmpty;
+    final initials = (user?.nomUtilisateur.isNotEmpty == true
+        ? user!.nomUtilisateur[0]
+        : 'U')
+        .toUpperCase();
+
+    return CircleAvatar(
+      radius: 40,
+      backgroundColor: Colors.white.withValues(alpha: 0.2),
+      backgroundImage: hasAvatar ? MemoryImage(base64Decode(user!.avatarUrl!.split(',').last)) : null,
+      child: hasAvatar
+          ? null
+          : Text(
+              initials,
+              style: const TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),
+            ),
     );
   }
 }

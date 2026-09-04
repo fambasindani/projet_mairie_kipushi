@@ -37,13 +37,15 @@ export default function Profil() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(() => {
-    if (user?.personne?.avatar) {
-      return user.personne.avatar.startsWith('http') ? user.personne.avatar : `http://localhost:8000/storage/${user.personne.avatar}`;
-    }
-    return null;
-  });
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const resolvedAvatarUrl = (() => {
+    if (avatarUrl) return avatarUrl;
+    const p: any = user?.personne;
+    if (p?.avatar_url) return p.avatar_url;
+    return null;
+  })();
 
   const personne = user?.personne;
   const displayName = personne?.nom_complet ?? [personne?.prenom, personne?.nom].filter(Boolean).join(' ') ?? user?.nom_utilisateur ?? '';
@@ -105,8 +107,10 @@ export default function Profil() {
     try {
       const formData = new FormData();
       formData.append('avatar', file);
-      const res = await post<{ avatar: string }>('/profile/upload-avatar', formData);
-      setAvatarUrl(res.avatar);
+      await post<{ avatar: string }>('/profile/upload-avatar', formData);
+      const reader = new FileReader();
+      reader.onload = () => setAvatarUrl(reader.result as string);
+      reader.readAsDataURL(file);
       toast.success('Photo de profil mise à jour');
     } catch {
       toast.error('Erreur lors de l\'upload de la photo');
@@ -129,9 +133,9 @@ export default function Profil() {
         <div className="relative flex items-center gap-6">
           <div className="relative group">
             <div className="w-24 h-24 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-3xl font-bold border-2 border-white/30 overflow-hidden shadow-lg">
-              {avatarUrl ? (
+              {resolvedAvatarUrl ? (
                 <img
-                  src={avatarUrl}
+                  src={resolvedAvatarUrl}
                   alt={displayName}
                   className="w-full h-full object-cover"
                   onError={() => setAvatarUrl(null)}

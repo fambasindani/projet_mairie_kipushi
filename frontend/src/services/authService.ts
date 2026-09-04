@@ -17,8 +17,12 @@ export const authService = {
   },
 
   async me(): Promise<Utilisateur> {
-    const raw = await get<MeResponse>("/me");
-    return raw.utilisateur;
+    const raw = await get<{ utilisateur: Utilisateur; personne?: Record<string, unknown> }>("/me");
+    const user = raw.utilisateur;
+    if (raw.personne && user) {
+      (user as unknown as Record<string, unknown>).personne = raw.personne;
+    }
+    return user;
   },
 
   changePassword(data: { current_password: string; new_password: string; new_password_confirmation: string }): Promise<{ message: string }> {
