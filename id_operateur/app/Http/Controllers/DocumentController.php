@@ -69,7 +69,7 @@ class DocumentController extends Controller
             'personne_id' => 'required|exists:personnes,id',
             'type_document' => 'required|in:CNI,PASSEPORT,STATUTS,RCCM,PATENTE,QUITTANCE,AVATAR,AUTRE',
             'numero' => 'nullable|string|max:100',
-            'fichier' => 'required|file|max:10240|mimes:pdf,jpg,jpeg,png,doc,docx', // 10MB max
+            'fichier' => 'required|file|max:10240|mimes:pdf,jpg,jpeg,png,doc,docx',
             'date_expiration' => 'nullable|date',
             'est_valide' => 'boolean',
         ]);

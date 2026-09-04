@@ -198,7 +198,7 @@ export default function Declarations() {
           >
             <Eye size={16} />
           </button>
-          {item.statut === 'en_attente' && (
+          {!isOperateur && item.statut === 'en_attente' && (
             <button
               onClick={(e) => { e.stopPropagation(); openConfirm(item, 'valider'); }}
               className="p-1.5 rounded-lg hover:bg-emerald-50 text-gray-500 hover:text-emerald-600 transition-colors cursor-pointer"
@@ -207,7 +207,7 @@ export default function Declarations() {
               <CheckCircle size={16} />
             </button>
           )}
-          {(item.statut === 'paye' || item.statut === 'en_attente') && (
+          {!isOperateur && (item.statut === 'paye' || item.statut === 'en_attente') && (
             <button
               onClick={(e) => { e.stopPropagation(); openConfirm(item, 'annuler'); }}
               className="p-1.5 rounded-lg hover:bg-red-50 text-gray-500 hover:text-red-600 transition-colors cursor-pointer"
@@ -216,7 +216,7 @@ export default function Declarations() {
               <XCircle size={16} />
             </button>
           )}
-          {item.statut === 'en_attente' && (
+          {!isOperateur && item.statut === 'en_attente' && (
             <button
               onClick={(e) => { e.stopPropagation(); openConfirm(item, 'exonerer'); }}
               className="p-1.5 rounded-lg hover:bg-blue-50 text-gray-500 hover:text-blue-600 transition-colors cursor-pointer"

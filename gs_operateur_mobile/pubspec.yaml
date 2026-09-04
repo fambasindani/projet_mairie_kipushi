@@ -1,0 +1,75 @@
+name: gs_operateur_mobile
+description: "Application mobile GS Opérateur - Identification des opérateurs économiques"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+
+  # HTTP & API
+  http: ^1.2.0
+  dio: ^5.7.0
+  flutter_dotenv: ^5.2.0
+
+  # State Management
+  provider: ^6.1.2
+
+  # Storage
+  shared_preferences: ^2.3.0
+  sqflite: ^2.4.1
+  path: ^1.9.0
+
+  # Navigation
+  go_router: ^14.6.0
+
+  # UI
+  flutter_svg: ^2.0.10
+  cached_network_image: ^3.4.1
+  shimmer: ^3.0.0
+  pull_to_refresh: ^2.0.0
+  flutter_staggered_animations: ^1.1.1
+  badges: ^3.1.2
+
+  # Forms
+  intl: ^0.19.0
+  form_validator: ^2.0.1
+
+  # Location
+  geolocator: ^13.0.1
+  geocoding: ^3.0.0
+
+  # Camera & Files
+  image_picker: ^1.1.2
+  path_provider: ^2.1.4
+  permission_handler: ^11.3.1
+
+  # PDF
+  pdf: ^3.11.1
+  printing: ^5.13.4
+
+  # Connectivity
+  connectivity_plus: ^6.1.0
+
+  # QR Code
+  qr_flutter: ^4.1.0
+
+  # Device Info
+  device_info_plus: ^11.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+    - .env

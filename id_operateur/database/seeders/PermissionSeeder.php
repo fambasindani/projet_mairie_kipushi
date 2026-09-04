@@ -35,25 +35,36 @@ class PermissionSeeder extends Seeder
             ['nom' => 'utilisateur:read', 'ressource' => 'utilisateur', 'action' => 'read', 'description' => 'Consulter les utilisateurs'],
             ['nom' => 'utilisateur:update', 'ressource' => 'utilisateur', 'action' => 'update', 'description' => 'Modifier un utilisateur'],
             ['nom' => 'utilisateur:delete', 'ressource' => 'utilisateur', 'action' => 'delete', 'description' => 'Supprimer un utilisateur'],
+            ['nom' => 'role:create', 'ressource' => 'role', 'action' => 'create', 'description' => 'Créer un rôle'],
+            ['nom' => 'role:read', 'ressource' => 'role', 'action' => 'read', 'description' => 'Consulter les rôles'],
+            ['nom' => 'role:update', 'ressource' => 'role', 'action' => 'update', 'description' => 'Modifier un rôle'],
+            ['nom' => 'role:delete', 'ressource' => 'role', 'action' => 'delete', 'description' => 'Supprimer un rôle'],
+            ['nom' => 'permission:create', 'ressource' => 'permission', 'action' => 'create', 'description' => 'Créer une permission'],
+            ['nom' => 'permission:read', 'ressource' => 'permission', 'action' => 'read', 'description' => 'Consulter les permissions'],
+            ['nom' => 'permission:update', 'ressource' => 'permission', 'action' => 'update', 'description' => 'Modifier une permission'],
+            ['nom' => 'permission:delete', 'ressource' => 'permission', 'action' => 'delete', 'description' => 'Supprimer une permission'],
             ['nom' => 'statistique:read', 'ressource' => 'statistique', 'action' => 'read', 'description' => 'Consulter les statistiques et rapports'],
             ['nom' => 'audit:read', 'ressource' => 'audit', 'action' => 'read', 'description' => 'Consulter les logs et historiques'],
-       
-       // Ajouter ces permissions
-[
-    'nom' => 'dashboard:read',
-    'ressource' => 'dashboard',
-    'action' => 'read',
-    'description' => 'Consulter le tableau de bord'
-],
-[
-    'nom' => 'statistique:read',
-    'ressource' => 'statistique',
-    'action' => 'read',
-    'description' => 'Consulter les statistiques'
-],
-       
-            ];
+            ['nom' => 'dashboard:read', 'ressource' => 'dashboard', 'action' => 'read', 'description' => 'Consulter le tableau de bord'],
+            ['nom' => 'notification:read', 'ressource' => 'notification', 'action' => 'read', 'description' => 'Consulter les notifications'],
+            ['nom' => 'notification:update', 'ressource' => 'notification', 'action' => 'update', 'description' => 'Marquer les notifications comme lues'],
+            ['nom' => 'document:create', 'ressource' => 'document', 'action' => 'create', 'description' => 'Uploader un document'],
+            ['nom' => 'document:read', 'ressource' => 'document', 'action' => 'read', 'description' => 'Consulter les documents'],
+            ['nom' => 'document:delete', 'ressource' => 'document', 'action' => 'delete', 'description' => 'Supprimer un document'],
+            ['nom' => 'identifiant:create', 'ressource' => 'identifiant', 'action' => 'create', 'description' => 'Créer un identifiant officiel'],
+            ['nom' => 'identifiant:read', 'ressource' => 'identifiant', 'action' => 'read', 'description' => 'Consulter les identifiants officiels'],
+            ['nom' => 'identifiant:update', 'ressource' => 'identifiant', 'action' => 'update', 'description' => 'Modifier un identifiant officiel'],
+            ['nom' => 'identifiant:delete', 'ressource' => 'identifiant', 'action' => 'delete', 'description' => 'Supprimer un identifiant officiel'],
+            ['nom' => 'rapport:read', 'ressource' => 'rapport', 'action' => 'read', 'description' => 'Consulter les rapports'],
+            ['nom' => 'parametre:read', 'ressource' => 'parametre', 'action' => 'read', 'description' => 'Consulter les paramètres'],
+            ['nom' => 'parametre:update', 'ressource' => 'parametre', 'action' => 'update', 'description' => 'Modifier les paramètres'],
+        ];
 
-        DB::table('permissions')->insert($permissions);
+        foreach ($permissions as $permission) {
+            DB::table('permissions')->updateOrInsert(
+                ['nom' => $permission['nom']],
+                array_merge($permission, ['created_at' => now(), 'updated_at' => now()])
+            );
+        }
     }
 }
