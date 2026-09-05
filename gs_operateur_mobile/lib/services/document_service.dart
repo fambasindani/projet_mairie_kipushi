@@ -30,7 +30,7 @@ class DocumentService {
     throw Exception(response['message'] ?? 'Erreur');
   }
 
-  Future<Document> upload({
+  Future<Document?> upload({
     required int personneId,
     required String typeDocument,
     String? numero,
@@ -44,7 +44,11 @@ class DocumentService {
     });
     final response = await _api.postFormData('/documents', formData: formData);
     if (response['success'] == true) {
-      return Document.fromJson(response['data']);
+      try {
+        return Document.fromJson(response['data']);
+      } catch (_) {
+        return null;
+      }
     }
     throw Exception(response['message'] ?? 'Erreur lors de l\'upload');
   }

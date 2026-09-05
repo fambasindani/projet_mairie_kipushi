@@ -166,13 +166,11 @@ class _OperateurDetailPageState extends State<OperateurDetailPage> {
                         numero: numeroController.text,
                         fichier: selectedFile!,
                       );
-                      if (mounted) {
-                        showAppSnackBar(context, 'Document ajouté');
-                        _loadDocuments();
-                      }
+                      showAppSnackBar(context, 'Document ajouté');
                     } catch (e) {
-                      if (mounted) showAppSnackBar(context, 'Erreur: $e', isError: true);
+                      showAppSnackBar(context, 'Erreur: $e', isError: true);
                     }
+                    if (mounted) _loadDocuments();
                   },
                 ),
                 const SizedBox(height: 8),
