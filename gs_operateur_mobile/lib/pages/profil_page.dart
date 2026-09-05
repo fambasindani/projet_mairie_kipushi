@@ -1,16 +1,91 @@
-import 'package:flutter/material.dart';
 import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:dio/dio.dart';
 import 'package:provider/provider.dart';
 import '../config/theme.dart';
 import '../models/user.dart';
 import '../providers/auth_provider.dart';
+import '../services/api_service.dart';
 import '../widgets/widgets.dart';
 import '../utils/formatters.dart';
 import '../utils/helpers.dart';
 
-class ProfilPage extends StatelessWidget {
+class ProfilPage extends StatefulWidget {
   const ProfilPage({super.key});
+
+  @override
+  State<ProfilPage> createState() => _ProfilPageState();
+}
+
+class _ProfilPageState extends State<ProfilPage> {
+  String? _localAvatarPath;
+
+  Future<void> _pickAvatar(ImageSource source) async {
+    try {
+      final picker = ImagePicker();
+      final picked = await picker.pickImage(source: source, maxWidth: 512, maxHeight: 512, imageQuality: 80);
+      if (picked == null) return;
+
+      setState(() => _localAvatarPath = picked.path);
+
+      final token = await ApiService().getToken();
+      if (token == null) {
+        if (mounted) showAppSnackBar(context, 'Non authentifié', isError: true);
+        return;
+      }
+
+      final formData = FormData.fromMap({
+        'avatar': await MultipartFile.fromFile(picked.path),
+      });
+
+      final response = await ApiService().postFormData('/profile/upload-avatar', formData: formData);
+
+      if (response['success'] == true) {
+        if (mounted) {
+          showAppSnackBar(context, 'Photo de profil mise à jour');
+          context.read<AuthProvider>().init();
+        }
+      } else {
+        if (mounted) showAppSnackBar(context, response['message'] ?? 'Erreur', isError: true);
+      }
+    } catch (e) {
+      if (mounted) showAppSnackBar(context, 'Erreur: $e', isError: true);
+    }
+  }
+
+  void _showAvatarOptions() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (_) => Container(
+        padding: const EdgeInsets.all(20),
+        decoration: const BoxDecoration(
+          color: AppColors.bgDark,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('Choisir une photo', style: TextStyle(color: AppColors.textPrimary, fontSize: 18, fontWeight: FontWeight.w600)),
+            const SizedBox(height: 20),
+            ListTile(
+              leading: const Icon(Icons.camera_alt, color: AppColors.primary),
+              title: const Text('Prendre une photo', style: TextStyle(color: AppColors.textPrimary)),
+              onTap: () { Navigator.pop(context); _pickAvatar(ImageSource.camera); },
+            ),
+            ListTile(
+              leading: const Icon(Icons.photo_library, color: AppColors.primary),
+              title: const Text('Choisir dans la galerie', style: TextStyle(color: AppColors.textPrimary)),
+              onTap: () { Navigator.pop(context); _pickAvatar(ImageSource.gallery); },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +123,23 @@ class ProfilPage extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  _AvatarWidget(user: user),
+                  GestureDetector(
+                    onTap: _showAvatarOptions,
+                    child: Stack(
+                      alignment: Alignment.bottomRight,
+                      children: [
+                        _AvatarWidget(user: user, localPath: _localAvatarPath),
+                        Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: const Icon(Icons.camera_alt, color: AppColors.primary, size: 18),
+                        ),
+                      ],
+                    ),
+                  ),
                   const SizedBox(height: 12),
                   Text(user?.nomUtilisateur ?? '-', style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 4),
@@ -116,10 +207,19 @@ class ProfilPage extends StatelessWidget {
 
 class _AvatarWidget extends StatelessWidget {
   final User? user;
-  const _AvatarWidget({required this.user});
+  final String? localPath;
+  const _AvatarWidget({required this.user, this.localPath});
 
   @override
   Widget build(BuildContext context) {
+    if (localPath != null) {
+      return CircleAvatar(
+        radius: 40,
+        backgroundColor: Colors.white.withValues(alpha: 0.2),
+        backgroundImage: FileImage(File(localPath!)),
+      );
+    }
+
     final hasAvatar = user?.avatarUrl != null && user!.avatarUrl!.isNotEmpty;
     final initials = (user?.nomUtilisateur.isNotEmpty == true
         ? user!.nomUtilisateur[0]

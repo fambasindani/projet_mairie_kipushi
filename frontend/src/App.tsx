@@ -84,6 +84,7 @@ export default function App() {
               <Route path="/taxes/:id/modifier" element={<TaxeForm />} />
               <Route path="/declarations" element={<Declarations />} />
               <Route path="/declarations/nouveau" element={<DeclarationForm />} />
+              <Route path="/declarations/:id/modifier" element={<DeclarationForm />} />
               <Route path="/factures" element={<Factures />} />
               <Route path="/factures/nouveau" element={<FactureForm />} />
               <Route path="/biens" element={<Biens />} />

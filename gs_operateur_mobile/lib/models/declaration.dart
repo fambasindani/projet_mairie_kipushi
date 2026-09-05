@@ -17,6 +17,7 @@ class DeclarationPaiement {
   final DateTime? datePaiement;
   final PersonneRef? personne;
   final TaxeRef? taxe;
+  final String? observations;
 
   DeclarationPaiement({
     required this.id,
@@ -37,6 +38,7 @@ class DeclarationPaiement {
     this.datePaiement,
     this.personne,
     this.taxe,
+    this.observations,
   });
 
   factory DeclarationPaiement.fromJson(Map<String, dynamic> json) {
@@ -67,6 +69,7 @@ class DeclarationPaiement {
           ? PersonneRef.fromJson(json['personne'])
           : null,
       taxe: json['taxe'] != null ? TaxeRef.fromJson(json['taxe']) : null,
+      observations: json['observations'],
     );
   }
 

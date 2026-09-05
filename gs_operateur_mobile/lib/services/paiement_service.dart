@@ -36,6 +36,21 @@ class PaiementService {
     throw Exception(response['message'] ?? 'Erreur lors de la création');
   }
 
+  Future<DeclarationPaiement> update(int id, Map<String, dynamic> data) async {
+    final response = await _api.put('/declarations/$id', data: data);
+    if (response['success'] == true) {
+      return DeclarationPaiement.fromJson(response['data']);
+    }
+    throw Exception(response['message'] ?? 'Erreur lors de la modification');
+  }
+
+  Future<void> delete(int id) async {
+    final response = await _api.delete('/declarations/$id');
+    if (response['success'] != true) {
+      throw Exception(response['message'] ?? 'Erreur lors de la suppression');
+    }
+  }
+
   Future<DeclarationPaiement> validerPaiement(int id, {String? referencePaiement, double? montantPaye}) async {
     final response = await _api.post('/declarations/$id/valider', data: {
       if (referencePaiement != null) 'reference_paiement': referencePaiement,

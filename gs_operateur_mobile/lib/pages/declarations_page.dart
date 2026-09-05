@@ -46,6 +46,65 @@ class _DeclarationsPageState extends State<DeclarationsPage> {
     super.dispose();
   }
 
+  void _editDeclaration(DeclarationPaiement d) {
+    final montantBaseCtrl = TextEditingController(text: d.montantBase.toString());
+    final montantTaxeCtrl = TextEditingController(text: d.montantTaxe.toString());
+    final observationsCtrl = TextEditingController(text: d.observations ?? '');
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => StatefulBuilder(
+        builder: (ctx, setSheetState) => Container(
+          padding: EdgeInsets.fromLTRB(16, 16, 16, MediaQuery.of(ctx).viewInsets.bottom + 16),
+          decoration: const BoxDecoration(
+            color: AppColors.bgDark,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Text('Modifier la Déclaration', style: TextStyle(color: AppColors.textPrimary, fontSize: 18, fontWeight: FontWeight.w600)),
+                const SizedBox(height: 16),
+                Text('Taxe: ${d.taxe?.nom ?? '-'}', style: const TextStyle(color: AppColors.textSecondary)),
+                Text('Exercice: ${d.exercice ?? '-'}', style: const TextStyle(color: AppColors.textSecondary)),
+                Text('Période: ${d.periodeDebut ?? '-'} au ${d.periodeFin ?? '-'}', style: const TextStyle(color: AppColors.textSecondary)),
+                const SizedBox(height: 16),
+                AppInput(label: 'Montant de base (CDF)', controller: montantBaseCtrl, keyboardType: TextInputType.number),
+                const SizedBox(height: 12),
+                AppInput(label: 'Montant taxe (CDF)', controller: montantTaxeCtrl, keyboardType: TextInputType.number),
+                const SizedBox(height: 12),
+                AppInput(label: 'Observations', controller: observationsCtrl, maxLines: 2),
+                const SizedBox(height: 20),
+                AppButton(
+                  label: 'Enregistrer',
+                  icon: Icons.check,
+                  isExpanded: true,
+                  onPressed: () async {
+                    Navigator.pop(ctx);
+                    try {
+                      await PaiementService().update(d.id, {
+                        'montant_base': double.tryParse(montantBaseCtrl.text) ?? d.montantBase,
+                        'montant_taxe': double.tryParse(montantTaxeCtrl.text) ?? d.montantTaxe,
+                        if (observationsCtrl.text.isNotEmpty) 'observations': observationsCtrl.text,
+                      });
+                      if (mounted) { showAppSnackBar(context, 'Déclaration modifiée'); _load(); }
+                    } catch (e) {
+                      if (mounted) showAppSnackBar(context, 'Erreur: $e', isError: true);
+                    }
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   void _showDetails(DeclarationPaiement d) {
     final statut = d.statut;
     showModalBottomSheet(
@@ -96,6 +155,57 @@ class _DeclarationsPageState extends State<DeclarationsPage> {
                     minimumSize: const Size(double.infinity, 48),
                   ),
                 ),
+              if (statut == 'en_attente') ...[
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        onPressed: () {
+                          Navigator.pop(ctx);
+                          _editDeclaration(d);
+                        },
+                        icon: const Icon(Icons.edit, size: 18),
+                        label: const Text('Modifier'),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: AppColors.primary,
+                          minimumSize: const Size(double.infinity, 48),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        onPressed: () async {
+                          Navigator.pop(ctx);
+                          final confirmed = await showConfirmDialog(
+                            context,
+                            title: 'Supprimer',
+                            message: 'Supprimer cette déclaration ?',
+                            confirmText: 'Supprimer',
+                            isDestructive: true,
+                          );
+                          if (confirmed && context.mounted) {
+                            try {
+                              await PaiementService().delete(d.id);
+                              showAppSnackBar(context, 'Déclaration supprimée');
+                              _load();
+                            } catch (e) {
+                              showAppSnackBar(context, 'Erreur: $e', isError: true);
+                            }
+                          }
+                        },
+                        icon: const Icon(Icons.delete_outline, size: 18),
+                        label: const Text('Supprimer'),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: AppColors.error,
+                          minimumSize: const Size(double.infinity, 48),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ],
           ),
         ),

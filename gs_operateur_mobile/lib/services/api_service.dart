@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../config/env.dart';
@@ -14,7 +15,6 @@ class ApiService {
       connectTimeout: Env.apiTimeout,
       receiveTimeout: Env.apiTimeout,
       headers: {
-        'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
     ));
@@ -74,7 +74,7 @@ class ApiService {
     try {
       final response =
           await _dio.get(path, queryParameters: queryParameters);
-      return response.data;
+      return _parseResponse(response.data);
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -84,8 +84,10 @@ class ApiService {
   Future<Map<String, dynamic>> post(String path,
       {dynamic data}) async {
     try {
-      final response = await _dio.post(path, data: data);
-      return response.data;
+      final response = await _dio.post(path, data: data, options: Options(
+        contentType: 'application/json',
+      ));
+      return _parseResponse(response.data);
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -96,18 +98,29 @@ class ApiService {
       {required FormData formData}) async {
     try {
       final response = await _dio.post(path, data: formData);
-      return response.data;
+      return _parseResponse(response.data);
     } on DioException catch (e) {
       throw _handleError(e);
     }
+  }
+
+  Map<String, dynamic> _parseResponse(dynamic data) {
+    if (data is Map<String, dynamic>) return data;
+    if (data is String) return jsonDecode(data) as Map<String, dynamic>;
+    if (data is List<int>) {
+      return jsonDecode(utf8.decode(data)) as Map<String, dynamic>;
+    }
+    return {'success': true, 'data': data};
   }
 
   // PUT
   Future<Map<String, dynamic>> put(String path,
       {dynamic data}) async {
     try {
-      final response = await _dio.put(path, data: data);
-      return response.data;
+      final response = await _dio.put(path, data: data, options: Options(
+        contentType: 'application/json',
+      ));
+      return _parseResponse(response.data);
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -117,8 +130,10 @@ class ApiService {
   Future<Map<String, dynamic>> patch(String path,
       {dynamic data}) async {
     try {
-      final response = await _dio.patch(path, data: data);
-      return response.data;
+      final response = await _dio.patch(path, data: data, options: Options(
+        contentType: 'application/json',
+      ));
+      return _parseResponse(response.data);
     } on DioException catch (e) {
       throw _handleError(e);
     }
@@ -128,7 +143,7 @@ class ApiService {
   Future<Map<String, dynamic>> delete(String path) async {
     try {
       final response = await _dio.delete(path);
-      return response.data;
+      return _parseResponse(response.data);
     } on DioException catch (e) {
       throw _handleError(e);
     }

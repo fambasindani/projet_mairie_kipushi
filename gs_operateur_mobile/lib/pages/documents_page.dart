@@ -1,11 +1,8 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:dio/dio.dart';
 import '../config/theme.dart';
-import '../providers/auth_provider.dart';
 import '../services/document_service.dart';
 import '../services/api_service.dart';
 import '../models/document.dart';

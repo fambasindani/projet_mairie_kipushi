@@ -212,6 +212,80 @@ class DeclarationPaiementController extends Controller
     }
 
     /**
+     * Modifier une déclaration (seulement si statut = en_attente)
+     */
+    public function update(Request $request, $id)
+    {
+        $declaration = DeclarationPaiement::find($id);
+
+        if (!$declaration) {
+            return response()->json(['success' => false, 'message' => 'Déclaration non trouvée'], 404);
+        }
+
+        if ($declaration->statut !== 'en_attente') {
+            return response()->json(['success' => false, 'message' => 'Seules les déclarations en attente peuvent être modifiées'], 422);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'taxe_id' => 'sometimes|exists:taxes,id',
+            'exercice' => 'sometimes|integer|min:2000|max:' . (date('Y') + 1),
+            'periode_debut' => 'sometimes|date',
+            'periode_fin' => 'sometimes|date|after_or_equal:periode_debut',
+            'montant_base' => 'sometimes|numeric|min:0',
+            'montant_taxe' => 'sometimes|numeric|min:0',
+            'date_limite_paiement' => 'sometimes|date',
+            'observations' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'errors' => $validator->errors()], 422);
+        }
+
+        $data = $request->only([
+            'taxe_id', 'exercice', 'periode_debut', 'periode_fin',
+            'montant_base', 'montant_taxe', 'date_limite_paiement', 'observations'
+        ]);
+
+        $declaration->update($data);
+
+        if (isset($data['montant_base']) || isset($data['montant_taxe'])) {
+            $declaration->montant_total = $declaration->montant_base + $declaration->montant_taxe + $declaration->penalites;
+            $declaration->save();
+        }
+
+        $declaration->load(['personne', 'taxe']);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Déclaration modifiée avec succès',
+            'data' => $declaration
+        ]);
+    }
+
+    /**
+     * Supprimer une déclaration (seulement si statut = en_attente)
+     */
+    public function destroy($id)
+    {
+        $declaration = DeclarationPaiement::find($id);
+
+        if (!$declaration) {
+            return response()->json(['success' => false, 'message' => 'Déclaration non trouvée'], 404);
+        }
+
+        if ($declaration->statut !== 'en_attente') {
+            return response()->json(['success' => false, 'message' => 'Seules les déclarations en attente peuvent être supprimées'], 422);
+        }
+
+        $declaration->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Déclaration supprimée avec succès'
+        ]);
+    }
+
+    /**
      * Valider un paiement
      */
     public function validerPaiement(Request $request, $id)

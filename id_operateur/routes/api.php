@@ -270,6 +270,14 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('/', [DeclarationPaiementController::class, 'store'])->name('store');
         });
 
+        Route::middleware(['permission:paiement:update'])->group(function () {
+            Route::put('/{id}', [DeclarationPaiementController::class, 'update'])->name('update');
+        });
+
+        Route::middleware(['permission:paiement:delete'])->group(function () {
+            Route::delete('/{id}', [DeclarationPaiementController::class, 'destroy'])->name('destroy');
+        });
+
         Route::middleware(['permission:paiement:validate'])->group(function () {
             Route::post('/{id}/valider', [DeclarationPaiementController::class, 'validerPaiement'])->name('valider');
             Route::post('/{id}/annuler', [DeclarationPaiementController::class, 'annuler'])->name('annuler');

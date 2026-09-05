@@ -4,6 +4,8 @@ import toast from 'react-hot-toast';
 import {
   Plus,
   Eye,
+  Pencil,
+  Trash2,
   CheckCircle,
   XCircle,
   ShieldOff,
@@ -56,6 +58,7 @@ export default function Declarations() {
 
   const [viewModal, setViewModal] = useState({ isOpen: false, item: null as DeclarationPaiement | null });
   const [confirmModal, setConfirmModal] = useState<{ isOpen: boolean; item: DeclarationPaiement | null; action: '' | 'valider' | 'annuler' | 'exonerer' }>({ isOpen: false, item: null, action: '' });
+  const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean; item: DeclarationPaiement | null }>({ isOpen: false, item: null });
 
   const [stats, setStats] = useState({ total: 0, en_attente: 0, paye: 0, en_retard: 0 });
   const [statsLoading, setStatsLoading] = useState(true);
@@ -143,6 +146,19 @@ export default function Declarations() {
     exonerer: 'Êtes-vous sûr de vouloir exonérer cette déclaration ?',
   };
 
+  const handleDelete = async () => {
+    if (!deleteModal.item) return;
+    try {
+      await declarationService.delete(deleteModal.item.id);
+      toast.success('Déclaration supprimée');
+      setDeleteModal({ isOpen: false, item: null });
+      fetchDeclarations(pagination.currentPage, pagination.perPage, search);
+      fetchStats();
+    } catch (err: any) {
+      toast.error(err?.message || 'Erreur lors de la suppression');
+    }
+  };
+
   const columns = [
     {
       key: 'personne',
@@ -198,6 +214,24 @@ export default function Declarations() {
           >
             <Eye size={16} />
           </button>
+          {!isOperateur && item.statut === 'en_attente' && (
+            <button
+              onClick={(e) => { e.stopPropagation(); navigate(`/declarations/${item.id}/modifier`); }}
+              className="p-1.5 rounded-lg hover:bg-amber-50 text-gray-500 hover:text-amber-600 transition-colors cursor-pointer"
+              title="Modifier"
+            >
+              <Pencil size={16} />
+            </button>
+          )}
+          {!isOperateur && item.statut === 'en_attente' && (
+            <button
+              onClick={(e) => { e.stopPropagation(); setDeleteModal({ isOpen: true, item }); }}
+              className="p-1.5 rounded-lg hover:bg-red-50 text-gray-500 hover:text-red-600 transition-colors cursor-pointer"
+              title="Supprimer"
+            >
+              <Trash2 size={16} />
+            </button>
+          )}
           {!isOperateur && item.statut === 'en_attente' && (
             <button
               onClick={(e) => { e.stopPropagation(); openConfirm(item, 'valider'); }}
@@ -358,6 +392,16 @@ export default function Declarations() {
         message={confirmMessages[confirmModal.action] ?? ''}
         confirmText={confirmModal.action === 'valider' ? 'Valider' : confirmModal.action === 'annuler' ? 'Annuler' : 'Exonérer'}
         variant={confirmModal.action === 'valider' ? 'danger' : 'danger'}
+      />
+
+      <ConfirmModal
+        isOpen={deleteModal.isOpen}
+        onClose={() => setDeleteModal({ isOpen: false, item: null })}
+        onConfirm={handleDelete}
+        title="Supprimer la déclaration"
+        message={`Êtes-vous sûr de vouloir supprimer cette déclaration ? Cette action est irréversible.`}
+        confirmText="Supprimer"
+        variant="danger"
       />
     </div>
   );

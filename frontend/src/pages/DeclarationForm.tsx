@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { ArrowLeft, Save, FileText, User, DollarSign, Calendar } from 'lucide-react';
 import Button from '../components/ui/Button';
@@ -9,6 +9,7 @@ import DropdownSearch from '../components/ui/DropdownSearch';
 import { declarationService } from '../services/declarationService';
 import { personneService } from '../services/personneService';
 import { taxeService } from '../services/taxeService';
+import { FormSkeleton } from '../components/ui/Skeletons';
 
 interface DeclarationFormState {
   personne_id: string | number;
@@ -37,11 +38,14 @@ const EMPTY_FORM: DeclarationFormState = {
 };
 
 export default function DeclarationForm() {
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const isEdit = Boolean(id);
 
   const [form, setForm] = useState<DeclarationFormState>(EMPTY_FORM);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
+  const [loading, setLoading] = useState(isEdit);
 
   const [personnes, setPersonnes] = useState<{ label: string; value: number }[]>([]);
   const [taxes, setTaxes] = useState<{ label: string; value: number }[]>([]);
@@ -77,6 +81,29 @@ export default function DeclarationForm() {
     fetchTaxes();
   }, [fetchPersonnes, fetchTaxes]);
 
+  useEffect(() => {
+    if (isEdit && id) {
+      declarationService.get(Number(id)).then((data) => {
+        setForm({
+          personne_id: data.personne_id,
+          taxe_id: data.taxe_id,
+          exercice: String(data.exercice ?? ''),
+          periode_debut: data.periode_debut ?? '',
+          periode_fin: data.periode_fin ?? '',
+          montant_base: String(data.montant_base ?? ''),
+          montant_taxe: String(data.montant_taxe ?? ''),
+          penalites: String(data.penalites ?? '0'),
+          date_limite_paiement: data.date_limite_paiement ?? '',
+          observations: data.observations ?? '',
+        });
+        setLoading(false);
+      }).catch(() => {
+        toast.error('Erreur lors du chargement de la déclaration');
+        navigate('/declarations');
+      });
+    }
+  }, [id, isEdit, navigate]);
+
   const validate = (): boolean => {
     const e: Record<string, string> = {};
     if (!form.personne_id) e.personne_id = 'L\'opérateur est requis';
@@ -111,8 +138,13 @@ export default function DeclarationForm() {
         date_limite_paiement: form.date_limite_paiement,
         observations: form.observations || null,
       };
-      await declarationService.create(payload);
-      toast.success('Déclaration créée');
+      if (isEdit && id) {
+        await declarationService.update(Number(id), payload);
+        toast.success('Déclaration modifiée');
+      } else {
+        await declarationService.create(payload);
+        toast.success('Déclaration créée');
+      }
       navigate('/declarations');
     } catch (err: unknown) {
       const apiErr = err as { errors?: Record<string, string[]>; message?: string };
@@ -133,6 +165,8 @@ export default function DeclarationForm() {
     if (errors[field]) setErrors((prev) => ({ ...prev, [field]: '' }));
   };
 
+  if (loading) return <FormSkeleton />;
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -144,8 +178,8 @@ export default function DeclarationForm() {
             <FileText className="text-white" size={22} />
           </div>
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900">Nouvelle déclaration</h1>
-            <p className="mt-1 text-sm text-slate-500">Créer une déclaration de paiement</p>
+            <h1 className="text-2xl font-bold tracking-tight text-slate-900">{isEdit ? 'Modifier la déclaration' : 'Nouvelle déclaration'}</h1>
+            <p className="mt-1 text-sm text-slate-500">{isEdit ? 'Modifier la déclaration de paiement' : 'Créer une déclaration de paiement'}</p>
           </div>
         </div>
         <nav className="flex items-center gap-2 text-sm">
@@ -153,7 +187,7 @@ export default function DeclarationForm() {
           <span className="text-slate-300">/</span>
           <span className="text-slate-500 hover:text-indigo-600 transition-colors cursor-pointer" onClick={() => navigate('/declarations')}>Déclarations</span>
           <span className="text-slate-300">/</span>
-          <span className="font-medium text-slate-900">Nouveau</span>
+          <span className="font-medium text-slate-900">{isEdit ? 'Modifier' : 'Nouveau'}</span>
         </nav>
       </div>
 
@@ -283,7 +317,7 @@ export default function DeclarationForm() {
 
           <div className="flex items-center justify-end gap-3 pt-5 border-t border-slate-100">
             <Button variant="secondary" type="button" onClick={() => navigate('/declarations')}>Annuler</Button>
-            <Button type="submit" loading={submitting} icon={<Save size={16} />}>Créer</Button>
+            <Button type="submit" loading={submitting} icon={<Save size={16} />}>{isEdit ? 'Modifier' : 'Créer'}</Button>
           </div>
         </form>
       </div>

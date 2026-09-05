@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `declarations_paiements` (
   CONSTRAINT `declarations_paiements_vehicule_id_foreign` FOREIGN KEY (`vehicule_id`) REFERENCES `vehicules` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.declarations_paiements : ~6 rows (environ)
+-- Listage des données de la table bd_operateur.declarations_paiements : ~9 rows (environ)
 INSERT INTO `declarations_paiements` (`id`, `personne_id`, `taxe_id`, `bien_immobilier_id`, `vehicule_id`, `permis_id`, `exercice`, `periode_debut`, `periode_fin`, `montant_base`, `montant_taxe`, `penalites`, `montant_total`, `date_limite_paiement`, `date_paiement`, `statut`, `reference_paiement`, `justificatif`, `observations`, `created_at`, `updated_at`) VALUES
 	(1, 1, 1, NULL, NULL, NULL, '2024', '2024-01-01', '2024-12-31', 500000.00, 80000.00, 0.00, 580000.00, '2026-12-31', '2026-09-02', 'paye', 'PAY-2024-001', 'recu_001.jpg', 'Patente 2024 - Grand commerce', '2026-09-02 20:16:51', '2026-09-02 20:18:20'),
 	(2, 13, 3, NULL, NULL, NULL, '2026', '2026-09-04', '2026-10-12', 1000.00, 0.00, 0.00, 0.00, '2026-10-12', NULL, 'exonere', NULL, NULL, NULL, '2026-09-03 16:16:37', '2026-09-03 16:16:53'),
@@ -145,7 +145,7 @@ INSERT INTO `declarations_paiements` (`id`, `personne_id`, `taxe_id`, `bien_immo
 	(6, 13, 1, NULL, NULL, NULL, '2026', '2026-01-01', '2026-12-31', 200000.00, 30000.00, 0.00, 230000.00, '2026-12-31', '2026-09-03', 'paye', 'PAY-6A99BD67B3AC0', NULL, NULL, '2026-09-03 16:27:17', '2026-09-03 16:33:11'),
 	(7, 25, 5, NULL, NULL, NULL, '2026', '2026-09-08', '2026-09-10', 4000.00, 4000.00, 0.00, 8000.00, '2026-09-08', '2026-09-03', 'paye', 'PAY-6A99F48713F1F', NULL, NULL, '2026-09-03 20:28:11', '2026-09-03 20:28:23'),
 	(8, 23, 5, NULL, NULL, NULL, '2026', '2026-10-15', '2026-12-21', 4000.00, 4000.00, 0.00, 8000.00, '2026-12-21', NULL, 'en_attente', NULL, NULL, NULL, '2026-09-04 05:08:32', '2026-09-04 05:08:32'),
-	(9, 5, 3, NULL, NULL, NULL, '2026', '2026-09-04', '2026-10-14', 3500.00, 4000.00, 0.00, 7500.00, '2026-10-14', NULL, 'en_attente', NULL, NULL, NULL, '2026-09-04 17:34:52', '2026-09-04 17:34:52');
+	(9, 5, 3, NULL, NULL, NULL, '2026', '2026-09-08', '2026-10-14', 3500.00, 4000.00, 0.00, 7500.00, '2026-10-07', NULL, 'en_attente', NULL, NULL, NULL, '2026-09-04 17:34:52', '2026-09-05 05:23:18');
 
 -- Listage de la structure de table bd_operateur. documents
 CREATE TABLE IF NOT EXISTS `documents` (
@@ -164,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `documents` (
   CONSTRAINT `documents_personne_id_foreign` FOREIGN KEY (`personne_id`) REFERENCES `personnes` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.documents : ~4 rows (environ)
+-- Listage des données de la table bd_operateur.documents : ~7 rows (environ)
 INSERT INTO `documents` (`id`, `personne_id`, `type_document`, `numero`, `fichier`, `date_expiration`, `est_valide`, `created_at`, `updated_at`) VALUES
 	(1, 1, 'CNI', 'CNI-001234567', 'documents/1/c4I03EGRhV3DpQ5SpzW3J34PMMQTjHIdKxdljiSs.pdf', '2025-12-31', 1, '2026-09-03 07:34:02', '2026-09-03 07:34:02'),
 	(2, 23, 'CNI', '77777', 'documents/23/OXU84VCrCO4CI2aClVy6vy3cac2L9BocoLaATAwz.pdf', NULL, 1, '2026-09-03 17:06:10', '2026-09-03 17:06:10'),
@@ -198,7 +198,7 @@ CREATE TABLE IF NOT EXISTS `factures` (
   CONSTRAINT `factures_declaration_paiement_id_foreign` FOREIGN KEY (`declaration_paiement_id`) REFERENCES `declarations_paiements` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.factures : ~5 rows (environ)
+-- Listage des données de la table bd_operateur.factures : ~6 rows (environ)
 INSERT INTO `factures` (`id`, `declaration_paiement_id`, `numero_facture`, `date_emission`, `montant_ht`, `montant_tva`, `montant_total`, `devise`, `chemin_pdf`, `statut`, `observations`, `created_at`, `updated_at`) VALUES
 	(1, 1, 'FAC-2026-09-00001', '2026-09-03 10:02:38', 500000.00, 80000.00, 580000.00, 'CDF', NULL, 'emise', 'Facture pour patente 2024', '2026-09-03 08:02:38', '2026-09-03 08:02:38'),
 	(2, 3, 'FAC-2026-09-00002', '2026-09-03 18:24:13', 9000.00, 1440.00, 10440.00, 'CDF', NULL, 'payee', NULL, '2026-09-03 16:24:13', '2026-09-03 16:24:13'),
@@ -249,9 +249,9 @@ CREATE TABLE IF NOT EXISTS `logs_audit` (
   KEY `logs_audit_action_index` (`action`),
   KEY `logs_audit_table_cible_index` (`table_cible`),
   CONSTRAINT `logs_audit_utilisateur_id_foreign` FOREIGN KEY (`utilisateur_id`) REFERENCES `utilisateurs` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.logs_audit : ~28 rows (environ)
+-- Listage des données de la table bd_operateur.logs_audit : ~95 rows (environ)
 INSERT INTO `logs_audit` (`id`, `utilisateur_id`, `action`, `table_cible`, `enregistrement_id`, `anciennes_valeurs`, `nouvelles_valeurs`, `adresse_ip`, `user_agent`, `created_at`, `updated_at`) VALUES
 	(1, NULL, 'CREATE', 'personnes', 23, NULL, '{"id": 23, "nom": "Dupont", "sexe": "M", "type": "physique", "prenom": "Jean", "created_at": "2026-09-03 17:55:04", "updated_at": "2026-09-03 17:55:04"}', '127.0.0.1', 'Symfony', '2026-09-03 15:55:04', '2026-09-03 15:55:04'),
 	(2, NULL, 'CREATE', 'personnes', 24, NULL, '{"id": 24, "nom": "Martin", "sexe": "F", "type": "physique", "prenom": "Marie", "created_at": "2026-09-03 17:55:04", "updated_at": "2026-09-03 17:55:04"}', '127.0.0.1', 'Symfony', '2026-09-03 15:55:04', '2026-09-03 15:55:04'),
@@ -345,7 +345,9 @@ INSERT INTO `logs_audit` (`id`, `utilisateur_id`, `action`, `table_cible`, `enre
 	(90, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.94.226.168', 'Dart/3.9 (dart:io)', '2026-09-04 17:55:28', '2026-09-04 17:55:28'),
 	(91, 1, 'LOGOUT', 'utilisateurs', 1, '{"email": "pierrepapy@gmail.com"}', NULL, '10.94.226.168', 'Dart/3.9 (dart:io)', '2026-09-04 17:55:34', '2026-09-04 17:55:34'),
 	(92, NULL, 'UPDATE', 'utilisateurs', 7, '{"updated_at": "2026-09-04T06:54:40.000000Z", "derniere_connexion": "2026-09-04T06:54:40.000000Z"}', '{"updated_at": "2026-09-04 19:56:15", "derniere_connexion": "2026-09-04 19:56:15"}', '10.94.226.168', 'Dart/3.9 (dart:io)', '2026-09-04 17:56:15', '2026-09-04 17:56:15'),
-	(93, 7, 'LOGIN', 'utilisateurs', 7, NULL, '{"email": "salama@gmail.com"}', '10.94.226.168', 'Dart/3.9 (dart:io)', '2026-09-04 17:56:15', '2026-09-04 17:56:15');
+	(93, 7, 'LOGIN', 'utilisateurs', 7, NULL, '{"email": "salama@gmail.com"}', '10.94.226.168', 'Dart/3.9 (dart:io)', '2026-09-04 17:56:15', '2026-09-04 17:56:15'),
+	(94, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-04T19:55:28.000000Z", "derniere_connexion": "2026-09-04T19:55:28.000000Z"}', '{"updated_at": "2026-09-05 07:21:57", "derniere_connexion": "2026-09-05 07:21:57"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-05 05:21:58', '2026-09-05 05:21:58'),
+	(95, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-05 05:21:59', '2026-09-05 05:21:59');
 
 -- Listage de la structure de table bd_operateur. migrations
 CREATE TABLE IF NOT EXISTS `migrations` (
@@ -467,58 +469,59 @@ CREATE TABLE IF NOT EXISTS `permissions` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `permissions_ressource_action_unique` (`ressource`,`action`),
   UNIQUE KEY `permissions_nom_unique` (`nom`)
-) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.permissions : ~28 rows (environ)
+-- Listage des données de la table bd_operateur.permissions : ~49 rows (environ)
 INSERT INTO `permissions` (`id`, `nom`, `ressource`, `action`, `description`, `created_at`, `updated_at`) VALUES
-	(1, 'operateur:create', 'operateur', 'create', 'Créer un nouvel opérateur', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(2, 'operateur:read', 'operateur', 'read', 'Consulter la liste et les détails des opérateurs', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(3, 'operateur:update', 'operateur', 'update', 'Modifier les informations d\'un opérateur', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(4, 'operateur:delete', 'operateur', 'delete', 'Supprimer un opérateur', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(5, 'operateur:validate', 'operateur', 'validate', 'Valider un opérateur (formalisation)', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(6, 'taxe:create', 'taxe', 'create', 'Créer une nouvelle taxe', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(7, 'taxe:read', 'taxe', 'read', 'Consulter la liste des taxes', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(8, 'taxe:update', 'taxe', 'update', 'Modifier une taxe', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(9, 'taxe:delete', 'taxe', 'delete', 'Supprimer une taxe', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(10, 'paiement:create', 'paiement', 'create', 'Créer une déclaration de paiement', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(11, 'paiement:read', 'paiement', 'read', 'Consulter les paiements', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(12, 'paiement:validate', 'paiement', 'validate', 'Valider un paiement', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(13, 'paiement:delete', 'paiement', 'delete', 'Supprimer un paiement', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(14, 'facture:create', 'facture', 'create', 'Générer une facture', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(15, 'facture:read', 'facture', 'read', 'Consulter les factures', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(16, 'facture:update', 'facture', 'update', 'Modifier une facture', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(17, 'facture:delete', 'facture', 'delete', 'Supprimer une facture', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(18, 'permis:create', 'permis', 'create', 'Délivrer un permis', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(19, 'permis:read', 'permis', 'read', 'Consulter les permis', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(20, 'permis:update', 'permis', 'update', 'Modifier un permis', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(21, 'permis:delete', 'permis', 'delete', 'Supprimer un permis', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(22, 'utilisateur:create', 'utilisateur', 'create', 'Créer un utilisateur', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(23, 'utilisateur:read', 'utilisateur', 'read', 'Consulter les utilisateurs', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(24, 'utilisateur:update', 'utilisateur', 'update', 'Modifier un utilisateur', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(25, 'utilisateur:delete', 'utilisateur', 'delete', 'Supprimer un utilisateur', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(26, 'statistique:read', 'statistique', 'read', 'Consulter les statistiques et rapports', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(27, 'audit:read', 'audit', 'read', 'Consulter les logs et historiques', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(65, 'dashboard:read', 'dashboard', 'read', 'Consulter le tableau de bord', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(66, 'role:create', 'role', 'create', 'Créer un rôle', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(67, 'role:read', 'role', 'read', 'Consulter les rôles', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(68, 'role:update', 'role', 'update', 'Modifier un rôle', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(69, 'role:delete', 'role', 'delete', 'Supprimer un rôle', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(70, 'permission:create', 'permission', 'create', 'Créer une permission', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(71, 'permission:read', 'permission', 'read', 'Consulter les permissions', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(72, 'permission:update', 'permission', 'update', 'Modifier une permission', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(73, 'permission:delete', 'permission', 'delete', 'Supprimer une permission', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(74, 'notification:read', 'notification', 'read', 'Consulter les notifications', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(75, 'notification:update', 'notification', 'update', 'Marquer les notifications comme lues', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(76, 'document:create', 'document', 'create', 'Uploader un document', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(77, 'document:read', 'document', 'read', 'Consulter les documents', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(78, 'document:delete', 'document', 'delete', 'Supprimer un document', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(79, 'identifiant:create', 'identifiant', 'create', 'Créer un identifiant officiel', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(80, 'identifiant:read', 'identifiant', 'read', 'Consulter les identifiants officiels', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(81, 'identifiant:update', 'identifiant', 'update', 'Modifier un identifiant officiel', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(82, 'identifiant:delete', 'identifiant', 'delete', 'Supprimer un identifiant officiel', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(83, 'rapport:read', 'rapport', 'read', 'Consulter les rapports', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(84, 'parametre:read', 'parametre', 'read', 'Consulter les paramètres', '2026-09-04 05:08:01', '2026-09-04 05:08:01'),
-	(85, 'parametre:update', 'parametre', 'update', 'Modifier les paramètres', '2026-09-04 05:08:01', '2026-09-04 05:08:01');
+	(1, 'operateur:create', 'operateur', 'create', 'Créer un nouvel opérateur', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(2, 'operateur:read', 'operateur', 'read', 'Consulter la liste et les détails des opérateurs', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(3, 'operateur:update', 'operateur', 'update', 'Modifier les informations d\'un opérateur', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(4, 'operateur:delete', 'operateur', 'delete', 'Supprimer un opérateur', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(5, 'operateur:validate', 'operateur', 'validate', 'Valider un opérateur (formalisation)', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(6, 'taxe:create', 'taxe', 'create', 'Créer une nouvelle taxe', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(7, 'taxe:read', 'taxe', 'read', 'Consulter la liste des taxes', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(8, 'taxe:update', 'taxe', 'update', 'Modifier une taxe', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(9, 'taxe:delete', 'taxe', 'delete', 'Supprimer une taxe', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(10, 'paiement:create', 'paiement', 'create', 'Créer une déclaration de paiement', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(11, 'paiement:read', 'paiement', 'read', 'Consulter les paiements', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(12, 'paiement:validate', 'paiement', 'validate', 'Valider un paiement', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(13, 'paiement:delete', 'paiement', 'delete', 'Supprimer un paiement', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(14, 'facture:create', 'facture', 'create', 'Générer une facture', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(15, 'facture:read', 'facture', 'read', 'Consulter les factures', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(16, 'facture:update', 'facture', 'update', 'Modifier une facture', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(17, 'facture:delete', 'facture', 'delete', 'Supprimer une facture', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(18, 'permis:create', 'permis', 'create', 'Délivrer un permis', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(19, 'permis:read', 'permis', 'read', 'Consulter les permis', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(20, 'permis:update', 'permis', 'update', 'Modifier un permis', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(21, 'permis:delete', 'permis', 'delete', 'Supprimer un permis', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(22, 'utilisateur:create', 'utilisateur', 'create', 'Créer un utilisateur', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(23, 'utilisateur:read', 'utilisateur', 'read', 'Consulter les utilisateurs', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(24, 'utilisateur:update', 'utilisateur', 'update', 'Modifier un utilisateur', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(25, 'utilisateur:delete', 'utilisateur', 'delete', 'Supprimer un utilisateur', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(26, 'statistique:read', 'statistique', 'read', 'Consulter les statistiques et rapports', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(27, 'audit:read', 'audit', 'read', 'Consulter les logs et historiques', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(65, 'dashboard:read', 'dashboard', 'read', 'Consulter le tableau de bord', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(66, 'role:create', 'role', 'create', 'Créer un rôle', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(67, 'role:read', 'role', 'read', 'Consulter les rôles', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(68, 'role:update', 'role', 'update', 'Modifier un rôle', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(69, 'role:delete', 'role', 'delete', 'Supprimer un rôle', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(70, 'permission:create', 'permission', 'create', 'Créer une permission', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(71, 'permission:read', 'permission', 'read', 'Consulter les permissions', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(72, 'permission:update', 'permission', 'update', 'Modifier une permission', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(73, 'permission:delete', 'permission', 'delete', 'Supprimer une permission', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(74, 'notification:read', 'notification', 'read', 'Consulter les notifications', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(75, 'notification:update', 'notification', 'update', 'Marquer les notifications comme lues', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(76, 'document:create', 'document', 'create', 'Uploader un document', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(77, 'document:read', 'document', 'read', 'Consulter les documents', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
+	(78, 'document:delete', 'document', 'delete', 'Supprimer un document', '2026-09-05 05:27:12', '2026-09-05 05:27:12'),
+	(79, 'identifiant:create', 'identifiant', 'create', 'Créer un identifiant officiel', '2026-09-05 05:27:12', '2026-09-05 05:27:12'),
+	(80, 'identifiant:read', 'identifiant', 'read', 'Consulter les identifiants officiels', '2026-09-05 05:27:12', '2026-09-05 05:27:12'),
+	(81, 'identifiant:update', 'identifiant', 'update', 'Modifier un identifiant officiel', '2026-09-05 05:27:12', '2026-09-05 05:27:12'),
+	(82, 'identifiant:delete', 'identifiant', 'delete', 'Supprimer un identifiant officiel', '2026-09-05 05:27:12', '2026-09-05 05:27:12'),
+	(83, 'rapport:read', 'rapport', 'read', 'Consulter les rapports', '2026-09-05 05:27:12', '2026-09-05 05:27:12'),
+	(84, 'parametre:read', 'parametre', 'read', 'Consulter les paramètres', '2026-09-05 05:27:12', '2026-09-05 05:27:12'),
+	(85, 'parametre:update', 'parametre', 'update', 'Modifier les paramètres', '2026-09-05 05:27:12', '2026-09-05 05:27:12'),
+	(86, 'paiement:update', 'paiement', 'update', 'Modifier une déclaration de paiement', '2026-09-05 05:27:11', '2026-09-05 05:27:11');
 
 -- Listage de la structure de table bd_operateur. permis_autorisations
 CREATE TABLE IF NOT EXISTS `permis_autorisations` (
@@ -540,7 +543,7 @@ CREATE TABLE IF NOT EXISTS `permis_autorisations` (
   CONSTRAINT `permis_autorisations_personne_id_foreign` FOREIGN KEY (`personne_id`) REFERENCES `personnes` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.permis_autorisations : ~2 rows (environ)
+-- Listage des données de la table bd_operateur.permis_autorisations : ~3 rows (environ)
 INSERT INTO `permis_autorisations` (`id`, `personne_id`, `type_permis`, `numero`, `date_delivrance`, `date_expiration`, `est_valide`, `est_renouvele`, `document_scan`, `created_at`, `updated_at`) VALUES
 	(1, 9, 'construire', 'PERM-58744', '2026-09-03', '2026-10-23', 1, 0, NULL, '2026-09-03 17:52:16', '2026-09-03 17:52:16'),
 	(2, 1, 'patente', 'PERM-TEST-002', '2026-01-15', '2027-01-15', 1, 0, NULL, '2026-09-03 17:54:30', '2026-09-03 17:58:46'),
@@ -561,9 +564,9 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.personal_access_tokens : ~18 rows (environ)
+-- Listage des données de la table bd_operateur.personal_access_tokens : ~33 rows (environ)
 INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `name`, `token`, `abilities`, `last_used_at`, `expires_at`, `created_at`, `updated_at`) VALUES
 	(1, 'App\\Models\\Utilisateur', 1, 'auth_token', 'cc3ff7200e91b5d307867389b08ec044bf5642abcaaf7bf5cf3c1b27417794e7', '["*"]', '2026-09-03 07:35:20', NULL, '2026-09-02 18:37:51', '2026-09-03 07:35:20'),
 	(2, 'App\\Models\\Utilisateur', 1, 'auth_token', 'd31b65da4681481dea82c13c20bb1fa0a82928013c08431d6f8cef073920a771', '["*"]', NULL, NULL, '2026-09-02 18:46:08', '2026-09-02 18:46:08'),
@@ -594,9 +597,10 @@ INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `n
 	(28, 'App\\Models\\Utilisateur', 1, 'auth_token', '7890d14712cb821511c453a355bb8fe371eb815fbc5e2b94ccaf1a061570bdc3', '["*"]', '2026-09-04 16:10:44', NULL, '2026-09-04 15:50:07', '2026-09-04 16:10:44'),
 	(29, 'App\\Models\\Utilisateur', 1, 'auth_token', '25d203fb7a0c9f9b41e911a0b51243c2680b3e8c088785ec3855f3363363e240', '["*"]', '2026-09-04 16:43:23', NULL, '2026-09-04 16:22:41', '2026-09-04 16:43:23'),
 	(31, 'App\\Models\\Utilisateur', 1, 'auth_token', '2a06972d163fa67327f382cc0db7d4248ed769d543195b6c87f8bf6cb5d9c6ff', '["*"]', '2026-09-04 17:03:03', NULL, '2026-09-04 16:46:26', '2026-09-04 17:03:03'),
-	(32, 'App\\Models\\Utilisateur', 1, 'auth_token', 'e6bbbb4ba53459757a13822ee234ba43b4b5f5bbfd0f1cb1d8c7a67d8914f1ff', '["*"]', '2026-09-04 18:05:16', NULL, '2026-09-04 17:04:30', '2026-09-04 18:05:16'),
+	(32, 'App\\Models\\Utilisateur', 1, 'auth_token', 'e6bbbb4ba53459757a13822ee234ba43b4b5f5bbfd0f1cb1d8c7a67d8914f1ff', '["*"]', '2026-09-04 18:16:33', NULL, '2026-09-04 17:04:30', '2026-09-04 18:16:33'),
 	(33, 'App\\Models\\Utilisateur', 1, 'auth_token', 'a46cfa20d7775b2302bb5eaa38d0febf5d34a73a98b94a67524e5d99e4a88a4e', '["*"]', '2026-09-04 17:26:32', NULL, '2026-09-04 17:08:06', '2026-09-04 17:26:32'),
-	(36, 'App\\Models\\Utilisateur', 7, 'auth_token', '5ae23ee1a3187caba18802cf5cd049fd8694772122f0a003813d0963f923c932', '["*"]', '2026-09-04 17:56:41', NULL, '2026-09-04 17:56:15', '2026-09-04 17:56:41');
+	(36, 'App\\Models\\Utilisateur', 7, 'auth_token', '5ae23ee1a3187caba18802cf5cd049fd8694772122f0a003813d0963f923c932', '["*"]', '2026-09-04 17:56:41', NULL, '2026-09-04 17:56:15', '2026-09-04 17:56:41'),
+	(37, 'App\\Models\\Utilisateur', 1, 'auth_token', 'f477aa4468db1c8acb17dadddbaa804244ff07b869f652c1ff6276297efd276d', '["*"]', '2026-09-05 05:47:58', NULL, '2026-09-05 05:21:59', '2026-09-05 05:47:58');
 
 -- Listage de la structure de table bd_operateur. personnes
 CREATE TABLE IF NOT EXISTS `personnes` (
@@ -646,7 +650,7 @@ CREATE TABLE IF NOT EXISTS `personnes` (
   CONSTRAINT `personnes_id_ville_foreign` FOREIGN KEY (`id_ville`) REFERENCES `villes` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.personnes : ~9 rows (environ)
+-- Listage des données de la table bd_operateur.personnes : ~10 rows (environ)
 INSERT INTO `personnes` (`id`, `type`, `nom`, `prenom`, `date_naissance`, `lieu_naissance`, `nationalite`, `sexe`, `cni_numero`, `denomination_sociale`, `forme_juridique`, `date_creation`, `adresse`, `quartier`, `id_quartier`, `id_province`, `id_ville`, `commune`, `ville`, `province`, `telephone`, `telephone_2`, `email`, `site_web`, `est_actif`, `est_formalise`, `date_formalisation`, `latitude`, `longitude`, `avatar`, `created_at`, `updated_at`) VALUES
 	(1, 'physique', 'Papy', 'Pierre', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Kinshasa, Gombe', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '+243800000001', NULL, 'pierrepapy@gmail.com', NULL, 1, 1, NULL, NULL, NULL, 'avatars/1/Fa8yJ1JWqYcpFAAO5QGZLkLdhF9er0elGCPlmvYi.jpg', '2026-09-02 18:29:47', '2026-09-03 18:08:55'),
 	(2, 'physique', 'LALA', 'Pierre', '1996-11-11', 'BUKAVU', 'Congolaise', 'M', NULL, NULL, NULL, NULL, 'KWANGO 14', 'Gombe', 1, 1, 2, 'Kinshasa', 'Kinshasa', 'Kinshasa', '078542145', NULL, 'lala@email.com', NULL, 1, 1, NULL, NULL, NULL, NULL, '2026-09-02 18:29:47', '2026-09-03 11:50:06'),
@@ -751,118 +755,119 @@ CREATE TABLE IF NOT EXISTS `roles_permissions` (
   CONSTRAINT `roles_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.roles_permissions : ~52 rows (environ)
+-- Listage des données de la table bd_operateur.roles_permissions : ~111 rows (environ)
 INSERT INTO `roles_permissions` (`role_id`, `permission_id`, `created_at`, `updated_at`) VALUES
-	(1, 1, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 2, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 3, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 4, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 5, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 6, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 7, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 8, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 9, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 10, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 11, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 12, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 13, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 14, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 15, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 16, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 17, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 18, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 19, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 20, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 21, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 22, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 23, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 24, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 25, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 26, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 27, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 65, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 66, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 67, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 68, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 69, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 70, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 71, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 72, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 73, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 74, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 75, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 76, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 77, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 78, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 79, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 80, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 81, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 82, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 83, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 84, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(1, 85, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(2, 1, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(2, 2, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(2, 3, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(2, 5, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(2, 6, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(2, 7, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(2, 8, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
+	(1, 1, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 2, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 3, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 4, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 5, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 6, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 7, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 8, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 9, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 10, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 11, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 12, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 13, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 14, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 15, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 16, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 17, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 18, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 19, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 20, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 21, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 22, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 23, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 24, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 25, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 26, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 27, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 65, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 66, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 67, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 68, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 69, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 70, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 71, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 72, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 73, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 74, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 75, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 76, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 77, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 78, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 79, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 80, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 81, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 82, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 83, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 84, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 85, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 86, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(2, 1, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(2, 2, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(2, 3, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(2, 5, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(2, 6, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(2, 7, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(2, 8, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
 	(2, 9, '2026-09-03 15:30:17', '2026-09-03 15:30:17'),
-	(2, 10, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(2, 11, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(2, 12, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(2, 14, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(2, 15, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(2, 16, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
+	(2, 10, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(2, 11, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(2, 12, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(2, 14, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(2, 15, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(2, 16, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
 	(2, 17, '2026-09-03 15:29:40', '2026-09-03 15:29:40'),
-	(2, 18, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(2, 19, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(2, 20, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(2, 23, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(2, 26, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
+	(2, 18, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(2, 19, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(2, 20, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(2, 23, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(2, 26, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
 	(2, 27, '2026-09-03 15:29:40', '2026-09-03 15:29:40'),
-	(2, 65, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(2, 74, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(2, 75, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(2, 77, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(3, 1, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(3, 2, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(3, 3, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(3, 23, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(3, 74, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(3, 76, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(3, 77, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(4, 2, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(4, 10, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(4, 11, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(4, 12, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(4, 14, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(4, 15, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(4, 26, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(4, 74, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(5, 2, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(5, 3, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(5, 7, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(5, 11, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(5, 15, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(5, 19, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(5, 26, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(5, 74, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(5, 75, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(5, 76, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(5, 77, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(5, 78, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(5, 80, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(5, 83, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(6, 2, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(6, 7, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(6, 11, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(6, 15, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(6, 26, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(6, 27, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(6, 65, '2026-09-04 17:09:45', '2026-09-04 17:09:45'),
-	(6, 74, '2026-09-04 17:09:45', '2026-09-04 17:09:45');
+	(2, 65, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(2, 74, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(2, 75, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(2, 77, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(3, 1, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(3, 2, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(3, 3, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(3, 23, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(3, 74, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(3, 76, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(3, 77, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(4, 2, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(4, 10, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(4, 11, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(4, 12, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(4, 14, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(4, 15, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(4, 26, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(4, 74, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(5, 2, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(5, 3, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(5, 7, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(5, 11, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(5, 15, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(5, 19, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(5, 26, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(5, 74, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(5, 75, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(5, 76, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(5, 77, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(5, 78, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(5, 80, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(5, 83, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(6, 2, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(6, 7, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(6, 11, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(6, 15, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(6, 26, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(6, 27, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(6, 65, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(6, 74, '2026-09-05 05:27:17', '2026-09-05 05:27:17');
 
 -- Listage de la structure de table bd_operateur. taxes
 CREATE TABLE IF NOT EXISTS `taxes` (
@@ -885,7 +890,7 @@ CREATE TABLE IF NOT EXISTS `taxes` (
   KEY `taxes_est_actif_index` (`est_actif`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.taxes : ~3 rows (environ)
+-- Listage des données de la table bd_operateur.taxes : ~4 rows (environ)
 INSERT INTO `taxes` (`id`, `code`, `nom`, `categorie`, `description`, `taux`, `unite`, `periodicite`, `bareme`, `est_actif`, `est_locale`, `created_at`, `updated_at`) VALUES
 	(1, 'PAT-2024', 'Patente 2024', 'patente', 'Taxe annuelle due par tout opérateur économique', 4000.0000, 'montant_fixe', 'annuelle', '{"categories": {"A": {"label": "Grand commerce", "montant": 500000}, "B": {"label": "Moyen commerce", "montant": 200000}, "C": {"label": "Petit commerce", "montant": 50000}}}', 1, 1, '2026-09-02 20:02:43', '2026-09-03 16:19:17'),
 	(2, 'PAT-2025', 'Patente 2025', 'patente', 'Taxe annuelle due par tout opérateur économique', 5000.0000, 'montant_fixe', 'annuelle', '{"categories": {"A": {"label": "Grand commerce", "montant": 500000}, "B": {"label": "Moyen commerce", "montant": 200000}, "C": {"label": "Petit commerce", "montant": 50000}}}', 1, 1, '2026-09-02 20:03:27', '2026-09-03 16:18:53'),
@@ -913,9 +918,9 @@ CREATE TABLE IF NOT EXISTS `utilisateurs` (
   CONSTRAINT `utilisateurs_personne_id_foreign` FOREIGN KEY (`personne_id`) REFERENCES `personnes` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.utilisateurs : ~4 rows (environ)
+-- Listage des données de la table bd_operateur.utilisateurs : ~5 rows (environ)
 INSERT INTO `utilisateurs` (`id`, `personne_id`, `nom_utilisateur`, `mot_de_passe_hash`, `email`, `est_actif`, `est_verrouille`, `tentatives_connexion`, `derniere_connexion`, `date_expiration_mot_de_passe`, `created_at`, `updated_at`) VALUES
-	(1, 1, 'admin', '$2y$12$AG4Vzn7EV73AlATnG9FKGexUHP0CAW/7mdbslHE1mL9HL4fSbhnye', 'pierrepapy@gmail.com', 1, 0, 0, '2026-09-04 19:55:28', NULL, '2026-09-02 18:29:47', '2026-09-04 17:55:28'),
+	(1, 1, 'admin', '$2y$12$AG4Vzn7EV73AlATnG9FKGexUHP0CAW/7mdbslHE1mL9HL4fSbhnye', 'pierrepapy@gmail.com', 1, 0, 0, '2026-09-05 07:21:57', NULL, '2026-09-02 18:29:47', '2026-09-05 05:21:57'),
 	(2, 2, 'jean.dupont', '$2y$12$OFHiT3XeNufyvt7aeEHhCO5.3IzHWABXV/jS5pgGejLVfn4f3CYkm', 'jean.dupont@email.com', 1, 0, 0, NULL, NULL, '2026-09-02 18:35:49', '2026-09-02 18:35:49'),
 	(3, 3, 'marie.mbala', '$2y$12$Armb/thc0jcIs0DjEfWZkeHsVYRvSYFUbHykRr19TgCqp8v.0QXnK', 'marie.mbala@email.com', 1, 0, 1, NULL, NULL, '2026-09-02 18:35:49', '2026-09-03 19:37:37'),
 	(4, 13, 'NGOMA Paul', '$2y$12$TstGZHCHUJivND1oCcWjauM3t3qwYLaRVKEsBaLq/gs9JxXSxW16i', 'ngoma@gmail.com', 1, 0, 0, NULL, NULL, '2026-09-02 18:53:45', '2026-09-03 12:08:02'),
@@ -933,7 +938,7 @@ CREATE TABLE IF NOT EXISTS `utilisateurs_roles` (
   CONSTRAINT `utilisateurs_roles_utilisateur_id_foreign` FOREIGN KEY (`utilisateur_id`) REFERENCES `utilisateurs` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.utilisateurs_roles : ~4 rows (environ)
+-- Listage des données de la table bd_operateur.utilisateurs_roles : ~5 rows (environ)
 INSERT INTO `utilisateurs_roles` (`utilisateur_id`, `role_id`, `created_at`, `updated_at`) VALUES
 	(1, 1, '2026-09-02 18:47:17', '2026-09-02 18:47:17'),
 	(2, 3, '2026-09-02 18:35:49', '2026-09-02 18:35:49'),
@@ -962,7 +967,7 @@ CREATE TABLE IF NOT EXISTS `vehicules` (
   CONSTRAINT `vehicules_proprietaire_id_foreign` FOREIGN KEY (`proprietaire_id`) REFERENCES `personnes` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.vehicules : ~5 rows (environ)
+-- Listage des données de la table bd_operateur.vehicules : ~4 rows (environ)
 INSERT INTO `vehicules` (`id`, `proprietaire_id`, `plaque_immatriculation`, `marque`, `modele`, `annee_fabrication`, `couleur`, `type_vehicule`, `nombre_places`, `poids`, `est_actif`, `created_at`, `updated_at`) VALUES
 	(1, 1, 'AA 1234 BC', 'Toyota', 'Land Cruiser', '2022', 'Noir', 'voiture', 8, 2500.50, 1, '2026-09-02 21:01:41', '2026-09-02 21:04:15'),
 	(2, 1, 'BB 5678 DE', 'Honda', 'CBR 500', '2023', 'Rouge', 'moto', 2, 200.00, 1, '2026-09-02 21:02:14', '2026-09-02 21:02:14'),

@@ -34,4 +34,19 @@ class TaxeService {
     }
     throw Exception(response['message'] ?? 'Erreur lors de la création');
   }
+
+  Future<Taxe> update(int id, Map<String, dynamic> data) async {
+    final response = await _api.put('/taxes/$id', data: data);
+    if (response['success'] == true) {
+      return Taxe.fromJson(response['data']);
+    }
+    throw Exception(response['message'] ?? 'Erreur lors de la modification');
+  }
+
+  Future<void> delete(int id) async {
+    final response = await _api.delete('/taxes/$id');
+    if (response['success'] != true) {
+      throw Exception(response['message'] ?? 'Erreur lors de la suppression');
+    }
+  }
 }

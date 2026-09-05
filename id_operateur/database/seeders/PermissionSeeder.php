@@ -21,6 +21,7 @@ class PermissionSeeder extends Seeder
             ['nom' => 'taxe:delete', 'ressource' => 'taxe', 'action' => 'delete', 'description' => 'Supprimer une taxe'],
             ['nom' => 'paiement:create', 'ressource' => 'paiement', 'action' => 'create', 'description' => 'Créer une déclaration de paiement'],
             ['nom' => 'paiement:read', 'ressource' => 'paiement', 'action' => 'read', 'description' => 'Consulter les paiements'],
+            ['nom' => 'paiement:update', 'ressource' => 'paiement', 'action' => 'update', 'description' => 'Modifier une déclaration de paiement'],
             ['nom' => 'paiement:validate', 'ressource' => 'paiement', 'action' => 'validate', 'description' => 'Valider un paiement'],
             ['nom' => 'paiement:delete', 'ressource' => 'paiement', 'action' => 'delete', 'description' => 'Supprimer un paiement'],
             ['nom' => 'facture:create', 'ressource' => 'facture', 'action' => 'create', 'description' => 'Générer une facture'],
