@@ -38,7 +38,8 @@ export default function Login() {
       });
       login(response.token, response.utilisateur);
       toast.success('Connexion réussie !');
-      navigate('/');
+      const isOperateur = response.utilisateur.roles?.some((r) => r.nom === 'Operateur');
+      navigate(isOperateur ? '/profil' : '/');
     } catch (err: unknown) {
       if (err instanceof ApiError) {
         toast.error(err.message);

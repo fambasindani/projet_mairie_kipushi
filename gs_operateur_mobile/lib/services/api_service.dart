@@ -152,8 +152,15 @@ class ApiService {
   String _handleError(DioException e) {
     if (e.response != null) {
       final data = e.response!.data;
-      if (data is Map && data.containsKey('message')) {
-        return data['message'];
+      if (data is Map) {
+        if (data.containsKey('errors') && data['errors'] is Map) {
+          final errors = data['errors'] as Map;
+          final msgs = errors.values.expand((v) => v is List ? v : [v]).join('\n');
+          return msgs.isNotEmpty ? msgs : (data['message'] ?? 'Erreur ${e.response!.statusCode}');
+        }
+        if (data.containsKey('message')) {
+          return data['message'];
+        }
       }
       return 'Erreur ${e.response!.statusCode}';
     }

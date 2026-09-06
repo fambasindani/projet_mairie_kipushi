@@ -140,20 +140,21 @@ export default function Operateurs() {
       const qrData = JSON.stringify({ type: 'GS_OPERATEUR_ID', id: item.id, nom: item.nom, prenom: item.prenom, type_personne: item.type });
       const qrDataUrl = await QRCode.toDataURL(qrData, { width: 150, margin: 1, color: { dark: '#1e293b', light: '#ffffff' } });
       let photoDataUrl: string | null = null;
-      if (item.avatar_url) {
-        photoDataUrl = item.avatar_url;
-      } else if (item.avatar) {
+      if (item.utilisateur?.id) {
         try {
           const base = (import.meta.env.VITE_API_URL || '/api').replace(/\/+$/, '');
-          const url = item.avatar.startsWith('http') ? item.avatar : `${base}/profile/avatar/${item.id}`;
           const token = localStorage.getItem('token');
-          const resp = await fetch(url, { headers: token ? { Authorization: `Bearer ${token}` } : {} });
-          const blob = await resp.blob();
-          photoDataUrl = await new Promise<string>((resolve) => {
-            const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result as string);
-            reader.readAsDataURL(blob);
+          const resp = await fetch(`${base}/profile/avatar/${item.utilisateur.id}`, {
+            headers: token ? { Authorization: `Bearer ${token}` } : {},
           });
+          if (resp.ok) {
+            const blob = await resp.blob();
+            photoDataUrl = await new Promise<string>((resolve) => {
+              const reader = new FileReader();
+              reader.onloadend = () => resolve(reader.result as string);
+              reader.readAsDataURL(blob);
+            });
+          }
         } catch { /* no photo */ }
       }
       const { pdf } = await import('@react-pdf/renderer');

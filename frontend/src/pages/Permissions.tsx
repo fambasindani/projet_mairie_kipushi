@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import toast from 'react-hot-toast';
-import { Plus, Pencil, Trash2, Key, Search } from 'lucide-react';
+import { Plus, Pencil, Trash2, Key, Search, RefreshCw } from 'lucide-react';
 import PageHeader from '../components/ui/PageHeader';
 import Badge from '../components/ui/Badge';
 import DataTable from '../components/ui/DataTable';
@@ -10,6 +10,7 @@ import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
 import Select from '../components/ui/Select';
 import { permissionService } from '../services/permissionService';
+import { post } from '../services/api';
 import type { Permission, PaginatedResponse } from '../types';
 
 interface PermForm {
@@ -41,6 +42,7 @@ export default function Permissions() {
   const [form, setForm] = useState<PermForm>(EMPTY_FORM);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
+  const [syncing, setSyncing] = useState(false);
 
   const fetchPermissions = useCallback(async (page = 1, perPage = 20, q = '', res = '') => {
     setLoading(true);
@@ -120,6 +122,20 @@ export default function Permissions() {
     }
   };
 
+  const handleSync = async () => {
+    setSyncing(true);
+    try {
+      const res = await post<{ success: boolean; message: string }>('/admin/seed-permissions');
+      toast.success(res.message || 'Permissions synchronisées');
+      fetchPermissions(1, pagination.perPage, '', '');
+    } catch (err: unknown) {
+      const apiErr = err as { message?: string };
+      toast.error(apiErr.message || 'Erreur lors de la synchronisation');
+    } finally {
+      setSyncing(false);
+    }
+  };
+
   const columns = [
     {
       key: 'nom',
@@ -166,7 +182,14 @@ export default function Permissions() {
       <PageHeader
         title="Permissions"
         subtitle="Gestion des permissions du système"
-        actions={<Button icon={<Plus size={16} />} onClick={openCreate}>Nouvelle permission</Button>}
+        actions={
+          <div className="flex items-center gap-2">
+            <Button variant="secondary" icon={<RefreshCw size={16} />} onClick={handleSync} loading={syncing}>
+              Synchroniser
+            </Button>
+            <Button icon={<Plus size={16} />} onClick={openCreate}>Nouvelle permission</Button>
+          </div>
+        }
       />
 
       <div className="flex items-center gap-3">

@@ -43,6 +43,16 @@ class PermissionController extends Controller
         ]);
     }
 
+    // Toutes les permissions (pour assignation de rôles)
+    public function all()
+    {
+        $permissions = Permission::orderBy('ressource')->orderBy('action')->get();
+        return response()->json([
+            'success' => true,
+            'data' => $permissions,
+        ]);
+    }
+
     // Créer une permission
     public function store(Request $request)
     {

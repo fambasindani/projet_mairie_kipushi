@@ -16,15 +16,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
-  static const List<_NavItem> _adminNavItems = [
-    _NavItem(icon: Icons.people_outline, activeIcon: Icons.people, label: 'Opérateurs', route: '/operateurs'),
-    _NavItem(icon: Icons.receipt_long_outlined, activeIcon: Icons.receipt_long, label: 'Déclarations', route: '/declarations'),
-    _NavItem(icon: Icons.receipt_outlined, activeIcon: Icons.receipt, label: 'Factures', route: '/factures'),
-    _NavItem(icon: Icons.notifications_outlined, activeIcon: Icons.notifications, label: 'Alertes', route: '/notifications'),
-    _NavItem(icon: Icons.person_outline, activeIcon: Icons.person, label: 'Profil', route: '/profil'),
-  ];
+  static const Map<String, String> _routePermissions = {
+    '/operateurs': 'operateur:read',
+    '/declarations': 'paiement:read',
+    '/factures': 'facture:read',
+    '/documents': 'document:read',
+    '/notifications': 'notification:read',
+    '/taxes': 'taxe:read',
+    '/profil': '',
+  };
 
-  static const List<_NavItem> _operateurNavItems = [
+  static const List<_NavItem> _allNavItems = [
+    _NavItem(icon: Icons.people_outline, activeIcon: Icons.people, label: 'Opérateurs', route: '/operateurs'),
     _NavItem(icon: Icons.receipt_long_outlined, activeIcon: Icons.receipt_long, label: 'Déclarations', route: '/declarations'),
     _NavItem(icon: Icons.receipt_outlined, activeIcon: Icons.receipt, label: 'Factures', route: '/factures'),
     _NavItem(icon: Icons.folder_open_outlined, activeIcon: Icons.folder_open, label: 'Documents', route: '/documents'),
@@ -32,7 +35,15 @@ class _HomePageState extends State<HomePage> {
     _NavItem(icon: Icons.person_outline, activeIcon: Icons.person, label: 'Profil', route: '/profil'),
   ];
 
-  List<_NavItem> get _navItems => context.read<AuthProvider>().isOperateur ? _operateurNavItems : _adminNavItems;
+  List<_NavItem> get _navItems {
+    final auth = context.read<AuthProvider>();
+    if (auth.isAdmin) return _allNavItems;
+    return _allNavItems.where((item) {
+      final perm = _routePermissions[item.route];
+      if (perm == null || perm.isEmpty) return true;
+      return auth.hasPermission(perm);
+    }).toList();
+  }
 
   @override
   void didChangeDependencies() {
@@ -149,7 +160,8 @@ class HomeContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final auth = context.watch<AuthProvider>();
-    final isOperateur = auth.isOperateur;
+    final isAdmin = auth.isAdmin;
+    bool can(String perm) => isAdmin || auth.hasPermission(perm);
 
     return Scaffold(
       appBar: AppBar(
@@ -182,24 +194,23 @@ class HomeContent extends StatelessWidget {
                 children: [
                   Text('Bienvenue, ${auth.user?.nomUtilisateur ?? ''}', style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
-                  Text(isOperateur ? 'Opérateur terrain' : 'Administrateur', style: const TextStyle(color: Colors.white70, fontSize: 14)),
+                  Text(isAdmin ? 'Administrateur' : 'Opérateur terrain', style: const TextStyle(color: Colors.white70, fontSize: 14)),
                 ],
               ),
             ),
             const SizedBox(height: 20),
-            if (isOperateur) ...[
-              _QuickAction(icon: Icons.receipt_long, label: 'Déclarations', color: AppColors.success, onTap: () => context.go('/declarations')),
-              _QuickAction(icon: Icons.receipt, label: 'Factures', color: AppColors.info, onTap: () => context.go('/factures')),
-              _QuickAction(icon: Icons.folder_open, label: 'Documents', color: AppColors.warning, onTap: () => context.go('/documents')),
-              _QuickAction(icon: Icons.notifications, label: 'Notifications', color: AppColors.primaryLight, onTap: () => context.go('/notifications')),
-            ] else ...[
+            if (can('operateur:read'))
               _QuickAction(icon: Icons.people, label: 'Opérateurs', color: AppColors.primary, onTap: () => context.go('/operateurs')),
+            if (can('paiement:read'))
               _QuickAction(icon: Icons.receipt_long, label: 'Déclarations', color: AppColors.success, onTap: () => context.go('/declarations')),
+            if (can('facture:read'))
               _QuickAction(icon: Icons.receipt, label: 'Factures', color: AppColors.info, onTap: () => context.go('/factures')),
+            if (can('document:read'))
               _QuickAction(icon: Icons.folder_open, label: 'Documents', color: AppColors.warning, onTap: () => context.go('/documents')),
+            if (can('taxe:read'))
               _QuickAction(icon: Icons.receipt, label: 'Taxes', color: AppColors.secondary, onTap: () => context.go('/taxes')),
+            if (can('notification:read'))
               _QuickAction(icon: Icons.notifications, label: 'Notifications', color: AppColors.primaryLight, onTap: () => context.go('/notifications')),
-            ],
           ],
         ),
       ),

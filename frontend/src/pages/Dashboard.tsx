@@ -470,13 +470,14 @@ export default function Dashboard() {
                 icon={<CreditCard size={18} className="text-purple-500" />}
                 label="Taux recouvrement"
                 value={
-                  stats?.finances?.total_collecte && stats?.finances?.en_attente
+                  stats?.finances?.total_collecte != null && stats?.finances?.en_attente != null &&
+                  (stats.finances.total_collecte + stats.finances.en_attente) > 0
                     ? Math.round(
                         (stats.finances.total_collecte /
                           (stats.finances.total_collecte + stats.finances.en_attente)) *
                           100
                       )
-                    : finances?.recouvrement?.taux ?? 0
+                    : 0
                 }
                 suffix="%"
               />

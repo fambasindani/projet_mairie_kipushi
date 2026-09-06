@@ -71,7 +71,7 @@ class _DeclarationsPageState extends State<DeclarationsPage> {
                 const SizedBox(height: 16),
                 Text('Taxe: ${d.taxe?.nom ?? '-'}', style: const TextStyle(color: AppColors.textSecondary)),
                 Text('Exercice: ${d.exercice ?? '-'}', style: const TextStyle(color: AppColors.textSecondary)),
-                Text('Période: ${d.periodeDebut ?? '-'} au ${d.periodeFin ?? '-'}', style: const TextStyle(color: AppColors.textSecondary)),
+                Text('Période: ${_formatDateStr(d.periodeDebut)} au ${_formatDateStr(d.periodeFin)}', style: const TextStyle(color: AppColors.textSecondary)),
                 const SizedBox(height: 16),
                 AppInput(label: 'Montant de base (CDF)', controller: montantBaseCtrl, keyboardType: TextInputType.number),
                 const SizedBox(height: 12),
@@ -133,7 +133,7 @@ class _DeclarationsPageState extends State<DeclarationsPage> {
               ),
               const SizedBox(height: 20),
               _buildDetail('Exercice', d.exercice ?? '-'),
-              _buildDetail('Période', '${d.periodeDebut ?? '-'} au ${d.periodeFin ?? '-'}'),
+              _buildDetail('Période', '${_formatDateStr(d.periodeDebut)} au ${_formatDateStr(d.periodeFin)}'),
               _buildDetail('Montant de base', formatMontant(d.montantBase)),
               _buildDetail('Montant taxe', formatMontant(d.montantTaxe)),
               _buildDetail('Pénalités', formatMontant(d.penalites)),
@@ -141,22 +141,9 @@ class _DeclarationsPageState extends State<DeclarationsPage> {
               _buildDetail('Date limite', d.dateLimitePaiement != null ? formatDate(d.dateLimitePaiement) : '-'),
               if (d.datePaiement != null) _buildDetail('Payé le', formatDate(d.datePaiement)),
               if (d.referencePaiement != null) _buildDetail('Réf. paiement', d.referencePaiement!),
+              if (d.observations != null && d.observations!.isNotEmpty) _buildDetail('Observations', d.observations!),
               const SizedBox(height: 20),
-              if (statut == 'en_attente' || statut == 'en_retard')
-                ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.pop(ctx);
-                    context.push('/scan');
-                  },
-                  icon: const Icon(Icons.payment, size: 18),
-                  label: const Text('Payer maintenant'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: statut == 'en_retard' ? AppColors.error : AppColors.success,
-                    minimumSize: const Size(double.infinity, 48),
-                  ),
-                ),
               if (statut == 'en_attente') ...[
-                const SizedBox(height: 12),
                 Row(
                   children: [
                     Expanded(
@@ -217,13 +204,20 @@ class _DeclarationsPageState extends State<DeclarationsPage> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(label, style: const TextStyle(color: AppColors.textSecondary)),
+          const SizedBox(width: 8),
           Flexible(child: Text(value, style: const TextStyle(color: AppColors.textPrimary), textAlign: TextAlign.end)),
         ],
       ),
     );
+  }
+
+  String _formatDateStr(String? dateStr) {
+    if (dateStr == null || dateStr.isEmpty) return '-';
+    final d = DateTime.tryParse(dateStr);
+    return d != null ? formatDate(d) : dateStr;
   }
 
   @override
@@ -299,7 +293,7 @@ class _DeclarationsPageState extends State<DeclarationsPage> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(d.taxe?.nom ?? 'Déclaration', style: const TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.w600)),
-                                        Text('${d.exercice ?? '-'} • ${d.periodeDebut ?? '-'}', style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
+                                        Text('${d.exercice ?? '-'} • ${_formatDateStr(d.periodeDebut)}', style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
                                       ],
                                     ),
                                   ),

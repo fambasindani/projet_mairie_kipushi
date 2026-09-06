@@ -20,8 +20,7 @@ export const permissionService = {
   },
 
   async all(): Promise<Permission[]> {
-    const res = await get<{ data: Permission[] }>("/permissions", { per_page: 9999 });
-    return res.data;
+    return get<Permission[]>("/permissions/all");
   },
 
   get(id: number): Promise<Permission> {

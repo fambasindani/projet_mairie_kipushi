@@ -133,6 +133,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('permissions')->name('permissions.')->group(function () {
         // Lecture
         Route::middleware(['permission:permission:read'])->group(function () {
+            Route::get('/all', [PermissionController::class, 'all'])->name('all');
             Route::get('/', [PermissionController::class, 'index'])->name('index');
             Route::get('/{id}', [PermissionController::class, 'show'])->name('show');
         });
@@ -720,6 +721,27 @@ Route::prefix('rapports')->name('rapports.')->group(function () {
 });
 
 
+
+    // ============================================================
+    // ADMIN: RESYNC PERMISSIONS (remote fix)
+    // ============================================================
+    Route::prefix('admin')->name('admin.')->middleware(['permission:permission:read'])->group(function () {
+        Route::post('/seed-permissions', function () {
+            try {
+                \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'PermissionSeeder', '--force' => true]);
+                \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'RolesPermissionsSeeder', '--force' => true]);
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Permissions et rôles synchronisés avec succès',
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Erreur: ' . $e->getMessage(),
+                ], 500);
+            }
+        });
+    });
 
 }); // Fin middleware auth:sanctum
 

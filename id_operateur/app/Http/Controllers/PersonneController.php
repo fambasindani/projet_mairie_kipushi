@@ -125,15 +125,7 @@ class PersonneController extends Controller
             $data = $personne->toArray();
             $data['avatar_url'] = null;
             if (!empty($data['avatar'])) {
-                try {
-                    if (Storage::disk('public')->exists($data['avatar'])) {
-                        $file = Storage::disk('public')->get($data['avatar']);
-                        $mime = Storage::disk('public')->mimeType($data['avatar']);
-                        $data['avatar_url'] = 'data:' . $mime . ';base64,' . base64_encode($file);
-                    }
-                } catch (\Exception $e) {
-                    $data['avatar_url'] = null;
-                }
+                $data['avatar_url'] = url('storage/' . $data['avatar']);
             }
             return $data;
         });

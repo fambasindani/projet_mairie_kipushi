@@ -80,6 +80,7 @@ export interface Personne {
   id_province: number | null;
   id_ville: number | null;
   activites?: ActiviteEconomique[];
+  utilisateur?: { id: number; personne_id: number; email: string };
   created_at: string;
   updated_at: string;
 }

@@ -142,7 +142,7 @@ class DeclarationPaiementController extends Controller
             'periode_fin' => 'required|date|after_or_equal:periode_debut',
             'montant_base' => 'required|numeric|min:0',
             'montant_taxe' => 'required|numeric|min:0',
-            'date_limite_paiement' => 'required|date|after:today',
+            'date_limite_paiement' => 'required|date|after_or_equal:today',
             'observations' => 'nullable|string',
         ]);
 

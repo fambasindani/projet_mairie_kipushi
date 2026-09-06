@@ -138,25 +138,61 @@ function getOpenGroup(pathname: string): string {
   return "dashboard";
 }
 
+const SYSTEM_ROLES = ['Administrateur', 'Operateur'];
+
+const pathPermissionMap: Record<string, string> = {
+  '/declarations': 'paiement:read',
+  '/factures': 'facture:read',
+  '/taxes': 'taxe:read',
+  '/biens': 'operateur:read',
+  '/vehicules': 'operateur:read',
+  '/permis': 'permis:read',
+  '/operateurs': 'operateur:read',
+  '/activites': 'operateur:read',
+  '/documents': 'document:read',
+  '/identifiants': 'identifiant:read',
+  '/utilisateurs': 'utilisateur:read',
+  '/roles': 'role:read',
+  '/permissions': 'permission:read',
+  '/audit': 'audit:read',
+  '/parametres': 'parametre:read',
+  '/rapports': 'rapport:read',
+  '/notifications': 'notification:read',
+  '/provinces': 'operateur:read',
+  '/villes': 'operateur:read',
+  '/communes': 'operateur:read',
+  '/quartiers': 'operateur:read',
+};
+
 export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
   const location = useLocation();
   const { user } = useAuth();
   const isOpen = !collapsed;
 
-  const isOperateur = user?.roles?.some((r) => r.nom === "Operateur");
+  const isAdmin = user?.roles?.some((r) => r.nom === "Administrateur");
+  const userPermissions = new Set(
+    user?.roles?.flatMap((r) => r.permissions?.map((p) => p.nom) ?? []) ?? []
+  );
 
-  const visibleGroups = isOperateur
-    ? navGroups.filter((g) => ["notifications", "profil"].includes(g.key)).concat(
-        navGroups.filter((g) => ["fiscalite", "patrimoine"].includes(g.key)).map((g) => ({
-          ...g,
-          children: g.children.filter((c) =>
-            g.key === "fiscalite"
-              ? c.path === "/declarations" || c.path === "/factures"
-              : true
-          ),
-        }))
-      )
-    : navGroups;
+  const hasPermission = (path: string) => {
+    if (isAdmin) return true;
+    const required = pathPermissionMap[path];
+    return !required || userPermissions.has(required);
+  };
+
+  const visibleGroups = navGroups
+    .filter((g) => {
+      if (g.standalone) {
+        if (g.path) return hasPermission(g.path);
+        return true;
+      }
+      return true;
+    })
+    .map((g) => ({
+      ...g,
+      children: g.children.filter((c) => hasPermission(c.path)),
+    }))
+    .filter((g) => g.standalone || g.children.length > 0);
 
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() => {
     const active = getOpenGroup(location.pathname);

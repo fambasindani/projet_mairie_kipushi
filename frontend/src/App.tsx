@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider, useAuth } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Layout from "./components/layout/Layout";
 import Login from "./pages/Login";
@@ -39,6 +39,13 @@ import Documents from "./pages/Documents";
 import Identifiants from "./pages/Identifiants";
 import Rapports from "./pages/Rapports";
 
+function OperateurRedirect() {
+  const { user } = useAuth();
+  const isOperateur = user?.roles?.some((r) => r.nom === "Operateur");
+  if (isOperateur) return <Navigate to="/profil" replace />;
+  return <Dashboard />;
+}
+
 export default function App() {
   return (
     <BrowserRouter basename="/mairie">
@@ -67,7 +74,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route element={<ProtectedRoute />}>
             <Route element={<Layout />}>
-              <Route path="/" element={<Dashboard />} />
+              <Route path="/" element={<OperateurRedirect />} />
               <Route path="/operateurs" element={<Operateurs />} />
               <Route path="/operateurs/nouveau" element={<OperateurForm />} />
               <Route path="/operateurs/:id" element={<OperateurDetail />} />
