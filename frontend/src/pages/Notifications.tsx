@@ -7,11 +7,16 @@ import {
   Clock,
   Eye,
   CheckCheck,
+  AlertTriangle,
+  Send,
+  Info,
+  FileText,
 } from 'lucide-react';
 import PageHeader from '../components/ui/PageHeader';
 import StatCard from '../components/ui/StatCard';
 import Badge from '../components/ui/Badge';
 import DataTable from '../components/ui/DataTable';
+import Modal from '../components/ui/Modal';
 import ConfirmModal from '../components/ui/ConfirmModal';
 import Button from '../components/ui/Button';
 import { notificationService } from '../services/notificationService';
@@ -21,6 +26,7 @@ const typeNotificationBadge: Record<string, 'info' | 'success' | 'warning' | 'da
   paiement_echu: 'danger',
   renouvellement_permis: 'warning',
   controle_prochain: 'info',
+  mise_en_demeure: 'danger',
   information: 'success',
 };
 
@@ -28,7 +34,16 @@ const typeNotificationLabels: Record<string, string> = {
   paiement_echu: 'Paiement échu',
   renouvellement_permis: 'Renouvellement permis',
   controle_prochain: 'Contrôle à venir',
+  mise_en_demeure: 'Mise en demeure',
   information: 'Information',
+};
+
+const typeNotificationIcons: Record<string, typeof Bell> = {
+  paiement_echu: AlertTriangle,
+  renouvellement_permis: Clock,
+  controle_prochain: Info,
+  mise_en_demeure: Send,
+  information: FileText,
 };
 
 export default function Notifications() {
@@ -44,6 +59,7 @@ export default function Notifications() {
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const [confirmModal, setConfirmModal] = useState({ isOpen: false, item: null as Notification | null });
+  const [detailModal, setDetailModal] = useState<{ isOpen: boolean; item: Notification | null }>({ isOpen: false, item: null });
 
   const [stats, setStats] = useState({ total: 0, nonLues: 0, aujourdHui: 0 });
   const [statsLoading, setStatsLoading] = useState(true);
@@ -133,6 +149,13 @@ export default function Notifications() {
 
   const openDelete = (item: Notification) => setConfirmModal({ isOpen: true, item });
 
+  const openDetail = (item: Notification) => {
+    setDetailModal({ isOpen: true, item });
+    if (!item.est_lue) {
+      handleMarkAsRead(item);
+    }
+  };
+
   const columns = [
     {
       key: 'sujet',
@@ -192,15 +215,13 @@ export default function Notifications() {
       label: 'Actions',
       render: (item: Notification) => (
         <div className="flex items-center gap-1">
-          {!item.est_lue && (
-            <button
-              onClick={(e) => { e.stopPropagation(); handleMarkAsRead(item); }}
-              className="p-1.5 rounded-lg hover:bg-emerald-50 text-gray-500 hover:text-emerald-600 transition-colors cursor-pointer"
-              title="Marquer comme lue"
-            >
-              <Eye size={16} />
-            </button>
-          )}
+          <button
+            onClick={(e) => { e.stopPropagation(); openDetail(item); }}
+            className="p-1.5 rounded-lg hover:bg-primary-50 text-gray-500 hover:text-primary-600 transition-colors cursor-pointer"
+            title="Voir le détail"
+          >
+            <Eye size={16} />
+          </button>
           <button
             onClick={(e) => { e.stopPropagation(); openDelete(item); }}
             className="p-1.5 rounded-lg hover:bg-red-50 text-gray-500 hover:text-red-600 transition-colors cursor-pointer"
@@ -239,6 +260,7 @@ export default function Notifications() {
         searchable
         searchPlaceholder="Rechercher une notification..."
         onSearch={handleSearch}
+        onRowClick={(item) => openDetail(item)}
         pagination={{
           currentPage: pagination.currentPage,
           lastPage: pagination.lastPage,
@@ -258,6 +280,90 @@ export default function Notifications() {
         confirmText="Supprimer"
         variant="danger"
       />
+
+      <Modal
+        isOpen={detailModal.isOpen}
+        onClose={() => setDetailModal({ isOpen: false, item: null })}
+        title="Détail de la notification"
+        size="md"
+      >
+        {detailModal.item && (() => {
+          const Icon = typeNotificationIcons[detailModal.item.type_notification] ?? Bell;
+          const iconColors: Record<string, string> = {
+            paiement_echu: 'bg-red-50 text-red-600 ring-red-100',
+            renouvellement_permis: 'bg-amber-50 text-amber-600 ring-amber-100',
+            controle_prochain: 'bg-blue-50 text-blue-600 ring-blue-100',
+            mise_en_demeure: 'bg-orange-50 text-orange-600 ring-orange-100',
+            information: 'bg-emerald-50 text-emerald-600 ring-emerald-100',
+          };
+          return (
+            <div className="space-y-5">
+              <div className="flex items-start gap-4">
+                <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ring-1 ${iconColors[detailModal.item.type_notification] ?? 'bg-gray-50 text-gray-600 ring-gray-100'}`}>
+                  <Icon size={22} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-lg font-bold text-slate-900">{detailModal.item.sujet}</h3>
+                  <div className="flex items-center gap-2 mt-1">
+                    <Badge variant={typeNotificationBadge[detailModal.item.type_notification] ?? 'info'}>
+                      {typeNotificationLabels[detailModal.item.type_notification] ?? detailModal.item.type_notification}
+                    </Badge>
+                    <Badge variant={detailModal.item.est_lue ? 'success' : 'warning'}>
+                      {detailModal.item.est_lue ? 'Lu' : 'Non lu'}
+                    </Badge>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-xl border border-slate-100 bg-slate-50/50 p-5">
+                <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">{detailModal.item.message}</p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-xs text-slate-400 uppercase tracking-wide">Date d'envoi</p>
+                  <p className="text-sm font-medium text-slate-700 mt-1">
+                    {new Date(detailModal.item.date_envoi).toLocaleDateString('fr-FR', {
+                      day: '2-digit', month: 'long', year: 'numeric',
+                      hour: '2-digit', minute: '2-digit',
+                    })}
+                  </p>
+                </div>
+                {detailModal.item.date_lecture && (
+                  <div>
+                    <p className="text-xs text-slate-400 uppercase tracking-wide">Date de lecture</p>
+                    <p className="text-sm font-medium text-slate-700 mt-1">
+                      {new Date(detailModal.item.date_lecture).toLocaleDateString('fr-FR', {
+                        day: '2-digit', month: 'long', year: 'numeric',
+                        hour: '2-digit', minute: '2-digit',
+                      })}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {detailModal.item.lien_action && (
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="text-slate-400">Lien :</span>
+                  <a
+                    href={`#${detailModal.item.lien_action}`}
+                    onClick={() => setDetailModal({ isOpen: false, item: null })}
+                    className="text-primary-600 hover:text-primary-700 font-medium underline underline-offset-2"
+                  >
+                    {detailModal.item.lien_action}
+                  </a>
+                </div>
+              )}
+
+              <div className="flex justify-end pt-3 border-t border-slate-100">
+                <Button variant="secondary" onClick={() => setDetailModal({ isOpen: false, item: null })}>
+                  Fermer
+                </Button>
+              </div>
+            </div>
+          );
+        })()}
+      </Modal>
     </div>
   );
 }

@@ -17,8 +17,8 @@ import Taxes from "./pages/Taxes";
 import TaxeForm from "./pages/TaxeForm";
 import Declarations from "./pages/Declarations";
 import DeclarationForm from "./pages/DeclarationForm";
-import Factures from "./pages/Factures";
-import FactureForm from "./pages/FactureForm";
+import RecusPerception from "./pages/RecusPerception";
+import RecusPerceptionForm from "./pages/RecusPerceptionForm";
 import Biens from "./pages/Biens";
 import BienForm from "./pages/BienForm";
 import Vehicules from "./pages/Vehicules";
@@ -37,6 +37,11 @@ import Parametres from "./pages/Parametres";
 import Profil from "./pages/Profil";
 import Documents from "./pages/Documents";
 import Identifiants from "./pages/Identifiants";
+import IdentifiantDetail from "./pages/IdentifiantDetail";
+import Inscription from "./pages/Inscription";
+import Inscriptions from "./pages/Inscriptions";
+import InscriptionDetail from "./pages/InscriptionDetail";
+import LandingPage from "./pages/LandingPage";
 import Rapports from "./pages/Rapports";
 
 function OperateurRedirect() {
@@ -48,7 +53,7 @@ function OperateurRedirect() {
 
 export default function App() {
   return (
-    <BrowserRouter basename="/mairie">
+    <BrowserRouter>
       <AuthProvider>
         <Toaster
           position="top-right"
@@ -71,10 +76,12 @@ export default function App() {
           }}
         />
         <Routes>
+          <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/inscription" element={<Inscription />} />
           <Route element={<ProtectedRoute />}>
             <Route element={<Layout />}>
-              <Route path="/" element={<OperateurRedirect />} />
+              <Route path="/dashboard" element={<OperateurRedirect />} />
               <Route path="/operateurs" element={<Operateurs />} />
               <Route path="/operateurs/nouveau" element={<OperateurForm />} />
               <Route path="/operateurs/:id" element={<OperateurDetail />} />
@@ -92,8 +99,9 @@ export default function App() {
               <Route path="/declarations" element={<Declarations />} />
               <Route path="/declarations/nouveau" element={<DeclarationForm />} />
               <Route path="/declarations/:id/modifier" element={<DeclarationForm />} />
-              <Route path="/factures" element={<Factures />} />
-              <Route path="/factures/nouveau" element={<FactureForm />} />
+              <Route path="/recus-perception" element={<RecusPerception />} />
+              <Route path="/recus-perception/nouveau" element={<RecusPerceptionForm />} />
+              <Route path="/recus-perception/:id/modifier" element={<RecusPerceptionForm />} />
               <Route path="/biens" element={<Biens />} />
               <Route path="/biens/nouveau" element={<BienForm />} />
               <Route path="/biens/:id/modifier" element={<BienForm />} />
@@ -115,6 +123,9 @@ export default function App() {
               <Route path="/profil" element={<Profil />} />
               <Route path="/documents" element={<Documents />} />
               <Route path="/identifiants" element={<Identifiants />} />
+              <Route path="/identifiants/:id" element={<IdentifiantDetail />} />
+              <Route path="/inscriptions" element={<Inscriptions />} />
+              <Route path="/inscriptions/:id" element={<InscriptionDetail />} />
               <Route path="/rapports" element={<Rapports />} />
             </Route>
           </Route>

@@ -1,15 +1,16 @@
-import { useState } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 
 const pageTitles: Record<string, string> = {
-  "/": "Tableau de bord",
+  "/dashboard": "Tableau de bord",
   "/operateurs": "Opérateurs",
   "/utilisateurs": "Utilisateurs",
+  "/inscriptions": "Inscriptions",
   "/taxes": "Taxes",
   "/declarations": "Déclarations",
-  "/factures": "Factures",
+  "/recus-perception": "Reçus perception",
   "/biens": "Biens Immobiliers",
   "/vehicules": "Véhicules",
   "/permis": "Permis",
@@ -35,7 +36,14 @@ function getPageTitle(pathname: string): string {
 export default function Layout() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const pageTitle = getPageTitle(location.pathname);
+
+  useEffect(() => {
+    if (location.pathname === '/') {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [location.pathname, navigate]);
 
   return (
     <div className="min-h-screen bg-surface">

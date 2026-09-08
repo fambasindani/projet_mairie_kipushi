@@ -110,6 +110,10 @@ export interface Taxe {
     | "vehicule"
     | "permis_construire"
     | "etalage"
+    | "peage_urbain"
+    | "pont_bascule"
+    | "chargement"
+    | "dechargement"
     | "autre";
   description: string | null;
   taux: number | null;
@@ -123,6 +127,10 @@ export interface Taxe {
   bareme: Record<string, unknown> | null;
   est_actif: boolean;
   est_locale: boolean;
+  taux_majoration_retard: number;
+  taux_interet_mensuel: number;
+  delai_grace_jours: number;
+  taux_majoration_apres_mise_en_demeure: number;
   created_at: string;
   updated_at: string;
 }
@@ -154,6 +162,12 @@ export interface DeclarationPaiement {
   reference_paiement: string | null;
   justificatif: string | null;
   observations: string | null;
+  date_dernier_calcul_penalites: string | null;
+  nombre_jours_retard: number;
+  majoration_retard: number;
+  interet_retard: number;
+  mise_en_demeure_envoyee: boolean;
+  date_mise_en_demeure: string | null;
   personne?: Personne;
   taxe?: Taxe;
   created_at: string;

@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+use App\Http\Controllers\RecuPerceptionVerifyController;
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/verifier-recu/{numero}', [RecuPerceptionVerifyController::class, 'verifyPage'])
+    ->name('verifier.recu.page');

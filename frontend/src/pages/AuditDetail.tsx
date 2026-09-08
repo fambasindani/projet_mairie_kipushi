@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { ArrowLeft, Shield, User, Clock, Globe, Monitor, FileText, ArrowRightLeft } from 'lucide-react';
 import Button from '../components/ui/Button';
+import { formatDate, formatDateTime } from '../utils/format';
 import Badge from '../components/ui/Badge';
 import { DetailSkeleton } from '../components/ui/Skeletons';
 import { auditService } from '../services/auditService';
@@ -128,7 +129,7 @@ export default function AuditDetail() {
           <div>
             <p className="text-xs text-slate-400 uppercase tracking-wide font-medium">Date</p>
             <p className="text-sm font-semibold text-slate-900">
-              {new Date(log.created_at).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+              {formatDateTime(log.created_at)}
             </p>
           </div>
         </div>
@@ -170,7 +171,7 @@ export default function AuditDetail() {
             </div>
             <div>
               <p className="text-xs text-slate-400 uppercase tracking-wide font-medium mb-1">Timestamp complet</p>
-              <p className="text-xs text-slate-600 font-mono">{log.created_at}</p>
+              <p className="text-xs text-slate-600 font-mono">{formatDateTime(log.created_at)}</p>
             </div>
           </div>
         </div>

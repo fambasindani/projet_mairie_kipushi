@@ -25,6 +25,10 @@ use App\Http\Controllers\IdentifiantOfficielController;
 use App\Http\Controllers\ActiviteOperateurController;
 use App\Http\Controllers\RapportPersonnaliseController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PenaliteController;
+use App\Http\Controllers\InscriptionController;
+use App\Http\Controllers\RecuPerceptionController;
+use App\Http\Controllers\RecuPerceptionVerifyController;
 
 
 
@@ -60,6 +64,18 @@ Route::get('/test', function () {
 // ROUTES PUBLIQUES (SANS AUTHENTIFICATION)
 // ============================================================
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/inscription', [InscriptionController::class, 'store']);
+
+// Routes publiques pour le formulaire d'inscription (données de référence)
+Route::get('/activites-economiques', [ActiviteEconomiqueController::class, 'index']);
+Route::get('/provinces', [ProvinceController::class, 'index']);
+Route::get('/villes', [VilleController::class, 'index']);
+Route::get('/communes', [CommuneController::class, 'index']);
+Route::get('/communes/{id}/quartiers', [CommuneController::class, 'quartiers']);
+Route::get('/quartiers', [QuartierController::class, 'index']);
+
+// Vérification publique des reçus (QR code)
+Route::get('/verifier-recu/{numero}', [RecuPerceptionVerifyController::class, 'verify']);
 
 // ============================================================
 // ROUTES PROTÉGÉES PAR AUTHENTIFICATION
@@ -191,15 +207,10 @@ Route::middleware('auth:sanctum')->group(function () {
     // ============================================================
     Route::prefix('activites-economiques')->name('activites-economiques.')->group(function () {
         
-        // Routes statiques (sans paramètre)
+        // Routes statiques (sans paramètre) — protégées
         Route::middleware(['permission:operateur:read'])->group(function () {
             Route::get('/secteurs', [ActiviteEconomiqueController::class, 'secteurs'])->name('secteurs');
             Route::get('/statistiques', [ActiviteEconomiqueController::class, 'statistiques'])->name('statistiques');
-        });
-
-        // Routes avec paramètres
-        Route::middleware(['permission:operateur:read'])->group(function () {
-            Route::get('/', [ActiviteEconomiqueController::class, 'index'])->name('index');
             Route::get('/{id}', [ActiviteEconomiqueController::class, 'show'])->name('show');
         });
 
@@ -287,6 +298,58 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     // ============================================================
+    // GESTION DES PÉNALITÉS
+    // ============================================================
+    Route::prefix('penalites')->name('penalites.')->group(function () {
+        Route::middleware(['permission:paiement:read'])->group(function () {
+            Route::get('/{declarationId}/calculer', [PenaliteController::class, 'calculer'])->name('calculer');
+        });
+
+        Route::middleware(['permission:paiement:update'])->group(function () {
+            Route::post('/{declarationId}/appliquer', [PenaliteController::class, 'appliquer'])->name('appliquer');
+            Route::post('/{declarationId}/mise-en-demeure', [PenaliteController::class, 'miseEnDemeure'])->name('mise-en-demeure');
+        });
+
+        Route::middleware(['permission:paiement:validate'])->group(function () {
+            Route::post('/mettre-a-jour-toutes', [PenaliteController::class, 'mettreAJourToutes'])->name('mettre-a-jour-toutes');
+            Route::post('/verifier-mises-en-demeure', [PenaliteController::class, 'verifierMisesEnDemeure'])->name('verifier-mises-en-demeure');
+        });
+
+        Route::middleware(['permission:paiement:read'])->group(function () {
+            Route::get('/mises-en-demeure', [PenaliteController::class, 'listerMisesEnDemeure'])->name('lister-mises-en-demeure');
+        });
+    });
+
+    // ============================================================
+    // GESTION DES REÇUS DE PERCEPTION
+    // ============================================================
+    Route::prefix('recus-perception')->name('recus-perception.')->group(function () {
+        Route::middleware(['permission:paiement:read'])->group(function () {
+            Route::get('/types', [RecuPerceptionController::class, 'types'])->name('types');
+            Route::get('/stats', [RecuPerceptionController::class, 'stats'])->name('stats');
+            Route::get('/prochain-numero', [RecuPerceptionController::class, 'prochainNumero'])->name('prochain-numero');
+            Route::get('/{id}/qrcode', [RecuPerceptionController::class, 'qrcode'])->name('qrcode');
+        });
+
+        Route::middleware(['permission:paiement:read'])->group(function () {
+            Route::get('/', [RecuPerceptionController::class, 'index'])->name('index');
+            Route::get('/{id}', [RecuPerceptionController::class, 'show'])->name('show');
+        });
+
+        Route::middleware(['permission:paiement:create'])->group(function () {
+            Route::post('/', [RecuPerceptionController::class, 'store'])->name('store');
+        });
+
+        Route::middleware(['permission:paiement:update'])->group(function () {
+            Route::put('/{id}', [RecuPerceptionController::class, 'update'])->name('update');
+        });
+
+        Route::middleware(['permission:paiement:delete'])->group(function () {
+            Route::delete('/{id}', [RecuPerceptionController::class, 'destroy'])->name('destroy');
+        });
+    });
+
+    // ============================================================
     // GESTION DES FACTURES
     // ============================================================
     Route::prefix('factures')->name('factures.')->group(function () {
@@ -313,12 +376,6 @@ Route::middleware('auth:sanctum')->group(function () {
     // GESTION DES PROVINCES
     // ============================================================
     Route::prefix('provinces')->name('provinces.')->group(function () {
-        Route::middleware(['permission:operateur:read'])->group(function () {
-            Route::get('/', [ProvinceController::class, 'index'])->name('index');
-            Route::get('/{id}', [ProvinceController::class, 'show'])->name('show');
-            Route::get('/{id}/communes', [ProvinceController::class, 'communes'])->name('communes');
-        });
-
         Route::middleware(['permission:operateur:create'])->group(function () {
             Route::post('/', [ProvinceController::class, 'store'])->name('store');
         });
@@ -336,12 +393,6 @@ Route::middleware('auth:sanctum')->group(function () {
     // GESTION DES VILLES
     // ============================================================
     Route::prefix('villes')->name('villes.')->group(function () {
-        Route::middleware(['permission:operateur:read'])->group(function () {
-            Route::get('/', [VilleController::class, 'index'])->name('index');
-            Route::get('/{id}', [VilleController::class, 'show'])->name('show');
-            Route::get('/{id}/communes', [VilleController::class, 'communes'])->name('communes');
-        });
-
         Route::middleware(['permission:operateur:create'])->group(function () {
             Route::post('/', [VilleController::class, 'store'])->name('store');
         });
@@ -359,12 +410,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // GESTION DES COMMUNES
     // ============================================================
     Route::prefix('communes')->name('communes.')->group(function () {
-        Route::middleware(['permission:operateur:read'])->group(function () {
-            Route::get('/', [CommuneController::class, 'index'])->name('index');
-            Route::get('/{id}', [CommuneController::class, 'show'])->name('show');
-            Route::get('/{id}/quartiers', [CommuneController::class, 'quartiers'])->name('quartiers');
-            Route::get('/statistiques', [CommuneController::class, 'statistiques'])->name('statistiques');
-        });
+        Route::get('/statistiques', [CommuneController::class, 'statistiques'])->name('statistiques');
 
         Route::middleware(['permission:operateur:create'])->group(function () {
             Route::post('/', [CommuneController::class, 'store'])->name('store');
@@ -384,18 +430,8 @@ Route::middleware('auth:sanctum')->group(function () {
     // GESTION DES QUARTIERS
     // ============================================================
     Route::prefix('quartiers')->name('quartiers.')->group(function () {
-        
-        // Routes statiques (sans paramètre)
-        Route::middleware(['permission:operateur:read'])->group(function () {
-            Route::get('/statistiques', [QuartierController::class, 'statistiques'])->name('statistiques');
-        });
-
-        // Routes avec paramètres
-        Route::middleware(['permission:operateur:read'])->group(function () {
-            Route::get('/', [QuartierController::class, 'index'])->name('index');
-            Route::get('/{id}', [QuartierController::class, 'show'])->name('show');
-            Route::get('/commune/{communeId}', [QuartierController::class, 'parCommune'])->name('par-commune');
-        });
+        Route::get('/statistiques', [QuartierController::class, 'statistiques'])->name('statistiques');
+        Route::get('/commune/{communeId}', [QuartierController::class, 'parCommune'])->name('par-commune');
 
         Route::middleware(['permission:operateur:create'])->group(function () {
             Route::post('/', [QuartierController::class, 'store'])->name('store');
@@ -741,6 +777,16 @@ Route::prefix('rapports')->name('rapports.')->group(function () {
                 ], 500);
             }
         });
+    });
+
+    // ============================================================
+    // ADMIN: INSCRIPTIONS
+    // ============================================================
+    Route::prefix('inscriptions')->name('inscriptions.')->group(function () {
+        Route::get('/', [InscriptionController::class, 'index'])->name('index');
+        Route::get('/{id}', [InscriptionController::class, 'show'])->name('show');
+        Route::post('/{id}/approuver', [InscriptionController::class, 'approuver'])->name('approuver');
+        Route::post('/{id}/rejeter', [InscriptionController::class, 'rejeter'])->name('rejeter');
     });
 
 }); // Fin middleware auth:sanctum

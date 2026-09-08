@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { LayoutDashboard, Mail, Lock } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
@@ -39,7 +39,7 @@ export default function Login() {
       login(response.token, response.utilisateur);
       toast.success('Connexion réussie !');
       const isOperateur = response.utilisateur.roles?.some((r) => r.nom === 'Operateur');
-      navigate(isOperateur ? '/profil' : '/');
+      navigate(isOperateur ? '/declarations' : '/dashboard');
     } catch (err: unknown) {
       if (err instanceof ApiError) {
         toast.error(err.message);
@@ -109,6 +109,12 @@ export default function Login() {
               Se connecter
             </Button>
           </form>
+
+          <div className="mt-4 text-center">
+            <Link to="/inscription" className="text-sm text-white/80 hover:text-white underline underline-offset-2">
+              Créer un compte opérateur
+            </Link>
+          </div>
         </div>
 
         <p className="text-center text-sm text-white/70 mt-6">

@@ -20,10 +20,10 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
         <div className="relative">
           <select
             ref={ref}
-            className={`w-full appearance-none rounded-xl border bg-white py-2.5 px-4 pr-10 text-sm text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition cursor-pointer ${
+            className={`w-full appearance-none rounded-xl border bg-white py-2.5 px-4 pr-10 text-sm text-slate-900 focus:outline-none focus:ring-2 transition cursor-pointer ${
               error
-                ? 'border-red-400 focus:border-red-500 focus:ring-red-500/20'
-                : 'border-slate-300'
+                ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20'
+                : 'border-slate-300 focus:border-indigo-500 focus:ring-indigo-500/20'
             } ${className}`}
             {...props}
           >

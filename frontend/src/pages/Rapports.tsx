@@ -79,6 +79,19 @@ interface RapportData {
   montant_tva?: number;
   montant_moyen?: number;
   taux_recouvrement?: number;
+  total_penalites?: number;
+  declarations_en_retard?: number;
+  retards?: Array<{
+    id: number;
+    operateur: string;
+    taxe: string;
+    montant_total: number;
+    date_limite: string;
+    jours_retard: number;
+    majoration: number;
+    interet: number;
+    statut: string;
+  }>;
   actives?: number;
   inactives?: number;
   operateurs?: RapportData;
@@ -447,6 +460,63 @@ function PaiementsReport({ data }: { data: RapportData }) {
               </AreaChart>
             </ResponsiveContainer>
           </div>
+        </ResultSection>
+      )}
+
+      {/* Retards de paiement */}
+      {(data.declarations_en_retard ?? 0) > 0 && (
+        <ResultSection title="Retards de paiement" icon={<AlertTriangle size={16} />}>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+            <div className="bg-red-50 rounded-xl border border-red-100 p-4 flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-red-100"><AlertTriangle size={18} className="text-red-600" /></div>
+              <div><p className="text-xs text-red-500">Déclarations en retard</p><p className="text-lg font-bold text-red-700">{formatNumber(data.declarations_en_retard ?? 0)}</p></div>
+            </div>
+            <div className="bg-orange-50 rounded-xl border border-orange-100 p-4 flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-100"><DollarSign size={18} className="text-orange-600" /></div>
+              <div><p className="text-xs text-orange-500">Pénalités totales</p><p className="text-lg font-bold text-orange-700">{formatCdf(data.total_penalites ?? 0)}</p></div>
+            </div>
+            <div className="bg-slate-50 rounded-xl border border-slate-200 p-4 flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100"><Clock size={18} className="text-slate-600" /></div>
+              <div><p className="text-xs text-slate-500">Montant en retard</p><p className="text-lg font-bold text-slate-700">{formatCdf(data.montant_en_retard ?? 0)}</p></div>
+            </div>
+          </div>
+
+          {data.retards && data.retards.length > 0 && (
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead><tr className="border-b border-slate-200">
+                  <th className="text-left text-xs font-bold uppercase tracking-wider text-slate-500 px-4 py-3">Opérateur</th>
+                  <th className="text-left text-xs font-bold uppercase tracking-wider text-slate-500 px-4 py-3">Taxe</th>
+                  <th className="text-right text-xs font-bold uppercase tracking-wider text-slate-500 px-4 py-3">Montant</th>
+                  <th className="text-center text-xs font-bold uppercase tracking-wider text-slate-500 px-4 py-3">Jours retard</th>
+                  <th className="text-right text-xs font-bold uppercase tracking-wider text-slate-500 px-4 py-3">Majoration</th>
+                  <th className="text-right text-xs font-bold uppercase tracking-wider text-slate-500 px-4 py-3">Intérêts</th>
+                  <th className="text-left text-xs font-bold uppercase tracking-wider text-slate-500 px-4 py-3">Date limite</th>
+                  <th className="text-center text-xs font-bold uppercase tracking-wider text-slate-500 px-4 py-3">Statut</th>
+                </tr></thead>
+                <tbody className="divide-y divide-slate-100">
+                  {data.retards.map((r) => (
+                    <tr key={r.id} className="hover:bg-slate-50 transition">
+                      <td className="px-4 py-3 text-sm font-medium text-slate-800">{r.operateur}</td>
+                      <td className="px-4 py-3 text-sm text-slate-600">{r.taxe}</td>
+                      <td className="px-4 py-3 text-sm font-bold text-slate-900 text-right">{formatCdf(r.montant_total)}</td>
+                      <td className="px-4 py-3 text-sm text-center">
+                        <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold ${r.jours_retard >= 60 ? 'bg-red-100 text-red-700' : r.jours_retard >= 30 ? 'bg-orange-100 text-orange-700' : 'bg-amber-100 text-amber-700'}`}>
+                          {r.jours_retard}j
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-sm font-bold text-orange-600 text-right">{formatCdf(r.majoration)}</td>
+                      <td className="px-4 py-3 text-sm font-bold text-red-600 text-right">{formatCdf(r.interet)}</td>
+                      <td className="px-4 py-3 text-sm text-slate-600">{r.date_limite ? new Date(r.date_limite).toLocaleDateString('fr-FR') : '—'}</td>
+                      <td className="px-4 py-3 text-center">
+                        <Badge variant={statutBadge[r.statut ?? '']?.variant ?? 'neutral'}>{statutBadge[r.statut ?? '']?.label ?? r.statut}</Badge>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </ResultSection>
       )}
 

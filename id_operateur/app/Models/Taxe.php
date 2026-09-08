@@ -21,14 +21,22 @@ class Taxe extends Model
         'periodicite',
         'bareme',
         'est_actif',
-        'est_locale'
+        'est_locale',
+        'taux_majoration_retard',
+        'taux_interet_mensuel',
+        'delai_grace_jours',
+        'taux_majoration_apres_mise_en_demeure',
     ];
 
     protected $casts = [
         'taux' => 'decimal:4',
         'est_actif' => 'boolean',
         'est_locale' => 'boolean',
-        'bareme' => 'array', // Convertit automatiquement JSON en tableau
+        'bareme' => 'array',
+        'taux_majoration_retard' => 'decimal:2',
+        'taux_interet_mensuel' => 'decimal:2',
+        'delai_grace_jours' => 'integer',
+        'taux_majoration_apres_mise_en_demeure' => 'decimal:2',
     ];
 
     // ============================================================
@@ -200,6 +208,10 @@ class Taxe extends Model
             'vehicule' => 'Véhicule',
             'permis_construire' => 'Permis de construire',
             'etalage' => 'Étalage',
+            'peage_urbain' => 'Péage urbain',
+            'pont_bascule' => 'Pont bascule',
+            'chargement' => 'Chargement',
+            'dechargement' => 'Déchargement',
             'autre' => 'Autre',
         ];
         return $labels[$this->categorie] ?? $this->categorie;

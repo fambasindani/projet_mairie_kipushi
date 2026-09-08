@@ -30,7 +30,13 @@ class DeclarationPaiement extends Model
         'statut',
         'reference_paiement', 
         'justificatif', 
-        'observations'
+        'observations',
+        'date_dernier_calcul_penalites',
+        'nombre_jours_retard',
+        'majoration_retard',
+        'interet_retard',
+        'mise_en_demeure_envoyee',
+        'date_mise_en_demeure',
     ];
 
     protected $casts = [
@@ -43,6 +49,12 @@ class DeclarationPaiement extends Model
         'montant_taxe' => 'decimal:2',
         'penalites' => 'decimal:2',
         'montant_total' => 'decimal:2',
+        'date_dernier_calcul_penalites' => 'date',
+        'nombre_jours_retard' => 'integer',
+        'majoration_retard' => 'decimal:2',
+        'interet_retard' => 'decimal:2',
+        'mise_en_demeure_envoyee' => 'boolean',
+        'date_mise_en_demeure' => 'date',
     ];
 
     // ============================================================
@@ -77,6 +89,11 @@ class DeclarationPaiement extends Model
     public function facture()
     {
         return $this->hasOne(Facture::class);
+    }
+
+    public function misesEnDemeure()
+    {
+        return $this->hasMany(MiseEnDemeure::class, 'declaration_paiement_id');
     }
 
     // ============================================================

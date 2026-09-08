@@ -24,10 +24,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           )}
           <input
             ref={ref}
-            className={`w-full rounded-xl border bg-white py-2.5 px-4 text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition ${
+            className={`w-full rounded-xl border bg-white py-2.5 px-4 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 transition ${
               error
-                ? 'border-red-400 focus:border-red-500 focus:ring-red-500/20'
-                : 'border-slate-300'
+                ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20'
+                : 'border-slate-300 focus:border-indigo-500 focus:ring-indigo-500/20'
             } ${icon ? 'pl-10' : ''} ${className}`}
             {...props}
           />

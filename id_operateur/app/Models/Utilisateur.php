@@ -22,7 +22,10 @@ class Utilisateur extends Authenticatable
         'est_verrouille',
         'tentatives_connexion',
         'derniere_connexion',
-        'date_expiration_mot_de_passe'
+        'date_expiration_mot_de_passe',
+        'statut_inscription',
+        'motif_rejet',
+        'date_inscription',
     ];
 
     protected $hidden = [
@@ -33,7 +36,8 @@ class Utilisateur extends Authenticatable
         'est_actif' => 'boolean',
         'est_verrouille' => 'boolean',
         'derniere_connexion' => 'datetime',
-        'date_expiration_mot_de_passe' => 'date'
+        'date_expiration_mot_de_passe' => 'date',
+        'date_inscription' => 'date',
     ];
 
     // Relations

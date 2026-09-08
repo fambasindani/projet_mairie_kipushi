@@ -168,6 +168,35 @@ class RapportPersonnaliseController extends Controller
                        ($groupBy === 'jour' ? 'DATE(created_at)' : 
                        ($groupBy === 'annee' ? 'YEAR(created_at)' : 'DATE_FORMAT(created_at, "%Y-%m")'));
 
+        // Retards de paiement
+        $retardsQuery = (clone $query)->where(function ($q) {
+            $q->where('statut', 'en_retard')
+              ->orWhere('nombre_jours_retard', '>', 0);
+        });
+        $totalPenalites = $retardsQuery->sum('majoration_retard') + $retardsQuery->sum('interet_retard');
+        $retardsCount = (clone $retardsQuery)->count();
+        $retardsListe = (clone $retardsQuery)
+            ->with(['personne', 'taxe'])
+            ->select('id', 'personne_id', 'taxe_id', 'montant_total', 'montant_taxe', 'montant_base',
+                     'date_limite_paiement', 'date_paiement', 'nombre_jours_retard',
+                     'majoration_retard', 'interet_retard', 'statut', 'created_at')
+            ->orderBy('nombre_jours_retard', 'desc')
+            ->limit(20)
+            ->get()
+            ->map(function ($d) {
+                return [
+                    'id' => $d->id,
+                    'operateur' => $d->personne ? $d->personne->nom_complet : '—',
+                    'taxe' => $d->taxe ? $d->taxe->nom : '—',
+                    'montant_total' => $d->montant_total,
+                    'date_limite' => $d->date_limite_paiement,
+                    'jours_retard' => $d->nombre_jours_retard,
+                    'majoration' => $d->majoration_retard,
+                    'interet' => $d->interet_retard,
+                    'statut' => $d->statut,
+                ];
+            });
+
         return [
             'total' => $query->count(),
             'montant_total' => $totalMontant,
@@ -175,6 +204,9 @@ class RapportPersonnaliseController extends Controller
             'montant_en_attente' => $totalAttente,
             'montant_en_retard' => $totalRetard,
             'taux_recouvrement' => $totalMontant > 0 ? round(($totalPaye / $totalMontant) * 100, 2) : 0,
+            'total_penalites' => $totalPenalites,
+            'declarations_en_retard' => $retardsCount,
+            'retards' => $retardsListe,
             'par_statut' => (clone $query)->select('statut')
                 ->selectRaw('count(*) as total, sum(montant_total) as montant')
                 ->groupBy('statut')

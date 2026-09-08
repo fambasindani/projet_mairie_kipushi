@@ -126,7 +126,7 @@ export default function FactureForm() {
           </div>
         </div>
         <nav className="flex items-center gap-2 text-sm">
-          <span className="text-slate-500 hover:text-indigo-600 transition-colors cursor-pointer" onClick={() => navigate('/')}>Accueil</span>
+          <span className="text-slate-500 hover:text-indigo-600 transition-colors cursor-pointer" onClick={() => navigate('/dashboard')}>Accueil</span>
           <span className="text-slate-300">/</span>
           <span className="text-slate-500 hover:text-indigo-600 transition-colors cursor-pointer" onClick={() => navigate('/factures')}>Factures</span>
           <span className="text-slate-300">/</span>

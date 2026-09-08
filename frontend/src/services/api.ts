@@ -53,12 +53,15 @@ async function api<T = unknown>(endpoint: string, options: RequestOptions = {}):
 
   const token = localStorage.getItem("token");
 
+  const publicEndpoints = ["/login", "/inscription", "/activites-economiques", "/provinces", "/villes", "/communes", "/quartiers"];
+  const isPublic = publicEndpoints.some((ep) => endpoint === ep || endpoint.startsWith(ep + "/"));
+
   const headers: Record<string, string> = {
     Accept: "application/json",
     ...((fetchOptions.headers as Record<string, string>) || {}),
   };
 
-  if (token) {
+  if (token && !isPublic) {
     headers["Authorization"] = `Bearer ${token}`;
   }
 
@@ -73,7 +76,7 @@ async function api<T = unknown>(endpoint: string, options: RequestOptions = {}):
     headers,
   });
 
-  if (response.status === 401 && !endpoint.includes("/login")) {
+  if (response.status === 401 && !isPublic) {
     localStorage.removeItem("token");
     window.location.href = "/login";
     throw new ApiError("Session expirée. Veuillez vous reconnecter.", 401);

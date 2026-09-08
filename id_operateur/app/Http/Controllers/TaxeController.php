@@ -104,11 +104,11 @@ class TaxeController extends Controller
         $validator = Validator::make($request->all(), [
             'code' => 'required|string|max:20|unique:taxes,code',
             'nom' => 'required|string|max:255',
-            'categorie' => 'required|in:patente,foncier,revenus_locatifs,personnel_minimum,vehicule,permis_construire,etalage,autre',
+            'categorie' => 'required|in:patente,foncier,revenus_locatifs,personnel_minimum,vehicule,permis_construire,etalage,peage_urbain,pont_bascule,chargement,dechargement,autre',
             'description' => 'nullable|string',
             'taux' => 'nullable|numeric|min:0',
             'unite' => 'required|in:pourcentage,montant_fixe,par_unite',
-            'periodicite' => 'required|in:mensuelle,trimestrielle,semestrielle,annuelle,evenementielle',
+            'periodicite' => 'required|in:journaliere,hebdomadaire,mensuelle,trimestrielle,semestrielle,annuelle,evenementielle',
             'est_actif' => 'boolean',
             'est_locale' => 'boolean',
         ]);
@@ -224,11 +224,11 @@ class TaxeController extends Controller
         $validator = Validator::make($request->all(), [
             'code' => 'sometimes|string|max:20|unique:taxes,code,' . $id,
             'nom' => 'sometimes|string|max:255',
-            'categorie' => 'sometimes|in:patente,foncier,revenus_locatifs,personnel_minimum,vehicule,permis_construire,etalage,autre',
+            'categorie' => 'sometimes|in:patente,foncier,revenus_locatifs,personnel_minimum,vehicule,permis_construire,etalage,peage_urbain,pont_bascule,chargement,dechargement,autre',
             'description' => 'nullable|string',
             'taux' => 'nullable|numeric|min:0',
             'unite' => 'sometimes|in:pourcentage,montant_fixe,par_unite',
-            'periodicite' => 'sometimes|in:mensuelle,trimestrielle,semestrielle,annuelle,evenementielle',
+            'periodicite' => 'sometimes|in:journaliere,hebdomadaire,mensuelle,trimestrielle,semestrielle,annuelle,evenementielle',
             'est_actif' => 'boolean',
             'est_locale' => 'boolean',
         ]);

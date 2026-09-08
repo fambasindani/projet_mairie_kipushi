@@ -71,6 +71,7 @@ class Notification extends Model
             'paiement_echu' => 'Paiement échu',
             'renouvellement_permis' => 'Renouvellement de permis',
             'controle_prochain' => 'Contrôle à venir',
+            'mise_en_demeure' => 'Mise en demeure',
             'information' => 'Information',
         ];
         return $labels[$this->type_notification] ?? $this->type_notification;

@@ -28,6 +28,10 @@ const categorieLabels: Record<string, string> = {
   vehicule: 'Véhicule',
   permis_construire: 'Permis construire',
   etalage: 'Étalage',
+  peage_urbain: 'Péage urbain',
+  pont_bascule: 'Pont bascule',
+  chargement: 'Chargement',
+  dechargement: 'Déchargement',
   autre: 'Autre',
 };
 
@@ -39,6 +43,10 @@ const categorieBadge: Record<string, 'info' | 'warning' | 'success' | 'danger' |
   vehicule: 'info',
   permis_construire: 'warning',
   etalage: 'success',
+  peage_urbain: 'info',
+  pont_bascule: 'warning',
+  chargement: 'info',
+  dechargement: 'info',
   autre: 'neutral',
 };
 
@@ -180,7 +188,7 @@ export default function Taxes() {
     },
     {
       key: 'nom',
-      label: 'Nom',
+      label: 'Libellé',
       sortable: true,
       render: (item: Taxe) => (
         <span className="font-medium text-gray-800">{item.nom}</span>

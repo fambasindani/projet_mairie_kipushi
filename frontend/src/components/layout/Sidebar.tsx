@@ -36,9 +36,9 @@ const navGroups: NavGroup[] = [
     key: "dashboard",
     label: "Tableau de bord",
     icon: <LayoutDashboard size={20} />,
-    children: [{ label: "Tableau de bord", path: "/" }],
+    children: [{ label: "Tableau de bord", path: "/dashboard" }],
     standalone: true,
-    path: "/",
+    path: "/dashboard",
   },
   {
     key: "operateurs",
@@ -57,6 +57,7 @@ const navGroups: NavGroup[] = [
     icon: <Settings size={20} />,
     children: [
       { label: "Utilisateurs", path: "/utilisateurs" },
+      { label: "Inscriptions", path: "/inscriptions" },
       { label: "Rôles", path: "/roles" },
       { label: "Permissions", path: "/permissions" },
       { label: "Audit", path: "/audit" },
@@ -71,7 +72,7 @@ const navGroups: NavGroup[] = [
     children: [
       { label: "Taxes", path: "/taxes" },
       { label: "Déclarations", path: "/declarations" },
-      { label: "Factures", path: "/factures" },
+      { label: "Reçus perception", path: "/recus-perception" },
     ],
   },
   {
@@ -142,7 +143,7 @@ const SYSTEM_ROLES = ['Administrateur', 'Operateur'];
 
 const pathPermissionMap: Record<string, string> = {
   '/declarations': 'paiement:read',
-  '/factures': 'facture:read',
+  '/recus-perception': 'paiement:read',
   '/taxes': 'taxe:read',
   '/biens': 'operateur:read',
   '/vehicules': 'operateur:read',
@@ -170,6 +171,7 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
   const isOpen = !collapsed;
 
   const isAdmin = user?.roles?.some((r) => r.nom === "Administrateur");
+  const isOperateur = user?.roles?.some((r) => r.nom === "Operateur");
   const userPermissions = new Set(
     user?.roles?.flatMap((r) => r.permissions?.map((p) => p.nom) ?? []) ?? []
   );
@@ -180,17 +182,36 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
     return !required || userPermissions.has(required);
   };
 
+  const operateurAllowedChildren: Record<string, string[]> = {
+    operateurs: ['/operateurs'],
+    fiscalite: ['/declarations', '/recus-perception'],
+  };
+
+  const operateurAllowedStandalone = ['/notifications', '/profil'];
+
+  const isGroupVisible = (g: NavGroup) => {
+    if (isAdmin) return true;
+    if (isOperateur) {
+      if (g.standalone) return operateurAllowedStandalone.includes(g.path!);
+      return g.key in operateurAllowedChildren;
+    }
+    return true;
+  };
+
+  const isChildVisible = (groupKey: string, childPath: string) => {
+    if (isAdmin) return true;
+    if (isOperateur) {
+      const allowed = operateurAllowedChildren[groupKey];
+      return allowed ? allowed.includes(childPath) : false;
+    }
+    return hasPermission(childPath);
+  };
+
   const visibleGroups = navGroups
-    .filter((g) => {
-      if (g.standalone) {
-        if (g.path) return hasPermission(g.path);
-        return true;
-      }
-      return true;
-    })
+    .filter(isGroupVisible)
     .map((g) => ({
       ...g,
-      children: g.children.filter((c) => hasPermission(c.path)),
+      children: g.children.filter((c) => isChildVisible(g.key, c.path)),
     }))
     .filter((g) => g.standalone || g.children.length > 0);
 

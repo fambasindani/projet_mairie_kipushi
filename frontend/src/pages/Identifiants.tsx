@@ -1,11 +1,17 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { Shield, Trash2 } from 'lucide-react';
+import { Shield, Trash2, Plus } from 'lucide-react';
 import PageHeader from '../components/ui/PageHeader';
 import Badge from '../components/ui/Badge';
 import DataTable from '../components/ui/DataTable';
+import Modal from '../components/ui/Modal';
 import ConfirmModal from '../components/ui/ConfirmModal';
-import { get, del } from '../services/api';
+import Button from '../components/ui/Button';
+import Input from '../components/ui/Input';
+import Select from '../components/ui/Select';
+import DropdownSearch from '../components/ui/DropdownSearch';
+import { get, post, del } from '../services/api';
 import type { PaginatedResponse } from '../types';
 
 interface Identifiant {
@@ -33,12 +39,21 @@ const typeLabels: Record<string, string> = {
 };
 
 export default function Identifiants() {
+  const navigate = useNavigate();
   const [data, setData] = useState<Identifiant[]>([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({ currentPage: 1, lastPage: 1, total: 0, perPage: 20 });
   const [search, setSearch] = useState('');
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [confirmDelete, setConfirmDelete] = useState<Identifiant | null>(null);
+
+  const [formOpen, setFormOpen] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [form, setForm] = useState({ personne_id: '', type_identifiant: 'RCCM', valeur: '', province_delivrance: '', date_delivrance: '', date_expiration: '' });
+
+  const [personnes, setPersonnes] = useState<{ value: number; label: string }[]>([]);
+  const [loadingPersonnes, setLoadingPersonnes] = useState(false);
 
   const fetchData = useCallback(async (page = 1, perPage = 20, q = '') => {
     setLoading(true);
@@ -54,6 +69,55 @@ export default function Identifiants() {
   }, []);
 
   useEffect(() => { fetchData(); }, []);
+
+  const loadPersonnes = async () => {
+    setLoadingPersonnes(true);
+    try {
+      const res = await get<{ data: { id: number; nom: string; prenom: string; denomination_sociale: string | null }[] }>('/personnes', { per_page: 200 });
+      const items = (res.data ?? []).map((p) => ({ value: p.id, label: p.prenom ? `${p.prenom} ${p.nom}` : p.denomination_sociale ?? p.nom }));
+      setPersonnes(items);
+    } catch { setPersonnes([]); }
+    finally { setLoadingPersonnes(false); }
+  };
+
+  const openForm = () => {
+    setForm({ personne_id: '', type_identifiant: 'RCCM', valeur: '', province_delivrance: '', date_delivrance: '', date_expiration: '' });
+    setFormErrors({});
+    setFormOpen(true);
+    loadPersonnes();
+  };
+
+  const handleSubmit = async () => {
+    const errors: Record<string, string> = {};
+    if (!form.personne_id) errors.personne_id = 'L\'opérateur est requis';
+    if (!form.valeur.trim()) errors.valeur = 'La valeur est requise';
+    if (Object.keys(errors).length) { setFormErrors(errors); return; }
+    setFormErrors({});
+    setSubmitting(true);
+    try {
+      await post('/identifiants', {
+        personne_id: Number(form.personne_id),
+        type_identifiant: form.type_identifiant,
+        valeur: form.valeur,
+        province_delivrance: form.province_delivrance || undefined,
+        date_delivrance: form.date_delivrance || undefined,
+        date_expiration: form.date_expiration || undefined,
+      });
+      toast.success('Identifiant créé');
+      setFormOpen(false);
+      fetchData(1, pagination.perPage, search);
+    } catch (err: unknown) {
+      const apiErr = err as { errors?: Record<string, string[]>; message?: string };
+      if (apiErr.errors) {
+        const firstKey = Object.keys(apiErr.errors)[0];
+        toast.error(apiErr.errors[firstKey][0]);
+      } else {
+        toast.error(apiErr.message || 'Erreur lors de la création');
+      }
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   const handleSearch = (value: string) => {
     setSearch(value);
@@ -130,7 +194,9 @@ export default function Identifiants() {
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Identifiants officiels" subtitle="Gestion des identifiants des opérateurs" />
+      <PageHeader title="Identifiants officiels" subtitle="Gestion des identifiants des opérateurs"
+        actions={<Button icon={<Plus size={16} />} onClick={openForm}>Nouvel identifiant</Button>}
+      />
       <DataTable
         columns={columns}
         data={data}
@@ -139,6 +205,7 @@ export default function Identifiants() {
         searchable
         searchPlaceholder="Rechercher..."
         onSearch={handleSearch}
+        onRowClick={(item) => navigate(`/identifiants/${item.id}`)}
         pagination={{
           currentPage: pagination.currentPage,
           lastPage: pagination.lastPage,
@@ -148,6 +215,31 @@ export default function Identifiants() {
           onPerPageChange: (perPage) => fetchData(1, perPage, search),
         }}
       />
+      <Modal isOpen={formOpen} onClose={() => setFormOpen(false)} title="Nouvel identifiant" size="lg">
+        <div className="space-y-4">
+          <DropdownSearch
+            label="Opérateur *"
+            options={personnes}
+            value={form.personne_id}
+            onChange={(v) => { setForm((p) => ({ ...p, personne_id: String(v) })); if (formErrors.personne_id) setFormErrors((p) => ({ ...p, personne_id: '' })); }}
+            placeholder="Rechercher un opérateur..."
+            loading={loadingPersonnes}
+            error={formErrors.personne_id}
+          />
+          <Select label="Type *" options={Object.entries(typeLabels).map(([value, label]) => ({ label, value }))} value={form.type_identifiant} onChange={(e) => setForm((p) => ({ ...p, type_identifiant: e.target.value }))} />
+          <Input label="Numéro / Valeur *" value={form.valeur} onChange={(e) => { setForm((p) => ({ ...p, valeur: e.target.value })); if (formErrors.valeur) setFormErrors((p) => ({ ...p, valeur: '' })); }} placeholder="Ex: 012345678" error={formErrors.valeur} />
+          <Input label="Province de délivrance" value={form.province_delivrance} onChange={(e) => setForm((p) => ({ ...p, province_delivrance: e.target.value }))} />
+          <div className="grid grid-cols-2 gap-4">
+            <Input label="Date de délivrance" type="date" value={form.date_delivrance} onChange={(e) => setForm((p) => ({ ...p, date_delivrance: e.target.value }))} />
+            <Input label="Date d'expiration" type="date" value={form.date_expiration} onChange={(e) => setForm((p) => ({ ...p, date_expiration: e.target.value }))} />
+          </div>
+          <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
+            <Button variant="secondary" onClick={() => setFormOpen(false)}>Annuler</Button>
+            <Button onClick={handleSubmit} loading={submitting} icon={<Plus size={14} />}>Créer</Button>
+          </div>
+        </div>
+      </Modal>
+
       <ConfirmModal
         isOpen={!!confirmDelete}
         onClose={() => setConfirmDelete(null)}

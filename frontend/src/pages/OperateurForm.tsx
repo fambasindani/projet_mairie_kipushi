@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { ArrowLeft, Save, Users, User, Phone, MapPin } from 'lucide-react';
+import { ArrowLeft, Save, Users, User, Phone, MapPin, Briefcase, FileText, Plus, Trash2 } from 'lucide-react';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
 import Select from '../components/ui/Select';
@@ -11,8 +11,25 @@ import { provinceService } from '../services/provinceService';
 import { villeService } from '../services/villeService';
 import { communeService } from '../services/communeService';
 import { quartierService } from '../services/quartierService';
-import type { Personne, Province, Ville, Commune, Quartier } from '../types';
+import { activiteService } from '../services/activiteService';
+import { identifiantService } from '../services/identifiantService';
+import { post, get } from '../services/api';
+import type { Personne, Province, Ville, Commune, Quartier, ActiviteEconomique, IdentifiantOfficiel } from '../types';
 import { FormSkeleton } from '../components/ui/Skeletons';
+
+interface SelectedActivite {
+  id: number;
+  nom: string;
+  est_principale: boolean;
+}
+
+interface NewIdentifiant {
+  type_identifiant: string;
+  valeur: string;
+  province_delivrance: string;
+  date_delivrance: string;
+  date_expiration: string;
+}
 
 const EMPTY_FORM: Partial<Personne> = {
   type: 'physique',
@@ -67,11 +84,20 @@ export default function OperateurForm() {
   const [loadingCommunes, setLoadingCommunes] = useState(false);
   const [loadingQuartiers, setLoadingQuartiers] = useState(false);
 
+  const [allActivites, setAllActivites] = useState<ActiviteEconomique[]>([]);
+  const [selectedActivites, setSelectedActivites] = useState<SelectedActivite[]>([]);
+  const [identifiants, setIdentifiants] = useState<IdentifiantOfficiel[]>([]);
+  const [newIdentifiant, setNewIdentifiant] = useState<NewIdentifiant>({ type_identifiant: '', valeur: '', province_delivrance: '', date_delivrance: '', date_expiration: '' });
+  const [savingIdentifiant, setSavingIdentifiant] = useState(false);
+  const [identifiantTypes, setIdentifiantTypes] = useState<Record<string, string>>({});
+
   useEffect(() => {
     provinceService.list({ per_page: 100 }).then((res) => {
       setProvinces(res.data);
       setLoadingProvinces(false);
     });
+    activiteService.list({ per_page: 200 }).then((res) => setAllActivites(res.data)).catch(() => {});
+    identifiantService.types().then((res) => setIdentifiantTypes(res)).catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -124,6 +150,14 @@ export default function OperateurForm() {
           }
         };
         loadCascade();
+
+        get<{ data: ActiviteEconomique[] }>(`/operateur-activites/${id}`).then((res) => {
+          setSelectedActivites(res.data.map((a) => ({ id: a.id, nom: a.nom, est_principale: (a as unknown as Record<string, unknown>).est_principale as boolean ?? false })));
+        }).catch(() => {});
+
+        identifiantService.list({ personne_id: Number(id), per_page: 100 }).then((res) => {
+          setIdentifiants(res.data);
+        }).catch(() => {});
 
         setLoading(false);
       }).catch(() => {
@@ -216,6 +250,51 @@ export default function OperateurForm() {
   const communeOptions = communes.map((c) => ({ label: c.nom, value: c.id }));
   const quartierOptions = quartiers.map((q) => ({ label: q.nom, value: q.id }));
 
+  const toggleActivite = (activite: ActiviteEconomique) => {
+    setSelectedActivites((prev) => {
+      const exists = prev.find((a) => a.id === activite.id);
+      if (exists) return prev.filter((a) => a.id !== activite.id);
+      return [...prev, { id: activite.id, nom: activite.nom, est_principale: false }];
+    });
+  };
+
+  const handleAddIdentifiant = async () => {
+    if (!newIdentifiant.type_identifiant || !newIdentifiant.valeur.trim()) {
+      toast.error('Type et valeur sont requis');
+      return;
+    }
+    setSavingIdentifiant(true);
+    try {
+      const res = await identifiantService.create({
+        personne_id: Number(id),
+        type_identifiant: newIdentifiant.type_identifiant as IdentifiantOfficiel['type_identifiant'],
+        valeur: newIdentifiant.valeur,
+        province_delivrance: newIdentifiant.province_delivrance || undefined,
+        date_delivrance: newIdentifiant.date_delivrance || undefined,
+        date_expiration: newIdentifiant.date_expiration || undefined,
+      });
+      setIdentifiants((prev) => [...prev, res]);
+      setNewIdentifiant({ type_identifiant: '', valeur: '', province_delivrance: '', date_delivrance: '', date_expiration: '' });
+      toast.success('Identifiant ajouté');
+    } catch {
+      toast.error('Erreur lors de l\'ajout');
+    } finally {
+      setSavingIdentifiant(false);
+    }
+  };
+
+  const handleDeleteIdentifiant = async (identId: number) => {
+    try {
+      await identifiantService.delete(identId);
+      setIdentifiants((prev) => prev.filter((i) => i.id !== identId));
+      toast.success('Identifiant supprimé');
+    } catch {
+      toast.error('Erreur lors de la suppression');
+    }
+  };
+
+  const identifiantTypeOptions = Object.entries(identifiantTypes).map(([value, label]) => ({ label, value }));
+
   const validate = (): boolean => {
     const e: Record<string, string> = {};
     if (!form.nom?.trim()) e.nom = 'Le nom est requis';
@@ -237,13 +316,24 @@ export default function OperateurForm() {
         }
       });
 
+      let personId: number;
       if (isEdit && id) {
         await personneService.update(Number(id), payload);
+        personId = Number(id);
         toast.success('Opérateur modifié');
       } else {
-        await personneService.create(payload);
+        const created = await personneService.create(payload);
+        personId = created.id;
         toast.success('Opérateur créé');
       }
+
+      if (selectedActivites.length > 0) {
+        await post('/operateur-activites/assigner', {
+          personne_id: personId,
+          activites: selectedActivites.map((a) => ({ id: a.id, est_principale: a.est_principale })),
+        }).catch(() => {});
+      }
+
       navigate('/operateurs');
     } catch (err: unknown) {
       const apiErr = err as { errors?: Record<string, string[]>; message?: string };
@@ -279,7 +369,7 @@ export default function OperateurForm() {
           </div>
         </div>
         <nav className="flex items-center gap-2 text-sm">
-          <span className="text-slate-500 hover:text-indigo-600 transition-colors cursor-pointer" onClick={() => navigate('/')}>Accueil</span>
+          <span className="text-slate-500 hover:text-indigo-600 transition-colors cursor-pointer" onClick={() => navigate('/dashboard')}>Accueil</span>
           <span className="text-slate-300">/</span>
           <span className="text-slate-500 hover:text-indigo-600 transition-colors cursor-pointer" onClick={() => navigate('/operateurs')}>Opérateurs</span>
           <span className="text-slate-300">/</span>
@@ -444,6 +534,81 @@ export default function OperateurForm() {
               </div>
             </div>
           </div>
+
+          {isEdit && (
+            <>
+              <div>
+                <div className="flex items-center gap-3 mb-5">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 ring-1 ring-indigo-100">
+                    <Briefcase className="text-sm" />
+                  </span>
+                  <h3 className="text-sm font-bold text-slate-900">Activités économiques</h3>
+                </div>
+                <div className="rounded-xl border border-slate-100 bg-slate-50/50 p-5">
+                  {selectedActivites.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {selectedActivites.map((a) => (
+                        <span key={a.id} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-100 text-indigo-700 text-sm font-medium">
+                          {a.nom}
+                          <button type="button" onClick={() => toggleActivite(a as unknown as ActiviteEconomique)} className="ml-1 hover:text-indigo-900 cursor-pointer">×</button>
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                    {allActivites.map((a) => {
+                      const selected = selectedActivites.some((s) => s.id === a.id);
+                      return (
+                        <button key={a.id} type="button" onClick={() => toggleActivite(a)}
+                          className={`text-left p-3 rounded-xl border text-sm transition-all cursor-pointer ${selected ? 'border-indigo-300 bg-indigo-50 text-indigo-700 font-medium' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'}`}>
+                          {a.nom}
+                          {a.secteur && <span className="block text-xs text-slate-400 mt-0.5">{a.secteur}</span>}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {allActivites.length === 0 && <p className="text-sm text-slate-400">Aucune activité disponible</p>}
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-center gap-3 mb-5">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 ring-1 ring-indigo-100">
+                    <FileText className="text-sm" />
+                  </span>
+                  <h3 className="text-sm font-bold text-slate-900">Identifiants officiels</h3>
+                </div>
+                <div className="rounded-xl border border-slate-100 bg-slate-50/50 p-5 space-y-4">
+                  {identifiants.length > 0 && (
+                    <div className="space-y-2">
+                      {identifiants.map((ident) => (
+                        <div key={ident.id} className="flex items-center justify-between p-3 rounded-xl bg-white border border-slate-200">
+                          <div>
+                            <span className="text-sm font-semibold text-slate-700">{ident.type_identifiant}</span>
+                            <span className="mx-2 text-slate-300">—</span>
+                            <span className="text-sm text-slate-600">{ident.valeur}</span>
+                          </div>
+                          <button type="button" onClick={() => handleDeleteIdentifiant(ident.id)} className="p-1.5 rounded-lg hover:bg-red-50 text-slate-400 hover:text-red-600 transition cursor-pointer">
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 p-3 rounded-xl border border-dashed border-slate-300 bg-white">
+                    <Select label="Type *" options={identifiantTypeOptions} value={newIdentifiant.type_identifiant} onChange={(e) => setNewIdentifiant((p) => ({ ...p, type_identifiant: e.target.value }))} />
+                    <Input label="Valeur *" value={newIdentifiant.valeur} onChange={(e) => setNewIdentifiant((p) => ({ ...p, valeur: e.target.value }))} placeholder="Numéro..." />
+                    <Input label="Province de délivrance" value={newIdentifiant.province_delivrance} onChange={(e) => setNewIdentifiant((p) => ({ ...p, province_delivrance: e.target.value }))} />
+                    <Input label="Date de délivrance" type="date" value={newIdentifiant.date_delivrance} onChange={(e) => setNewIdentifiant((p) => ({ ...p, date_delivrance: e.target.value }))} />
+                    <Input label="Date d'expiration" type="date" value={newIdentifiant.date_expiration} onChange={(e) => setNewIdentifiant((p) => ({ ...p, date_expiration: e.target.value }))} />
+                    <div className="flex items-end">
+                      <Button type="button" variant="secondary" icon={<Plus size={14} />} onClick={handleAddIdentifiant} loading={savingIdentifiant} className="!w-full">Ajouter</Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
 
           <div className="flex items-center justify-end gap-3 pt-5 border-t border-slate-100">
             <Button variant="secondary" type="button" onClick={() => navigate('/operateurs')}>Annuler</Button>

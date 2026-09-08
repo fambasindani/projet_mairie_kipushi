@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { ArrowLeft, Save, Receipt, Hash, DollarSign, Calendar } from 'lucide-react';
+import { ArrowLeft, Save, Receipt, Hash, DollarSign, Calendar, AlertTriangle } from 'lucide-react';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
 import Select from '../components/ui/Select';
@@ -19,6 +19,10 @@ interface TaxeFormState {
   unite: string;
   periodicite: string;
   est_locale: boolean;
+  taux_majoration_retard: string;
+  taux_interet_mensuel: string;
+  delai_grace_jours: string;
+  taux_majoration_apres_mise_en_demeure: string;
 }
 
 const EMPTY_FORM: TaxeFormState = {
@@ -30,6 +34,10 @@ const EMPTY_FORM: TaxeFormState = {
   unite: 'pourcentage',
   periodicite: 'annuelle',
   est_locale: false,
+  taux_majoration_retard: '25',
+  taux_interet_mensuel: '2',
+  delai_grace_jours: '0',
+  taux_majoration_apres_mise_en_demeure: '100',
 };
 
 const categorieOptions = [
@@ -40,6 +48,10 @@ const categorieOptions = [
   { label: 'Véhicule', value: 'vehicule' },
   { label: 'Permis construire', value: 'permis_construire' },
   { label: 'Étalage', value: 'etalage' },
+  { label: 'Péage urbain', value: 'peage_urbain' },
+  { label: 'Pont bascule', value: 'pont_bascule' },
+  { label: 'Chargement', value: 'chargement' },
+  { label: 'Déchargement', value: 'dechargement' },
   { label: 'Autre', value: 'autre' },
 ];
 
@@ -50,6 +62,8 @@ const uniteOptions = [
 ];
 
 const periodiciteOptions = [
+  { label: 'Journalière', value: 'journaliere' },
+  { label: 'Hebdomadaire', value: 'hebdomadaire' },
   { label: 'Mensuelle', value: 'mensuelle' },
   { label: 'Trimestrielle', value: 'trimestrielle' },
   { label: 'Semestrielle', value: 'semestrielle' },
@@ -79,6 +93,10 @@ export default function TaxeForm() {
           unite: data.unite,
           periodicite: data.periodicite,
           est_locale: data.est_locale,
+          taux_majoration_retard: String(data.taux_majoration_retard ?? 25),
+          taux_interet_mensuel: String(data.taux_interet_mensuel ?? 2),
+          delai_grace_jours: String(data.delai_grace_jours ?? 0),
+          taux_majoration_apres_mise_en_demeure: String(data.taux_majoration_apres_mise_en_demeure ?? 100),
         });
         setLoading(false);
       }).catch(() => {
@@ -113,6 +131,10 @@ export default function TaxeForm() {
         unite: form.unite,
         periodicite: form.periodicite,
         est_locale: form.est_locale,
+        taux_majoration_retard: Number(form.taux_majoration_retard),
+        taux_interet_mensuel: Number(form.taux_interet_mensuel),
+        delai_grace_jours: Number(form.delai_grace_jours),
+        taux_majoration_apres_mise_en_demeure: Number(form.taux_majoration_apres_mise_en_demeure),
       };
 
       if (isEdit && id) {
@@ -162,7 +184,7 @@ export default function TaxeForm() {
           </div>
         </div>
         <nav className="flex items-center gap-2 text-sm">
-          <span className="text-slate-500 hover:text-indigo-600 transition-colors cursor-pointer" onClick={() => navigate('/')}>Accueil</span>
+          <span className="text-slate-500 hover:text-indigo-600 transition-colors cursor-pointer" onClick={() => navigate('/dashboard')}>Accueil</span>
           <span className="text-slate-300">/</span>
           <span className="text-slate-500 hover:text-indigo-600 transition-colors cursor-pointer" onClick={() => navigate('/taxes')}>Taxes</span>
           <span className="text-slate-300">/</span>
@@ -189,7 +211,7 @@ export default function TaxeForm() {
                   placeholder="TAX-001"
                 />
                 <Input
-                  label="Nom *"
+                  label="Libellé *"
                   value={form.nom}
                   onChange={(e) => setField('nom', e.target.value)}
                   error={errors.nom}
@@ -258,6 +280,64 @@ export default function TaxeForm() {
                   Taxe locale
                 </label>
               </div>
+            </div>
+          </div>
+
+          <div>
+            <div className="flex items-center gap-3 mb-5">
+              <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-orange-50 text-orange-600 ring-1 ring-orange-100">
+                <AlertTriangle className="text-sm" />
+              </span>
+              <h3 className="text-sm font-bold text-slate-900">Configuration des pénalités</h3>
+            </div>
+            <div className="rounded-xl border border-slate-100 bg-slate-50/50 p-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Input
+                  label="Majoration retard (%)"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  max="100"
+                  value={form.taux_majoration_retard}
+                  onChange={(e) => setField('taux_majoration_retard', e.target.value)}
+                  error={errors.taux_majoration_retard}
+                  placeholder="25"
+                />
+                <Input
+                  label="Intérêt mensuel (%)"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  max="100"
+                  value={form.taux_interet_mensuel}
+                  onChange={(e) => setField('taux_interet_mensuel', e.target.value)}
+                  error={errors.taux_interet_mensuel}
+                  placeholder="2"
+                />
+                <Input
+                  label="Délai de grâce (jours)"
+                  type="number"
+                  min="0"
+                  value={form.delai_grace_jours}
+                  onChange={(e) => setField('delai_grace_jours', e.target.value)}
+                  error={errors.delai_grace_jours}
+                  placeholder="0"
+                />
+                <Input
+                  label="Majoration après mise en demeure (%)"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  max="100"
+                  value={form.taux_majoration_apres_mise_en_demeure}
+                  onChange={(e) => setField('taux_majoration_apres_mise_en_demeure', e.target.value)}
+                  error={errors.taux_majoration_apres_mise_en_demeure}
+                  placeholder="100"
+                />
+              </div>
+              <p className="text-xs text-gray-500 mt-3">
+                Ces paramètres sont utilisés pour calculer automatiquement les pénalités en cas de retard de paiement.
+              </p>
             </div>
           </div>
 

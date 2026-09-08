@@ -27,7 +27,7 @@ const DropdownSearch: React.FC<DropdownSearchProps> = ({
   const dropdownRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-  const selectedOption = options.find((opt) => opt.value === value);
+  const selectedOption = options.find((opt) => String(opt.value) === String(value));
 
   const filteredOptions = useMemo(() => {
     if (!search) return options;
@@ -74,9 +74,9 @@ const DropdownSearch: React.FC<DropdownSearchProps> = ({
           onClick={() => setIsOpen(!isOpen)}
           className={`w-full px-4 py-2.5 rounded-xl border bg-white text-sm text-left flex items-center justify-between transition cursor-pointer ${
             error
-              ? 'border-red-400 focus:ring-2 focus:ring-red-500/20'
+              ? 'border-red-500 focus:ring-2 focus:ring-red-500/20'
               : 'border-slate-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20'
-          } ${isOpen ? 'ring-2 ring-indigo-500/20 border-indigo-500' : ''}`}
+          } ${isOpen ? (error ? 'ring-2 ring-red-500/20 border-red-500' : 'ring-2 ring-indigo-500/20 border-indigo-500') : ''}`}
         >
           <span
             className={
@@ -142,7 +142,7 @@ const DropdownSearch: React.FC<DropdownSearchProps> = ({
                       setSearch('');
                     }}
                     className={`w-full px-4 py-2.5 text-sm text-left transition-colors cursor-pointer ${
-                      option.value === value
+                      String(option.value) === String(value)
                         ? 'bg-indigo-50 text-indigo-700 font-medium'
                         : 'text-slate-700 hover:bg-slate-50'
                     }`}

@@ -10,6 +10,7 @@ import { declarationService } from '../services/declarationService';
 import { personneService } from '../services/personneService';
 import { taxeService } from '../services/taxeService';
 import { FormSkeleton } from '../components/ui/Skeletons';
+import type { Taxe } from '../types';
 
 interface DeclarationFormState {
   personne_id: string | number;
@@ -49,6 +50,7 @@ export default function DeclarationForm() {
 
   const [personnes, setPersonnes] = useState<{ label: string; value: number }[]>([]);
   const [taxes, setTaxes] = useState<{ label: string; value: number }[]>([]);
+  const [taxesData, setTaxesData] = useState<Taxe[]>([]);
   const [loadingPersonnes, setLoadingPersonnes] = useState(false);
   const [loadingTaxes, setLoadingTaxes] = useState(false);
 
@@ -68,6 +70,7 @@ export default function DeclarationForm() {
     setLoadingTaxes(true);
     try {
       const res = await taxeService.list({ per_page: 100 });
+      setTaxesData(res.data);
       setTaxes(res.data.map((t) => ({ label: t.nom, value: t.id })));
     } catch {
       // silently fail
@@ -165,6 +168,34 @@ export default function DeclarationForm() {
     if (errors[field]) setErrors((prev) => ({ ...prev, [field]: '' }));
   };
 
+  const handleTaxeChange = (taxeId: string | number) => {
+    setField('taxe_id', taxeId);
+    const taxe = taxesData.find((t) => t.id === Number(taxeId));
+    if (!taxe) return;
+
+    const montantBase = Number(form.montant_base) || 0;
+
+    if (taxe.unite === 'montant_fixe') {
+      const montantTaxe = Number(taxe.taux) || 0;
+      setForm((prev) => ({ ...prev, taxe_id: taxeId, montant_taxe: String(montantTaxe) }));
+    } else if (taxe.unite === 'pourcentage' && montantBase > 0) {
+      const montantTaxe = montantBase * ((Number(taxe.taux) || 0) / 100);
+      setForm((prev) => ({ ...prev, taxe_id: taxeId, montant_taxe: String(montantTaxe.toFixed(2)) }));
+    } else {
+      setForm((prev) => ({ ...prev, taxe_id: taxeId }));
+    }
+  };
+
+  const handleMontantBaseChange = (value: string) => {
+    setField('montant_base', value);
+    const taxe = taxesData.find((t) => t.id === Number(form.taxe_id));
+    if (taxe && taxe.unite === 'pourcentage') {
+      const montantBase = Number(value) || 0;
+      const montantTaxe = montantBase * ((Number(taxe.taux) || 0) / 100);
+      setForm((prev) => ({ ...prev, montant_base: value, montant_taxe: String(montantTaxe.toFixed(2)) }));
+    }
+  };
+
   if (loading) return <FormSkeleton />;
 
   return (
@@ -183,7 +214,7 @@ export default function DeclarationForm() {
           </div>
         </div>
         <nav className="flex items-center gap-2 text-sm">
-          <span className="text-slate-500 hover:text-indigo-600 transition-colors cursor-pointer" onClick={() => navigate('/')}>Accueil</span>
+          <span className="text-slate-500 hover:text-indigo-600 transition-colors cursor-pointer" onClick={() => navigate('/dashboard')}>Accueil</span>
           <span className="text-slate-300">/</span>
           <span className="text-slate-500 hover:text-indigo-600 transition-colors cursor-pointer" onClick={() => navigate('/declarations')}>Déclarations</span>
           <span className="text-slate-300">/</span>
@@ -215,7 +246,7 @@ export default function DeclarationForm() {
                   label="Taxe *"
                   options={taxes}
                   value={form.taxe_id}
-                  onChange={(val) => setField('taxe_id', val)}
+                  onChange={(val) => handleTaxeChange(val)}
                   placeholder="Sélectionner une taxe..."
                   loading={loadingTaxes}
                   error={errors.taxe_id}
@@ -263,6 +294,14 @@ export default function DeclarationForm() {
                   error={errors.periode_fin}
                 />
               </div>
+              {form.periode_debut && form.periode_fin && (() => {
+                const debut = new Date(form.periode_debut);
+                const fin = new Date(form.periode_fin);
+                const diffMs = fin.getTime() - debut.getTime();
+                if (diffMs < 0) return <p className="text-xs text-red-500 mt-2">La date de fin doit être après la date de début</p>;
+                const jours = Math.floor(diffMs / (1000 * 60 * 60 * 24)) + 1;
+                return <p className="text-xs text-slate-500 mt-2">{jours} jour{jours > 1 ? 's' : ''}</p>;
+              })()}
             </div>
           </div>
 
@@ -275,34 +314,49 @@ export default function DeclarationForm() {
             </div>
             <div className="rounded-xl border border-slate-100 bg-slate-50/50 p-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Input
-                  label="Montant de base *"
-                  type="number"
-                  step="0.01"
-                  value={form.montant_base}
-                  onChange={(e) => setField('montant_base', e.target.value)}
-                  error={errors.montant_base}
-                  placeholder="0"
-                />
-                <Input
-                  label="Montant taxe *"
-                  type="number"
-                  step="0.01"
-                  value={form.montant_taxe}
-                  onChange={(e) => setField('montant_taxe', e.target.value)}
-                  error={errors.montant_taxe}
-                  placeholder="0"
-                />
-                <Input
-                  label="Pénalités"
-                  type="number"
-                  step="0.01"
-                  value={form.penalites}
-                  onChange={(e) => setField('penalites', e.target.value)}
-                  error={errors.penalites}
-                  placeholder="0"
-                />
+                <div>
+                  <Input
+                    label="Montant de base *"
+                    type="number"
+                    step="0.01"
+                    value={form.montant_base}
+                    onChange={(e) => handleMontantBaseChange(e.target.value)}
+                    error={errors.montant_base}
+                    placeholder="0"
+                  />
+                </div>
+                <div>
+                  <Input
+                    label="Montant taxe *"
+                    type="number"
+                    step="0.01"
+                    value={form.montant_taxe}
+                    onChange={(e) => setField('montant_taxe', e.target.value)}
+                    error={errors.montant_taxe}
+                    placeholder="0"
+                  />
+                  {form.taxe_id && (() => {
+                    const taxe = taxesData.find((t) => t.id === Number(form.taxe_id));
+                    if (!taxe) return null;
+                    if (taxe.unite === 'montant_fixe') {
+                      return <p className="text-xs text-slate-400 mt-1">Montant fixe : {Number(taxe.taux).toLocaleString('fr-FR')} CDF</p>;
+                    }
+                    if (taxe.unite === 'pourcentage') {
+                      return <p className="text-xs text-slate-400 mt-1">{taxe.taux}% du montant de base</p>;
+                    }
+                    return <p className="text-xs text-slate-400 mt-1">{taxe.taux} CDF / unité</p>;
+                  })()}
+                </div>
               </div>
+              {isEdit && Number(form.penalites) > 0 && (
+                <div className="mt-4 rounded-lg bg-red-50 border border-red-100 p-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-medium text-red-700">Pénalités appliquées :</span>
+                    <span className="text-sm font-bold text-red-800">{Number(form.penalites).toLocaleString('fr-FR')} CDF</span>
+                  </div>
+                  <p className="text-xs text-red-500 mt-1">Les pénalités sont calculées automatiquement selon le retard de paiement.</p>
+                </div>
+              )}
               <Textarea
                 label="Observations"
                 value={form.observations}
