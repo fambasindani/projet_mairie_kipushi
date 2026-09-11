@@ -739,7 +739,7 @@ Route::prefix('factures')->name('factures.')->group(function () {
         Route::put('/{id}', [FactureController::class, 'update'])->name('update');
         Route::post('/{id}/annuler', [FactureController::class, 'annuler'])->name('annuler');
     });
-
+  //ROUTE
     Route::middleware(['permission:facture:delete'])->group(function () {
         Route::delete('/{id}', [FactureController::class, 'destroy'])->name('destroy');
     });
