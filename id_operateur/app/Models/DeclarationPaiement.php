@@ -37,6 +37,7 @@ class DeclarationPaiement extends Model
         'interet_retard',
         'mise_en_demeure_envoyee',
         'date_mise_en_demeure',
+        'motif_annulation',
     ];
 
     protected $casts = [

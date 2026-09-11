@@ -43,9 +43,10 @@ class _LoginPageState extends State<LoginPage> {
     if (success && mounted) {
       context.go('/home');
     } else if (mounted) {
+      final detail = auth.lastError ?? 'Email ou mot de passe incorrect';
       setState(() {
         _isLoading = false;
-        _error = 'Email ou mot de passe incorrect';
+        _error = detail;
       });
     }
   }

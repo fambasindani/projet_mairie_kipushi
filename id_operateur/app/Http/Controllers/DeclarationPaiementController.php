@@ -460,7 +460,7 @@ class DeclarationPaiementController extends Controller
     /**
      * Annuler une déclaration
      */
-    public function annuler($id)
+    public function annuler(Request $request, $id)
     {
         $declaration = DeclarationPaiement::find($id);
 
@@ -478,8 +478,20 @@ class DeclarationPaiementController extends Controller
             ], 422);
         }
 
+        $validator = Validator::make($request->all(), [
+            'motif_annulation' => 'required|string|max:500',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
         $declaration->update([
-            'statut' => 'annule'
+            'statut' => 'annule',
+            'motif_annulation' => $request->motif_annulation,
         ]);
 
         return response()->json([

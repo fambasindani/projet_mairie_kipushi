@@ -147,7 +147,7 @@ class _DeclarationFormPageState extends State<DeclarationFormPage> {
     if (p.type == 'morale' && p.denominationSociale != null && p.denominationSociale!.isNotEmpty) {
       return p.denominationSociale!;
     }
-    return '${p.nom} ${p.prenom}'.trim();
+    return [p.nom, p.prenom].where((s) => s != null && s.isNotEmpty).join(' ');
   }
 
   @override

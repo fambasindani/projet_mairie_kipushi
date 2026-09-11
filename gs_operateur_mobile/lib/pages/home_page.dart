@@ -22,6 +22,7 @@ class _HomePageState extends State<HomePage> {
     '/factures': 'facture:read',
     '/documents': 'document:read',
     '/notifications': 'notification:read',
+    '/recus-perception': 'paiement:read',
     '/taxes': 'taxe:read',
     '/profil': '',
   };
@@ -30,6 +31,7 @@ class _HomePageState extends State<HomePage> {
     _NavItem(icon: Icons.people_outline, activeIcon: Icons.people, label: 'Opérateurs', route: '/operateurs'),
     _NavItem(icon: Icons.receipt_long_outlined, activeIcon: Icons.receipt_long, label: 'Déclarations', route: '/declarations'),
     _NavItem(icon: Icons.receipt_outlined, activeIcon: Icons.receipt, label: 'Factures', route: '/factures'),
+    _NavItem(icon: Icons.payment_outlined, activeIcon: Icons.payment, label: 'Perception', route: '/recus-perception'),
     _NavItem(icon: Icons.folder_open_outlined, activeIcon: Icons.folder_open, label: 'Documents', route: '/documents'),
     _NavItem(icon: Icons.notifications_outlined, activeIcon: Icons.notifications, label: 'Alertes', route: '/notifications'),
     _NavItem(icon: Icons.person_outline, activeIcon: Icons.person, label: 'Profil', route: '/profil'),
@@ -207,6 +209,8 @@ class HomeContent extends StatelessWidget {
               _QuickAction(icon: Icons.receipt, label: 'Factures', color: AppColors.info, onTap: () => context.go('/factures')),
             if (can('document:read'))
               _QuickAction(icon: Icons.folder_open, label: 'Documents', color: AppColors.warning, onTap: () => context.go('/documents')),
+            if (can('paiement:read'))
+              _QuickAction(icon: Icons.receipt, label: 'Reçus Perception', color: AppColors.secondary, onTap: () => context.go('/recus-perception')),
             if (can('taxe:read'))
               _QuickAction(icon: Icons.receipt, label: 'Taxes', color: AppColors.secondary, onTap: () => context.go('/taxes')),
             if (can('notification:read'))

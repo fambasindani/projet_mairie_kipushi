@@ -10,12 +10,14 @@ class AuthProvider extends ChangeNotifier {
   User? _user;
   bool _loading = true;
   Timer? _inactivityTimer;
+  String? _lastError;
 
   User? get user => _user;
   bool get loading => _loading;
   bool get isAuthenticated => _user != null;
   bool get isOperateur => _user?.isOperateur ?? false;
   bool get isAdmin => _user?.isAdmin ?? false;
+  String? get lastError => _lastError;
 
   Future<void> init() async {
     try {
@@ -46,12 +48,14 @@ class AuthProvider extends ChangeNotifier {
 
   Future<bool> login(String email, String password) async {
     try {
+      _lastError = null;
       final result = await _authService.login(email, password);
       _user = result['user'] as User;
       _startInactivityTimer();
       notifyListeners();
       return true;
     } catch (e) {
+      _lastError = e.toString().replaceFirst('Exception: ', '');
       debugPrint('Login error: $e');
       return false;
     }

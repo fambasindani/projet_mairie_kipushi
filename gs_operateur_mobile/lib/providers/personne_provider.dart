@@ -15,7 +15,12 @@ class PersonneProvider extends ChangeNotifier {
   String? get error => _error;
   bool get hasMore => _hasMore;
 
-  Future<void> load({String? search, bool refresh = false}) async {
+  String? _statutInscription;
+
+  String? get statutInscription => _statutInscription;
+
+  Future<void> load({String? search, String? statutInscription, bool refresh = false}) async {
+    if (statutInscription != null) _statutInscription = statutInscription;
     if (refresh) {
       _currentPage = 1;
       _hasMore = true;
@@ -28,7 +33,7 @@ class PersonneProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final results = await _service.list(search: search, page: _currentPage);
+      final results = await _service.list(search: search, statutInscription: _statutInscription, page: _currentPage);
       if (refresh) {
         _personnes = results;
       } else {

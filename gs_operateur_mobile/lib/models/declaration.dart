@@ -19,6 +19,14 @@ class DeclarationPaiement {
   final TaxeRef? taxe;
   final String? observations;
 
+  // Pénalités
+  final int? nombreJoursRetard;
+  final double? majorationRetard;
+  final double? interetRetard;
+  final bool miseEnDemeureEnvoyee;
+  final DateTime? dateMiseEnDemeure;
+  final DateTime? dateDernierCalculPenalites;
+
   DeclarationPaiement({
     required this.id,
     this.personneId,
@@ -39,6 +47,12 @@ class DeclarationPaiement {
     this.personne,
     this.taxe,
     this.observations,
+    this.nombreJoursRetard,
+    this.majorationRetard,
+    this.interetRetard,
+    this.miseEnDemeureEnvoyee = false,
+    this.dateMiseEnDemeure,
+    this.dateDernierCalculPenalites,
   });
 
   factory DeclarationPaiement.fromJson(Map<String, dynamic> json) {
@@ -70,6 +84,16 @@ class DeclarationPaiement {
           : null,
       taxe: json['taxe'] != null ? TaxeRef.fromJson(json['taxe']) : null,
       observations: json['observations'],
+      nombreJoursRetard: json['nombre_jours_retard'],
+      majorationRetard: _parseDouble(json['majoration_retard']),
+      interetRetard: _parseDouble(json['interet_retard']),
+      miseEnDemeureEnvoyee: json['mise_en_demeure_envoyee'] ?? false,
+      dateMiseEnDemeure: json['date_mise_en_demeure'] != null
+          ? DateTime.tryParse(json['date_mise_en_demeure'])
+          : null,
+      dateDernierCalculPenalites: json['date_dernier_calcul_penalites'] != null
+          ? DateTime.tryParse(json['date_dernier_calcul_penalites'])
+          : null,
     );
   }
 

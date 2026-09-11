@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `biens_immobiliers` (
   CONSTRAINT `biens_immobiliers_proprietaire_id_foreign` FOREIGN KEY (`proprietaire_id`) REFERENCES `personnes` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.biens_immobiliers : ~7 rows (environ)
+-- Listage des données de la table bd_operateur.biens_immobiliers : ~6 rows (environ)
 INSERT INTO `biens_immobiliers` (`id`, `proprietaire_id`, `adresse`, `quartier`, `commune`, `id_quartier`, `parcelle_id`, `type_bien`, `superficie`, `valeur_locative`, `valeur_venale`, `classement`, `est_actif`, `created_at`, `updated_at`) VALUES
 	(1, 1, '123 Nouvelle Adresse', 'Nouveau Quartier', 'Gombe', NULL, 'PAR-001-2024', 'terrain', 500.50, 1000000.00, 15000000.00, 2, 1, '2026-09-03 06:57:54', '2026-09-03 07:08:19'),
 	(2, 1, '45 Boulevard du 30 Juin', 'Limete', 'Limete', NULL, 'PAR-002-2024', 'maison', 200.00, 1500000.00, 25000000.00, 1, 1, '2026-09-03 07:03:05', '2026-09-03 07:03:05'),
@@ -118,6 +118,13 @@ CREATE TABLE IF NOT EXISTS `declarations_paiements` (
   `reference_paiement` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `justificatif` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `observations` text COLLATE utf8mb4_unicode_ci,
+  `motif_annulation` text COLLATE utf8mb4_unicode_ci,
+  `date_dernier_calcul_penalites` date DEFAULT NULL,
+  `nombre_jours_retard` int NOT NULL DEFAULT '0',
+  `majoration_retard` decimal(20,2) NOT NULL DEFAULT '0.00',
+  `interet_retard` decimal(20,2) NOT NULL DEFAULT '0.00',
+  `mise_en_demeure_envoyee` tinyint(1) NOT NULL DEFAULT '0',
+  `date_mise_en_demeure` date DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -136,16 +143,16 @@ CREATE TABLE IF NOT EXISTS `declarations_paiements` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table bd_operateur.declarations_paiements : ~9 rows (environ)
-INSERT INTO `declarations_paiements` (`id`, `personne_id`, `taxe_id`, `bien_immobilier_id`, `vehicule_id`, `permis_id`, `exercice`, `periode_debut`, `periode_fin`, `montant_base`, `montant_taxe`, `penalites`, `montant_total`, `date_limite_paiement`, `date_paiement`, `statut`, `reference_paiement`, `justificatif`, `observations`, `created_at`, `updated_at`) VALUES
-	(1, 1, 1, NULL, NULL, NULL, '2024', '2024-01-01', '2024-12-31', 500000.00, 80000.00, 0.00, 580000.00, '2026-12-31', '2026-09-02', 'paye', 'PAY-2024-001', 'recu_001.jpg', 'Patente 2024 - Grand commerce', '2026-09-02 20:16:51', '2026-09-02 20:18:20'),
-	(2, 13, 3, NULL, NULL, NULL, '2026', '2026-09-04', '2026-10-12', 1000.00, 0.00, 0.00, 0.00, '2026-10-12', NULL, 'exonere', NULL, NULL, NULL, '2026-09-03 16:16:37', '2026-09-03 16:16:53'),
-	(3, 2, 2, NULL, NULL, NULL, '2025', '2026-02-01', '2026-11-10', 4000.00, 5000.00, 0.00, 9000.00, '2026-11-10', '2026-09-03', 'paye', 'PAY-6A99BB4DD4650', NULL, NULL, '2026-09-03 16:21:25', '2026-09-03 16:24:13'),
-	(4, 2, 1, NULL, NULL, NULL, '2026', '2026-01-01', '2026-12-31', 100000.00, 15000.00, 0.00, 115000.00, '2026-12-31', '2026-09-03', 'paye', 'PAY-6A99BBAE6315D', NULL, NULL, '2026-09-03 16:25:41', '2026-09-03 16:25:50'),
-	(5, 2, 1, NULL, NULL, NULL, '2026', '2026-01-01', '2026-12-31', 100000.00, 15000.00, 0.00, 115000.00, '2026-12-31', '2026-09-03', 'paye', 'PAY-6A99BBFAD342C', NULL, NULL, '2026-09-03 16:27:00', '2026-09-03 16:27:06'),
-	(6, 13, 1, NULL, NULL, NULL, '2026', '2026-01-01', '2026-12-31', 200000.00, 30000.00, 0.00, 230000.00, '2026-12-31', '2026-09-03', 'paye', 'PAY-6A99BD67B3AC0', NULL, NULL, '2026-09-03 16:27:17', '2026-09-03 16:33:11'),
-	(7, 25, 5, NULL, NULL, NULL, '2026', '2026-09-08', '2026-09-10', 4000.00, 4000.00, 0.00, 8000.00, '2026-09-08', '2026-09-03', 'paye', 'PAY-6A99F48713F1F', NULL, NULL, '2026-09-03 20:28:11', '2026-09-03 20:28:23'),
-	(8, 23, 5, NULL, NULL, NULL, '2026', '2026-10-15', '2026-12-21', 4000.00, 4000.00, 0.00, 8000.00, '2026-12-21', NULL, 'en_attente', NULL, NULL, NULL, '2026-09-04 05:08:32', '2026-09-04 05:08:32'),
-	(9, 5, 3, NULL, NULL, NULL, '2026', '2026-09-08', '2026-10-14', 3500.00, 4000.00, 0.00, 7500.00, '2026-10-07', NULL, 'en_attente', NULL, NULL, NULL, '2026-09-04 17:34:52', '2026-09-05 05:23:18');
+INSERT INTO `declarations_paiements` (`id`, `personne_id`, `taxe_id`, `bien_immobilier_id`, `vehicule_id`, `permis_id`, `exercice`, `periode_debut`, `periode_fin`, `montant_base`, `montant_taxe`, `penalites`, `montant_total`, `date_limite_paiement`, `date_paiement`, `statut`, `reference_paiement`, `justificatif`, `observations`, `motif_annulation`, `date_dernier_calcul_penalites`, `nombre_jours_retard`, `majoration_retard`, `interet_retard`, `mise_en_demeure_envoyee`, `date_mise_en_demeure`, `created_at`, `updated_at`) VALUES
+	(1, 1, 1, NULL, NULL, NULL, '2024', '2024-01-01', '2024-12-31', 500000.00, 80000.00, 0.00, 580000.00, '2026-12-31', '2026-09-02', 'paye', 'PAY-2024-001', 'recu_001.jpg', 'Patente 2024 - Grand commerce', NULL, NULL, 0, 0.00, 0.00, 0, NULL, '2026-09-02 20:16:51', '2026-09-02 20:18:20'),
+	(2, 13, 3, NULL, NULL, NULL, '2026', '2026-09-04', '2026-10-12', 1000.00, 0.00, 0.00, 0.00, '2026-10-12', NULL, 'exonere', NULL, NULL, NULL, NULL, NULL, 0, 0.00, 0.00, 0, NULL, '2026-09-03 16:16:37', '2026-09-03 16:16:53'),
+	(3, 2, 2, NULL, NULL, NULL, '2025', '2026-02-01', '2026-11-10', 4000.00, 5000.00, 0.00, 9000.00, '2026-11-10', '2026-09-03', 'paye', 'PAY-6A99BB4DD4650', NULL, NULL, NULL, NULL, 0, 0.00, 0.00, 0, NULL, '2026-09-03 16:21:25', '2026-09-03 16:24:13'),
+	(4, 2, 1, NULL, NULL, NULL, '2026', '2026-01-01', '2026-12-31', 100000.00, 15000.00, 0.00, 115000.00, '2026-12-31', '2026-09-03', 'paye', 'PAY-6A99BBAE6315D', NULL, NULL, NULL, NULL, 0, 0.00, 0.00, 0, NULL, '2026-09-03 16:25:41', '2026-09-03 16:25:50'),
+	(5, 2, 1, NULL, NULL, NULL, '2026', '2026-01-01', '2026-12-31', 100000.00, 15000.00, 0.00, 115000.00, '2026-12-31', '2026-09-03', 'paye', 'PAY-6A99BBFAD342C', NULL, NULL, NULL, NULL, 0, 0.00, 0.00, 0, NULL, '2026-09-03 16:27:00', '2026-09-03 16:27:06'),
+	(6, 13, 1, NULL, NULL, NULL, '2026', '2026-01-01', '2026-12-31', 200000.00, 30000.00, 0.00, 230000.00, '2026-12-31', '2026-09-03', 'paye', 'PAY-6A99BD67B3AC0', NULL, NULL, NULL, NULL, 0, 0.00, 0.00, 0, NULL, '2026-09-03 16:27:17', '2026-09-03 16:33:11'),
+	(7, 25, 5, NULL, NULL, NULL, '2026', '2026-09-08', '2026-09-10', 4000.00, 4000.00, 0.00, 8000.00, '2026-09-08', '2026-09-03', 'paye', 'PAY-6A99F48713F1F', NULL, NULL, NULL, NULL, 0, 0.00, 0.00, 0, NULL, '2026-09-03 20:28:11', '2026-09-03 20:28:23'),
+	(8, 23, 5, NULL, NULL, NULL, '2026', '2026-10-15', '2026-12-21', 4000.00, 4000.00, 1160.00, 9160.00, '2026-08-01', NULL, 'en_retard', NULL, NULL, NULL, NULL, '2026-09-08', 38, 1000.00, 160.00, 1, '2026-09-08', '2026-09-04 05:08:32', '2026-09-08 09:58:52'),
+	(9, 5, 3, NULL, NULL, NULL, '2026', '2026-09-08', '2026-10-14', 3500.00, 4000.00, 0.00, 7500.00, '2026-10-07', '2026-09-08', 'paye', 'PAY-6A9FFC3781DA0', NULL, NULL, NULL, NULL, 0, 0.00, 0.00, 0, NULL, '2026-09-04 17:34:52', '2026-09-08 10:14:47');
 
 -- Listage de la structure de table bd_operateur. documents
 CREATE TABLE IF NOT EXISTS `documents` (
@@ -164,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `documents` (
   CONSTRAINT `documents_personne_id_foreign` FOREIGN KEY (`personne_id`) REFERENCES `personnes` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.documents : ~7 rows (environ)
+-- Listage des données de la table bd_operateur.documents : ~6 rows (environ)
 INSERT INTO `documents` (`id`, `personne_id`, `type_document`, `numero`, `fichier`, `date_expiration`, `est_valide`, `created_at`, `updated_at`) VALUES
 	(1, 1, 'CNI', 'CNI-001234567', 'documents/1/c4I03EGRhV3DpQ5SpzW3J34PMMQTjHIdKxdljiSs.pdf', '2025-12-31', 1, '2026-09-03 07:34:02', '2026-09-03 07:34:02'),
 	(2, 23, 'CNI', '77777', 'documents/23/OXU84VCrCO4CI2aClVy6vy3cac2L9BocoLaATAwz.pdf', NULL, 1, '2026-09-03 17:06:10', '2026-09-03 17:06:10'),
@@ -196,7 +203,7 @@ CREATE TABLE IF NOT EXISTS `factures` (
   KEY `factures_numero_facture_index` (`numero_facture`),
   KEY `factures_statut_index` (`statut`),
   CONSTRAINT `factures_declaration_paiement_id_foreign` FOREIGN KEY (`declaration_paiement_id`) REFERENCES `declarations_paiements` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table bd_operateur.factures : ~6 rows (environ)
 INSERT INTO `factures` (`id`, `declaration_paiement_id`, `numero_facture`, `date_emission`, `montant_ht`, `montant_tva`, `montant_total`, `devise`, `chemin_pdf`, `statut`, `observations`, `created_at`, `updated_at`) VALUES
@@ -205,7 +212,8 @@ INSERT INTO `factures` (`id`, `declaration_paiement_id`, `numero_facture`, `date
 	(3, 4, 'FAC-2026-09-00003', '2026-09-03 18:25:50', 115000.00, 18400.00, 133400.00, 'CDF', NULL, 'payee', NULL, '2026-09-03 16:25:50', '2026-09-03 16:25:50'),
 	(4, 5, 'FAC-2026-09-00004', '2026-09-03 18:27:06', 115000.00, 18400.00, 133400.00, 'CDF', NULL, 'payee', NULL, '2026-09-03 16:27:06', '2026-09-03 16:27:06'),
 	(5, 6, 'FAC-2026-09-00005', '2026-09-03 18:33:11', 230000.00, 36800.00, 266800.00, 'CDF', NULL, 'payee', NULL, '2026-09-03 16:33:11', '2026-09-03 16:33:11'),
-	(6, 7, 'FAC-2026-09-00006', '2026-09-03 22:28:23', 8000.00, 1280.00, 9280.00, 'CDF', NULL, 'payee', NULL, '2026-09-03 20:28:23', '2026-09-03 20:28:23');
+	(6, 7, 'FAC-2026-09-00006', '2026-09-03 22:28:23', 8000.00, 1280.00, 9280.00, 'CDF', NULL, 'payee', NULL, '2026-09-03 20:28:23', '2026-09-03 20:28:23'),
+	(7, 9, 'FAC-2026-09-00007', '2026-09-08 12:14:47', 7500.00, 1200.00, 8700.00, 'CDF', NULL, 'payee', NULL, '2026-09-08 10:14:47', '2026-09-08 10:14:47');
 
 -- Listage de la structure de table bd_operateur. identifiants_officiels
 CREATE TABLE IF NOT EXISTS `identifiants_officiels` (
@@ -223,13 +231,15 @@ CREATE TABLE IF NOT EXISTS `identifiants_officiels` (
   UNIQUE KEY `identifiants_officiels_type_identifiant_valeur_unique` (`type_identifiant`,`valeur`),
   KEY `identifiants_officiels_personne_id_index` (`personne_id`),
   CONSTRAINT `identifiants_officiels_personne_id_foreign` FOREIGN KEY (`personne_id`) REFERENCES `personnes` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table bd_operateur.identifiants_officiels : ~2 rows (environ)
 INSERT INTO `identifiants_officiels` (`id`, `personne_id`, `type_identifiant`, `valeur`, `province_delivrance`, `date_delivrance`, `date_expiration`, `est_actif`, `created_at`, `updated_at`) VALUES
 	(1, 1, 'RCCM', 'RCCM-2024-001', 'Kinshasa', '2024-01-01', '2025-12-31', 1, '2026-09-03 07:23:31', '2026-09-03 07:23:31'),
 	(2, 1, 'IDNAT', 'CNI-001234567', 'Kinshasa', '2020-06-15', '2025-06-15', 1, '2026-09-03 07:23:59', '2026-09-03 07:23:59'),
-	(3, 2, 'NIF', 'NIF-1234567890', 'Kinshasa', '2023-01-01', '2024-12-31', 1, '2026-09-03 07:24:47', '2026-09-03 07:24:47');
+	(3, 2, 'NIF', 'NIF-1234567890', 'Kinshasa', '2023-01-01', '2024-12-31', 1, '2026-09-03 07:24:47', '2026-09-03 07:24:47'),
+	(4, 25, 'NIF', '1458752', NULL, '2026-12-25', '2027-11-13', 1, '2026-09-08 09:53:15', '2026-09-08 09:53:15'),
+	(5, 31, 'IDNAT', '1254875', NULL, NULL, NULL, 1, '2026-09-08 18:23:18', '2026-09-08 18:23:18');
 
 -- Listage de la structure de table bd_operateur. logs_audit
 CREATE TABLE IF NOT EXISTS `logs_audit` (
@@ -249,9 +259,9 @@ CREATE TABLE IF NOT EXISTS `logs_audit` (
   KEY `logs_audit_action_index` (`action`),
   KEY `logs_audit_table_cible_index` (`table_cible`),
   CONSTRAINT `logs_audit_utilisateur_id_foreign` FOREIGN KEY (`utilisateur_id`) REFERENCES `utilisateurs` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=282 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.logs_audit : ~95 rows (environ)
+-- Listage des données de la table bd_operateur.logs_audit : ~279 rows (environ)
 INSERT INTO `logs_audit` (`id`, `utilisateur_id`, `action`, `table_cible`, `enregistrement_id`, `anciennes_valeurs`, `nouvelles_valeurs`, `adresse_ip`, `user_agent`, `created_at`, `updated_at`) VALUES
 	(1, NULL, 'CREATE', 'personnes', 23, NULL, '{"id": 23, "nom": "Dupont", "sexe": "M", "type": "physique", "prenom": "Jean", "created_at": "2026-09-03 17:55:04", "updated_at": "2026-09-03 17:55:04"}', '127.0.0.1', 'Symfony', '2026-09-03 15:55:04', '2026-09-03 15:55:04'),
 	(2, NULL, 'CREATE', 'personnes', 24, NULL, '{"id": 24, "nom": "Martin", "sexe": "F", "type": "physique", "prenom": "Marie", "created_at": "2026-09-03 17:55:04", "updated_at": "2026-09-03 17:55:04"}', '127.0.0.1', 'Symfony', '2026-09-03 15:55:04', '2026-09-03 15:55:04'),
@@ -347,7 +357,191 @@ INSERT INTO `logs_audit` (`id`, `utilisateur_id`, `action`, `table_cible`, `enre
 	(92, NULL, 'UPDATE', 'utilisateurs', 7, '{"updated_at": "2026-09-04T06:54:40.000000Z", "derniere_connexion": "2026-09-04T06:54:40.000000Z"}', '{"updated_at": "2026-09-04 19:56:15", "derniere_connexion": "2026-09-04 19:56:15"}', '10.94.226.168', 'Dart/3.9 (dart:io)', '2026-09-04 17:56:15', '2026-09-04 17:56:15'),
 	(93, 7, 'LOGIN', 'utilisateurs', 7, NULL, '{"email": "salama@gmail.com"}', '10.94.226.168', 'Dart/3.9 (dart:io)', '2026-09-04 17:56:15', '2026-09-04 17:56:15'),
 	(94, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-04T19:55:28.000000Z", "derniere_connexion": "2026-09-04T19:55:28.000000Z"}', '{"updated_at": "2026-09-05 07:21:57", "derniere_connexion": "2026-09-05 07:21:57"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-05 05:21:58', '2026-09-05 05:21:58'),
-	(95, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-05 05:21:59', '2026-09-05 05:21:59');
+	(95, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-05 05:21:59', '2026-09-05 05:21:59'),
+	(96, NULL, 'UPDATE', 'utilisateurs', 7, '{"tentatives_connexion": 0}', '{"tentatives_connexion": 1}', '127.0.0.1', 'Mozilla/5.0 (Windows NT; Windows NT 10.0; fr-FR) WindowsPowerShell/5.1.26100.9168', '2026-09-05 08:35:23', '2026-09-05 08:35:23'),
+	(97, NULL, 'UPDATE', 'utilisateurs', 7, '{"updated_at": "2026-09-05T10:35:23.000000Z", "derniere_connexion": "2026-09-04T19:56:15.000000Z", "tentatives_connexion": 1}', '{"updated_at": "2026-09-05 10:41:41", "derniere_connexion": "2026-09-05 10:41:41", "tentatives_connexion": 0}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-05 08:41:41', '2026-09-05 08:41:41'),
+	(98, 7, 'LOGIN', 'utilisateurs', 7, NULL, '{"email": "salama@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-05 08:41:41', '2026-09-05 08:41:41'),
+	(99, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-05T07:21:57.000000Z", "derniere_connexion": "2026-09-05T07:21:57.000000Z"}', '{"updated_at": "2026-09-08 11:52:17", "derniere_connexion": "2026-09-08 11:52:17"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 09:52:17', '2026-09-08 09:52:17'),
+	(100, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 09:52:18', '2026-09-08 09:52:18'),
+	(101, NULL, 'UPDATE', 'utilisateurs', 2, '{"updated_at": "2026-09-08T12:01:47.000000Z", "derniere_connexion": null}', '{"updated_at": "2026-09-08 12:02:10", "derniere_connexion": "2026-09-08 12:02:10"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 10:02:10', '2026-09-08 10:02:10'),
+	(102, 2, 'LOGIN', 'utilisateurs', 2, NULL, '{"email": "jean.dupont@email.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 10:02:10', '2026-09-08 10:02:10'),
+	(103, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-08T11:52:17.000000Z", "derniere_connexion": "2026-09-08T11:52:17.000000Z"}', '{"updated_at": "2026-09-08 12:09:47", "derniere_connexion": "2026-09-08 12:09:47"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 10:09:47', '2026-09-08 10:09:47'),
+	(104, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 10:09:47', '2026-09-08 10:09:47'),
+	(105, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-08T12:09:47.000000Z", "derniere_connexion": "2026-09-08T12:09:47.000000Z"}', '{"updated_at": "2026-09-08 12:51:43", "derniere_connexion": "2026-09-08 12:51:43"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 10:51:43', '2026-09-08 10:51:43'),
+	(106, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 10:51:43', '2026-09-08 10:51:43'),
+	(107, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-08T12:51:43.000000Z", "derniere_connexion": "2026-09-08T12:51:43.000000Z"}', '{"updated_at": "2026-09-08 12:59:15", "derniere_connexion": "2026-09-08 12:59:15"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 10:59:15', '2026-09-08 10:59:15'),
+	(108, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 10:59:15', '2026-09-08 10:59:15'),
+	(109, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-08T12:59:15.000000Z", "derniere_connexion": "2026-09-08T12:59:15.000000Z"}', '{"updated_at": "2026-09-08 13:05:43", "derniere_connexion": "2026-09-08 13:05:43"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 11:05:43', '2026-09-08 11:05:43'),
+	(110, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 11:05:43', '2026-09-08 11:05:43'),
+	(111, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-08T13:05:43.000000Z", "derniere_connexion": "2026-09-08T13:05:43.000000Z"}', '{"updated_at": "2026-09-08 13:45:22", "derniere_connexion": "2026-09-08 13:45:22"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 11:45:22', '2026-09-08 11:45:22'),
+	(112, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 11:45:22', '2026-09-08 11:45:22'),
+	(113, NULL, 'CREATE', 'personnes', 28, NULL, '{"id": 28, "nom": "SINDANI", "sexe": "F", "type": "physique", "email": "sindani@gmail.com", "prenom": "Josiane", "adresse": "KINGU 52", "telephone": "+2438985458", "created_at": "2026-09-08 14:09:51", "updated_at": "2026-09-08 14:09:51", "id_quartier": "3", "nationalite": "Congolaise", "date_naissance": "1992-01-06 00:00:00", "lieu_naissance": "Kinshasa", "forme_juridique": null, "denomination_sociale": null}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 12:09:51', '2026-09-08 12:09:51'),
+	(114, NULL, 'CREATE', 'utilisateurs', 8, NULL, '{"id": 8, "email": "sindani@gmail.com", "est_actif": false, "created_at": "2026-09-08 14:09:52", "updated_at": "2026-09-08 14:09:52", "personne_id": 28, "nom_utilisateur": "sindani@gmail.com", "date_inscription": "2026-09-08 00:00:00", "mot_de_passe_hash": "$2y$12$ws/x4b6bK1CrNJ6V6wVsZOQofXkznSAd6H2jVxJDuWKbjrclc72k2", "statut_inscription": "en_attente"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 12:09:52', '2026-09-08 12:09:52'),
+	(115, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-08T13:45:22.000000Z", "derniere_connexion": "2026-09-08T13:45:22.000000Z"}', '{"updated_at": "2026-09-08 14:11:57", "derniere_connexion": "2026-09-08 14:11:57"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 12:11:57', '2026-09-08 12:11:57'),
+	(116, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 12:11:57', '2026-09-08 12:11:57'),
+	(117, 1, 'UPDATE', 'personnes', 28, '{"est_actif": true, "updated_at": "2026-09-08T14:09:51.000000Z"}', '{"est_actif": false, "updated_at": "2026-09-08 14:12:45"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 12:12:45', '2026-09-08 12:12:45'),
+	(118, 1, 'UPDATE', 'personnes', 28, '{"est_actif": false, "updated_at": "2026-09-08T14:12:45.000000Z"}', '{"est_actif": true, "updated_at": "2026-09-08 14:12:50"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 12:12:50', '2026-09-08 12:12:50'),
+	(119, 1, 'UPDATE', 'utilisateurs', 8, '{"est_actif": false, "updated_at": "2026-09-08T14:09:52.000000Z"}', '{"est_actif": true, "updated_at": "2026-09-08 14:18:20"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 12:18:20', '2026-09-08 12:18:20'),
+	(120, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-08T14:11:57.000000Z", "derniere_connexion": "2026-09-08T14:11:57.000000Z"}', '{"updated_at": "2026-09-08 17:19:53", "derniere_connexion": "2026-09-08 17:19:53"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 15:19:53', '2026-09-08 15:19:53'),
+	(121, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 15:19:53', '2026-09-08 15:19:53'),
+	(122, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-08T17:19:53.000000Z", "derniere_connexion": "2026-09-08T17:19:53.000000Z"}', '{"updated_at": "2026-09-08 18:16:15", "derniere_connexion": "2026-09-08 18:16:15"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 16:16:15', '2026-09-08 16:16:15'),
+	(123, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 16:16:15', '2026-09-08 16:16:15'),
+	(124, 1, 'CREATE', 'taxes', 7, NULL, '{"id": 7, "nom": "Peage urbain", "code": "TAX-12547", "taux": 5000, "unite": "montant_fixe", "categorie": "peage_urbain", "est_actif": true, "created_at": "2026-09-08 18:22:36", "est_locale": false, "updated_at": "2026-09-08 18:22:36", "description": null, "periodicite": "evenementielle", "delai_grace_jours": 0, "taux_interet_mensuel": 2, "taux_majoration_retard": 25, "taux_majoration_apres_mise_en_demeure": 100}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 16:22:36', '2026-09-08 16:22:36'),
+	(125, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-08T18:16:15.000000Z", "derniere_connexion": "2026-09-08T18:16:15.000000Z"}', '{"updated_at": "2026-09-08 18:46:44", "derniere_connexion": "2026-09-08 18:46:44"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 16:46:44', '2026-09-08 16:46:44'),
+	(126, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 16:46:44', '2026-09-08 16:46:44'),
+	(127, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-08T18:46:44.000000Z", "derniere_connexion": "2026-09-08T18:46:44.000000Z"}', '{"updated_at": "2026-09-08 19:06:22", "derniere_connexion": "2026-09-08 19:06:22"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 17:06:22', '2026-09-08 17:06:22'),
+	(128, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 17:06:22', '2026-09-08 17:06:22'),
+	(129, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-08T19:06:22.000000Z", "derniere_connexion": "2026-09-08T19:06:22.000000Z"}', '{"updated_at": "2026-09-08 19:19:24", "derniere_connexion": "2026-09-08 19:19:24"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 17:19:24', '2026-09-08 17:19:24'),
+	(130, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 17:19:24', '2026-09-08 17:19:24'),
+	(131, NULL, 'UPDATE', 'utilisateurs', 7, '{"updated_at": "2026-09-05T10:41:41.000000Z", "derniere_connexion": "2026-09-05T10:41:41.000000Z"}', '{"updated_at": "2026-09-08 19:22:14", "derniere_connexion": "2026-09-08 19:22:14"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 17:22:14', '2026-09-08 17:22:14'),
+	(132, 7, 'LOGIN', 'utilisateurs', 7, NULL, '{"email": "salama@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 17:22:16', '2026-09-08 17:22:16'),
+	(133, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-08T19:19:24.000000Z", "derniere_connexion": "2026-09-08T19:19:24.000000Z"}', '{"updated_at": "2026-09-08 19:32:47", "derniere_connexion": "2026-09-08 19:32:47"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 17:32:47', '2026-09-08 17:32:47'),
+	(134, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 17:32:47', '2026-09-08 17:32:47'),
+	(135, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-08T19:32:47.000000Z", "derniere_connexion": "2026-09-08T19:32:47.000000Z"}', '{"updated_at": "2026-09-08 19:38:41", "derniere_connexion": "2026-09-08 19:38:41"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 17:38:41', '2026-09-08 17:38:41'),
+	(136, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 17:38:41', '2026-09-08 17:38:41'),
+	(137, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-08T19:38:41.000000Z", "derniere_connexion": "2026-09-08T19:38:41.000000Z"}', '{"updated_at": "2026-09-08 19:45:21", "derniere_connexion": "2026-09-08 19:45:21"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT; Windows NT 10.0; fr-FR) WindowsPowerShell/5.1.26100.9168', '2026-09-08 17:45:21', '2026-09-08 17:45:21'),
+	(138, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT; Windows NT 10.0; fr-FR) WindowsPowerShell/5.1.26100.9168', '2026-09-08 17:45:21', '2026-09-08 17:45:21'),
+	(139, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-08T19:45:21.000000Z", "derniere_connexion": "2026-09-08T19:45:21.000000Z"}', '{"updated_at": "2026-09-08 19:47:09", "derniere_connexion": "2026-09-08 19:47:09"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 17:47:09', '2026-09-08 17:47:09'),
+	(140, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 17:47:09', '2026-09-08 17:47:09'),
+	(141, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-08T19:47:09.000000Z", "derniere_connexion": "2026-09-08T19:47:09.000000Z"}', '{"updated_at": "2026-09-08 19:48:21", "derniere_connexion": "2026-09-08 19:48:21"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT; Windows NT 10.0; fr-FR) WindowsPowerShell/5.1.26100.9168', '2026-09-08 17:48:21', '2026-09-08 17:48:21'),
+	(142, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT; Windows NT 10.0; fr-FR) WindowsPowerShell/5.1.26100.9168', '2026-09-08 17:48:21', '2026-09-08 17:48:21'),
+	(143, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-08T19:48:21.000000Z", "derniere_connexion": "2026-09-08T19:48:21.000000Z"}', '{"updated_at": "2026-09-08 19:48:57", "derniere_connexion": "2026-09-08 19:48:57"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT; Windows NT 10.0; fr-FR) WindowsPowerShell/5.1.26100.9168', '2026-09-08 17:48:57', '2026-09-08 17:48:57'),
+	(144, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT; Windows NT 10.0; fr-FR) WindowsPowerShell/5.1.26100.9168', '2026-09-08 17:48:57', '2026-09-08 17:48:57'),
+	(145, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-08T19:48:57.000000Z", "derniere_connexion": "2026-09-08T19:48:57.000000Z"}', '{"updated_at": "2026-09-08 19:51:53", "derniere_connexion": "2026-09-08 19:51:53"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 17:51:53', '2026-09-08 17:51:53'),
+	(146, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 17:51:53', '2026-09-08 17:51:53'),
+	(147, 1, 'UPDATE', 'utilisateurs', 8, '{"updated_at": "2026-09-08T14:18:20.000000Z", "statut_inscription": "en_attente"}', '{"updated_at": "2026-09-08 19:57:52", "statut_inscription": "approuve"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 17:57:52', '2026-09-08 17:57:52'),
+	(148, NULL, 'CREATE', 'personnes', 29, NULL, '{"id": 29, "nom": "TEST", "sexe": "M", "type": "physique", "email": "test_inscription_20260908220309@test.com", "prenom": "User", "adresse": null, "telephone": "+243999999999", "created_at": "2026-09-08 20:03:10", "updated_at": "2026-09-08 20:03:10", "id_quartier": null, "nationalite": "Congolaise", "date_naissance": "1990-01-01 00:00:00", "lieu_naissance": null, "forme_juridique": null, "denomination_sociale": null}', '127.0.0.1', 'Mozilla/5.0 (Windows NT; Windows NT 10.0; fr-FR) WindowsPowerShell/5.1.26100.9168', '2026-09-08 18:03:10', '2026-09-08 18:03:10'),
+	(149, NULL, 'CREATE', 'utilisateurs', 9, NULL, '{"id": 9, "email": "test_inscription_20260908220309@test.com", "est_actif": false, "created_at": "2026-09-08 20:03:11", "updated_at": "2026-09-08 20:03:11", "personne_id": 29, "nom_utilisateur": "test_inscription_20260908220309@test.com", "date_inscription": "2026-09-08 00:00:00", "mot_de_passe_hash": "$2y$12$VYTnA4xIy4bl9FT0OoS/g.gxj9XHuky1FrxJdBjRA7aPoxxPfL.v.", "statut_inscription": "en_attente"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT; Windows NT 10.0; fr-FR) WindowsPowerShell/5.1.26100.9168', '2026-09-08 18:03:11', '2026-09-08 18:03:11'),
+	(152, NULL, 'CREATE', 'personnes', 31, NULL, '{"id": 31, "nom": "KAMOYA", "sexe": "F", "type": "physique", "email": "kamoya@gmail.com", "prenom": null, "adresse": null, "telephone": "+24369875412", "created_at": "2026-09-08 20:23:17", "updated_at": "2026-09-08 20:23:17", "id_quartier": "3", "nationalite": "Congolaise", "date_naissance": "1995-02-02 00:00:00", "lieu_naissance": null, "forme_juridique": "SARL", "denomination_sociale": "KAMOYA"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 18:23:17', '2026-09-08 18:23:17'),
+	(153, NULL, 'CREATE', 'utilisateurs', 11, NULL, '{"id": 11, "email": "kamoya@gmail.com", "est_actif": false, "created_at": "2026-09-08 20:23:18", "updated_at": "2026-09-08 20:23:18", "personne_id": 31, "nom_utilisateur": "kamoya@gmail.com", "date_inscription": "2026-09-08 00:00:00", "mot_de_passe_hash": "$2y$12$d8mxcUW6iCKxuGqhduDOye/sHbBjbTi5/FHnlcgN7uYZcJl6DmFK.", "statut_inscription": "en_attente"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 18:23:18', '2026-09-08 18:23:18'),
+	(154, NULL, 'CREATE', 'personnes', 32, NULL, '{"id": 32, "nom": "k", "sexe": null, "type": "morale", "email": "k@gmail.com", "prenom": null, "adresse": "lk", "telephone": "44444", "created_at": "2026-09-08 20:31:35", "updated_at": "2026-09-08 20:31:35", "id_quartier": "3", "nationalite": "Congolaise", "date_naissance": null, "lieu_naissance": null, "forme_juridique": "k", "denomination_sociale": "k"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 18:31:35', '2026-09-08 18:31:35'),
+	(155, NULL, 'CREATE', 'utilisateurs', 12, NULL, '{"id": 12, "email": "k@gmail.com", "est_actif": false, "created_at": "2026-09-08 20:31:36", "updated_at": "2026-09-08 20:31:36", "personne_id": 32, "nom_utilisateur": "k@gmail.com", "date_inscription": "2026-09-08 00:00:00", "mot_de_passe_hash": "$2y$12$ST65DEyWw68AR/wrZTk5Cu.PVi10NVPhlgaUcivm33GMxYe/tRGnq", "statut_inscription": "en_attente"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 18:31:36', '2026-09-08 18:31:36'),
+	(156, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-08T19:51:53.000000Z", "derniere_connexion": "2026-09-08T19:51:53.000000Z"}', '{"updated_at": "2026-09-08 20:31:50", "derniere_connexion": "2026-09-08 20:31:50"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 18:31:50', '2026-09-08 18:31:50'),
+	(157, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 18:31:50', '2026-09-08 18:31:50'),
+	(158, 1, 'UPDATE', 'utilisateurs', 12, '{"updated_at": "2026-09-08T20:31:36.000000Z", "motif_rejet": null, "statut_inscription": "en_attente"}', '{"updated_at": "2026-09-08 20:32:29", "motif_rejet": "ras", "statut_inscription": "rejete"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 18:32:29', '2026-09-08 18:32:29'),
+	(159, NULL, 'UPDATE', 'utilisateurs', 7, '{"updated_at": "2026-09-08T19:22:14.000000Z", "derniere_connexion": "2026-09-08T19:22:14.000000Z"}', '{"updated_at": "2026-09-08 20:35:01", "derniere_connexion": "2026-09-08 20:35:01"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 18:35:01', '2026-09-08 18:35:01'),
+	(160, 7, 'LOGIN', 'utilisateurs', 7, NULL, '{"email": "salama@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 18:35:01', '2026-09-08 18:35:01'),
+	(161, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-08T20:31:50.000000Z", "derniere_connexion": "2026-09-08T20:31:50.000000Z"}', '{"updated_at": "2026-09-08 20:36:28", "derniere_connexion": "2026-09-08 20:36:28"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 18:36:28', '2026-09-08 18:36:28'),
+	(162, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 18:36:28', '2026-09-08 18:36:28'),
+	(163, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-08T20:36:28.000000Z", "derniere_connexion": "2026-09-08T20:36:28.000000Z"}', '{"updated_at": "2026-09-08 20:37:29", "derniere_connexion": "2026-09-08 20:37:29"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 18:37:29', '2026-09-08 18:37:29'),
+	(164, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 18:37:29', '2026-09-08 18:37:29'),
+	(165, NULL, 'UPDATE', 'utilisateurs', 3, '{"tentatives_connexion": 1}', '{"tentatives_connexion": 2}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 18:38:30', '2026-09-08 18:38:30'),
+	(166, NULL, 'UPDATE', 'utilisateurs', 3, '{"tentatives_connexion": 2}', '{"tentatives_connexion": 3}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 18:38:43', '2026-09-08 18:38:43'),
+	(167, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-08T20:37:29.000000Z", "derniere_connexion": "2026-09-08T20:37:29.000000Z"}', '{"updated_at": "2026-09-08 20:39:01", "derniere_connexion": "2026-09-08 20:39:01"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 18:39:01', '2026-09-08 18:39:01'),
+	(168, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-08 18:39:01', '2026-09-08 18:39:01'),
+	(169, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-08T20:39:01.000000Z", "derniere_connexion": "2026-09-08T20:39:01.000000Z"}', '{"updated_at": "2026-09-09 08:59:20", "derniere_connexion": "2026-09-09 08:59:20"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-09 06:59:20', '2026-09-09 06:59:20'),
+	(170, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-09 06:59:20', '2026-09-09 06:59:20'),
+	(171, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-09T08:59:20.000000Z", "derniere_connexion": "2026-09-09T08:59:20.000000Z"}', '{"updated_at": "2026-09-09 19:36:37", "derniere_connexion": "2026-09-09 19:36:37"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-09 17:36:37', '2026-09-09 17:36:37'),
+	(172, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-09 17:36:39', '2026-09-09 17:36:39'),
+	(173, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-09T19:36:37.000000Z", "derniere_connexion": "2026-09-09T19:36:37.000000Z"}', '{"updated_at": "2026-09-09 19:36:53", "derniere_connexion": "2026-09-09 19:36:53"}', '192.168.1.35', 'Dart/3.9 (dart:io)', '2026-09-09 17:36:53', '2026-09-09 17:36:53'),
+	(174, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '192.168.1.35', 'Dart/3.9 (dart:io)', '2026-09-09 17:36:53', '2026-09-09 17:36:53'),
+	(175, 1, 'LOGOUT', 'utilisateurs', 1, '{"email": "pierrepapy@gmail.com"}', NULL, '192.168.1.35', 'Dart/3.9 (dart:io)', '2026-09-09 17:58:19', '2026-09-09 17:58:19'),
+	(176, NULL, 'CREATE', 'personnes', 33, NULL, '{"id": 33, "nom": "gg", "sexe": null, "type": "morale", "email": "a@gmail.com", "prenom": null, "adresse": "ggg", "telephone": "002438963528", "created_at": "2026-09-09 20:03:12", "updated_at": "2026-09-09 20:03:12", "id_quartier": null, "nationalite": "Congolaise", "date_naissance": null, "lieu_naissance": null, "forme_juridique": null, "denomination_sociale": null}', '192.168.1.35', 'Dart/3.9 (dart:io)', '2026-09-09 18:03:12', '2026-09-09 18:03:12'),
+	(177, NULL, 'CREATE', 'utilisateurs', 13, NULL, '{"id": 13, "email": "a@gmail.com", "est_actif": false, "created_at": "2026-09-09 20:03:13", "updated_at": "2026-09-09 20:03:13", "personne_id": 33, "nom_utilisateur": "a@gmail.com", "date_inscription": "2026-09-09 00:00:00", "mot_de_passe_hash": "$2y$12$6fqfO.L.vrHNriqgdJcvvuKdIQDickU1ORLEIpwwS2CcS21qqBbUy", "statut_inscription": "en_attente"}', '192.168.1.35', 'Dart/3.9 (dart:io)', '2026-09-09 18:03:13', '2026-09-09 18:03:13'),
+	(178, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-09T19:36:53.000000Z", "derniere_connexion": "2026-09-09T19:36:53.000000Z"}', '{"updated_at": "2026-09-10 09:15:33", "derniere_connexion": "2026-09-10 09:15:33"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-10 07:15:33', '2026-09-10 07:15:33'),
+	(179, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-10 07:15:34', '2026-09-10 07:15:34'),
+	(180, 1, 'UPDATE', 'utilisateurs', 13, '{"updated_at": "2026-09-09T20:03:13.000000Z", "motif_rejet": null, "statut_inscription": "en_attente"}', '{"updated_at": "2026-09-10 09:16:30", "motif_rejet": "Faux compte", "statut_inscription": "rejete"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-10 07:16:30', '2026-09-10 07:16:30'),
+	(181, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-10T09:15:33.000000Z", "derniere_connexion": "2026-09-10T09:15:33.000000Z"}', '{"updated_at": "2026-09-10 10:08:40", "derniere_connexion": "2026-09-10 10:08:40"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-10 08:08:40', '2026-09-10 08:08:40'),
+	(182, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-10 08:08:40', '2026-09-10 08:08:40'),
+	(183, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-10T10:08:40.000000Z", "derniere_connexion": "2026-09-10T10:08:40.000000Z"}', '{"updated_at": "2026-09-10 10:32:08", "derniere_connexion": "2026-09-10 10:32:08"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-10 08:32:08', '2026-09-10 08:32:08'),
+	(184, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-10 08:32:08', '2026-09-10 08:32:08'),
+	(185, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-10T10:32:08.000000Z", "derniere_connexion": "2026-09-10T10:32:08.000000Z"}', '{"updated_at": "2026-09-10 10:32:32", "derniere_connexion": "2026-09-10 10:32:32"}', '192.168.1.210', 'Dart/3.9 (dart:io)', '2026-09-10 08:32:32', '2026-09-10 08:32:32'),
+	(186, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '192.168.1.210', 'Dart/3.9 (dart:io)', '2026-09-10 08:32:32', '2026-09-10 08:32:32'),
+	(187, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-10T10:32:32.000000Z", "derniere_connexion": "2026-09-10T10:32:32.000000Z"}', '{"updated_at": "2026-09-10 11:31:25", "derniere_connexion": "2026-09-10 11:31:25"}', '192.168.1.210', 'Dart/3.9 (dart:io)', '2026-09-10 09:31:25', '2026-09-10 09:31:25'),
+	(188, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '192.168.1.210', 'Dart/3.9 (dart:io)', '2026-09-10 09:31:25', '2026-09-10 09:31:25'),
+	(189, 1, 'LOGOUT', 'utilisateurs', 1, '{"email": "pierrepapy@gmail.com"}', NULL, '192.168.1.210', 'Dart/3.9 (dart:io)', '2026-09-10 09:47:14', '2026-09-10 09:47:14'),
+	(190, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-10T11:31:25.000000Z", "derniere_connexion": "2026-09-10T11:31:25.000000Z"}', '{"updated_at": "2026-09-10 11:47:33", "derniere_connexion": "2026-09-10 11:47:33"}', '192.168.1.210', 'Dart/3.9 (dart:io)', '2026-09-10 09:47:33', '2026-09-10 09:47:33'),
+	(191, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '192.168.1.210', 'Dart/3.9 (dart:io)', '2026-09-10 09:47:34', '2026-09-10 09:47:34'),
+	(192, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-10T11:47:33.000000Z", "derniere_connexion": "2026-09-10T11:47:33.000000Z"}', '{"updated_at": "2026-09-10 11:54:10", "derniere_connexion": "2026-09-10 11:54:10"}', '192.168.1.126', 'Dart/3.9 (dart:io)', '2026-09-10 09:54:10', '2026-09-10 09:54:10'),
+	(193, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '192.168.1.126', 'Dart/3.9 (dart:io)', '2026-09-10 09:54:10', '2026-09-10 09:54:10'),
+	(194, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-10T11:54:10.000000Z", "derniere_connexion": "2026-09-10T11:54:10.000000Z"}', '{"updated_at": "2026-09-10 12:18:11", "derniere_connexion": "2026-09-10 12:18:11"}', '192.168.1.126', 'Dart/3.9 (dart:io)', '2026-09-10 10:18:11', '2026-09-10 10:18:11'),
+	(195, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '192.168.1.126', 'Dart/3.9 (dart:io)', '2026-09-10 10:18:11', '2026-09-10 10:18:11'),
+	(196, 1, 'DELETE', 'personnes', 33, '{"id": 33, "nom": "gg", "sexe": null, "type": "morale", "email": "a@gmail.com", "ville": null, "avatar": null, "prenom": null, "adresse": "ggg", "commune": null, "id_ville": null, "latitude": null, "province": null, "quartier": null, "site_web": null, "est_actif": 1, "longitude": null, "telephone": "002438963528", "cni_numero": null, "created_at": "2026-09-09 20:03:12", "updated_at": "2026-09-09 20:03:12", "id_province": null, "id_quartier": null, "nationalite": "Congolaise", "telephone_2": null, "date_creation": null, "est_formalise": 0, "date_naissance": null, "lieu_naissance": null, "forme_juridique": null, "date_formalisation": null, "denomination_sociale": null}', NULL, '192.168.1.126', 'Dart/3.9 (dart:io)', '2026-09-10 10:24:30', '2026-09-10 10:24:30'),
+	(197, 1, 'DELETE', 'personnes', 32, '{"id": 32, "nom": "k", "sexe": null, "type": "morale", "email": "k@gmail.com", "ville": null, "avatar": null, "prenom": null, "adresse": "lk", "commune": null, "id_ville": null, "latitude": null, "province": null, "quartier": null, "site_web": null, "est_actif": 1, "longitude": null, "telephone": "44444", "cni_numero": null, "created_at": "2026-09-08 20:31:35", "updated_at": "2026-09-08 20:31:35", "id_province": null, "id_quartier": 3, "nationalite": "Congolaise", "telephone_2": null, "date_creation": null, "est_formalise": 0, "date_naissance": null, "lieu_naissance": null, "forme_juridique": "k", "date_formalisation": null, "denomination_sociale": "k"}', NULL, '192.168.1.126', 'Dart/3.9 (dart:io)', '2026-09-10 10:24:42', '2026-09-10 10:24:42'),
+	(198, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-10T12:18:11.000000Z", "derniere_connexion": "2026-09-10T12:18:11.000000Z"}', '{"updated_at": "2026-09-10 12:26:00", "derniere_connexion": "2026-09-10 12:26:00"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-10 10:26:00', '2026-09-10 10:26:00'),
+	(199, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-10 10:26:01', '2026-09-10 10:26:01'),
+	(200, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-10T12:26:00.000000Z", "derniere_connexion": "2026-09-10T12:26:00.000000Z"}', '{"updated_at": "2026-09-10 12:34:11", "derniere_connexion": "2026-09-10 12:34:11"}', '192.168.1.126', 'Dart/3.9 (dart:io)', '2026-09-10 10:34:11', '2026-09-10 10:34:11'),
+	(201, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '192.168.1.126', 'Dart/3.9 (dart:io)', '2026-09-10 10:34:11', '2026-09-10 10:34:11'),
+	(202, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-10T12:34:11.000000Z", "derniere_connexion": "2026-09-10T12:34:11.000000Z"}', '{"updated_at": "2026-09-10 12:51:38", "derniere_connexion": "2026-09-10 12:51:38"}', '192.168.1.126', 'Dart/3.9 (dart:io)', '2026-09-10 10:51:38', '2026-09-10 10:51:38'),
+	(203, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '192.168.1.126', 'Dart/3.9 (dart:io)', '2026-09-10 10:51:38', '2026-09-10 10:51:38'),
+	(204, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-10T12:51:38.000000Z", "derniere_connexion": "2026-09-10T12:51:38.000000Z"}', '{"updated_at": "2026-09-10 13:13:59", "derniere_connexion": "2026-09-10 13:13:59"}', '192.168.1.126', 'Dart/3.9 (dart:io)', '2026-09-10 11:13:59', '2026-09-10 11:13:59'),
+	(205, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '192.168.1.126', 'Dart/3.9 (dart:io)', '2026-09-10 11:13:59', '2026-09-10 11:13:59'),
+	(206, 1, 'LOGOUT', 'utilisateurs', 1, '{"email": "pierrepapy@gmail.com"}', NULL, '192.168.1.210', 'Dart/3.9 (dart:io)', '2026-09-10 11:19:36', '2026-09-10 11:19:36'),
+	(207, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-10T13:13:59.000000Z", "derniere_connexion": "2026-09-10T13:13:59.000000Z"}', '{"updated_at": "2026-09-10 13:19:49", "derniere_connexion": "2026-09-10 13:19:49"}', '192.168.1.210', 'Dart/3.9 (dart:io)', '2026-09-10 11:19:49', '2026-09-10 11:19:49'),
+	(208, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '192.168.1.210', 'Dart/3.9 (dart:io)', '2026-09-10 11:19:49', '2026-09-10 11:19:49'),
+	(209, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-10T13:19:49.000000Z", "derniere_connexion": "2026-09-10T13:19:49.000000Z"}', '{"updated_at": "2026-09-10 13:39:57", "derniere_connexion": "2026-09-10 13:39:57"}', '192.168.1.126', 'Dart/3.9 (dart:io)', '2026-09-10 11:39:57', '2026-09-10 11:39:57'),
+	(210, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '192.168.1.126', 'Dart/3.9 (dart:io)', '2026-09-10 11:39:57', '2026-09-10 11:39:57'),
+	(211, 1, 'LOGOUT', 'utilisateurs', 1, '{"email": "pierrepapy@gmail.com"}', NULL, '192.168.1.126', 'Dart/3.9 (dart:io)', '2026-09-10 12:00:11', '2026-09-10 12:00:11'),
+	(212, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-10T13:39:57.000000Z", "derniere_connexion": "2026-09-10T13:39:57.000000Z"}', '{"updated_at": "2026-09-10 14:01:58", "derniere_connexion": "2026-09-10 14:01:58"}', '192.168.1.126', 'Dart/3.9 (dart:io)', '2026-09-10 12:01:58', '2026-09-10 12:01:58'),
+	(213, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '192.168.1.126', 'Dart/3.9 (dart:io)', '2026-09-10 12:01:58', '2026-09-10 12:01:58'),
+	(214, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-10T14:01:58.000000Z", "derniere_connexion": "2026-09-10T14:01:58.000000Z"}', '{"updated_at": "2026-09-10 18:35:18", "derniere_connexion": "2026-09-10 18:35:18"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-10 16:35:18', '2026-09-10 16:35:18'),
+	(215, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-10 16:35:20', '2026-09-10 16:35:20'),
+	(216, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-10T18:35:18.000000Z", "derniere_connexion": "2026-09-10T18:35:18.000000Z"}', '{"updated_at": "2026-09-10 18:35:24", "derniere_connexion": "2026-09-10 18:35:24"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-10 16:35:24', '2026-09-10 16:35:24'),
+	(217, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-10 16:35:24', '2026-09-10 16:35:24'),
+	(218, 1, 'LOGOUT', 'utilisateurs', 1, '{"email": "pierrepapy@gmail.com"}', NULL, '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-10 17:01:56', '2026-09-10 17:01:56'),
+	(219, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-10T18:35:24.000000Z", "derniere_connexion": "2026-09-10T18:35:24.000000Z"}', '{"updated_at": "2026-09-10 20:35:44", "derniere_connexion": "2026-09-10 20:35:44"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-10 18:35:44', '2026-09-10 18:35:44'),
+	(220, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-10 18:35:44', '2026-09-10 18:35:44'),
+	(221, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-10T20:35:44.000000Z", "derniere_connexion": "2026-09-10T20:35:44.000000Z"}', '{"updated_at": "2026-09-10 20:52:09", "derniere_connexion": "2026-09-10 20:52:09"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-10 18:52:09', '2026-09-10 18:52:09'),
+	(222, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-10 18:52:09', '2026-09-10 18:52:09'),
+	(223, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-10T20:52:09.000000Z", "derniere_connexion": "2026-09-10T20:52:09.000000Z"}', '{"updated_at": "2026-09-10 20:54:48", "derniere_connexion": "2026-09-10 20:54:48"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-10 18:54:48', '2026-09-10 18:54:48'),
+	(224, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-10 18:54:48', '2026-09-10 18:54:48'),
+	(225, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-10T20:54:48.000000Z", "derniere_connexion": "2026-09-10T20:54:48.000000Z"}', '{"updated_at": "2026-09-10 21:09:29", "derniere_connexion": "2026-09-10 21:09:29"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-10 19:09:29', '2026-09-10 19:09:29'),
+	(226, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-10 19:09:29', '2026-09-10 19:09:29'),
+	(227, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-10T21:09:29.000000Z", "derniere_connexion": "2026-09-10T21:09:29.000000Z"}', '{"updated_at": "2026-09-11 08:48:17", "derniere_connexion": "2026-09-11 08:48:17"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 06:48:17', '2026-09-11 06:48:17'),
+	(228, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 06:48:19', '2026-09-11 06:48:19'),
+	(229, 1, 'LOGOUT', 'utilisateurs', 1, '{"email": "pierrepapy@gmail.com"}', NULL, '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 07:03:25', '2026-09-11 07:03:25'),
+	(230, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-11T08:48:17.000000Z", "derniere_connexion": "2026-09-11T08:48:17.000000Z"}', '{"updated_at": "2026-09-11 09:35:03", "derniere_connexion": "2026-09-11 09:35:03"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 07:35:03', '2026-09-11 07:35:03'),
+	(231, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 07:35:03', '2026-09-11 07:35:03'),
+	(232, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-11T09:35:03.000000Z", "derniere_connexion": "2026-09-11T09:35:03.000000Z"}', '{"updated_at": "2026-09-11 10:13:05", "derniere_connexion": "2026-09-11 10:13:05"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 08:13:05', '2026-09-11 08:13:05'),
+	(233, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 08:13:06', '2026-09-11 08:13:06'),
+	(234, 1, 'LOGOUT', 'utilisateurs', 1, '{"email": "pierrepapy@gmail.com"}', NULL, '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 08:28:12', '2026-09-11 08:28:12'),
+	(235, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-11T10:13:05.000000Z", "derniere_connexion": "2026-09-11T10:13:05.000000Z"}', '{"updated_at": "2026-09-11 10:45:15", "derniere_connexion": "2026-09-11 10:45:15"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 08:45:15', '2026-09-11 08:45:15'),
+	(236, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 08:45:16', '2026-09-11 08:45:16'),
+	(237, NULL, 'UPDATE', 'utilisateurs', 1, '{"tentatives_connexion": 0}', '{"tentatives_connexion": 1}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 09:13:17', '2026-09-11 09:13:17'),
+	(238, NULL, 'UPDATE', 'utilisateurs', 1, '{"tentatives_connexion": 1}', '{"tentatives_connexion": 2}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 09:13:30', '2026-09-11 09:13:30'),
+	(239, NULL, 'UPDATE', 'utilisateurs', 1, '{"tentatives_connexion": 2}', '{"tentatives_connexion": 3}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 09:13:51', '2026-09-11 09:13:51'),
+	(240, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-11T11:13:51.000000Z", "derniere_connexion": "2026-09-11T10:45:15.000000Z", "tentatives_connexion": 3}', '{"updated_at": "2026-09-11 11:15:03", "derniere_connexion": "2026-09-11 11:15:03", "tentatives_connexion": 0}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 09:15:03', '2026-09-11 09:15:03'),
+	(241, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 09:15:03', '2026-09-11 09:15:03'),
+	(242, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-11T11:15:03.000000Z", "derniere_connexion": "2026-09-11T11:15:03.000000Z"}', '{"updated_at": "2026-09-11 12:24:28", "derniere_connexion": "2026-09-11 12:24:28"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 10:24:28', '2026-09-11 10:24:28'),
+	(243, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 10:24:29', '2026-09-11 10:24:29'),
+	(244, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-11T12:24:28.000000Z", "derniere_connexion": "2026-09-11T12:24:28.000000Z"}', '{"updated_at": "2026-09-11 12:56:11", "derniere_connexion": "2026-09-11 12:56:11"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 10:56:11', '2026-09-11 10:56:11'),
+	(245, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 10:56:11', '2026-09-11 10:56:11'),
+	(246, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-11T12:56:11.000000Z", "derniere_connexion": "2026-09-11T12:56:11.000000Z"}', '{"updated_at": "2026-09-11 13:27:45", "derniere_connexion": "2026-09-11 13:27:45"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 11:27:45', '2026-09-11 11:27:45'),
+	(247, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 11:27:45', '2026-09-11 11:27:45'),
+	(248, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-11T13:27:45.000000Z", "derniere_connexion": "2026-09-11T13:27:45.000000Z"}', '{"updated_at": "2026-09-11 13:49:03", "derniere_connexion": "2026-09-11 13:49:03"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 11:49:03', '2026-09-11 11:49:03'),
+	(249, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 11:49:03', '2026-09-11 11:49:03'),
+	(250, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-11T13:49:03.000000Z", "derniere_connexion": "2026-09-11T13:49:03.000000Z"}', '{"updated_at": "2026-09-11 14:12:59", "derniere_connexion": "2026-09-11 14:12:59"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 12:12:59', '2026-09-11 12:12:59'),
+	(251, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 12:12:59', '2026-09-11 12:12:59'),
+	(252, 1, 'LOGOUT', 'utilisateurs', 1, '{"email": "pierrepapy@gmail.com"}', NULL, '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 12:19:27', '2026-09-11 12:19:27'),
+	(253, NULL, 'CREATE', 'personnes', 34, NULL, '{"id": 34, "nom": "gf", "sexe": null, "type": "physique", "email": "aer@cc.c", "prenom": "ghh", "adresse": "12345678", "telephone": "235888855", "created_at": "2026-09-11 14:20:26", "updated_at": "2026-09-11 14:20:26", "id_quartier": null, "nationalite": "Congolaise", "date_naissance": null, "lieu_naissance": null, "forme_juridique": null, "denomination_sociale": null}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 12:20:26', '2026-09-11 12:20:26'),
+	(254, NULL, 'CREATE', 'utilisateurs', 14, NULL, '{"id": 14, "email": "aer@cc.c", "est_actif": false, "created_at": "2026-09-11 14:20:27", "updated_at": "2026-09-11 14:20:27", "personne_id": 34, "nom_utilisateur": "aer@cc.c", "date_inscription": "2026-09-11 00:00:00", "mot_de_passe_hash": "$2y$12$tUb0y52Qfd3Kxw4IInQDSui9sifWSBbRslzb2QBgWlI7xjqQL2H2.", "statut_inscription": "en_attente"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 12:20:27', '2026-09-11 12:20:27'),
+	(255, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-11T14:12:59.000000Z", "derniere_connexion": "2026-09-11T14:12:59.000000Z"}', '{"updated_at": "2026-09-11 14:22:37", "derniere_connexion": "2026-09-11 14:22:37"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-11 12:22:37', '2026-09-11 12:22:37'),
+	(256, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-11 12:22:37', '2026-09-11 12:22:37'),
+	(257, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-11T14:22:37.000000Z", "derniere_connexion": "2026-09-11T14:22:37.000000Z"}', '{"updated_at": "2026-09-11 15:04:54", "derniere_connexion": "2026-09-11 15:04:54"}', '10.94.226.168', 'Dart/3.9 (dart:io)', '2026-09-11 13:04:54', '2026-09-11 13:04:54'),
+	(258, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.94.226.168', 'Dart/3.9 (dart:io)', '2026-09-11 13:04:54', '2026-09-11 13:04:54'),
+	(259, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-11T15:04:54.000000Z", "derniere_connexion": "2026-09-11T15:04:54.000000Z"}', '{"updated_at": "2026-09-11 15:05:55", "derniere_connexion": "2026-09-11 15:05:55"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-11 13:05:55', '2026-09-11 13:05:55'),
+	(260, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-11 13:05:55', '2026-09-11 13:05:55'),
+	(261, 1, 'DELETE', 'personnes', 34, '{"id": 34, "nom": "gf", "sexe": null, "type": "physique", "email": "aer@cc.c", "ville": null, "avatar": null, "prenom": "ghh", "adresse": "12345678", "commune": null, "id_ville": null, "latitude": null, "province": null, "quartier": null, "site_web": null, "est_actif": 1, "longitude": null, "telephone": "235888855", "cni_numero": null, "created_at": "2026-09-11 14:20:26", "updated_at": "2026-09-11 14:20:26", "id_province": null, "id_quartier": null, "nationalite": "Congolaise", "telephone_2": null, "date_creation": null, "est_formalise": 0, "date_naissance": null, "lieu_naissance": null, "forme_juridique": null, "date_formalisation": null, "denomination_sociale": null}', NULL, '10.94.226.168', 'Dart/3.9 (dart:io)', '2026-09-11 13:08:42', '2026-09-11 13:08:42'),
+	(262, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-11T15:05:55.000000Z", "derniere_connexion": "2026-09-11T15:05:55.000000Z"}', '{"updated_at": "2026-09-11 15:10:44", "derniere_connexion": "2026-09-11 15:10:44"}', '10.94.226.117', 'Mozilla/5.0 (Windows NT; Windows NT 10.0; fr-FR) WindowsPowerShell/5.1.26100.9444', '2026-09-11 13:10:44', '2026-09-11 13:10:44'),
+	(263, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.94.226.117', 'Mozilla/5.0 (Windows NT; Windows NT 10.0; fr-FR) WindowsPowerShell/5.1.26100.9444', '2026-09-11 13:10:44', '2026-09-11 13:10:44'),
+	(264, 1, 'LOGOUT', 'utilisateurs', 1, '{"email": "pierrepapy@gmail.com"}', NULL, '10.94.226.168', 'Dart/3.9 (dart:io)', '2026-09-11 13:39:44', '2026-09-11 13:39:44'),
+	(265, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-11T15:10:44.000000Z", "derniere_connexion": "2026-09-11T15:10:44.000000Z"}', '{"updated_at": "2026-09-11 15:41:01", "derniere_connexion": "2026-09-11 15:41:01"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-11 13:41:01', '2026-09-11 13:41:01'),
+	(266, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-11 13:41:01', '2026-09-11 13:41:01'),
+	(267, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-11T15:41:01.000000Z", "derniere_connexion": "2026-09-11T15:41:01.000000Z"}', '{"updated_at": "2026-09-11 15:46:34", "derniere_connexion": "2026-09-11 15:46:34"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 13:46:34', '2026-09-11 13:46:34'),
+	(268, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 13:46:34', '2026-09-11 13:46:34'),
+	(269, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-11T15:46:34.000000Z", "derniere_connexion": "2026-09-11T15:46:34.000000Z"}', '{"updated_at": "2026-09-11 16:20:04", "derniere_connexion": "2026-09-11 16:20:04"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-11 14:20:04', '2026-09-11 14:20:04'),
+	(270, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0', '2026-09-11 14:20:04', '2026-09-11 14:20:04'),
+	(271, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-11T16:20:04.000000Z", "derniere_connexion": "2026-09-11T16:20:04.000000Z"}', '{"updated_at": "2026-09-11 16:27:52", "derniere_connexion": "2026-09-11 16:27:52"}', '10.94.226.168', 'Dart/3.9 (dart:io)', '2026-09-11 14:27:52', '2026-09-11 14:27:52'),
+	(272, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.94.226.168', 'Dart/3.9 (dart:io)', '2026-09-11 14:27:52', '2026-09-11 14:27:52'),
+	(273, 1, 'LOGOUT', 'utilisateurs', 1, '{"email": "pierrepapy@gmail.com"}', NULL, '10.94.226.168', 'Dart/3.9 (dart:io)', '2026-09-11 14:29:53', '2026-09-11 14:29:53'),
+	(274, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-11T16:27:52.000000Z", "derniere_connexion": "2026-09-11T16:27:52.000000Z"}', '{"updated_at": "2026-09-11 16:36:03", "derniere_connexion": "2026-09-11 16:36:03"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 14:36:03', '2026-09-11 14:36:03'),
+	(275, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 14:36:03', '2026-09-11 14:36:03'),
+	(276, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-11T16:36:03.000000Z", "derniere_connexion": "2026-09-11T16:36:03.000000Z"}', '{"updated_at": "2026-09-11 17:00:55", "derniere_connexion": "2026-09-11 17:00:55"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 15:00:55', '2026-09-11 15:00:55'),
+	(277, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 15:00:56', '2026-09-11 15:00:56'),
+	(278, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-11T17:00:55.000000Z", "derniere_connexion": "2026-09-11T17:00:55.000000Z"}', '{"updated_at": "2026-09-11 17:33:15", "derniere_connexion": "2026-09-11 17:33:15"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 15:33:15', '2026-09-11 15:33:15'),
+	(279, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 15:33:15', '2026-09-11 15:33:15'),
+	(280, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-11T17:33:15.000000Z", "derniere_connexion": "2026-09-11T17:33:15.000000Z"}', '{"updated_at": "2026-09-11 17:35:37", "derniere_connexion": "2026-09-11 17:35:37"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 15:35:37', '2026-09-11 15:35:37'),
+	(281, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.94.226.50', 'Dart/3.9 (dart:io)', '2026-09-11 15:35:37', '2026-09-11 15:35:37');
 
 -- Listage de la structure de table bd_operateur. migrations
 CREATE TABLE IF NOT EXISTS `migrations` (
@@ -355,7 +549,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table bd_operateur.migrations : ~44 rows (environ)
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -404,13 +598,44 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(43, '2026_09_03_120001_add_id_ville_to_communes_table', 4),
 	(44, '2026_09_03_120002_add_id_ville_to_personnes_table', 4),
 	(45, '2026_09_03_130000_drop_id_province_from_communes_table', 5),
-	(46, '2026_09_03_194109_add_id_quartier_to_biens_immobiliers_table', 6);
+	(46, '2026_09_03_194109_add_id_quartier_to_biens_immobiliers_table', 6),
+	(47, '2026_09_08_100000_add_penalite_config_to_taxes_table', 7),
+	(48, '2026_09_08_100001_create_mises_en_demeure_table', 7),
+	(49, '2026_09_08_100002_add_penalite_fields_to_declarations_table', 7),
+	(50, '2026_09_08_110000_add_mise_en_demeure_to_notification_type_enum', 8),
+	(51, '2026_09_08_120000_add_statut_inscription_to_utilisateurs_table', 9),
+	(52, '2026_09_08_175407_create_recus_peage_table', 10),
+	(53, '2026_09_08_180241_replace_recus_peage_with_recus_perception_table', 11),
+	(54, '2026_09_08_182200_add_new_categories_to_taxes_table', 12),
+	(55, '2026_09_10_000001_add_motif_annulation_to_declarations_paiements_table', 13);
+
+-- Listage de la structure de table bd_operateur. mises_en_demeure
+CREATE TABLE IF NOT EXISTS `mises_en_demeure` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `declaration_paiement_id` bigint unsigned NOT NULL,
+  `date_emission` date NOT NULL,
+  `date_echeance` date NOT NULL,
+  `montant_restant` decimal(20,2) NOT NULL,
+  `motif` text COLLATE utf8mb4_unicode_ci,
+  `statut` enum('en_cours','honoree','passee_en_force') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'en_cours',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `mises_en_demeure_declaration_paiement_id_index` (`declaration_paiement_id`),
+  KEY `mises_en_demeure_statut_index` (`statut`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des données de la table bd_operateur.mises_en_demeure : ~2 rows (environ)
+INSERT INTO `mises_en_demeure` (`id`, `declaration_paiement_id`, `date_emission`, `date_echeance`, `montant_restant`, `motif`, `statut`, `created_at`, `updated_at`) VALUES
+	(1, 8, '2026-09-08', '2026-09-23', 9160.00, 'Mise en demeure pour non-paiement de la taxe', 'en_cours', '2026-09-08 09:58:52', '2026-09-08 09:58:52'),
+	(2, 8, '2026-09-08', '2026-09-23', 9160.00, 'Test mise en demeure', 'en_cours', '2026-09-08 10:03:35', '2026-09-08 10:03:35'),
+	(3, 8, '2026-09-08', '2026-09-23', 9160.00, 'Test mise en demeure', 'en_cours', '2026-09-08 10:04:22', '2026-09-08 10:04:22');
 
 -- Listage de la structure de table bd_operateur. notifications
 CREATE TABLE IF NOT EXISTS `notifications` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `personne_id` bigint unsigned NOT NULL,
-  `type_notification` enum('paiement_echu','renouvellement_permis','controle_prochain','information') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type_notification` enum('paiement_echu','renouvellement_permis','controle_prochain','information','mise_en_demeure') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'information',
   `sujet` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `est_lue` tinyint(1) NOT NULL DEFAULT '0',
@@ -424,11 +649,13 @@ CREATE TABLE IF NOT EXISTS `notifications` (
   KEY `notifications_est_lue_index` (`est_lue`),
   KEY `notifications_type_notification_index` (`type_notification`),
   CONSTRAINT `notifications_personne_id_foreign` FOREIGN KEY (`personne_id`) REFERENCES `personnes` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.notifications : ~1 rows (environ)
+-- Listage des données de la table bd_operateur.notifications : ~3 rows (environ)
 INSERT INTO `notifications` (`id`, `personne_id`, `type_notification`, `sujet`, `message`, `est_lue`, `date_envoi`, `date_lecture`, `lien_action`, `created_at`, `updated_at`) VALUES
-	(1, 1, 'paiement_echu', 'Paiement en retard', 'Votre paiement pour la patente 2024 est en retard. Veuillez régulariser votre situation.', 1, '2026-09-03 09:14:11', '2026-09-03 09:15:08', '/paiements/1', '2026-09-03 07:14:11', '2026-09-03 07:15:08');
+	(1, 1, 'paiement_echu', 'Paiement en retard', 'Votre paiement pour la patente 2024 est en retard. Veuillez régulariser votre situation.', 1, '2026-09-03 09:14:11', '2026-09-03 09:15:08', '/paiements/1', '2026-09-03 07:14:11', '2026-09-03 07:15:08'),
+	(2, 23, 'mise_en_demeure', 'Mise en demeure - Construction', 'Vous avez reçu une mise en demeure pour la déclaration #8 concernant la taxe "Construction". Montant dû : 9.160 CDF. Vous devez régulariser votre situation avant le 23 septembre 2026. Passé ce délai, des pénalités majorées seront appliquées.', 0, '2026-09-08 12:04:22', NULL, '/declarations/8', '2026-09-08 10:04:22', '2026-09-08 10:04:22'),
+	(3, 2, 'mise_en_demeure', 'Mise en demeure - Construction', 'Vous avez reçu une mise en demeure pour la déclaration #8 concernant la taxe \\Construction\\. Montant dû : 9 160 CDF. Vous devez régulariser votre situation avant le 23 septembre 2026. Passé ce délai, des pénalités majorées seront appliquées.', 0, '2026-09-08 12:05:02', NULL, '/declarations/8', '2026-09-08 10:05:02', '2026-09-08 10:05:02');
 
 -- Listage de la structure de table bd_operateur. parametres
 CREATE TABLE IF NOT EXISTS `parametres` (
@@ -441,11 +668,11 @@ CREATE TABLE IF NOT EXISTS `parametres` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `parametres_cle_unique` (`cle`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.parametres : ~10 rows (environ)
+-- Listage des données de la table bd_operateur.parametres : ~14 rows (environ)
 INSERT INTO `parametres` (`id`, `cle`, `valeur`, `description`, `est_modifiable`, `created_at`, `updated_at`) VALUES
-	(1, 'app_name', 'GS Opérateur', 'Nom de l\'application', 1, '2026-09-03 16:07:52', '2026-09-03 16:07:52'),
+	(1, 'app_name', 'I-KIPUSHI', 'Nom de l\'application', 1, '2026-09-03 16:07:52', '2026-09-08 18:37:12'),
 	(2, 'devise_defaut', 'CDF', 'Devise par défaut (CDF ou USD)', 0, '2026-09-03 16:07:52', '2026-09-03 16:07:52'),
 	(3, 'taux_penalty_retard', '5', 'Taux de pénalité en % pour retard de paiement', 1, '2026-09-03 16:07:52', '2026-09-03 16:07:52'),
 	(4, 'delai_paiement_jours', '30', 'Délai de paiement en jours après déclaration', 1, '2026-09-03 16:07:52', '2026-09-03 16:07:52'),
@@ -455,7 +682,12 @@ INSERT INTO `parametres` (`id`, `cle`, `valeur`, `description`, `est_modifiable`
 	(8, 'logo_url', '/logo.png', 'URL du logo de l\'application', 1, '2026-09-03 16:07:52', '2026-09-03 16:07:52'),
 	(9, 'version_api', '1.0.0', 'Version actuelle de l\'API', 0, '2026-09-03 16:07:53', '2026-09-03 16:07:53'),
 	(10, 'maintenance_mode', 'false', 'Mode maintenance activé/désactivé', 0, '2026-09-03 16:07:53', '2026-09-03 16:07:53'),
-	(11, 'taux_tva', '17', 'Taux de la Taxe sur la Valeur Ajoutée (TVA) en %', 1, '2026-09-03 20:30:41', '2026-09-04 15:54:36');
+	(11, 'taux_tva', '17', 'Taux de la Taxe sur la Valeur Ajoutée (TVA) en %', 1, '2026-09-03 20:30:41', '2026-09-04 15:54:36'),
+	(12, 'taux_majoration_retard', '25', 'Majoration en % appliquée en cas de retard de paiement (avant mise en demeure)', 1, '2026-09-08 10:11:54', '2026-09-08 10:11:54'),
+	(13, 'taux_interet_mensuel', '2', 'Intérêt de retard mensuel en % (par mois entier de retard)', 1, '2026-09-08 10:11:54', '2026-09-08 10:11:54'),
+	(14, 'delai_grace_jours', '0', 'Délai de grâce en jours avant application des pénalités', 1, '2026-09-08 10:11:54', '2026-09-08 10:11:54'),
+	(15, 'delai_mise_en_demeure_jours', '15', 'Nombre de jours après mise en demeure avant pénalités majorées', 1, '2026-09-08 10:11:54', '2026-09-08 10:11:54'),
+	(16, 'taux_majoration_apres_mise_en_demeure', '100', 'Majoration en % après passage en force de la mise en demeure', 1, '2026-09-08 10:11:54', '2026-09-08 10:11:54');
 
 -- Listage de la structure de table bd_operateur. permissions
 CREATE TABLE IF NOT EXISTS `permissions` (
@@ -471,57 +703,57 @@ CREATE TABLE IF NOT EXISTS `permissions` (
   UNIQUE KEY `permissions_nom_unique` (`nom`)
 ) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.permissions : ~49 rows (environ)
+-- Listage des données de la table bd_operateur.permissions : ~48 rows (environ)
 INSERT INTO `permissions` (`id`, `nom`, `ressource`, `action`, `description`, `created_at`, `updated_at`) VALUES
-	(1, 'operateur:create', 'operateur', 'create', 'Créer un nouvel opérateur', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(2, 'operateur:read', 'operateur', 'read', 'Consulter la liste et les détails des opérateurs', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(3, 'operateur:update', 'operateur', 'update', 'Modifier les informations d\'un opérateur', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(4, 'operateur:delete', 'operateur', 'delete', 'Supprimer un opérateur', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(5, 'operateur:validate', 'operateur', 'validate', 'Valider un opérateur (formalisation)', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(6, 'taxe:create', 'taxe', 'create', 'Créer une nouvelle taxe', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(7, 'taxe:read', 'taxe', 'read', 'Consulter la liste des taxes', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(8, 'taxe:update', 'taxe', 'update', 'Modifier une taxe', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(9, 'taxe:delete', 'taxe', 'delete', 'Supprimer une taxe', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(10, 'paiement:create', 'paiement', 'create', 'Créer une déclaration de paiement', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(11, 'paiement:read', 'paiement', 'read', 'Consulter les paiements', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(12, 'paiement:validate', 'paiement', 'validate', 'Valider un paiement', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(13, 'paiement:delete', 'paiement', 'delete', 'Supprimer un paiement', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(14, 'facture:create', 'facture', 'create', 'Générer une facture', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(15, 'facture:read', 'facture', 'read', 'Consulter les factures', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(16, 'facture:update', 'facture', 'update', 'Modifier une facture', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(17, 'facture:delete', 'facture', 'delete', 'Supprimer une facture', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(18, 'permis:create', 'permis', 'create', 'Délivrer un permis', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(19, 'permis:read', 'permis', 'read', 'Consulter les permis', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(20, 'permis:update', 'permis', 'update', 'Modifier un permis', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(21, 'permis:delete', 'permis', 'delete', 'Supprimer un permis', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(22, 'utilisateur:create', 'utilisateur', 'create', 'Créer un utilisateur', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(23, 'utilisateur:read', 'utilisateur', 'read', 'Consulter les utilisateurs', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(24, 'utilisateur:update', 'utilisateur', 'update', 'Modifier un utilisateur', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(25, 'utilisateur:delete', 'utilisateur', 'delete', 'Supprimer un utilisateur', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(26, 'statistique:read', 'statistique', 'read', 'Consulter les statistiques et rapports', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(27, 'audit:read', 'audit', 'read', 'Consulter les logs et historiques', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(65, 'dashboard:read', 'dashboard', 'read', 'Consulter le tableau de bord', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(66, 'role:create', 'role', 'create', 'Créer un rôle', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(67, 'role:read', 'role', 'read', 'Consulter les rôles', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(68, 'role:update', 'role', 'update', 'Modifier un rôle', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(69, 'role:delete', 'role', 'delete', 'Supprimer un rôle', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(70, 'permission:create', 'permission', 'create', 'Créer une permission', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(71, 'permission:read', 'permission', 'read', 'Consulter les permissions', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(72, 'permission:update', 'permission', 'update', 'Modifier une permission', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(73, 'permission:delete', 'permission', 'delete', 'Supprimer une permission', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(74, 'notification:read', 'notification', 'read', 'Consulter les notifications', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(75, 'notification:update', 'notification', 'update', 'Marquer les notifications comme lues', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(76, 'document:create', 'document', 'create', 'Uploader un document', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(77, 'document:read', 'document', 'read', 'Consulter les documents', '2026-09-05 05:27:11', '2026-09-05 05:27:11'),
-	(78, 'document:delete', 'document', 'delete', 'Supprimer un document', '2026-09-05 05:27:12', '2026-09-05 05:27:12'),
-	(79, 'identifiant:create', 'identifiant', 'create', 'Créer un identifiant officiel', '2026-09-05 05:27:12', '2026-09-05 05:27:12'),
-	(80, 'identifiant:read', 'identifiant', 'read', 'Consulter les identifiants officiels', '2026-09-05 05:27:12', '2026-09-05 05:27:12'),
-	(81, 'identifiant:update', 'identifiant', 'update', 'Modifier un identifiant officiel', '2026-09-05 05:27:12', '2026-09-05 05:27:12'),
-	(82, 'identifiant:delete', 'identifiant', 'delete', 'Supprimer un identifiant officiel', '2026-09-05 05:27:12', '2026-09-05 05:27:12'),
-	(83, 'rapport:read', 'rapport', 'read', 'Consulter les rapports', '2026-09-05 05:27:12', '2026-09-05 05:27:12'),
-	(84, 'parametre:read', 'parametre', 'read', 'Consulter les paramètres', '2026-09-05 05:27:12', '2026-09-05 05:27:12'),
-	(85, 'parametre:update', 'parametre', 'update', 'Modifier les paramètres', '2026-09-05 05:27:12', '2026-09-05 05:27:12'),
-	(86, 'paiement:update', 'paiement', 'update', 'Modifier une déclaration de paiement', '2026-09-05 05:27:11', '2026-09-05 05:27:11');
+	(1, 'operateur:create', 'operateur', 'create', 'Créer un nouvel opérateur', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(2, 'operateur:read', 'operateur', 'read', 'Consulter la liste et les détails des opérateurs', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(3, 'operateur:update', 'operateur', 'update', 'Modifier les informations d\'un opérateur', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(4, 'operateur:delete', 'operateur', 'delete', 'Supprimer un opérateur', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(5, 'operateur:validate', 'operateur', 'validate', 'Valider un opérateur (formalisation)', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(6, 'taxe:create', 'taxe', 'create', 'Créer une nouvelle taxe', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(7, 'taxe:read', 'taxe', 'read', 'Consulter la liste des taxes', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(8, 'taxe:update', 'taxe', 'update', 'Modifier une taxe', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(9, 'taxe:delete', 'taxe', 'delete', 'Supprimer une taxe', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(10, 'paiement:create', 'paiement', 'create', 'Créer une déclaration de paiement', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(11, 'paiement:read', 'paiement', 'read', 'Consulter les paiements', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(12, 'paiement:validate', 'paiement', 'validate', 'Valider un paiement', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(13, 'paiement:delete', 'paiement', 'delete', 'Supprimer un paiement', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(14, 'facture:create', 'facture', 'create', 'Générer une facture', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(15, 'facture:read', 'facture', 'read', 'Consulter les factures', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(16, 'facture:update', 'facture', 'update', 'Modifier une facture', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(17, 'facture:delete', 'facture', 'delete', 'Supprimer une facture', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(18, 'permis:create', 'permis', 'create', 'Délivrer un permis', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(19, 'permis:read', 'permis', 'read', 'Consulter les permis', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(20, 'permis:update', 'permis', 'update', 'Modifier un permis', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(21, 'permis:delete', 'permis', 'delete', 'Supprimer un permis', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(22, 'utilisateur:create', 'utilisateur', 'create', 'Créer un utilisateur', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(23, 'utilisateur:read', 'utilisateur', 'read', 'Consulter les utilisateurs', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(24, 'utilisateur:update', 'utilisateur', 'update', 'Modifier un utilisateur', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(25, 'utilisateur:delete', 'utilisateur', 'delete', 'Supprimer un utilisateur', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(26, 'statistique:read', 'statistique', 'read', 'Consulter les statistiques et rapports', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(27, 'audit:read', 'audit', 'read', 'Consulter les logs et historiques', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(65, 'dashboard:read', 'dashboard', 'read', 'Consulter le tableau de bord', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(66, 'role:create', 'role', 'create', 'Créer un rôle', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(67, 'role:read', 'role', 'read', 'Consulter les rôles', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(68, 'role:update', 'role', 'update', 'Modifier un rôle', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(69, 'role:delete', 'role', 'delete', 'Supprimer un rôle', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(70, 'permission:create', 'permission', 'create', 'Créer une permission', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(71, 'permission:read', 'permission', 'read', 'Consulter les permissions', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(72, 'permission:update', 'permission', 'update', 'Modifier une permission', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(73, 'permission:delete', 'permission', 'delete', 'Supprimer une permission', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(74, 'notification:read', 'notification', 'read', 'Consulter les notifications', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(75, 'notification:update', 'notification', 'update', 'Marquer les notifications comme lues', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(76, 'document:create', 'document', 'create', 'Uploader un document', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(77, 'document:read', 'document', 'read', 'Consulter les documents', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(78, 'document:delete', 'document', 'delete', 'Supprimer un document', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(79, 'identifiant:create', 'identifiant', 'create', 'Créer un identifiant officiel', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(80, 'identifiant:read', 'identifiant', 'read', 'Consulter les identifiants officiels', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(81, 'identifiant:update', 'identifiant', 'update', 'Modifier un identifiant officiel', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(82, 'identifiant:delete', 'identifiant', 'delete', 'Supprimer un identifiant officiel', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(83, 'rapport:read', 'rapport', 'read', 'Consulter les rapports', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(84, 'parametre:read', 'parametre', 'read', 'Consulter les paramètres', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(85, 'parametre:update', 'parametre', 'update', 'Modifier les paramètres', '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(86, 'paiement:update', 'paiement', 'update', 'Modifier une déclaration de paiement', '2026-09-05 09:42:27', '2026-09-05 09:42:27');
 
 -- Listage de la structure de table bd_operateur. permis_autorisations
 CREATE TABLE IF NOT EXISTS `permis_autorisations` (
@@ -564,9 +796,9 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=114 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.personal_access_tokens : ~33 rows (environ)
+-- Listage des données de la table bd_operateur.personal_access_tokens : ~99 rows (environ)
 INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `name`, `token`, `abilities`, `last_used_at`, `expires_at`, `created_at`, `updated_at`) VALUES
 	(1, 'App\\Models\\Utilisateur', 1, 'auth_token', 'cc3ff7200e91b5d307867389b08ec044bf5642abcaaf7bf5cf3c1b27417794e7', '["*"]', '2026-09-03 07:35:20', NULL, '2026-09-02 18:37:51', '2026-09-03 07:35:20'),
 	(2, 'App\\Models\\Utilisateur', 1, 'auth_token', 'd31b65da4681481dea82c13c20bb1fa0a82928013c08431d6f8cef073920a771', '["*"]', NULL, NULL, '2026-09-02 18:46:08', '2026-09-02 18:46:08'),
@@ -600,7 +832,73 @@ INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `n
 	(32, 'App\\Models\\Utilisateur', 1, 'auth_token', 'e6bbbb4ba53459757a13822ee234ba43b4b5f5bbfd0f1cb1d8c7a67d8914f1ff', '["*"]', '2026-09-04 18:16:33', NULL, '2026-09-04 17:04:30', '2026-09-04 18:16:33'),
 	(33, 'App\\Models\\Utilisateur', 1, 'auth_token', 'a46cfa20d7775b2302bb5eaa38d0febf5d34a73a98b94a67524e5d99e4a88a4e', '["*"]', '2026-09-04 17:26:32', NULL, '2026-09-04 17:08:06', '2026-09-04 17:26:32'),
 	(36, 'App\\Models\\Utilisateur', 7, 'auth_token', '5ae23ee1a3187caba18802cf5cd049fd8694772122f0a003813d0963f923c932', '["*"]', '2026-09-04 17:56:41', NULL, '2026-09-04 17:56:15', '2026-09-04 17:56:41'),
-	(37, 'App\\Models\\Utilisateur', 1, 'auth_token', 'f477aa4468db1c8acb17dadddbaa804244ff07b869f652c1ff6276297efd276d', '["*"]', '2026-09-05 05:47:58', NULL, '2026-09-05 05:21:59', '2026-09-05 05:47:58');
+	(37, 'App\\Models\\Utilisateur', 1, 'auth_token', 'f477aa4468db1c8acb17dadddbaa804244ff07b869f652c1ff6276297efd276d', '["*"]', '2026-09-05 05:47:58', NULL, '2026-09-05 05:21:59', '2026-09-05 05:47:58'),
+	(38, 'App\\Models\\Utilisateur', 7, 'test-api', '60bc475a6e60cbc1dcd529224eb31e614e1196e9e7a193491cffa466def847fd', '["*"]', '2026-09-05 08:38:58', NULL, '2026-09-05 08:38:52', '2026-09-05 08:38:58'),
+	(39, 'App\\Models\\Utilisateur', 7, 'test-api', '1158522235d05b57e619ca9c69e06b9b36a3cf2e678073de0b113a68b47f8ff8', '["*"]', '2026-09-05 08:39:51', NULL, '2026-09-05 08:39:48', '2026-09-05 08:39:51'),
+	(40, 'App\\Models\\Utilisateur', 7, 'auth_token', '46283c772a04f336828ec9152b44a698ab0b12e7b149fde8890d4aa2e8828c70', '["*"]', '2026-09-05 08:58:11', NULL, '2026-09-05 08:41:41', '2026-09-05 08:58:11'),
+	(41, 'App\\Models\\Utilisateur', 1, 'test-admin', '1c5bbe2d459eb0b7622629d8fb4fac325fb3b88d9808d58c79232c4a2bc6fd51', '["*"]', '2026-09-05 09:42:26', NULL, '2026-09-05 09:42:26', '2026-09-05 09:42:26'),
+	(42, 'App\\Models\\Utilisateur', 1, 'auth_token', '0f00d8491919677c01d09757234dd3ea25fc0801256f1ac532a9362ef049769a', '["*"]', '2026-09-08 10:01:03', NULL, '2026-09-08 09:52:18', '2026-09-08 10:01:03'),
+	(43, 'App\\Models\\Utilisateur', 2, 'auth_token', '816e28b1e12ee9c26a04fe75b854a30d44f19a48391697ca551091a9702b4316', '["*"]', '2026-09-08 10:09:18', NULL, '2026-09-08 10:02:10', '2026-09-08 10:09:18'),
+	(44, 'App\\Models\\Utilisateur', 1, 'auth_token', '3f90b7a500f2e7e72ae3cff79c54fafaac72d5da22d63bfd61faad1b4c2caa18', '["*"]', '2026-09-08 10:38:52', NULL, '2026-09-08 10:09:47', '2026-09-08 10:38:52'),
+	(45, 'App\\Models\\Utilisateur', 1, 'auth_token', '37b23a230bad584703bdebc0ee9d856d63ba2e27a013e173ee49ae7debf36b00', '["*"]', '2026-09-08 10:52:52', NULL, '2026-09-08 10:51:43', '2026-09-08 10:52:52'),
+	(46, 'App\\Models\\Utilisateur', 1, 'auth_token', 'fe024294829595fb5620c82135916bafb02d917786b3bfbe9bf5f9d1a91fcb3d', '["*"]', '2026-09-08 10:59:30', NULL, '2026-09-08 10:59:15', '2026-09-08 10:59:30'),
+	(47, 'App\\Models\\Utilisateur', 1, 'auth_token', 'b731fbc114afea2424f58a85ff62814ac3f386dadee206a8d2831d3f49e12d77', '["*"]', '2026-09-08 11:14:00', NULL, '2026-09-08 11:05:43', '2026-09-08 11:14:00'),
+	(48, 'App\\Models\\Utilisateur', 1, 'auth_token', 'fffc9734dce1ac09e428d10cef44c946650589380882e647ee37fd8197876afe', '["*"]', '2026-09-08 11:50:26', NULL, '2026-09-08 11:45:22', '2026-09-08 11:50:26'),
+	(49, 'App\\Models\\Utilisateur', 1, 'auth_token', '497342004f3102c0f248c186803cbb591b8f267dab861d44d18f7f69cf08c293', '["*"]', '2026-09-08 15:09:10', NULL, '2026-09-08 12:11:57', '2026-09-08 15:09:10'),
+	(50, 'App\\Models\\Utilisateur', 1, 'auth_token', '7872ed8038d04c7fd7471ff69940f479d8ee37126e04ed86ddc5638453b8ab11', '["*"]', '2026-09-08 16:15:43', NULL, '2026-09-08 15:19:53', '2026-09-08 16:15:43'),
+	(51, 'App\\Models\\Utilisateur', 1, 'auth_token', '476babca4a6e70c07dff03c7cf77b57aaad5b67e8da49955e59c455d60171c67', '["*"]', '2026-09-08 16:43:03', NULL, '2026-09-08 16:16:15', '2026-09-08 16:43:03'),
+	(52, 'App\\Models\\Utilisateur', 1, 'auth_token', '40fca1fe59bc5dbca1e4431a0b7e888f0a56be6d276f3996338c8b1294839e71', '["*"]', '2026-09-08 17:05:39', NULL, '2026-09-08 16:46:44', '2026-09-08 17:05:39'),
+	(53, 'App\\Models\\Utilisateur', 1, 'auth_token', '000b03feae50c53e867ad3382b7eb30c318a26e4e29577160a00dc79bf96ac61', '["*"]', '2026-09-08 17:18:53', NULL, '2026-09-08 17:06:22', '2026-09-08 17:18:53'),
+	(54, 'App\\Models\\Utilisateur', 1, 'auth_token', 'd674a8bf36c2721ae1a12be6c624d1ec44a02eab8418fe5a51eaeb1dff7dd936', '["*"]', '2026-09-08 17:20:35', NULL, '2026-09-08 17:19:24', '2026-09-08 17:20:35'),
+	(55, 'App\\Models\\Utilisateur', 7, 'auth_token', '6028bfd2be1d856ab9ef13d4fc9a8b9f49f1e79d9d9ff82afd4ac40045cd3ec8', '["*"]', '2026-09-08 17:32:10', NULL, '2026-09-08 17:22:16', '2026-09-08 17:32:10'),
+	(56, 'App\\Models\\Utilisateur', 1, 'auth_token', '9fa25c26415db8f6601825c857a7ef9025bec20f662c71112ef9835ac91ac1a1', '["*"]', '2026-09-08 17:38:13', NULL, '2026-09-08 17:32:47', '2026-09-08 17:38:13'),
+	(57, 'App\\Models\\Utilisateur', 1, 'auth_token', '5707d511cefc3352ae1cf2c30896d41a6fcc64b22ed3de8ab7c6448bbde1297c', '["*"]', '2026-09-08 17:46:50', NULL, '2026-09-08 17:38:41', '2026-09-08 17:46:50'),
+	(58, 'App\\Models\\Utilisateur', 1, 'auth_token', 'ca2c694333ee353b6a4fbac49f6404aaa5a84f8349f3060d59bc61abd38b23bf', '["*"]', NULL, NULL, '2026-09-08 17:45:21', '2026-09-08 17:45:21'),
+	(59, 'App\\Models\\Utilisateur', 1, 'auth_token', '31a68ab33248e30515bbc0c4d56dc249f6c178299ace464633da56d265bea61f', '["*"]', '2026-09-08 17:51:40', NULL, '2026-09-08 17:47:09', '2026-09-08 17:51:40'),
+	(60, 'App\\Models\\Utilisateur', 1, 'auth_token', '083e4ffaaa78745d455179fe36e9a6291a06eb66f5bcb31008b71d2ad177ace9', '["*"]', '2026-09-08 17:48:21', NULL, '2026-09-08 17:48:21', '2026-09-08 17:48:21'),
+	(61, 'App\\Models\\Utilisateur', 1, 'auth_token', '1643127775d989583adf445ea1287fe75afa1454182da9060bd4970c446813d5', '["*"]', '2026-09-08 17:48:57', NULL, '2026-09-08 17:48:57', '2026-09-08 17:48:57'),
+	(62, 'App\\Models\\Utilisateur', 1, 'auth_token', '51a816a6915ea138ddd54e391d1b5854d2baeac49f97482e1a1511d9ff4f0e75', '["*"]', '2026-09-08 17:58:25', NULL, '2026-09-08 17:51:53', '2026-09-08 17:58:25'),
+	(63, 'App\\Models\\Utilisateur', 1, 'auth_token', 'aa1859fd9ae146c739ba9a8a6d99170ed1005c02e4b3b4ff4693ee83d9a3e79d', '["*"]', '2026-09-08 18:34:52', NULL, '2026-09-08 18:31:50', '2026-09-08 18:34:52'),
+	(64, 'App\\Models\\Utilisateur', 7, 'auth_token', '0588f7b91bed2efaf273eaab921995d5678c7c79ce065ce02ec61f2bebfb276c', '["*"]', '2026-09-08 18:36:02', NULL, '2026-09-08 18:35:01', '2026-09-08 18:36:02'),
+	(65, 'App\\Models\\Utilisateur', 1, 'auth_token', 'df1cbfd0f2030e332bc6b0419ceabfd98c6b56201fb07d5086e8feaf4df87bf0', '["*"]', '2026-09-08 18:37:13', NULL, '2026-09-08 18:36:28', '2026-09-08 18:37:13'),
+	(66, 'App\\Models\\Utilisateur', 1, 'auth_token', '6f9b96085b931c87c389cf8aa037aab2d4e3ee98166a6f4597cf4f004adf2527', '["*"]', '2026-09-08 18:38:18', NULL, '2026-09-08 18:37:29', '2026-09-08 18:38:18'),
+	(67, 'App\\Models\\Utilisateur', 1, 'auth_token', '15e59e6b6be0a4f2adf26d5284dd03b7cb1c4fd2a63398f03f4f942b2f55125b', '["*"]', '2026-09-08 18:57:40', NULL, '2026-09-08 18:39:01', '2026-09-08 18:57:40'),
+	(68, 'App\\Models\\Utilisateur', 1, 'auth_token', 'ee4acdd95a70194533f85d6c142dec845508d0c0d48f09a64bb71fe5f7f211b6', '["*"]', '2026-09-09 08:05:26', NULL, '2026-09-09 06:59:20', '2026-09-09 08:05:26'),
+	(69, 'App\\Models\\Utilisateur', 1, 'auth_token', 'fbafae61a8c8ceadbc60b5d42b0e25b834b044be9b61a53b548b741e0aee49d3', '["*"]', '2026-09-09 17:56:38', NULL, '2026-09-09 17:36:39', '2026-09-09 17:56:38'),
+	(71, 'App\\Models\\Utilisateur', 1, 'auth_token', '0353642127ea6d8e31b25da02f417fcfbb162b26b6f6c3859565f6ab7e09083d', '["*"]', '2026-09-10 07:53:43', NULL, '2026-09-10 07:15:33', '2026-09-10 07:53:43'),
+	(72, 'App\\Models\\Utilisateur', 1, 'auth_token', '2c8275bc6f09a116a977a92f210af9fc1fc25d9559bf86ac9c3b86fbf065008b', '["*"]', '2026-09-10 08:23:26', NULL, '2026-09-10 08:08:40', '2026-09-10 08:23:26'),
+	(73, 'App\\Models\\Utilisateur', 1, 'auth_token', '70087c642b916ac29f1dec56ec6ca2e6814d4fdab61f4d5b591db0bf376aac37', '["*"]', '2026-09-10 08:47:36', NULL, '2026-09-10 08:32:08', '2026-09-10 08:47:36'),
+	(74, 'App\\Models\\Utilisateur', 1, 'auth_token', '12a6f624156dc38aa32cd499bc5a425a3ac6ef4bf047e76a9fa587c8a7659969', '["*"]', NULL, NULL, '2026-09-10 08:32:32', '2026-09-10 08:32:32'),
+	(77, 'App\\Models\\Utilisateur', 1, 'auth_token', 'f70fb2145200b0b056044a8f8fee2f83fd46af7f790df59190af1ddcd71c89b4', '["*"]', '2026-09-10 09:58:59', NULL, '2026-09-10 09:54:10', '2026-09-10 09:58:59'),
+	(78, 'App\\Models\\Utilisateur', 1, 'auth_token', '0125be57be35f52589f3b151531dc164c1acb049ce6af9faac574e1b10216120', '["*"]', '2026-09-10 10:30:53', NULL, '2026-09-10 10:18:11', '2026-09-10 10:30:53'),
+	(79, 'App\\Models\\Utilisateur', 1, 'auth_token', 'e2d1c3decee86694a1f5acf3dca99b6f7e7698bed575efaf75a2ac977fc0c0b7', '["*"]', '2026-09-10 10:43:28', NULL, '2026-09-10 10:26:01', '2026-09-10 10:43:28'),
+	(80, 'App\\Models\\Utilisateur', 1, 'auth_token', '817134b115a4fa02138288d31e533115f4ad48d188c602f571bdedaaedac6874', '["*"]', '2026-09-10 10:37:50', NULL, '2026-09-10 10:34:11', '2026-09-10 10:37:50'),
+	(81, 'App\\Models\\Utilisateur', 1, 'auth_token', '326e5a21b3ebcdebc5c9e25468290d1129d0e20814c6a423cb48bee9e029536d', '["*"]', '2026-09-10 10:51:40', NULL, '2026-09-10 10:51:38', '2026-09-10 10:51:40'),
+	(82, 'App\\Models\\Utilisateur', 1, 'auth_token', 'bf521eb8856356ff77ab8272540216a8ab12159da410d08e6c139887d62d8ff6', '["*"]', '2026-09-10 11:32:25', NULL, '2026-09-10 11:13:59', '2026-09-10 11:32:25'),
+	(83, 'App\\Models\\Utilisateur', 1, 'auth_token', '8797321c928ac3ad42273c7d3beb8c1d2fe7386afef87586f7e01a763f86b88e', '["*"]', '2026-09-10 11:19:53', NULL, '2026-09-10 11:19:49', '2026-09-10 11:19:53'),
+	(85, 'App\\Models\\Utilisateur', 1, 'auth_token', 'ffd20a7c41c8363a3ad9ff2465faf0d8a6ad84e05a31e13be7730399af984fb3', '["*"]', '2026-09-10 12:12:39', NULL, '2026-09-10 12:01:58', '2026-09-10 12:12:39'),
+	(86, 'App\\Models\\Utilisateur', 1, 'auth_token', 'ed108fa23a2449a99735426a4e9eeba4761029ac467062264ba013c46e3d9981', '["*"]', NULL, NULL, '2026-09-10 16:35:20', '2026-09-10 16:35:20'),
+	(88, 'App\\Models\\Utilisateur', 1, 'auth_token', 'd2bd96100da37a5cd1d57b814d31c3f069f621cd8b175cb8262587ab347bfaae', '["*"]', '2026-09-10 18:35:49', NULL, '2026-09-10 18:35:44', '2026-09-10 18:35:49'),
+	(89, 'App\\Models\\Utilisateur', 1, 'auth_token', 'f84f3246f19046add0ceede1f5b97e035f3a1c3a81b47b67cd01b974ddf33a82', '["*"]', '2026-09-10 18:52:45', NULL, '2026-09-10 18:52:09', '2026-09-10 18:52:45'),
+	(90, 'App\\Models\\Utilisateur', 1, 'auth_token', '1c6289db7fd6637e720a77c80d9b5333d191f290ff3e434ca3f311f276d2ddf9', '["*"]', '2026-09-10 18:54:51', NULL, '2026-09-10 18:54:48', '2026-09-10 18:54:51'),
+	(91, 'App\\Models\\Utilisateur', 1, 'auth_token', 'bb4c61a978ab63db50603d8f6c66ea25d0ac562e2e899749b0d8deb12b040938', '["*"]', '2026-09-10 19:09:32', NULL, '2026-09-10 19:09:29', '2026-09-10 19:09:32'),
+	(93, 'App\\Models\\Utilisateur', 1, 'auth_token', 'e6df6f889d02a5e9e3624af570ba67b7ebeee34c1e031ce721705bf082764e94', '["*"]', '2026-09-11 07:35:08', NULL, '2026-09-11 07:35:03', '2026-09-11 07:35:08'),
+	(95, 'App\\Models\\Utilisateur', 1, 'auth_token', '6efa47520b0fd08d544a8d3ec274386e79f60121f8bf4e64bc7435f81f35c28d', '["*"]', '2026-09-11 08:45:29', NULL, '2026-09-11 08:45:16', '2026-09-11 08:45:29'),
+	(96, 'App\\Models\\Utilisateur', 1, 'auth_token', '502060cbf7562dcb5a3e65a6001163890a52aa6ad0ce254de388dd3bc9884ea9', '["*"]', '2026-09-11 09:15:06', NULL, '2026-09-11 09:15:03', '2026-09-11 09:15:06'),
+	(97, 'App\\Models\\Utilisateur', 1, 'auth_token', '369951520b9fad4c2361f89d140b4926c0712a1662a3cbcf950195b754ad13b0', '["*"]', '2026-09-11 10:24:41', NULL, '2026-09-11 10:24:29', '2026-09-11 10:24:41'),
+	(98, 'App\\Models\\Utilisateur', 1, 'auth_token', '379d19ea553b5c66cecd0fd81e15bab578a620499fa330ac38f20303fd1e6344', '["*"]', '2026-09-11 10:56:16', NULL, '2026-09-11 10:56:11', '2026-09-11 10:56:16'),
+	(99, 'App\\Models\\Utilisateur', 1, 'auth_token', '39ecca520e05c757bf0b2517b815e272adc79a65e63937fa9f034075923bf100', '["*"]', '2026-09-11 11:27:48', NULL, '2026-09-11 11:27:45', '2026-09-11 11:27:48'),
+	(100, 'App\\Models\\Utilisateur', 1, 'auth_token', '1bbe0fbbad54eb591d85f026037100178fee9022bea770b1acb69299a30040e0', '["*"]', '2026-09-11 11:49:06', NULL, '2026-09-11 11:49:03', '2026-09-11 11:49:06'),
+	(102, 'App\\Models\\Utilisateur', 1, 'auth_token', 'bc96a00b9c76a3588e80a9255cb3ed8400a2dad806c3a4a46f94a27d51f8cfbe', '["*"]', '2026-09-11 12:40:16', NULL, '2026-09-11 12:22:37', '2026-09-11 12:40:16'),
+	(104, 'App\\Models\\Utilisateur', 1, 'auth_token', '4923c972a446b4073087e0abac6e4297c7118af239cc8b917d827b640b96e86e', '["*"]', '2026-09-11 13:35:13', NULL, '2026-09-11 13:05:55', '2026-09-11 13:35:13'),
+	(105, 'App\\Models\\Utilisateur', 1, 'auth_token', 'c1cc7746003085e2dd6e086a4b41ef344cd1ee27b296cface3a21c3c12ac1014', '["*"]', '2026-09-11 13:10:45', NULL, '2026-09-11 13:10:44', '2026-09-11 13:10:45'),
+	(106, 'App\\Models\\Utilisateur', 1, 'auth_token', '66295ccd894c1daf23aae0ad4d8ec36dc6d7b9175b842f0eebd696c6f37cfaeb', '["*"]', '2026-09-11 14:02:58', NULL, '2026-09-11 13:41:01', '2026-09-11 14:02:58'),
+	(107, 'App\\Models\\Utilisateur', 1, 'auth_token', '37d46afec87357ebea752f2f77699c6b251665946f7b8c9ccaa2ee03358a1fe7', '["*"]', '2026-09-11 13:48:00', NULL, '2026-09-11 13:46:34', '2026-09-11 13:48:00'),
+	(108, 'App\\Models\\Utilisateur', 1, 'auth_token', 'ec435fbcd6d66b48bccbe2b92bdeb64f679f1f80124ad119ac6353118c1fa915', '["*"]', '2026-09-11 14:34:32', NULL, '2026-09-11 14:20:04', '2026-09-11 14:34:32'),
+	(110, 'App\\Models\\Utilisateur', 1, 'auth_token', 'a1f6ff4b3f0191cc7228b73e74928da88624a25e90c93718459c0183c6a2628b', '["*"]', '2026-09-11 14:36:05', NULL, '2026-09-11 14:36:03', '2026-09-11 14:36:05'),
+	(111, 'App\\Models\\Utilisateur', 1, 'auth_token', 'df71dd614244e5401e44bed432f977aef481e131af3ae2d31f1e9ac5aeade239', '["*"]', '2026-09-11 15:00:58', NULL, '2026-09-11 15:00:56', '2026-09-11 15:00:58'),
+	(112, 'App\\Models\\Utilisateur', 1, 'auth_token', 'fa0e76a90ceecb22af0b5eceb6698f1b9ab704201aa72c306b9b1dd2d79ad657', '["*"]', '2026-09-11 15:33:18', NULL, '2026-09-11 15:33:15', '2026-09-11 15:33:18'),
+	(113, 'App\\Models\\Utilisateur', 1, 'auth_token', '321e249bd645408d5f1999118e348c24fbf16de406c240d066be819e8aad9fa0', '["*"]', '2026-09-11 15:35:43', NULL, '2026-09-11 15:35:37', '2026-09-11 15:35:43');
 
 -- Listage de la structure de table bd_operateur. personnes
 CREATE TABLE IF NOT EXISTS `personnes` (
@@ -648,9 +946,9 @@ CREATE TABLE IF NOT EXISTS `personnes` (
   CONSTRAINT `personnes_id_province_foreign` FOREIGN KEY (`id_province`) REFERENCES `provinces` (`id`) ON DELETE SET NULL,
   CONSTRAINT `personnes_id_quartier_foreign` FOREIGN KEY (`id_quartier`) REFERENCES `quartiers` (`id`) ON DELETE SET NULL,
   CONSTRAINT `personnes_id_ville_foreign` FOREIGN KEY (`id_ville`) REFERENCES `villes` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.personnes : ~10 rows (environ)
+-- Listage des données de la table bd_operateur.personnes : ~13 rows (environ)
 INSERT INTO `personnes` (`id`, `type`, `nom`, `prenom`, `date_naissance`, `lieu_naissance`, `nationalite`, `sexe`, `cni_numero`, `denomination_sociale`, `forme_juridique`, `date_creation`, `adresse`, `quartier`, `id_quartier`, `id_province`, `id_ville`, `commune`, `ville`, `province`, `telephone`, `telephone_2`, `email`, `site_web`, `est_actif`, `est_formalise`, `date_formalisation`, `latitude`, `longitude`, `avatar`, `created_at`, `updated_at`) VALUES
 	(1, 'physique', 'Papy', 'Pierre', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Kinshasa, Gombe', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '+243800000001', NULL, 'pierrepapy@gmail.com', NULL, 1, 1, NULL, NULL, NULL, 'avatars/1/Fa8yJ1JWqYcpFAAO5QGZLkLdhF9er0elGCPlmvYi.jpg', '2026-09-02 18:29:47', '2026-09-03 18:08:55'),
 	(2, 'physique', 'LALA', 'Pierre', '1996-11-11', 'BUKAVU', 'Congolaise', 'M', NULL, NULL, NULL, NULL, 'KWANGO 14', 'Gombe', 1, 1, 2, 'Kinshasa', 'Kinshasa', 'Kinshasa', '078542145', NULL, 'lala@email.com', NULL, 1, 1, NULL, NULL, NULL, NULL, '2026-09-02 18:29:47', '2026-09-03 11:50:06'),
@@ -661,7 +959,10 @@ INSERT INTO `personnes` (`id`, `type`, `nom`, `prenom`, `date_naissance`, `lieu_
 	(13, 'physique', 'NGUZA', 'David', '1992-02-02', 'Kolwezi', 'Congolaise', 'M', NULL, NULL, NULL, NULL, 'KWANGO 45', 'Misau', 2, 1, 2, 'Kintambo', 'Kinshasa', 'Kinshasa', '0978596501', '5478', 'nguza@gmail.com', NULL, 1, 0, NULL, NULL, NULL, NULL, '2026-09-03 11:40:04', '2026-09-03 12:01:12'),
 	(23, 'physique', 'Dupont', 'Jean', NULL, NULL, NULL, 'M', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, '2026-09-03 15:55:04', '2026-09-03 15:55:04'),
 	(24, 'physique', 'Martin', 'Marie', NULL, NULL, NULL, 'F', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, '2026-09-03 15:55:04', '2026-09-03 15:55:04'),
-	(25, 'physique', 'SALAMA', 'Pascal', '1992-04-02', 'Goma', 'Congolaise', 'M', NULL, NULL, NULL, NULL, 'KWANGO 45', 'Misau', 2, 1, 2, 'Kintambo', 'Kinshasa', 'Kinshasa', '0898596501', NULL, 'salama@gmail.com', NULL, 1, 0, NULL, NULL, NULL, NULL, '2026-09-03 19:40:05', '2026-09-03 19:40:05');
+	(25, 'physique', 'SALAMA', 'Pascal', '1992-04-02', 'Goma', 'Congolaise', 'M', NULL, NULL, NULL, NULL, 'KWANGO 45', 'Misau', 2, 1, 2, 'Kintambo', 'Kinshasa', 'Kinshasa', '0898596501', NULL, 'salama@gmail.com', NULL, 1, 0, NULL, NULL, NULL, NULL, '2026-09-03 19:40:05', '2026-09-03 19:40:05'),
+	(28, 'physique', 'SINDANI', 'Josiane', '1992-01-06', 'Kinshasa', 'Congolaise', 'F', NULL, NULL, NULL, NULL, 'KINGU 52', NULL, 3, NULL, NULL, NULL, NULL, NULL, '+2438985458', NULL, 'sindani@gmail.com', NULL, 1, 0, NULL, NULL, NULL, NULL, '2026-09-08 12:09:51', '2026-09-08 12:12:50'),
+	(29, 'physique', 'TEST', 'User', '1990-01-01', NULL, 'Congolaise', 'M', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '+243999999999', NULL, 'test_inscription_20260908220309@test.com', NULL, 1, 0, NULL, NULL, NULL, NULL, '2026-09-08 18:03:10', '2026-09-08 18:03:10'),
+	(31, 'physique', 'KAMOYA', NULL, '1995-02-02', NULL, 'Congolaise', 'F', NULL, 'KAMOYA', 'SARL', NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, NULL, '+24369875412', NULL, 'kamoya@gmail.com', NULL, 1, 0, NULL, NULL, NULL, NULL, '2026-09-08 18:23:17', '2026-09-08 18:23:17');
 
 -- Listage de la structure de table bd_operateur. personne_activites
 CREATE TABLE IF NOT EXISTS `personne_activites` (
@@ -678,12 +979,14 @@ CREATE TABLE IF NOT EXISTS `personne_activites` (
   CONSTRAINT `personne_activites_personne_id_foreign` FOREIGN KEY (`personne_id`) REFERENCES `personnes` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.personne_activites : ~4 rows (environ)
+-- Listage des données de la table bd_operateur.personne_activites : ~6 rows (environ)
 INSERT INTO `personne_activites` (`personne_id`, `activite_id`, `est_principale`, `date_debut`, `date_fin`, `created_at`, `updated_at`) VALUES
 	(1, 1, 1, '2024-01-01', NULL, '2026-09-03 07:47:22', '2026-09-03 07:47:22'),
 	(1, 2, 0, '2024-06-01', NULL, '2026-09-03 07:47:22', '2026-09-03 07:47:22'),
 	(9, 1, 0, NULL, NULL, '2026-09-02 19:33:21', '2026-09-02 19:33:21'),
-	(9, 2, 0, NULL, NULL, '2026-09-02 19:33:21', '2026-09-02 19:33:21');
+	(9, 2, 0, NULL, NULL, '2026-09-02 19:33:21', '2026-09-02 19:33:21'),
+	(25, 4, 0, '2026-09-08', NULL, '2026-09-08 09:52:53', '2026-09-08 09:52:53'),
+	(28, 1, 0, '2025-01-02', NULL, '2026-09-08 12:09:52', '2026-09-08 12:09:52');
 
 -- Listage de la structure de table bd_operateur. provinces
 CREATE TABLE IF NOT EXISTS `provinces` (
@@ -697,7 +1000,7 @@ CREATE TABLE IF NOT EXISTS `provinces` (
   UNIQUE KEY `provinces_code_unique` (`code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.provinces : ~2 rows (environ)
+-- Listage des données de la table bd_operateur.provinces : ~1 rows (environ)
 INSERT INTO `provinces` (`id`, `nom`, `code`, `est_actif`, `created_at`, `updated_at`) VALUES
 	(1, 'Kinshasa', 'KIN', 1, '2026-09-03 11:02:21', '2026-09-03 11:11:58'),
 	(2, 'Haut Katanga', 'HT', 1, '2026-09-03 17:41:32', '2026-09-03 17:41:32');
@@ -723,6 +1026,42 @@ INSERT INTO `quartiers` (`id`, `commune_id`, `nom`, `code`, `est_actif`, `create
 	(2, 2, 'Misau', 'MIS', 1, '2026-09-03 10:43:00', '2026-09-03 10:43:00'),
 	(3, 3, 'Matoto', 'MAT', 1, '2026-09-03 17:43:57', '2026-09-03 17:43:57');
 
+-- Listage de la structure de table bd_operateur. recus_perception
+CREATE TABLE IF NOT EXISTS `recus_perception` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `taxe_id` bigint unsigned NOT NULL,
+  `personne_id` bigint unsigned DEFAULT NULL,
+  `percepteur_id` bigint unsigned DEFAULT NULL,
+  `type_perception` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `numero` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `date_emission` date NOT NULL,
+  `heure_emission` time DEFAULT NULL,
+  `categorie_vehicule` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `plaque_immatriculation` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `montant` decimal(20,2) NOT NULL,
+  `trajet` enum('aller','retour','aller_retour') COLLATE utf8mb4_unicode_ci DEFAULT 'aller',
+  `chauffeur_nom` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `conducteur_nom` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `Numero_Piece` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `designation` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `poids` decimal(10,2) DEFAULT NULL,
+  `observations` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `recus_perception_numero_unique` (`numero`),
+  KEY `recus_perception_taxe_id_index` (`taxe_id`),
+  KEY `recus_perception_personne_id_index` (`personne_id`),
+  KEY `recus_perception_percepteur_id_index` (`percepteur_id`),
+  KEY `recus_perception_type_perception_index` (`type_perception`),
+  KEY `recus_perception_date_emission_index` (`date_emission`),
+  KEY `recus_perception_numero_index` (`numero`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des données de la table bd_operateur.recus_perception : ~0 rows (environ)
+INSERT INTO `recus_perception` (`id`, `taxe_id`, `personne_id`, `percepteur_id`, `type_perception`, `numero`, `date_emission`, `heure_emission`, `categorie_vehicule`, `plaque_immatriculation`, `montant`, `trajet`, `chauffeur_nom`, `conducteur_nom`, `Numero_Piece`, `designation`, `poids`, `observations`, `created_at`, `updated_at`) VALUES
+	(1, 7, NULL, 1, 'pont_bascule', 'PON/001', '2026-09-08', '20:18:00', 'camion', '2555444', 5000.00, 'aller', NULL, 'NGOLA', 'HK-52142', NULL, NULL, NULL, '2026-09-08 16:26:04', '2026-09-08 16:26:04');
+
 -- Listage de la structure de table bd_operateur. roles
 CREATE TABLE IF NOT EXISTS `roles` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
@@ -734,7 +1073,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
   UNIQUE KEY `roles_nom_unique` (`nom`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.roles : ~6 rows (environ)
+-- Listage des données de la table bd_operateur.roles : ~7 rows (environ)
 INSERT INTO `roles` (`id`, `nom`, `description`, `created_at`, `updated_at`) VALUES
 	(1, 'Administrateur', 'Accès total au système - Gestion complète', NULL, NULL),
 	(2, 'Agent_Mairie', 'Gestion des opérateurs et des taxes locales', NULL, NULL),
@@ -755,128 +1094,132 @@ CREATE TABLE IF NOT EXISTS `roles_permissions` (
   CONSTRAINT `roles_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.roles_permissions : ~111 rows (environ)
+-- Listage des données de la table bd_operateur.roles_permissions : ~109 rows (environ)
 INSERT INTO `roles_permissions` (`role_id`, `permission_id`, `created_at`, `updated_at`) VALUES
-	(1, 1, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 2, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 3, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 4, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 5, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 6, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 7, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 8, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 9, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 10, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 11, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 12, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 13, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 14, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 15, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 16, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 17, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 18, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 19, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 20, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 21, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 22, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 23, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 24, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 25, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 26, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 27, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 65, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 66, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 67, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 68, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 69, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 70, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 71, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 72, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 73, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 74, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 75, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 76, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 77, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 78, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 79, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 80, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 81, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 82, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 83, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 84, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 85, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(1, 86, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(2, 1, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(2, 2, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(2, 3, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(2, 5, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(2, 6, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(2, 7, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(2, 8, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(1, 1, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 2, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 3, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 4, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 5, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 6, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 7, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 8, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 9, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 10, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 11, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 12, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 13, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 14, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 15, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 16, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 17, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 18, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 19, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 20, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 21, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 22, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 23, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 24, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 25, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 26, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 27, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 65, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 66, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 67, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 68, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 69, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 70, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 71, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 72, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 73, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 74, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 75, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 76, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 77, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 78, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 79, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 80, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 81, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 82, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 83, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 84, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 85, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(1, 86, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(2, 1, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(2, 2, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(2, 3, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(2, 5, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(2, 6, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(2, 7, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(2, 8, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
 	(2, 9, '2026-09-03 15:30:17', '2026-09-03 15:30:17'),
-	(2, 10, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(2, 11, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(2, 12, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(2, 14, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(2, 15, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(2, 16, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(2, 10, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(2, 11, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(2, 12, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(2, 14, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(2, 15, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(2, 16, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
 	(2, 17, '2026-09-03 15:29:40', '2026-09-03 15:29:40'),
-	(2, 18, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(2, 19, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(2, 20, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(2, 23, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(2, 26, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
+	(2, 18, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(2, 19, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(2, 20, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(2, 23, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(2, 26, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
 	(2, 27, '2026-09-03 15:29:40', '2026-09-03 15:29:40'),
-	(2, 65, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(2, 74, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(2, 75, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(2, 77, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(3, 1, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(3, 2, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(3, 3, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(3, 23, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(3, 74, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(3, 76, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(3, 77, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(4, 2, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(4, 10, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(4, 11, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(4, 12, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(4, 14, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(4, 15, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(4, 26, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(4, 74, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(5, 2, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(5, 3, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(5, 7, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(5, 11, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(5, 15, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(5, 19, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(5, 26, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(5, 74, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(5, 75, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(5, 76, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(5, 77, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(5, 78, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(5, 80, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(5, 83, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(6, 2, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(6, 7, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(6, 11, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(6, 15, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(6, 26, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(6, 27, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(6, 65, '2026-09-05 05:27:17', '2026-09-05 05:27:17'),
-	(6, 74, '2026-09-05 05:27:17', '2026-09-05 05:27:17');
+	(2, 65, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(2, 74, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(2, 75, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(2, 77, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(3, 1, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(3, 2, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(3, 3, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(3, 23, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(3, 74, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(3, 76, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(3, 77, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(4, 2, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(4, 10, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(4, 11, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(4, 12, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(4, 14, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(4, 15, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(4, 26, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(4, 74, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(5, 2, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(5, 3, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(5, 7, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(5, 11, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(5, 15, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(5, 19, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(5, 26, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(5, 74, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(5, 75, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(5, 76, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(5, 77, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(5, 78, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(5, 80, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(5, 83, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(6, 2, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(6, 7, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(6, 11, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(6, 15, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(6, 26, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(6, 27, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(6, 65, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
+	(6, 74, '2026-09-05 09:42:27', '2026-09-05 09:42:27');
 
 -- Listage de la structure de table bd_operateur. taxes
 CREATE TABLE IF NOT EXISTS `taxes` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `code` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `categorie` enum('patente','foncier','revenus_locatifs','personnel_minimum','vehicule','permis_construire','etalage','autre') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'autre',
+  `categorie` enum('patente','foncier','revenus_locatifs','personnel_minimum','vehicule','permis_construire','etalage','peage_urbain','pont_bascule','chargement','dechargement','autre') COLLATE utf8mb4_unicode_ci DEFAULT 'autre',
   `description` text COLLATE utf8mb4_unicode_ci,
   `taux` decimal(10,4) DEFAULT NULL,
+  `taux_majoration_retard` decimal(5,2) NOT NULL DEFAULT '25.00',
+  `taux_interet_mensuel` decimal(5,2) NOT NULL DEFAULT '2.00',
+  `delai_grace_jours` int NOT NULL DEFAULT '0',
+  `taux_majoration_apres_mise_en_demeure` decimal(5,2) NOT NULL DEFAULT '100.00',
   `unite` enum('pourcentage','montant_fixe','par_unite') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'montant_fixe',
   `periodicite` enum('mensuelle','trimestrielle','semestrielle','annuelle','evenementielle') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'annuelle',
   `bareme` json DEFAULT NULL,
@@ -888,14 +1231,15 @@ CREATE TABLE IF NOT EXISTS `taxes` (
   UNIQUE KEY `taxes_code_unique` (`code`),
   KEY `taxes_categorie_index` (`categorie`),
   KEY `taxes_est_actif_index` (`est_actif`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.taxes : ~4 rows (environ)
-INSERT INTO `taxes` (`id`, `code`, `nom`, `categorie`, `description`, `taux`, `unite`, `periodicite`, `bareme`, `est_actif`, `est_locale`, `created_at`, `updated_at`) VALUES
-	(1, 'PAT-2024', 'Patente 2024', 'patente', 'Taxe annuelle due par tout opérateur économique', 4000.0000, 'montant_fixe', 'annuelle', '{"categories": {"A": {"label": "Grand commerce", "montant": 500000}, "B": {"label": "Moyen commerce", "montant": 200000}, "C": {"label": "Petit commerce", "montant": 50000}}}', 1, 1, '2026-09-02 20:02:43', '2026-09-03 16:19:17'),
-	(2, 'PAT-2025', 'Patente 2025', 'patente', 'Taxe annuelle due par tout opérateur économique', 5000.0000, 'montant_fixe', 'annuelle', '{"categories": {"A": {"label": "Grand commerce", "montant": 500000}, "B": {"label": "Moyen commerce", "montant": 200000}, "C": {"label": "Petit commerce", "montant": 50000}}}', 1, 1, '2026-09-02 20:03:27', '2026-09-03 16:18:53'),
-	(3, 'FON-2025', 'Impôt foncier 2024', 'foncier', 'Taxe sur les propriétés bâties et non bâties', 5.0000, 'pourcentage', 'annuelle', NULL, 1, 1, '2026-09-02 20:04:03', '2026-09-03 16:14:13'),
-	(5, 'TAX-4587', 'Construction', 'permis_construire', 'Taxe pour permis de construire', 4000.0000, 'montant_fixe', 'annuelle', NULL, 1, 0, '2026-09-03 20:25:52', '2026-09-03 20:25:52');
+-- Listage des données de la table bd_operateur.taxes : ~5 rows (environ)
+INSERT INTO `taxes` (`id`, `code`, `nom`, `categorie`, `description`, `taux`, `taux_majoration_retard`, `taux_interet_mensuel`, `delai_grace_jours`, `taux_majoration_apres_mise_en_demeure`, `unite`, `periodicite`, `bareme`, `est_actif`, `est_locale`, `created_at`, `updated_at`) VALUES
+	(1, 'PAT-2024', 'Patente 2024', 'patente', 'Taxe annuelle due par tout opérateur économique', 4000.0000, 25.00, 2.00, 0, 100.00, 'montant_fixe', 'annuelle', '{"categories": {"A": {"label": "Grand commerce", "montant": 500000}, "B": {"label": "Moyen commerce", "montant": 200000}, "C": {"label": "Petit commerce", "montant": 50000}}}', 1, 1, '2026-09-02 20:02:43', '2026-09-03 16:19:17'),
+	(2, 'PAT-2025', 'Patente 2025', 'patente', 'Taxe annuelle due par tout opérateur économique', 5000.0000, 25.00, 2.00, 0, 100.00, 'montant_fixe', 'annuelle', '{"categories": {"A": {"label": "Grand commerce", "montant": 500000}, "B": {"label": "Moyen commerce", "montant": 200000}, "C": {"label": "Petit commerce", "montant": 50000}}}', 1, 1, '2026-09-02 20:03:27', '2026-09-03 16:18:53'),
+	(3, 'FON-2025', 'Impôt foncier 2024', 'foncier', 'Taxe sur les propriétés bâties et non bâties', 5.0000, 25.00, 2.00, 0, 100.00, 'pourcentage', 'annuelle', NULL, 1, 1, '2026-09-02 20:04:03', '2026-09-03 16:14:13'),
+	(5, 'TAX-4587', 'Construction', 'permis_construire', 'Taxe pour permis de construire', 4000.0000, 25.00, 2.00, 0, 100.00, 'montant_fixe', 'annuelle', NULL, 1, 0, '2026-09-03 20:25:52', '2026-09-03 20:25:52'),
+	(7, 'TAX-12547', 'Peage urbain', 'peage_urbain', NULL, 5000.0000, 25.00, 2.00, 0, 100.00, 'montant_fixe', 'evenementielle', NULL, 1, 0, '2026-09-08 16:22:36', '2026-09-08 16:22:36');
 
 -- Listage de la structure de table bd_operateur. utilisateurs
 CREATE TABLE IF NOT EXISTS `utilisateurs` (
@@ -904,6 +1248,9 @@ CREATE TABLE IF NOT EXISTS `utilisateurs` (
   `nom_utilisateur` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `mot_de_passe_hash` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `statut_inscription` enum('en_attente','approuve','rejete') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'approuve',
+  `motif_rejet` text COLLATE utf8mb4_unicode_ci,
+  `date_inscription` date DEFAULT NULL,
   `est_actif` tinyint(1) NOT NULL DEFAULT '1',
   `est_verrouille` tinyint(1) NOT NULL DEFAULT '0',
   `tentatives_connexion` tinyint unsigned NOT NULL DEFAULT '0',
@@ -916,15 +1263,17 @@ CREATE TABLE IF NOT EXISTS `utilisateurs` (
   UNIQUE KEY `utilisateurs_nom_utilisateur_unique` (`nom_utilisateur`),
   UNIQUE KEY `utilisateurs_email_unique` (`email`),
   CONSTRAINT `utilisateurs_personne_id_foreign` FOREIGN KEY (`personne_id`) REFERENCES `personnes` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.utilisateurs : ~5 rows (environ)
-INSERT INTO `utilisateurs` (`id`, `personne_id`, `nom_utilisateur`, `mot_de_passe_hash`, `email`, `est_actif`, `est_verrouille`, `tentatives_connexion`, `derniere_connexion`, `date_expiration_mot_de_passe`, `created_at`, `updated_at`) VALUES
-	(1, 1, 'admin', '$2y$12$AG4Vzn7EV73AlATnG9FKGexUHP0CAW/7mdbslHE1mL9HL4fSbhnye', 'pierrepapy@gmail.com', 1, 0, 0, '2026-09-05 07:21:57', NULL, '2026-09-02 18:29:47', '2026-09-05 05:21:57'),
-	(2, 2, 'jean.dupont', '$2y$12$OFHiT3XeNufyvt7aeEHhCO5.3IzHWABXV/jS5pgGejLVfn4f3CYkm', 'jean.dupont@email.com', 1, 0, 0, NULL, NULL, '2026-09-02 18:35:49', '2026-09-02 18:35:49'),
-	(3, 3, 'marie.mbala', '$2y$12$Armb/thc0jcIs0DjEfWZkeHsVYRvSYFUbHykRr19TgCqp8v.0QXnK', 'marie.mbala@email.com', 1, 0, 1, NULL, NULL, '2026-09-02 18:35:49', '2026-09-03 19:37:37'),
-	(4, 13, 'NGOMA Paul', '$2y$12$TstGZHCHUJivND1oCcWjauM3t3qwYLaRVKEsBaLq/gs9JxXSxW16i', 'ngoma@gmail.com', 1, 0, 0, NULL, NULL, '2026-09-02 18:53:45', '2026-09-03 12:08:02'),
-	(7, 25, 'salama', '$2y$12$Eyy1aKAHCMPE0GX1lWMjOOKCTZXG4P0SXG2S1H2oRmtRANWLI0gJ.', 'salama@gmail.com', 1, 0, 0, '2026-09-04 19:56:15', NULL, '2026-09-03 19:45:08', '2026-09-04 17:56:15');
+-- Listage des données de la table bd_operateur.utilisateurs : ~7 rows (environ)
+INSERT INTO `utilisateurs` (`id`, `personne_id`, `nom_utilisateur`, `mot_de_passe_hash`, `email`, `statut_inscription`, `motif_rejet`, `date_inscription`, `est_actif`, `est_verrouille`, `tentatives_connexion`, `derniere_connexion`, `date_expiration_mot_de_passe`, `created_at`, `updated_at`) VALUES
+	(1, 1, 'admin', '$2y$12$AG4Vzn7EV73AlATnG9FKGexUHP0CAW/7mdbslHE1mL9HL4fSbhnye', 'pierrepapy@gmail.com', 'approuve', NULL, NULL, 1, 0, 0, '2026-09-11 17:35:37', NULL, '2026-09-02 18:29:47', '2026-09-11 15:35:37'),
+	(2, 2, 'jean.dupont', '$2y$12$9w6qMZGMUDoBCG.8FuP8HOAdSYk1OGLQMSZgaR7oJWE0KuwGrSyIC', 'jean.dupont@email.com', 'approuve', NULL, NULL, 1, 0, 0, '2026-09-08 12:02:10', NULL, '2026-09-02 18:35:49', '2026-09-08 10:02:10'),
+	(3, 3, 'marie.mbala', '$2y$12$Armb/thc0jcIs0DjEfWZkeHsVYRvSYFUbHykRr19TgCqp8v.0QXnK', 'marie.mbala@email.com', 'approuve', NULL, NULL, 1, 0, 3, NULL, NULL, '2026-09-02 18:35:49', '2026-09-08 18:38:43'),
+	(4, 13, 'NGOMA Paul', '$2y$12$TstGZHCHUJivND1oCcWjauM3t3qwYLaRVKEsBaLq/gs9JxXSxW16i', 'ngoma@gmail.com', 'approuve', NULL, NULL, 1, 0, 0, NULL, NULL, '2026-09-02 18:53:45', '2026-09-03 12:08:02'),
+	(7, 25, 'salama', '$2y$12$Eyy1aKAHCMPE0GX1lWMjOOKCTZXG4P0SXG2S1H2oRmtRANWLI0gJ.', 'salama@gmail.com', 'approuve', NULL, NULL, 1, 0, 0, '2026-09-08 20:35:01', NULL, '2026-09-03 19:45:08', '2026-09-08 18:35:01'),
+	(8, 28, 'sindani@gmail.com', '$2y$12$ws/x4b6bK1CrNJ6V6wVsZOQofXkznSAd6H2jVxJDuWKbjrclc72k2', 'sindani@gmail.com', 'approuve', NULL, '2026-09-08', 1, 0, 0, NULL, NULL, '2026-09-08 12:09:52', '2026-09-08 17:57:52'),
+	(11, 31, 'kamoya@gmail.com', '$2y$12$d8mxcUW6iCKxuGqhduDOye/sHbBjbTi5/FHnlcgN7uYZcJl6DmFK.', 'kamoya@gmail.com', 'en_attente', NULL, '2026-09-08', 0, 0, 0, NULL, NULL, '2026-09-08 18:23:18', '2026-09-08 18:23:18');
 
 -- Listage de la structure de table bd_operateur. utilisateurs_roles
 CREATE TABLE IF NOT EXISTS `utilisateurs_roles` (
@@ -941,10 +1290,11 @@ CREATE TABLE IF NOT EXISTS `utilisateurs_roles` (
 -- Listage des données de la table bd_operateur.utilisateurs_roles : ~5 rows (environ)
 INSERT INTO `utilisateurs_roles` (`utilisateur_id`, `role_id`, `created_at`, `updated_at`) VALUES
 	(1, 1, '2026-09-02 18:47:17', '2026-09-02 18:47:17'),
-	(2, 3, '2026-09-02 18:35:49', '2026-09-02 18:35:49'),
+	(2, 5, '2026-09-08 10:00:09', '2026-09-08 10:00:09'),
 	(3, 5, '2026-09-02 18:35:49', '2026-09-02 18:35:49'),
 	(4, 2, '2026-09-02 18:53:45', '2026-09-02 18:53:45'),
-	(7, 5, '2026-09-03 19:45:08', '2026-09-03 19:45:08');
+	(7, 5, '2026-09-03 19:45:08', '2026-09-03 19:45:08'),
+	(8, 5, '2026-09-08 12:18:41', '2026-09-08 12:18:41');
 
 -- Listage de la structure de table bd_operateur. vehicules
 CREATE TABLE IF NOT EXISTS `vehicules` (

@@ -6,9 +6,10 @@ import 'api_service.dart';
 class PersonneService {
   final ApiService _api = ApiService();
 
-  Future<List<Personne>> list({String? search, int page = 1}) async {
+  Future<List<Personne>> list({String? search, String? statutInscription, int page = 1}) async {
     final response = await _api.get('/personnes', queryParameters: {
       if (search != null && search.isNotEmpty) 'search': search,
+      if (statutInscription != null) 'statut_inscription': statutInscription,
       'page': page,
     });
 

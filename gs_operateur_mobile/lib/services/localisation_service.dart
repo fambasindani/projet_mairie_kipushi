@@ -17,7 +17,7 @@ class LocalisationService {
 
   Future<List<Ville>> villes({int? provinceId}) async {
     final response = await _api.get('/villes', queryParameters: {
-      if (provinceId != null) 'province_id': provinceId,
+      if (provinceId != null) 'id_province': provinceId,
     });
     if (response['success'] == true) {
       final data = response['data'];
@@ -30,7 +30,7 @@ class LocalisationService {
 
   Future<List<Commune>> communes({int? villeId}) async {
     final response = await _api.get('/communes', queryParameters: {
-      if (villeId != null) 'ville_id': villeId,
+      if (villeId != null) 'id_ville': villeId,
     });
     if (response['success'] == true) {
       final data = response['data'];

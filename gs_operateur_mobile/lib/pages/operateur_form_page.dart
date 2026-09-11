@@ -27,6 +27,7 @@ class _OperateurFormPageState extends State<OperateurFormPage> {
   final _cniController = TextEditingController();
   final _lieuNaissanceController = TextEditingController();
   final _formeJuridiqueController = TextEditingController();
+  final _nationaliteController = TextEditingController(text: 'Congolaise');
   String? _sexe;
   DateTime? _dateNaissance;
   bool _isLoading = false;
@@ -50,18 +51,23 @@ class _OperateurFormPageState extends State<OperateurFormPage> {
       final service = PersonneService();
       final personne = await service.get(widget.id!);
       _nomController.text = personne.nom;
-      _postnomController.text = personne.postnom;
-      _prenomController.text = personne.prenom;
+      _postnomController.text = personne.postnom ?? '';
+      _prenomController.text = personne.prenom ?? '';
       _telephoneController.text = personne.telephone ?? '';
       _emailController.text = personne.email ?? '';
       _adresseController.text = personne.adresse ?? '';
       _cniController.text = personne.cni ?? '';
       _lieuNaissanceController.text = personne.lieuNaissance ?? '';
+      _nationaliteController.text = personne.nationalite ?? 'Congolaise';
       setState(() {
-        _type = 'physique';
+        _type = personne.type ?? 'physique';
         _sexe = personne.sexe;
         _dateNaissance = personne.dateNaissance;
       });
+      if (personne.type == 'morale') {
+        _denominationCtrl.text = personne.denominationSociale ?? '';
+        _formeJuridiqueController.text = personne.formeJuridique ?? '';
+      }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -81,9 +87,23 @@ class _OperateurFormPageState extends State<OperateurFormPage> {
       return;
     }
 
-    if (_isPhysique && _nomController.text.trim().isEmpty) {
+    if (_nomController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Le nom est requis pour une personne physique'), backgroundColor: AppColors.error),
+        const SnackBar(content: Text('Le nom est requis'), backgroundColor: AppColors.error),
+      );
+      return;
+    }
+
+    if (_isPhysique && _sexe == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Le sexe est requis pour une personne physique'), backgroundColor: AppColors.error),
+      );
+      return;
+    }
+
+    if (_isPhysique && _dateNaissance == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('La date de naissance est requise pour une personne physique'), backgroundColor: AppColors.error),
       );
       return;
     }
@@ -93,12 +113,13 @@ class _OperateurFormPageState extends State<OperateurFormPage> {
     try {
       final data = <String, dynamic>{
         'type': _type,
+        'nom': _nomController.text.trim(),
       };
 
+      if (_postnomController.text.isNotEmpty) data['postnom'] = _postnomController.text.trim();
+      if (_prenomController.text.isNotEmpty) data['prenom'] = _prenomController.text.trim();
+
       if (_isPhysique) {
-        data['nom'] = _nomController.text.trim();
-        if (_postnomController.text.isNotEmpty) data['postnom'] = _postnomController.text.trim();
-        if (_prenomController.text.isNotEmpty) data['prenom'] = _prenomController.text.trim();
         if (_sexe != null) data['sexe'] = _sexe;
         if (_dateNaissance != null) data['date_naissance'] = _dateNaissance!.toIso8601String().substring(0, 10);
         if (_lieuNaissanceController.text.isNotEmpty) data['lieu_naissance'] = _lieuNaissanceController.text.trim();
@@ -107,6 +128,7 @@ class _OperateurFormPageState extends State<OperateurFormPage> {
         if (_formeJuridiqueController.text.isNotEmpty) data['forme_juridique'] = _formeJuridiqueController.text.trim();
       }
 
+      if (_nationaliteController.text.isNotEmpty) data['nationalite'] = _nationaliteController.text.trim();
       if (_telephoneController.text.isNotEmpty) data['telephone'] = _telephoneController.text.trim();
       if (_emailController.text.isNotEmpty) data['email'] = _emailController.text.trim();
       if (_adresseController.text.isNotEmpty) data['adresse'] = _adresseController.text.trim();
@@ -172,7 +194,7 @@ class _OperateurFormPageState extends State<OperateurFormPage> {
                 AppInput(label: 'Prénom', controller: _prenomController),
                 const SizedBox(height: 16),
                 AppDropdown<String>(
-                  label: 'Sexe',
+                  label: 'Sexe *',
                   value: _sexe,
                   hint: 'Sélectionner',
                   items: const [
@@ -183,13 +205,15 @@ class _OperateurFormPageState extends State<OperateurFormPage> {
                 ),
                 const SizedBox(height: 16),
                 AppDateInput(
-                  label: 'Date de naissance',
+                  label: 'Date de naissance *',
                   value: _dateNaissance,
                   onChanged: (v) => setState(() => _dateNaissance = v),
                 ),
                 const SizedBox(height: 16),
                 AppInput(label: 'Lieu de naissance', controller: _lieuNaissanceController),
               ] else ...[
+                AppInput(label: 'Nom *', controller: _nomController, validator: (v) => v == null || v.isEmpty ? 'Requis' : null),
+                const SizedBox(height: 16),
                 AppInput(label: 'Dénomination sociale', controller: _denominationCtrl),
                 const SizedBox(height: 16),
                 AppInput(label: 'Forme juridique', hint: 'SARL, SA, ASBL...', controller: _formeJuridiqueController),
@@ -209,6 +233,8 @@ class _OperateurFormPageState extends State<OperateurFormPage> {
               ),
               const SizedBox(height: 16),
               AppInput(label: 'Adresse', controller: _adresseController),
+              const SizedBox(height: 16),
+              AppInput(label: 'Nationalité', controller: _nationaliteController),
               const SizedBox(height: 16),
               AppInput(label: 'CNI / RCCM', controller: _cniController),
               const SizedBox(height: 32),
@@ -239,6 +265,7 @@ class _OperateurFormPageState extends State<OperateurFormPage> {
     _cniController.dispose();
     _lieuNaissanceController.dispose();
     _formeJuridiqueController.dispose();
+    _nationaliteController.dispose();
     super.dispose();
   }
 }

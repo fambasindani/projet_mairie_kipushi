@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'config/theme.dart';
@@ -8,7 +7,8 @@ import 'providers/auth_provider.dart';
 import 'providers/personne_provider.dart';
 import 'providers/paiement_provider.dart';
 import 'providers/notification_provider.dart';
-import 'pages/splash_page.dart';
+import 'pages/landing_page.dart';
+import 'pages/inscription_page.dart';
 import 'pages/login_page.dart';
 import 'pages/home_page.dart';
 import 'pages/operateurs_list_page.dart';
@@ -22,10 +22,12 @@ import 'pages/notifications_page.dart';
 import 'pages/profil_page.dart';
 import 'pages/taxes_page.dart';
 import 'pages/documents_page.dart';
+import 'pages/recus_perception_page.dart';
+import 'pages/recu_perception_form_page.dart';
+import 'pages/recu_perception_pdf_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: '.env');
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
@@ -55,18 +57,18 @@ class _GSOperateurAppState extends State<GSOperateurApp> {
       redirect: (context, state) {
         final isLoggedIn = _authProvider.isAuthenticated;
         final isLoginRoute = state.matchedLocation == '/login';
-        final isSplashRoute = state.matchedLocation == '/';
+        final isLandingRoute = state.matchedLocation == '/';
+        final isInscriptionRoute = state.matchedLocation == '/inscription';
 
-        if (isSplashRoute) return null;
-
-        if (!isLoggedIn && !isLoginRoute) return '/login';
-        if (isLoggedIn && isLoginRoute) return '/home';
+        if (!isLoggedIn && !isLoginRoute && !isLandingRoute && !isInscriptionRoute) return '/';
+        if (isLoggedIn && (isLoginRoute || isLandingRoute || isInscriptionRoute)) return '/home';
 
         return null;
       },
       routes: [
-        GoRoute(path: '/', builder: (_, __) => const SplashPage()),
+        GoRoute(path: '/', builder: (_, __) => const LandingPage()),
         GoRoute(path: '/login', builder: (_, __) => const LoginPage()),
+        GoRoute(path: '/inscription', builder: (_, __) => const InscriptionPage()),
         ShellRoute(
           builder: (context, state, child) => HomePage(child: child),
           routes: [
@@ -82,6 +84,11 @@ class _GSOperateurAppState extends State<GSOperateurApp> {
             GoRoute(path: '/taxes', builder: (_, __) => const TaxesPage()),
             GoRoute(path: '/documents', builder: (_, __) => const DocumentsPage()),
             GoRoute(path: '/notifications', builder: (_, __) => const NotificationsPage()),
+            GoRoute(path: '/recus-perception', builder: (_, __) => const RecusPerceptionPage()),
+            GoRoute(path: '/recus-perception/ajouter', builder: (_, __) => const RecuPerceptionFormPage()),
+            GoRoute(path: '/recus-perception/:id/imprimer', builder: (_, state) {
+              return const RecusPerceptionPage();
+            }),
             GoRoute(path: '/profil', builder: (_, __) => const ProfilPage()),
           ],
         ),

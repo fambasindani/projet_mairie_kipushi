@@ -1,0 +1,1360 @@
+﻿
+> dexdump_disasm.txt:513234:277516: 6e20 f85f 7000                         |0007: invoke-virtual {v0, v7}, 
+Lcom/common/apiutil/printer/NewUsbThermalPrinter;.addString:(Ljava/lang/String;)V // method@5ff8
+  dexdump_disasm.txt:513235:27751c: 1e06                                   |000a: monitor-exit v6
+  dexdump_disasm.txt:513236:27751e: 0e00                                   |000b: return-void
+  dexdump_disasm.txt:513237:277520: 5460 4b48                              |000c: iget-object v0, v6, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.clazz:Ljava/lang/Class; // field@484b
+> dexdump_disasm.txt:513315:2775ee: 6e30 f95f 8009                         |0007: invoke-virtual {v0, v8, v9}, 
+Lcom/common/apiutil/printer/NewUsbThermalPrinter;.addStringOffset:(ILjava/lang/String;)V // method@5ff9
+  dexdump_disasm.txt:513316:2775f4: 1e07                                   |000a: monitor-exit v7
+  dexdump_disasm.txt:513317:2775f6: 0e00                                   |000b: return-void
+  dexdump_disasm.txt:513318:2775f8: 5470 4b48                              |000c: iget-object v0, v7, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.clazz:Ljava/lang/Class; // field@484b
+> dexdump_disasm.txt:513557:276eda: 6e10 fb5f 0000                         |0007: invoke-virtual {v0}, 
+Lcom/common/apiutil/printer/NewUsbThermalPrinter;.checkStatus:()I // method@5ffb
+  dexdump_disasm.txt:513558:276ee0: 0a00                                   |000a: move-result v0
+  dexdump_disasm.txt:513559:276ee2: 1e04                                   |000b: monitor-exit v4
+  dexdump_disasm.txt:513560:276ee4: 0f00                                   |000c: return v0
+> dexdump_disasm.txt:513639:277876: 6e10 fc5f 0000                         |0007: invoke-virtual {v0}, 
+Lcom/common/apiutil/printer/NewUsbThermalPrinter;.clearString:()V // method@5ffc
+  dexdump_disasm.txt:513640:27787c: 1e04                                   |000a: monitor-exit v4
+  dexdump_disasm.txt:513641:27787e: 0e00                                   |000b: return-void
+  dexdump_disasm.txt:513642:277880: 5440 4b48                              |000c: iget-object v0, v4, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.clazz:Ljava/lang/Class; // field@484b
+> dexdump_disasm.txt:513791:277a06: 6e30 fe5f 8009                         |0007: invoke-virtual {v0, v8, v9}, 
+Lcom/common/apiutil/printer/NewUsbThermalPrinter;.enlargeFontSize:(II)V // method@5ffe
+  dexdump_disasm.txt:513792:277a0c: 1e07                                   |000a: monitor-exit v7
+  dexdump_disasm.txt:513793:277a0e: 0e00                                   |000b: return-void
+  dexdump_disasm.txt:513794:277a10: 5470 4b48                              |000c: iget-object v0, v7, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.clazz:Ljava/lang/Class; // field@484b
+> dexdump_disasm.txt:514124:277afa: 6e10 0260 0000                         |0007: invoke-virtual {v0}, 
+Lcom/common/apiutil/printer/NewUsbThermalPrinter;.paperCut:()V // method@6002
+  dexdump_disasm.txt:514125:277b00: 1e04                                   |000a: monitor-exit v4
+  dexdump_disasm.txt:514126:277b02: 0e00                                   |000b: return-void
+  dexdump_disasm.txt:514127:277b04: 5440 4b48                              |000c: iget-object v0, v4, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.clazz:Ljava/lang/Class; // field@484b
+> dexdump_disasm.txt:514582:277fce: 6e10 0760 0000                         |0007: invoke-virtual {v0}, 
+Lcom/common/apiutil/printer/NewUsbThermalPrinter;.printString:()V // method@6007
+  dexdump_disasm.txt:514583:277fd4: 1e04                                   |000a: monitor-exit v4
+  dexdump_disasm.txt:514584:277fd6: 0e00                                   |000b: return-void
+  dexdump_disasm.txt:514585:277fd8: 5440 4b48                              |000c: iget-object v0, v4, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.clazz:Ljava/lang/Class; // field@484b
+> dexdump_disasm.txt:514658:278096: 6e40 0860 90ba                         |0007: invoke-virtual {v0, v9, v10, v11}, 
+Lcom/common/apiutil/printer/NewUsbThermalPrinter;.printStringAndWalk:(III)V // method@6008
+  dexdump_disasm.txt:514659:27809c: 1e08                                   |000a: monitor-exit v8
+  dexdump_disasm.txt:514660:27809e: 0e00                                   |000b: return-void
+  dexdump_disasm.txt:514661:2780a0: 5480 4b48                              |000c: iget-object v0, v8, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.clazz:Ljava/lang/Class; // field@484b
+> dexdump_disasm.txt:514921:27835e: 6e20 0b60 7000                         |0007: invoke-virtual {v0, v7}, 
+Lcom/common/apiutil/printer/NewUsbThermalPrinter;.setAlgin:(I)V // method@600b
+  dexdump_disasm.txt:514922:278364: 1e06                                   |000a: monitor-exit v6
+  dexdump_disasm.txt:514923:278366: 0e00                                   |000b: return-void
+  dexdump_disasm.txt:514924:278368: 5460 4b48                              |000c: iget-object v0, v6, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.clazz:Ljava/lang/Class; // field@484b
+> dexdump_disasm.txt:515170:2785fe: 6e20 0e60 7000                         |0007: invoke-virtual {v0, v7}, 
+Lcom/common/apiutil/printer/NewUsbThermalPrinter;.setBold:(Z)V // method@600e
+  dexdump_disasm.txt:515171:278604: 1e06                                   |000a: monitor-exit v6
+  dexdump_disasm.txt:515172:278606: 0e00                                   |000b: return-void
+  dexdump_disasm.txt:515173:278608: 5460 4b48                              |000c: iget-object v0, v6, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.clazz:Ljava/lang/Class; // field@484b
+> dexdump_disasm.txt:515253:2786de: 6e20 0f60 7000                         |0007: invoke-virtual {v0, v7}, 
+Lcom/common/apiutil/printer/NewUsbThermalPrinter;.setFontSize:(I)V // method@600f
+  dexdump_disasm.txt:515254:2786e4: 1e06                                   |000a: monitor-exit v6
+  dexdump_disasm.txt:515255:2786e6: 0e00                                   |000b: return-void
+  dexdump_disasm.txt:515256:2786e8: 5460 4b48                              |000c: iget-object v0, v6, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.clazz:Ljava/lang/Class; // field@484b
+> dexdump_disasm.txt:515336:2787be: 6e20 1060 7000                         |0007: invoke-virtual {v0, v7}, 
+Lcom/common/apiutil/printer/NewUsbThermalPrinter;.setGray:(I)V // method@6010
+  dexdump_disasm.txt:515337:2787c4: 1e06                                   |000a: monitor-exit v6
+  dexdump_disasm.txt:515338:2787c6: 0e00                                   |000b: return-void
+  dexdump_disasm.txt:515339:2787c8: 5460 4b48                              |000c: iget-object v0, v6, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.clazz:Ljava/lang/Class; // field@484b
+> dexdump_disasm.txt:515668:278b3e: 6e20 1460 7000                         |0007: invoke-virtual {v0, v7}, 
+Lcom/common/apiutil/printer/NewUsbThermalPrinter;.setLineSpace:(I)V // method@6014
+  dexdump_disasm.txt:515669:278b44: 1e06                                   |000a: monitor-exit v6
+  dexdump_disasm.txt:515670:278b46: 0e00                                   |000b: return-void
+  dexdump_disasm.txt:515671:278b48: 5460 4b48                              |000c: iget-object v0, v6, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.clazz:Ljava/lang/Class; // field@484b
+> dexdump_disasm.txt:535188:2881ce: 7110 3a60 0000                         |0009: invoke-static {v0}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.init:(Landroid/content/Context;)V // method@603a
+  dexdump_disasm.txt:535189:2881d4: 5420 ca48                              |000c: iget-object v0, v2, 
+Lcom/common/apiutil/util/SDKUtil;.mContext:Landroid/content/Context; // field@48ca
+  dexdump_disasm.txt:535190:2881d8: 7110 2e5e 0000                         |000e: invoke-static {v0}, 
+Lcom/common/apiutil/magnetic/MagneticCard;.init:(Landroid/content/Context;)V // method@5e2e
+  dexdump_disasm.txt:535191:2881de: 5420 ca48                              |0011: iget-object v0, v2, 
+Lcom/common/apiutil/util/SDKUtil;.mContext:Landroid/content/Context; // field@48ca
+> dexdump_disasm.txt:822007:372dd0: 7100 3d60 0000                         |000a: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.paperCut:()V // method@603d
+  dexdump_disasm.txt:822008:372dd6: 2807                                   |000d: goto 0014 // +0007
+  dexdump_disasm.txt:822009:372dd8: 0d00                                   |000e: move-exception v0
+  dexdump_disasm.txt:822010:372dda: 280d                                   |000f: goto 001c // +000d
+> dexdump_disasm.txt:825693:375326: 7110 5060 0500                         |0017: invoke-static {v5}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setGray:(I)V // method@6050
+  dexdump_disasm.txt:825694:37532c: 54a5 2190                              |001a: iget-object v5, v10, Lcom/telpo/tps55
+0/api/demo/printer/PrinterActivity$barcodePrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@9021
+  dexdump_disasm.txt:825695:375330: 6206 4490                              |001c: sget-object v6, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivity;.barcodeStr:Ljava/lang/String; // field@9044
+  dexdump_disasm.txt:825696:375334: 6207 6a86                              |001e: sget-object v7, 
+Lcom/google/zxing/BarcodeFormat;.CODE_128:Lcom/google/zxing/BarcodeFormat; // field@866a
+> dexdump_disasm.txt:825704:375356: 7110 3160 0500                         |002f: invoke-static {v5}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.addString:(Ljava/lang/String;)V // method@6031
+> dexdump_disasm.txt:825705:37535c: 7100 4360 0000                         |0032: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.printString:()V // method@6043
+  dexdump_disasm.txt:825706:375362: 1305 6400                              |0035: const/16 v5, #int 100 // #64
+  dexdump_disasm.txt:825707:375366: 7110 6160 0500                         |0037: invoke-static {v5}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.walkPaper:(I)V // method@6061
+  dexdump_disasm.txt:825708:37536c: 54a5 2190                              |003a: iget-object v5, v10, Lcom/telpo/tps55
+0/api/demo/printer/PrinterActivity$barcodePrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@9021
+> dexdump_disasm.txt:825924:375596: 7110 4d60 0300                         |0011: invoke-static {v3}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setAlgin:(I)V // method@604d
+  dexdump_disasm.txt:825925:37559c: 5485 2290                              |0014: iget-object v5, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@9022
+  dexdump_disasm.txt:825926:3755a0: 7110 d896 0500                         |0016: invoke-static {v5}, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivity;.access$2600:(Lcom/telpo/tps550/api/demo/printer/PrinterActivity;)I 
+// method@96d8
+  dexdump_disasm.txt:825927:3755a6: 0a05                                   |0019: move-result v5
+> dexdump_disasm.txt:825932:3755ba: 7110 5460 0500                         |0023: invoke-static {v5}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setLineSpace:(I)V // method@6054
+  dexdump_disasm.txt:825933:3755c0: 5485 2290                              |0026: iget-object v5, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@9022
+  dexdump_disasm.txt:825934:3755c4: 7110 de96 0500                         |0028: invoke-static {v5}, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivity;.access$3000:(Lcom/telpo/tps550/api/demo/printer/PrinterActivity;)I 
+// method@96de
+  dexdump_disasm.txt:825935:3755ca: 0a05                                   |002b: move-result v5
+> dexdump_disasm.txt:825939:3755d4: 7110 4f60 0700                         |0030: invoke-static {v7}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setFontSize:(I)V // method@604f
+> dexdump_disasm.txt:825940:3755da: 7120 3560 7700                         |0033: invoke-static {v7, v7}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.enlargeFontSize:(II)V // method@6035
+  dexdump_disasm.txt:825941:3755e0: 2827                                   |0036: goto 005d // +0027
+  dexdump_disasm.txt:825942:3755e2: 5485 2290                              |0037: iget-object v5, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@9022
+  dexdump_disasm.txt:825943:3755e6: 7110 de96 0500                         |0039: invoke-static {v5}, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivity;.access$3000:(Lcom/telpo/tps550/api/demo/printer/PrinterActivity;)I 
+// method@96de
+> dexdump_disasm.txt:825946:3755f2: 7110 4f60 0300                         |003f: invoke-static {v3}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setFontSize:(I)V // method@604f
+> dexdump_disasm.txt:825947:3755f8: 7120 3560 7700                         |0042: invoke-static {v7, v7}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.enlargeFontSize:(II)V // method@6035
+  dexdump_disasm.txt:825948:3755fe: 2818                                   |0045: goto 005d // +0018
+  dexdump_disasm.txt:825949:375600: 5485 2290                              |0046: iget-object v5, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@9022
+  dexdump_disasm.txt:825950:375604: 7110 de96 0500                         |0048: invoke-static {v5}, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivity;.access$3000:(Lcom/telpo/tps550/api/demo/printer/PrinterActivity;)I 
+// method@96de
+> dexdump_disasm.txt:825953:375610: 7110 4f60 0700                         |004e: invoke-static {v7}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setFontSize:(I)V // method@604f
+  dexdump_disasm.txt:825954:375616: 280c                                   |0051: goto 005d // +000c
+  dexdump_disasm.txt:825955:375618: 5485 2290                              |0052: iget-object v5, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@9022
+  dexdump_disasm.txt:825956:37561c: 7110 de96 0500                         |0054: invoke-static {v5}, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivity;.access$3000:(Lcom/telpo/tps550/api/demo/printer/PrinterActivity;)I 
+// method@96de
+> dexdump_disasm.txt:825959:375628: 7110 4f60 0300                         |005a: invoke-static {v3}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setFontSize:(I)V // method@604f
+  dexdump_disasm.txt:825960:37562e: 5485 2290                              |005d: iget-object v5, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@9022
+  dexdump_disasm.txt:825961:375632: 7110 cc96 0500                         |005f: invoke-static {v5}, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivity;.access$1800:(Lcom/telpo/tps550/api/demo/printer/PrinterActivity;)I 
+// method@96cc
+  dexdump_disasm.txt:825962:375638: 0a05                                   |0062: move-result v5
+> dexdump_disasm.txt:825963:37563a: 7110 5060 0500                         |0063: invoke-static {v5}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setGray:(I)V // method@6050
+  dexdump_disasm.txt:825964:375640: 6205 6d90                              |0066: sget-object v5, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivity;.printContent:Ljava/lang/String; // field@906d
+> dexdump_disasm.txt:825965:375644: 7110 3160 0500                         |0068: invoke-static {v5}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.addString:(Ljava/lang/String;)V // method@6031
+> dexdump_disasm.txt:825966:37564a: 7100 4360 0000                         |006b: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.printString:()V // method@6043
+  dexdump_disasm.txt:825967:375650: 1305 3200                              |006e: const/16 v5, #int 50 // #32
+  dexdump_disasm.txt:825968:375654: 7110 6160 0500                         |0070: invoke-static {v5}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.walkPaper:(I)V // method@6061
+  dexdump_disasm.txt:825969:37565a: 5486 2290                              |0073: iget-object v6, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@9022
+> dexdump_disasm.txt:825975:375672: 7100 3d60 0000                         |007f: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.paperCut:()V // method@603d
+  dexdump_disasm.txt:825976:375678: 7110 6160 0500                         |0082: invoke-static {v5}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.walkPaper:(I)V // method@6061
+  dexdump_disasm.txt:825977:37567e: 5485 2290                              |0085: iget-object v5, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@9022
+  dexdump_disasm.txt:825978:375682: 5455 6390                              |0087: iget-object v5, v5, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity;.handler:Lcom/telpo/tps550/api/demo/printer/PrinterActivity$MyHandler; // field@9063
+> dexdump_disasm.txt:828810:378150: 7100 3260 0000                         |145e: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.checkStatus:()I // method@6032
+  dexdump_disasm.txt:828811:378156: 1606 b80b                              |1461: const-wide/16 v6, #int 3000 // #bb8
+  dexdump_disasm.txt:828812:37815a: 7120 3a9b 7600                         |1463: invoke-static {v6, v7}, 
+Ljava/lang/Thread;.sleep:(J)V // method@9b3a
+  dexdump_disasm.txt:828813:378160: 2806                                   |1466: goto 146c // +0006
+> dexdump_disasm.txt:829538:3787ae: 7110 5060 0500                         |0017: invoke-static {v5}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setGray:(I)V // method@6050
+> dexdump_disasm.txt:829539:3787b4: 7110 4d60 0300                         |001a: invoke-static {v3}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setAlgin:(I)V // method@604d
+  dexdump_disasm.txt:829540:3787ba: 2205 2613                              |001d: new-instance v5, Ljava/io/File; // 
+type@1326
+  dexdump_disasm.txt:829541:3787be: 5496 2990                              |001f: iget-object v6, v9, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity$printLongPicture;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@9029
+  dexdump_disasm.txt:829542:3787c2: 7110 e696 0600                         |0021: invoke-static {v6}, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity;.access$3600:(Lcom/telpo/tps550/api/demo/printer/PrinterActivity;)Ljava/lang/String; 
+// method@96e6
+> dexdump_disasm.txt:829970:378ce6: 7110 4d60 0500                         |0013: invoke-static {v5}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setAlgin:(I)V // method@604d
+  dexdump_disasm.txt:829971:378cec: 1256                                   |0016: const/4 v6, #int 5 // #5
+> dexdump_disasm.txt:829972:378cee: 7110 5460 0600                         |0017: invoke-static {v6}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setLineSpace:(I)V // method@6054
+  dexdump_disasm.txt:829973:378cf4: 5496 2a90                              |001a: iget-object v6, v9, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@902a
+  dexdump_disasm.txt:829974:378cf8: 7110 de96 0600                         |001c: invoke-static {v6}, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivity;.access$3000:(Lcom/telpo/tps550/api/demo/printer/PrinterActivity;)I 
+// method@96de
+  dexdump_disasm.txt:829975:378cfe: 0a06                                   |001f: move-result v6
+> dexdump_disasm.txt:829979:378d08: 7110 4f60 0800                         |0024: invoke-static {v8}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setFontSize:(I)V // method@604f
+> dexdump_disasm.txt:829980:378d0e: 7120 3560 8800                         |0027: invoke-static {v8, v8}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.enlargeFontSize:(II)V // method@6035
+  dexdump_disasm.txt:829981:378d14: 2827                                   |002a: goto 0051 // +0027
+  dexdump_disasm.txt:829982:378d16: 5496 2a90                              |002b: iget-object v6, v9, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@902a
+  dexdump_disasm.txt:829983:378d1a: 7110 de96 0600                         |002d: invoke-static {v6}, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivity;.access$3000:(Lcom/telpo/tps550/api/demo/printer/PrinterActivity;)I 
+// method@96de
+> dexdump_disasm.txt:829986:378d26: 7110 4f60 0500                         |0033: invoke-static {v5}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setFontSize:(I)V // method@604f
+> dexdump_disasm.txt:829987:378d2c: 7120 3560 8800                         |0036: invoke-static {v8, v8}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.enlargeFontSize:(II)V // method@6035
+  dexdump_disasm.txt:829988:378d32: 2818                                   |0039: goto 0051 // +0018
+  dexdump_disasm.txt:829989:378d34: 5496 2a90                              |003a: iget-object v6, v9, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@902a
+  dexdump_disasm.txt:829990:378d38: 7110 de96 0600                         |003c: invoke-static {v6}, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivity;.access$3000:(Lcom/telpo/tps550/api/demo/printer/PrinterActivity;)I 
+// method@96de
+> dexdump_disasm.txt:829993:378d44: 7110 4f60 0800                         |0042: invoke-static {v8}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setFontSize:(I)V // method@604f
+  dexdump_disasm.txt:829994:378d4a: 280c                                   |0045: goto 0051 // +000c
+  dexdump_disasm.txt:829995:378d4c: 5496 2a90                              |0046: iget-object v6, v9, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@902a
+  dexdump_disasm.txt:829996:378d50: 7110 de96 0600                         |0048: invoke-static {v6}, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivity;.access$3000:(Lcom/telpo/tps550/api/demo/printer/PrinterActivity;)I 
+// method@96de
+> dexdump_disasm.txt:829999:378d5c: 7110 4f60 0500                         |004e: invoke-static {v5}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setFontSize:(I)V // method@604f
+> dexdump_disasm.txt:830000:378d62: 7110 5060 0000                         |0051: invoke-static {v0}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setGray:(I)V // method@6050
+  dexdump_disasm.txt:830001:378d68: 2206 7513                              |0054: new-instance v6, 
+Ljava/lang/StringBuilder; // type@1375
+  dexdump_disasm.txt:830002:378d6c: 7010 0e9b 0600                         |0056: invoke-direct {v6}, 
+Ljava/lang/StringBuilder;.<init>:()V // method@9b0e
+  dexdump_disasm.txt:830003:378d72: 1a07 f803                              |0059: const-string v7, "1\n" // string@03f8
+> dexdump_disasm.txt:830012:378d9c: 7110 3160 0600                         |006e: invoke-static {v6}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.addString:(Ljava/lang/String;)V // method@6031
+  dexdump_disasm.txt:830013:378da2: 5496 2a90                              |0071: iget-object v6, v9, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@902a
+  dexdump_disasm.txt:830014:378da6: 5266 5690                              |0073: iget v6, v6, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivity;.deviceType:I // field@9056
+  dexdump_disasm.txt:830015:378daa: 6207 2549                              |0075: sget-object v7, 
+Lcom/common/apiutil/util/StringUtil$DeviceModelEnum;.TPS681:Lcom/common/apiutil/util/StringUtil$DeviceModelEnum; // 
+field@4925
+> dexdump_disasm.txt:830019:378dba: 7100 4360 0000                         |007d: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.printString:()V // method@6043
+  dexdump_disasm.txt:830020:378dc0: 2206 7513                              |0080: new-instance v6, 
+Ljava/lang/StringBuilder; // type@1375
+  dexdump_disasm.txt:830021:378dc4: 7010 0e9b 0600                         |0082: invoke-direct {v6}, 
+Ljava/lang/StringBuilder;.<init>:()V // method@9b0e
+  dexdump_disasm.txt:830022:378dca: 1a07 2004                              |0085: const-string v7, "2\n" // string@0420
+> dexdump_disasm.txt:830030:378dee: 7110 3160 0600                         |0097: invoke-static {v6}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.addString:(Ljava/lang/String;)V // method@6031
+  dexdump_disasm.txt:830031:378df4: 5496 2a90                              |009a: iget-object v6, v9, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@902a
+  dexdump_disasm.txt:830032:378df8: 5266 5690                              |009c: iget v6, v6, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivity;.deviceType:I // field@9056
+  dexdump_disasm.txt:830033:378dfc: 6207 2549                              |009e: sget-object v7, 
+Lcom/common/apiutil/util/StringUtil$DeviceModelEnum;.TPS681:Lcom/common/apiutil/util/StringUtil$DeviceModelEnum; // 
+field@4925
+> dexdump_disasm.txt:830037:378e0c: 7100 4360 0000                         |00a6: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.printString:()V // method@6043
+  dexdump_disasm.txt:830038:378e12: 2206 7513                              |00a9: new-instance v6, 
+Ljava/lang/StringBuilder; // type@1375
+  dexdump_disasm.txt:830039:378e16: 7010 0e9b 0600                         |00ab: invoke-direct {v6}, 
+Ljava/lang/StringBuilder;.<init>:()V // method@9b0e
+  dexdump_disasm.txt:830040:378e1c: 1a07 3704                              |00ae: const-string v7, "3\n" // string@0437
+> dexdump_disasm.txt:830048:378e40: 7110 3160 0600                         |00c0: invoke-static {v6}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.addString:(Ljava/lang/String;)V // method@6031
+  dexdump_disasm.txt:830049:378e46: 5496 2a90                              |00c3: iget-object v6, v9, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@902a
+  dexdump_disasm.txt:830050:378e4a: 5266 5690                              |00c5: iget v6, v6, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivity;.deviceType:I // field@9056
+  dexdump_disasm.txt:830051:378e4e: 6207 2549                              |00c7: sget-object v7, 
+Lcom/common/apiutil/util/StringUtil$DeviceModelEnum;.TPS681:Lcom/common/apiutil/util/StringUtil$DeviceModelEnum; // 
+field@4925
+> dexdump_disasm.txt:830055:378e5e: 7100 4360 0000                         |00cf: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.printString:()V // method@6043
+  dexdump_disasm.txt:830056:378e64: 2206 7513                              |00d2: new-instance v6, 
+Ljava/lang/StringBuilder; // type@1375
+  dexdump_disasm.txt:830057:378e68: 7010 0e9b 0600                         |00d4: invoke-direct {v6}, 
+Ljava/lang/StringBuilder;.<init>:()V // method@9b0e
+  dexdump_disasm.txt:830058:378e6e: 1a07 9504                              |00d7: const-string v7, "4\n" // string@0495
+> dexdump_disasm.txt:830066:378e92: 7110 3160 0600                         |00e9: invoke-static {v6}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.addString:(Ljava/lang/String;)V // method@6031
+  dexdump_disasm.txt:830067:378e98: 5496 2a90                              |00ec: iget-object v6, v9, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@902a
+  dexdump_disasm.txt:830068:378e9c: 5266 5690                              |00ee: iget v6, v6, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivity;.deviceType:I // field@9056
+  dexdump_disasm.txt:830069:378ea0: 6207 2549                              |00f0: sget-object v7, 
+Lcom/common/apiutil/util/StringUtil$DeviceModelEnum;.TPS681:Lcom/common/apiutil/util/StringUtil$DeviceModelEnum; // 
+field@4925
+> dexdump_disasm.txt:830073:378eb0: 7100 4360 0000                         |00f8: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.printString:()V // method@6043
+  dexdump_disasm.txt:830074:378eb6: 2206 7513                              |00fb: new-instance v6, 
+Ljava/lang/StringBuilder; // type@1375
+  dexdump_disasm.txt:830075:378eba: 7010 0e9b 0600                         |00fd: invoke-direct {v6}, 
+Ljava/lang/StringBuilder;.<init>:()V // method@9b0e
+  dexdump_disasm.txt:830076:378ec0: 1a07 ac04                              |0100: const-string v7, "5\n" // string@04ac
+> dexdump_disasm.txt:830084:378ee4: 7110 3160 0600                         |0112: invoke-static {v6}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.addString:(Ljava/lang/String;)V // method@6031
+  dexdump_disasm.txt:830085:378eea: 5496 2a90                              |0115: iget-object v6, v9, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@902a
+  dexdump_disasm.txt:830086:378eee: 5266 5690                              |0117: iget v6, v6, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivity;.deviceType:I // field@9056
+  dexdump_disasm.txt:830087:378ef2: 6207 2549                              |0119: sget-object v7, 
+Lcom/common/apiutil/util/StringUtil$DeviceModelEnum;.TPS681:Lcom/common/apiutil/util/StringUtil$DeviceModelEnum; // 
+field@4925
+> dexdump_disasm.txt:830091:378f02: 7100 4360 0000                         |0121: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.printString:()V // method@6043
+  dexdump_disasm.txt:830092:378f08: 2206 7513                              |0124: new-instance v6, 
+Ljava/lang/StringBuilder; // type@1375
+  dexdump_disasm.txt:830093:378f0c: 7010 0e9b 0600                         |0126: invoke-direct {v6}, 
+Ljava/lang/StringBuilder;.<init>:()V // method@9b0e
+  dexdump_disasm.txt:830094:378f12: 1a07 b204                              |0129: const-string v7, "6\n" // string@04b2
+> dexdump_disasm.txt:830102:378f36: 7110 3160 0600                         |013b: invoke-static {v6}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.addString:(Ljava/lang/String;)V // method@6031
+  dexdump_disasm.txt:830103:378f3c: 5496 2a90                              |013e: iget-object v6, v9, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@902a
+  dexdump_disasm.txt:830104:378f40: 5266 5690                              |0140: iget v6, v6, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivity;.deviceType:I // field@9056
+  dexdump_disasm.txt:830105:378f44: 6207 2549                              |0142: sget-object v7, 
+Lcom/common/apiutil/util/StringUtil$DeviceModelEnum;.TPS681:Lcom/common/apiutil/util/StringUtil$DeviceModelEnum; // 
+field@4925
+> dexdump_disasm.txt:830109:378f54: 7100 4360 0000                         |014a: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.printString:()V // method@6043
+  dexdump_disasm.txt:830110:378f5a: 2206 7513                              |014d: new-instance v6, 
+Ljava/lang/StringBuilder; // type@1375
+  dexdump_disasm.txt:830111:378f5e: 7010 0e9b 0600                         |014f: invoke-direct {v6}, 
+Ljava/lang/StringBuilder;.<init>:()V // method@9b0e
+  dexdump_disasm.txt:830112:378f64: 1a07 b604                              |0152: const-string v7, "7\n" // string@04b6
+> dexdump_disasm.txt:830120:378f88: 7110 3160 0600                         |0164: invoke-static {v6}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.addString:(Ljava/lang/String;)V // method@6031
+  dexdump_disasm.txt:830121:378f8e: 5496 2a90                              |0167: iget-object v6, v9, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@902a
+  dexdump_disasm.txt:830122:378f92: 5266 5690                              |0169: iget v6, v6, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivity;.deviceType:I // field@9056
+  dexdump_disasm.txt:830123:378f96: 6207 2549                              |016b: sget-object v7, 
+Lcom/common/apiutil/util/StringUtil$DeviceModelEnum;.TPS681:Lcom/common/apiutil/util/StringUtil$DeviceModelEnum; // 
+field@4925
+> dexdump_disasm.txt:830127:378fa6: 7100 4360 0000                         |0173: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.printString:()V // method@6043
+  dexdump_disasm.txt:830128:378fac: 2206 7513                              |0176: new-instance v6, 
+Ljava/lang/StringBuilder; // type@1375
+  dexdump_disasm.txt:830129:378fb0: 7010 0e9b 0600                         |0178: invoke-direct {v6}, 
+Ljava/lang/StringBuilder;.<init>:()V // method@9b0e
+  dexdump_disasm.txt:830130:378fb6: 1a07 bd04                              |017b: const-string v7, "8\n" // string@04bd
+> dexdump_disasm.txt:830138:378fda: 7110 3160 0600                         |018d: invoke-static {v6}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.addString:(Ljava/lang/String;)V // method@6031
+> dexdump_disasm.txt:830139:378fe0: 7100 4360 0000                         |0190: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.printString:()V // method@6043
+  dexdump_disasm.txt:830140:378fe6: 1306 3200                              |0193: const/16 v6, #int 50 // #32
+  dexdump_disasm.txt:830141:378fea: 7110 6160 0600                         |0195: invoke-static {v6}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.walkPaper:(I)V // method@6061
+  dexdump_disasm.txt:830142:378ff0: 5496 2a90                              |0198: iget-object v6, v9, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@902a
+> dexdump_disasm.txt:830148:379008: 7100 3d60 0000                         |01a4: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.paperCut:()V // method@603d
+  dexdump_disasm.txt:830149:37900e: 5490 2a90                              |01a7: iget-object v0, v9, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@902a
+  dexdump_disasm.txt:830150:379012: 5400 6390                              |01a9: iget-object v0, v0, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity;.handler:Lcom/telpo/tps550/api/demo/printer/PrinterActivity$MyHandler; // field@9063
+  dexdump_disasm.txt:830151:379016: 5496 2a90                              |01ab: iget-object v6, v9, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@902a
+> dexdump_disasm.txt:830465:37929e: 7110 5060 0500                         |0017: invoke-static {v5}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setGray:(I)V // method@6050
+> dexdump_disasm.txt:830466:3792a4: 7110 4d60 0300                         |001a: invoke-static {v3}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setAlgin:(I)V // method@604d
+  dexdump_disasm.txt:830467:3792aa: 1a05 5500                              |001d: const-string v5, " " // string@0055
+> dexdump_disasm.txt:830468:3792ae: 7110 3160 0500                         |001f: invoke-static {v5}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.addString:(Ljava/lang/String;)V // method@6031
+> dexdump_disasm.txt:830469:3792b4: 7100 4360 0000                         |0022: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.printString:()V // method@6043
+  dexdump_disasm.txt:830470:3792ba: 2205 2613                              |0025: new-instance v5, Ljava/io/File; // 
+type@1326
+  dexdump_disasm.txt:830471:3792be: 5486 2c90                              |0027: iget-object v6, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity$printPicture;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@902c
+  dexdump_disasm.txt:830472:3792c2: 7110 e496 0600                         |0029: invoke-static {v6}, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity;.access$3400:(Lcom/telpo/tps550/api/demo/printer/PrinterActivity;)Ljava/lang/String; 
+// method@96e4
+> dexdump_disasm.txt:831216:379ae6: 7110 5060 0500                         |0017: invoke-static {v5}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setGray:(I)V // method@6050
+> dexdump_disasm.txt:831217:379aec: 7110 4d60 0300                         |001a: invoke-static {v3}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setAlgin:(I)V // method@604d
+  dexdump_disasm.txt:831218:379af2: 1a05 8303                              |001d: const-string v5, "------------" // 
+string@0383
+> dexdump_disasm.txt:831219:379af6: 7110 3160 0500                         |001f: invoke-static {v5}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.addString:(Ljava/lang/String;)V // method@6031
+> dexdump_disasm.txt:831220:379afc: 7100 4360 0000                         |0022: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.printString:()V // method@6043
+  dexdump_disasm.txt:831221:379b02: 5495 2f90                              |0025: iget-object v5, v9, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity$qrcodePrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@902f
+  dexdump_disasm.txt:831222:379b06: 6206 7790                              |0027: sget-object v6, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivity;.qrcodeStr:Ljava/lang/String; // field@9077
+  dexdump_disasm.txt:831223:379b0a: 6207 7486                              |0029: sget-object v7, 
+Lcom/google/zxing/BarcodeFormat;.QR_CODE:Lcom/google/zxing/BarcodeFormat; // field@8674
+> dexdump_disasm.txt:831230:379b28: 7110 3160 0500                         |0038: invoke-static {v5}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.addString:(Ljava/lang/String;)V // method@6031
+> dexdump_disasm.txt:831231:379b2e: 7100 4360 0000                         |003b: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.printString:()V // method@6043
+  dexdump_disasm.txt:831232:379b34: 1305 6400                              |003e: const/16 v5, #int 100 // #64
+  dexdump_disasm.txt:831233:379b38: 7110 6160 0500                         |0040: invoke-static {v5}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.walkPaper:(I)V // method@6061
+  dexdump_disasm.txt:831234:379b3e: 5495 2f90                              |0043: iget-object v5, v9, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivity$qrcodePrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivity; // 
+field@902f
+> dexdump_disasm.txt:832251:37a5fc: 7100 3d60 0000                         |000c: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.paperCut:()V // method@603d
+  dexdump_disasm.txt:832252:37a602: 5474 8090                              |000f: iget-object v4, v7, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$15$1;.this$1:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581$15; // 
+field@9080
+  dexdump_disasm.txt:832253:37a606: 5444 8190                              |0011: iget-object v4, v4, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$15;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581; // 
+field@9081
+  dexdump_disasm.txt:832254:37a60a: 5444 e490                              |0013: iget-object v4, v4, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581;.handler:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581$MyHandler; // 
+field@90e4
+> dexdump_disasm.txt:833889:37b7c4: 7100 3260 0000                         |0000: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.checkStatus:()I // method@6032
+  dexdump_disasm.txt:833890:37b7ca: 0a04                                   |0003: move-result v4
+  dexdump_disasm.txt:833891:37b7cc: 1a00 85a2                              |0004: const-string v0, "tagg" // 
+string@a285
+  dexdump_disasm.txt:833892:37b7d0: 2201 7513                              |0006: new-instance v1, 
+Ljava/lang/StringBuilder; // type@1375
+> dexdump_disasm.txt:834071:37b9e4: 7110 3c60 0600                         |001c: invoke-static {v6}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.init80mmUsbPrinter:(Landroid/content/Context;)Z // method@603c
+  dexdump_disasm.txt:834072:37b9ea: 0a06                                   |001f: move-result v6
+  dexdump_disasm.txt:834073:37b9ec: 5c36 e590                              |0020: iput-boolean v6, v3, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;.has80mmUsbPrinter:Z // field@90e5
+  dexdump_disasm.txt:834074:37b9f0: 2203 7513                              |0022: new-instance v3, 
+Ljava/lang/StringBuilder; // type@1375
+> dexdump_disasm.txt:834085:37ba22: 7100 3b60 0000                         |003b: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.init80mmSerialPrinter:()V // method@603b
+  dexdump_disasm.txt:834086:37ba28: 5483 8a90                              |003e: iget-object v3, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$23;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581; // 
+field@908a
+  dexdump_disasm.txt:834087:37ba2c: 5c35 e590                              |0040: iput-boolean v5, v3, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;.has80mmUsbPrinter:Z // field@90e5
+  dexdump_disasm.txt:834088:37ba30: 5483 8a90                              |0042: iget-object v3, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$23;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581; // 
+field@908a
+> dexdump_disasm.txt:836587:37d344: 7110 3160 0200                         |0118: invoke-static {v2}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.addString:(Ljava/lang/String;)V // method@6031
+  dexdump_disasm.txt:836588:37d34a: 2202 7513                              |011b: new-instance v2, 
+Ljava/lang/StringBuilder; // type@1375
+  dexdump_disasm.txt:836589:37d34e: 7010 0e9b 0200                         |011d: invoke-direct {v2}, 
+Ljava/lang/StringBuilder;.<init>:()V // method@9b0e
+  dexdump_disasm.txt:836590:37d354: 1a03 ac04                              |0120: const-string v3, "5\n" // string@04ac
+> dexdump_disasm.txt:836598:37d378: 7110 3160 0200                         |0132: invoke-static {v2}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.addString:(Ljava/lang/String;)V // method@6031
+  dexdump_disasm.txt:836599:37d37e: 2202 7513                              |0135: new-instance v2, 
+Ljava/lang/StringBuilder; // type@1375
+  dexdump_disasm.txt:836600:37d382: 7010 0e9b 0200                         |0137: invoke-direct {v2}, 
+Ljava/lang/StringBuilder;.<init>:()V // method@9b0e
+  dexdump_disasm.txt:836601:37d388: 1a03 b204                              |013a: const-string v3, "6\n" // string@04b2
+> dexdump_disasm.txt:836609:37d3ac: 7110 3160 0200                         |014c: invoke-static {v2}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.addString:(Ljava/lang/String;)V // method@6031
+  dexdump_disasm.txt:836610:37d3b2: 54a2 9c90                              |014f: iget-object v2, v10, Lcom/telpo/tps55
+0/api/demo/printer/PrinterActivitySY581$ReadThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581; // 
+field@909c
+  dexdump_disasm.txt:836611:37d3b6: 5422 0e91                              |0151: iget-object v2, v2, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;.useLanguage:Ljava/lang/String; // field@910e
+  dexdump_disasm.txt:836612:37d3ba: 3902 0700                              |0153: if-nez v2, 015a // +0007
+> dexdump_disasm.txt:836613:37d3be: 7100 4360 0000                         |0155: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.printString:()V // method@6043
+  dexdump_disasm.txt:836614:37d3c4: 2900 affe                              |0158: goto/16 0007 // -0151
+  dexdump_disasm.txt:836615:37d3c8: 54a2 9c90                              |015a: iget-object v2, v10, Lcom/telpo/tps55
+0/api/demo/printer/PrinterActivitySY581$ReadThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581; // 
+field@909c
+  dexdump_disasm.txt:836616:37d3cc: 5422 0e91                              |015c: iget-object v2, v2, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;.useLanguage:Ljava/lang/String; // field@910e
+> dexdump_disasm.txt:836617:37d3d0: 7110 4460 0200                         |015e: invoke-static {v2}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.printString:(Ljava/lang/String;)V // method@6044
+  dexdump_disasm.txt:836618:37d3d6: 2900 a6fe                              |0161: goto/16 0007 // -015a
+  dexdump_disasm.txt:836619:37d3da: 0d02                                   |0163: move-exception v2
+  dexdump_disasm.txt:836620:37d3dc: 6e10 235c 0200                         |0164: invoke-virtual {v2}, 
+Lcom/common/apiutil/CommonException;.printStackTrace:()V // method@5c23
+> dexdump_disasm.txt:836638:37d42e: 7110 3160 0200                         |018d: invoke-static {v2}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.addString:(Ljava/lang/String;)V // method@6031
+  dexdump_disasm.txt:836639:37d434: 2202 7513                              |0190: new-instance v2, 
+Ljava/lang/StringBuilder; // type@1375
+  dexdump_disasm.txt:836640:37d438: 7010 0e9b 0200                         |0192: invoke-direct {v2}, 
+Ljava/lang/StringBuilder;.<init>:()V // method@9b0e
+  dexdump_disasm.txt:836641:37d43e: 1a03 bd04                              |0195: const-string v3, "8\n" // string@04bd
+> dexdump_disasm.txt:836649:37d462: 7110 3160 0200                         |01a7: invoke-static {v2}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.addString:(Ljava/lang/String;)V // method@6031
+  dexdump_disasm.txt:836650:37d468: 54a2 9c90                              |01aa: iget-object v2, v10, Lcom/telpo/tps55
+0/api/demo/printer/PrinterActivitySY581$ReadThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581; // 
+field@909c
+  dexdump_disasm.txt:836651:37d46c: 5422 0e91                              |01ac: iget-object v2, v2, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;.useLanguage:Ljava/lang/String; // field@910e
+  dexdump_disasm.txt:836652:37d470: 3902 0700                              |01ae: if-nez v2, 01b5 // +0007
+> dexdump_disasm.txt:836653:37d474: 7100 4360 0000                         |01b0: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.printString:()V // method@6043
+  dexdump_disasm.txt:836654:37d47a: 2900 54fe                              |01b3: goto/16 0007 // -01ac
+  dexdump_disasm.txt:836655:37d47e: 54a2 9c90                              |01b5: iget-object v2, v10, Lcom/telpo/tps55
+0/api/demo/printer/PrinterActivitySY581$ReadThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581; // 
+field@909c
+  dexdump_disasm.txt:836656:37d482: 5422 0e91                              |01b7: iget-object v2, v2, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;.useLanguage:Ljava/lang/String; // field@910e
+> dexdump_disasm.txt:836657:37d486: 7110 4460 0200                         |01b9: invoke-static {v2}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.printString:(Ljava/lang/String;)V // method@6044
+  dexdump_disasm.txt:836658:37d48c: 2900 4bfe                              |01bc: goto/16 0007 // -01b5
+  dexdump_disasm.txt:836659:37d490: 0d02                                   |01be: move-exception v2
+  dexdump_disasm.txt:836660:37d492: 6e10 235c 0200                         |01bf: invoke-virtual {v2}, 
+Lcom/common/apiutil/CommonException;.printStackTrace:()V // method@5c23
+> dexdump_disasm.txt:836933:37d732: 7110 5060 0400                         |0013: invoke-static {v4}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setGray:(I)V // method@6050
+  dexdump_disasm.txt:836934:37d738: 5494 9d90                              |0016: iget-object v4, v9, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$barcodePrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY5
+81; // field@909d
+  dexdump_disasm.txt:836935:37d73c: 6205 bd90                              |0018: sget-object v5, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;.barcodeStr:Ljava/lang/String; // field@90bd
+  dexdump_disasm.txt:836936:37d740: 6206 6a86                              |001a: sget-object v6, 
+Lcom/google/zxing/BarcodeFormat;.CODE_128:Lcom/google/zxing/BarcodeFormat; // field@866a
+> dexdump_disasm.txt:836944:37d762: 7110 3160 0400                         |002b: invoke-static {v4}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.addString:(Ljava/lang/String;)V // method@6031
+  dexdump_disasm.txt:836945:37d768: 5494 9d90                              |002e: iget-object v4, v9, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$barcodePrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY5
+81; // field@909d
+  dexdump_disasm.txt:836946:37d76c: 5444 0e91                              |0030: iget-object v4, v4, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;.useLanguage:Ljava/lang/String; // field@910e
+  dexdump_disasm.txt:836947:37d770: 3904 0600                              |0032: if-nez v4, 0038 // +0006
+> dexdump_disasm.txt:836948:37d774: 7100 4360 0000                         |0034: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.printString:()V // method@6043
+  dexdump_disasm.txt:836949:37d77a: 2808                                   |0037: goto 003f // +0008
+  dexdump_disasm.txt:836950:37d77c: 5494 9d90                              |0038: iget-object v4, v9, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$barcodePrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY5
+81; // field@909d
+  dexdump_disasm.txt:836951:37d780: 5444 0e91                              |003a: iget-object v4, v4, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;.useLanguage:Ljava/lang/String; // field@910e
+> dexdump_disasm.txt:836952:37d784: 7110 4460 0400                         |003c: invoke-static {v4}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.printString:(Ljava/lang/String;)V // method@6044
+  dexdump_disasm.txt:836953:37d78a: 1304 c800                              |003f: const/16 v4, #int 200 // #c8
+  dexdump_disasm.txt:836954:37d78e: 7110 6160 0400                         |0041: invoke-static {v4}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.walkPaper:(I)V // method@6061
+  dexdump_disasm.txt:836955:37d794: 5494 9d90                              |0044: iget-object v4, v9, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$barcodePrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY5
+81; // field@909d
+> dexdump_disasm.txt:837081:37d87e: 7110 4d60 0300                         |000f: invoke-static {v3}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setAlgin:(I)V // method@604d
+  dexdump_disasm.txt:837082:37d884: 5484 9e90                              |0012: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY5
+81; // field@909e
+  dexdump_disasm.txt:837083:37d888: 7110 9997 0400                         |0014: invoke-static {v4}, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581;.access$3700:(Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;)I // 
+method@9799
+  dexdump_disasm.txt:837084:37d88e: 0a04                                   |0017: move-result v4
+> dexdump_disasm.txt:837089:37d8a2: 7110 5460 0400                         |0021: invoke-static {v4}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setLineSpace:(I)V // method@6054
+  dexdump_disasm.txt:837090:37d8a8: 5484 9e90                              |0024: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY5
+81; // field@909e
+  dexdump_disasm.txt:837091:37d8ac: 7110 a197 0400                         |0026: invoke-static {v4}, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581;.access$4100:(Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;)I // 
+method@97a1
+  dexdump_disasm.txt:837092:37d8b2: 0a04                                   |0029: move-result v4
+> dexdump_disasm.txt:837094:37d8b8: 7110 4f60 0300                         |002c: invoke-static {v3}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setFontSize:(I)V // method@604f
+  dexdump_disasm.txt:837095:37d8be: 285a                                   |002f: goto 0089 // +005a
+  dexdump_disasm.txt:837096:37d8c0: 5484 9e90                              |0030: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY5
+81; // field@909e
+  dexdump_disasm.txt:837097:37d8c4: 7110 a197 0400                         |0032: invoke-static {v4}, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581;.access$4100:(Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;)I // 
+method@97a1
+> dexdump_disasm.txt:837100:37d8d0: 7110 4f60 0200                         |0038: invoke-static {v2}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setFontSize:(I)V // method@604f
+  dexdump_disasm.txt:837101:37d8d6: 284e                                   |003b: goto 0089 // +004e
+  dexdump_disasm.txt:837102:37d8d8: 5484 9e90                              |003c: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY5
+81; // field@909e
+  dexdump_disasm.txt:837103:37d8dc: 7110 a197 0400                         |003e: invoke-static {v4}, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581;.access$4100:(Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;)I // 
+method@97a1
+> dexdump_disasm.txt:837107:37d8ea: 7110 4f60 0500                         |0045: invoke-static {v5}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setFontSize:(I)V // method@604f
+  dexdump_disasm.txt:837108:37d8f0: 2841                                   |0048: goto 0089 // +0041
+  dexdump_disasm.txt:837109:37d8f2: 5484 9e90                              |0049: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY5
+81; // field@909e
+  dexdump_disasm.txt:837110:37d8f6: 7110 a197 0400                         |004b: invoke-static {v4}, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581;.access$4100:(Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;)I // 
+method@97a1
+> dexdump_disasm.txt:837114:37d904: 7110 4f60 0500                         |0052: invoke-static {v5}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setFontSize:(I)V // method@604f
+  dexdump_disasm.txt:837115:37d90a: 2834                                   |0055: goto 0089 // +0034
+  dexdump_disasm.txt:837116:37d90c: 5484 9e90                              |0056: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY5
+81; // field@909e
+  dexdump_disasm.txt:837117:37d910: 7110 a197 0400                         |0058: invoke-static {v4}, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581;.access$4100:(Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;)I // 
+method@97a1
+> dexdump_disasm.txt:837121:37d91e: 7110 4f60 0500                         |005f: invoke-static {v5}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setFontSize:(I)V // method@604f
+  dexdump_disasm.txt:837122:37d924: 2827                                   |0062: goto 0089 // +0027
+  dexdump_disasm.txt:837123:37d926: 5484 9e90                              |0063: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY5
+81; // field@909e
+  dexdump_disasm.txt:837124:37d92a: 7110 a197 0400                         |0065: invoke-static {v4}, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581;.access$4100:(Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;)I // 
+method@97a1
+> dexdump_disasm.txt:837128:37d938: 7110 4f60 0500                         |006c: invoke-static {v5}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setFontSize:(I)V // method@604f
+  dexdump_disasm.txt:837129:37d93e: 281a                                   |006f: goto 0089 // +001a
+  dexdump_disasm.txt:837130:37d940: 5484 9e90                              |0070: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY5
+81; // field@909e
+  dexdump_disasm.txt:837131:37d944: 7110 a197 0400                         |0072: invoke-static {v4}, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581;.access$4100:(Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;)I // 
+method@97a1
+> dexdump_disasm.txt:837135:37d952: 7110 4f60 0500                         |0079: invoke-static {v5}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setFontSize:(I)V // method@604f
+  dexdump_disasm.txt:837136:37d958: 280d                                   |007c: goto 0089 // +000d
+  dexdump_disasm.txt:837137:37d95a: 5484 9e90                              |007d: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY5
+81; // field@909e
+  dexdump_disasm.txt:837138:37d95e: 7110 a197 0400                         |007f: invoke-static {v4}, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581;.access$4100:(Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;)I // 
+method@97a1
+> dexdump_disasm.txt:837142:37d96c: 7110 4f60 0500                         |0086: invoke-static {v5}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setFontSize:(I)V // method@604f
+  dexdump_disasm.txt:837143:37d972: 5484 9e90                              |0089: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY5
+81; // field@909e
+  dexdump_disasm.txt:837144:37d976: 7110 8e97 0400                         |008b: invoke-static {v4}, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581;.access$3000:(Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;)I // 
+method@978e
+  dexdump_disasm.txt:837145:37d97c: 0a04                                   |008e: move-result v4
+> dexdump_disasm.txt:837146:37d97e: 7110 5060 0400                         |008f: invoke-static {v4}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setGray:(I)V // method@6050
+  dexdump_disasm.txt:837147:37d984: 5484 9e90                              |0092: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY5
+81; // field@909e
+  dexdump_disasm.txt:837148:37d988: 7110 a997 0400                         |0094: invoke-static {v4}, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581;.access$4800:(Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;)Landroid/
+widget/CheckBox; // method@97a9
+  dexdump_disasm.txt:837149:37d98e: 0c04                                   |0097: move-result-object v4
+> dexdump_disasm.txt:837176:37d9fe: 7110 3160 0600                         |00cf: invoke-static {v6}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.addString:(Ljava/lang/String;)V // method@6031
+  dexdump_disasm.txt:837177:37da04: d805 0501                              |00d2: add-int/lit8 v5, v5, #int 1 // #01
+  dexdump_disasm.txt:837178:37da08: 28df                                   |00d4: goto 00b3 // -0021
+  dexdump_disasm.txt:837179:37da0a: 6204 f690                              |00d5: sget-object v4, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;.printContent:Ljava/lang/String; // field@90f6
+> dexdump_disasm.txt:837180:37da0e: 7110 3160 0400                         |00d7: invoke-static {v4}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.addString:(Ljava/lang/String;)V // method@6031
+  dexdump_disasm.txt:837181:37da14: 5484 9e90                              |00da: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY5
+81; // field@909e
+  dexdump_disasm.txt:837182:37da18: 5444 0e91                              |00dc: iget-object v4, v4, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;.useLanguage:Ljava/lang/String; // field@910e
+  dexdump_disasm.txt:837183:37da1c: 3904 0600                              |00de: if-nez v4, 00e4 // +0006
+> dexdump_disasm.txt:837184:37da20: 7100 4360 0000                         |00e0: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.printString:()V // method@6043
+  dexdump_disasm.txt:837185:37da26: 2808                                   |00e3: goto 00eb // +0008
+  dexdump_disasm.txt:837186:37da28: 5484 9e90                              |00e4: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY5
+81; // field@909e
+  dexdump_disasm.txt:837187:37da2c: 5444 0e91                              |00e6: iget-object v4, v4, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;.useLanguage:Ljava/lang/String; // field@910e
+> dexdump_disasm.txt:837188:37da30: 7110 4460 0400                         |00e8: invoke-static {v4}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.printString:(Ljava/lang/String;)V // method@6044
+  dexdump_disasm.txt:837189:37da36: 1304 c800                              |00eb: const/16 v4, #int 200 // #c8
+  dexdump_disasm.txt:837190:37da3a: 7110 6160 0400                         |00ed: invoke-static {v4}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.walkPaper:(I)V // method@6061
+  dexdump_disasm.txt:837191:37da40: 5484 9e90                              |00f0: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY5
+81; // field@909e
+> dexdump_disasm.txt:837610:37dd78: 7110 5060 0400                         |0018: invoke-static {v4}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setGray:(I)V // method@6050
+  dexdump_disasm.txt:837611:37dd7e: 1a04 87a2                              |001b: const-string v4, "tahh" // 
+string@a287
+  dexdump_disasm.txt:837612:37dd82: 2205 7513                              |001d: new-instance v5, 
+Ljava/lang/StringBuilder; // type@1375
+  dexdump_disasm.txt:837613:37dd86: 7010 0e9b 0500                         |001f: invoke-direct {v5}, 
+Ljava/lang/StringBuilder;.<init>:()V // method@9b0e
+> dexdump_disasm.txt:837625:37ddc0: 7110 4d60 0200                         |003c: invoke-static {v2}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setAlgin:(I)V // method@604d
+  dexdump_disasm.txt:837626:37ddc6: 5494 a190                              |003f: iget-object v4, v9, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$printLongPicture;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581
+; // field@90a1
+  dexdump_disasm.txt:837627:37ddca: 1405 5f00 077f                         |0041: const v5, #float 1.79448e+38 // 
+#7f07005f
+  dexdump_disasm.txt:837628:37ddd0: 7120 b897 5400                         |0044: invoke-static {v4, v5}, Lcom/telpo/tp
+s550/api/demo/printer/PrinterActivitySY581;.getBitmap:(Landroid/content/Context;I)Landroid/graphics/Bitmap; // 
+method@97b8
+> dexdump_disasm.txt:837807:37df86: 7110 4d60 0200                         |000d: invoke-static {v2}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setAlgin:(I)V // method@604d
+  dexdump_disasm.txt:837808:37df8c: 5484 a290                              |0010: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581; 
+// field@90a2
+  dexdump_disasm.txt:837809:37df90: 7110 9997 0400                         |0012: invoke-static {v4}, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581;.access$3700:(Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;)I // 
+method@9799
+  dexdump_disasm.txt:837810:37df96: 0a04                                   |0015: move-result v4
+> dexdump_disasm.txt:837813:37dfa0: 7110 5460 0400                         |001a: invoke-static {v4}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setLineSpace:(I)V // method@6054
+  dexdump_disasm.txt:837814:37dfa6: 5485 a290                              |001d: iget-object v5, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581; 
+// field@90a2
+  dexdump_disasm.txt:837815:37dfaa: 7110 a197 0500                         |001f: invoke-static {v5}, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581;.access$4100:(Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;)I // 
+method@97a1
+  dexdump_disasm.txt:837816:37dfb0: 0a05                                   |0022: move-result v5
+> dexdump_disasm.txt:837818:37dfb6: 7110 4f60 0200                         |0025: invoke-static {v2}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setFontSize:(I)V // method@604f
+  dexdump_disasm.txt:837819:37dfbc: 2859                                   |0028: goto 0081 // +0059
+  dexdump_disasm.txt:837820:37dfbe: 5485 a290                              |0029: iget-object v5, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581; 
+// field@90a2
+  dexdump_disasm.txt:837821:37dfc2: 7110 a197 0500                         |002b: invoke-static {v5}, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581;.access$4100:(Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;)I // 
+method@97a1
+> dexdump_disasm.txt:837824:37dfce: 7110 4f60 0300                         |0031: invoke-static {v3}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setFontSize:(I)V // method@604f
+  dexdump_disasm.txt:837825:37dfd4: 284d                                   |0034: goto 0081 // +004d
+  dexdump_disasm.txt:837826:37dfd6: 5485 a290                              |0035: iget-object v5, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581; 
+// field@90a2
+  dexdump_disasm.txt:837827:37dfda: 7110 a197 0500                         |0037: invoke-static {v5}, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581;.access$4100:(Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;)I // 
+method@97a1
+> dexdump_disasm.txt:837831:37dfe8: 7110 4f60 0600                         |003e: invoke-static {v6}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setFontSize:(I)V // method@604f
+  dexdump_disasm.txt:837832:37dfee: 2840                                   |0041: goto 0081 // +0040
+  dexdump_disasm.txt:837833:37dff0: 5485 a290                              |0042: iget-object v5, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581; 
+// field@90a2
+  dexdump_disasm.txt:837834:37dff4: 7110 a197 0500                         |0044: invoke-static {v5}, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581;.access$4100:(Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;)I // 
+method@97a1
+> dexdump_disasm.txt:837838:37e002: 7110 4f60 0600                         |004b: invoke-static {v6}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setFontSize:(I)V // method@604f
+  dexdump_disasm.txt:837839:37e008: 2833                                   |004e: goto 0081 // +0033
+  dexdump_disasm.txt:837840:37e00a: 5485 a290                              |004f: iget-object v5, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581; 
+// field@90a2
+  dexdump_disasm.txt:837841:37e00e: 7110 a197 0500                         |0051: invoke-static {v5}, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581;.access$4100:(Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;)I // 
+method@97a1
+> dexdump_disasm.txt:837845:37e01c: 7110 4f60 0600                         |0058: invoke-static {v6}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setFontSize:(I)V // method@604f
+  dexdump_disasm.txt:837846:37e022: 2826                                   |005b: goto 0081 // +0026
+  dexdump_disasm.txt:837847:37e024: 5485 a290                              |005c: iget-object v5, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581; 
+// field@90a2
+  dexdump_disasm.txt:837848:37e028: 7110 a197 0500                         |005e: invoke-static {v5}, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581;.access$4100:(Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;)I // 
+method@97a1
+> dexdump_disasm.txt:837851:37e034: 7110 4f60 0400                         |0064: invoke-static {v4}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setFontSize:(I)V // method@604f
+  dexdump_disasm.txt:837852:37e03a: 281a                                   |0067: goto 0081 // +001a
+  dexdump_disasm.txt:837853:37e03c: 5484 a290                              |0068: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581; 
+// field@90a2
+  dexdump_disasm.txt:837854:37e040: 7110 a197 0400                         |006a: invoke-static {v4}, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581;.access$4100:(Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;)I // 
+method@97a1
+> dexdump_disasm.txt:837858:37e04e: 7110 4f60 0500                         |0071: invoke-static {v5}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setFontSize:(I)V // method@604f
+  dexdump_disasm.txt:837859:37e054: 280d                                   |0074: goto 0081 // +000d
+  dexdump_disasm.txt:837860:37e056: 5484 a290                              |0075: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581; 
+// field@90a2
+  dexdump_disasm.txt:837861:37e05a: 7110 a197 0400                         |0077: invoke-static {v4}, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581;.access$4100:(Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;)I // 
+method@97a1
+> dexdump_disasm.txt:837865:37e068: 7110 4f60 0500                         |007e: invoke-static {v5}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setFontSize:(I)V // method@604f
+  dexdump_disasm.txt:837866:37e06e: 5484 a290                              |0081: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581; 
+// field@90a2
+  dexdump_disasm.txt:837867:37e072: 7110 8e97 0400                         |0083: invoke-static {v4}, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581;.access$3000:(Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;)I // 
+method@978e
+  dexdump_disasm.txt:837868:37e078: 0a04                                   |0086: move-result v4
+> dexdump_disasm.txt:837869:37e07a: 7110 5060 0400                         |0087: invoke-static {v4}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setGray:(I)V // method@6050
+  dexdump_disasm.txt:837870:37e080: 5484 a290                              |008a: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581; 
+// field@90a2
+  dexdump_disasm.txt:837871:37e084: 7120 a097 3400                         |008c: invoke-static {v4, v3}, Lcom/telpo/tp
+s550/api/demo/printer/PrinterActivitySY581;.access$402:(Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;I)I // 
+method@97a0
+  dexdump_disasm.txt:837872:37e08a: 2204 7513                              |008f: new-instance v4, 
+Ljava/lang/StringBuilder; // type@1375
+> dexdump_disasm.txt:837883:37e0be: 7110 3160 0400                         |00a9: invoke-static {v4}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.addString:(Ljava/lang/String;)V // method@6031
+  dexdump_disasm.txt:837884:37e0c4: 2204 7513                              |00ac: new-instance v4, 
+Ljava/lang/StringBuilder; // type@1375
+  dexdump_disasm.txt:837885:37e0c8: 7010 0e9b 0400                         |00ae: invoke-direct {v4}, 
+Ljava/lang/StringBuilder;.<init>:()V // method@9b0e
+  dexdump_disasm.txt:837886:37e0ce: 1a05 2004                              |00b1: const-string v5, "2\n" // string@0420
+> dexdump_disasm.txt:837894:37e0f2: 7110 3160 0400                         |00c3: invoke-static {v4}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.addString:(Ljava/lang/String;)V // method@6031
+  dexdump_disasm.txt:837895:37e0f8: 2204 7513                              |00c6: new-instance v4, 
+Ljava/lang/StringBuilder; // type@1375
+  dexdump_disasm.txt:837896:37e0fc: 7010 0e9b 0400                         |00c8: invoke-direct {v4}, 
+Ljava/lang/StringBuilder;.<init>:()V // method@9b0e
+  dexdump_disasm.txt:837897:37e102: 1a05 3704                              |00cb: const-string v5, "3\n" // string@0437
+> dexdump_disasm.txt:837905:37e126: 7110 3160 0400                         |00dd: invoke-static {v4}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.addString:(Ljava/lang/String;)V // method@6031
+  dexdump_disasm.txt:837906:37e12c: 5484 a290                              |00e0: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581; 
+// field@90a2
+  dexdump_disasm.txt:837907:37e130: 5444 0e91                              |00e2: iget-object v4, v4, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;.useLanguage:Ljava/lang/String; // field@910e
+  dexdump_disasm.txt:837908:37e134: 3904 0600                              |00e4: if-nez v4, 00ea // +0006
+> dexdump_disasm.txt:837909:37e138: 7100 4360 0000                         |00e6: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.printString:()V // method@6043
+  dexdump_disasm.txt:837910:37e13e: 2808                                   |00e9: goto 00f1 // +0008
+  dexdump_disasm.txt:837911:37e140: 5484 a290                              |00ea: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581; 
+// field@90a2
+  dexdump_disasm.txt:837912:37e144: 5444 0e91                              |00ec: iget-object v4, v4, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;.useLanguage:Ljava/lang/String; // field@910e
+> dexdump_disasm.txt:837913:37e148: 7110 4460 0400                         |00ee: invoke-static {v4}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.printString:(Ljava/lang/String;)V // method@6044
+  dexdump_disasm.txt:837914:37e14e: 1304 3200                              |00f1: const/16 v4, #int 50 // #32
+  dexdump_disasm.txt:837915:37e152: 7110 6160 0400                         |00f3: invoke-static {v4}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.walkPaper:(I)V // method@6061
+  dexdump_disasm.txt:837916:37e158: 5484 a290                              |00f6: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581; 
+// field@90a2
+> dexdump_disasm.txt:838075:37e272: 7110 5060 0400                         |0013: invoke-static {v4}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setGray:(I)V // method@6050
+> dexdump_disasm.txt:838076:37e278: 7110 4d60 0300                         |0016: invoke-static {v3}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setAlgin:(I)V // method@604d
+  dexdump_disasm.txt:838077:37e27e: 5484 a390                              |0019: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$printPicture;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581; 
+// field@90a3
+  dexdump_disasm.txt:838078:37e282: 1405 6200 077f                         |001b: const v5, #float 1.79448e+38 // 
+#7f070062
+  dexdump_disasm.txt:838079:37e288: 7120 b897 5400                         |001e: invoke-static {v4, v5}, Lcom/telpo/tp
+s550/api/demo/printer/PrinterActivitySY581;.getBitmap:(Landroid/content/Context;I)Landroid/graphics/Bitmap; // 
+method@97b8
+> dexdump_disasm.txt:838498:37e6a2: 7110 5060 0400                         |0013: invoke-static {v4}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.setGray:(I)V // method@6050
+  dexdump_disasm.txt:838499:37e6a8: 5484 a590                              |0016: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$qrcodePrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY58
+1; // field@90a5
+  dexdump_disasm.txt:838500:37e6ac: 6205 0491                              |0018: sget-object v5, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;.qrcodeStr:Ljava/lang/String; // field@9104
+  dexdump_disasm.txt:838501:37e6b0: 6206 7486                              |001a: sget-object v6, 
+Lcom/google/zxing/BarcodeFormat;.QR_CODE:Lcom/google/zxing/BarcodeFormat; // field@8674
+> dexdump_disasm.txt:838508:37e6ce: 7110 3160 0400                         |0029: invoke-static {v4}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.addString:(Ljava/lang/String;)V // method@6031
+  dexdump_disasm.txt:838509:37e6d4: 5484 a590                              |002c: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$qrcodePrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY58
+1; // field@90a5
+  dexdump_disasm.txt:838510:37e6d8: 5444 0e91                              |002e: iget-object v4, v4, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;.useLanguage:Ljava/lang/String; // field@910e
+  dexdump_disasm.txt:838511:37e6dc: 3904 0600                              |0030: if-nez v4, 0036 // +0006
+> dexdump_disasm.txt:838512:37e6e0: 7100 4360 0000                         |0032: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.printString:()V // method@6043
+  dexdump_disasm.txt:838513:37e6e6: 2808                                   |0035: goto 003d // +0008
+  dexdump_disasm.txt:838514:37e6e8: 5484 a590                              |0036: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$qrcodePrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY58
+1; // field@90a5
+  dexdump_disasm.txt:838515:37e6ec: 5444 0e91                              |0038: iget-object v4, v4, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;.useLanguage:Ljava/lang/String; // field@910e
+> dexdump_disasm.txt:838516:37e6f0: 7110 4460 0400                         |003a: invoke-static {v4}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.printString:(Ljava/lang/String;)V // method@6044
+  dexdump_disasm.txt:838517:37e6f6: 1304 c800                              |003d: const/16 v4, #int 200 // #c8
+  dexdump_disasm.txt:838518:37e6fa: 7110 6160 0400                         |003f: invoke-static {v4}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.walkPaper:(I)V // method@6061
+  dexdump_disasm.txt:838519:37e700: 5484 a590                              |0042: iget-object v4, v8, Lcom/telpo/tps550
+/api/demo/printer/PrinterActivitySY581$qrcodePrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY58
+1; // field@90a5
+> dexdump_disasm.txt:842295:383b38: 6e20 9b60 7800                         |001a: invoke-virtual {v8, v7}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.setAlgin:(I)V // method@609b
+  dexdump_disasm.txt:842296:383b3e: 54f8 2691                              |001d: iget-object v8, v15, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$ColumnsPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;
+ // field@9126
+  dexdump_disasm.txt:842297:383b42: 5488 7a91                              |001f: iget-object v8, v8, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:842298:383b46: 54f9 2691                              |0021: iget-object v9, v15, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$ColumnsPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;
+ // field@9126
+> dexdump_disasm.txt:842307:383b6c: 6e20 a460 9800                         |0034: invoke-virtual {v8, v9}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.setLineSpace:(I)V // method@60a4
+  dexdump_disasm.txt:842308:383b72: 54f8 2691                              |0037: iget-object v8, v15, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$ColumnsPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;
+ // field@9126
+  dexdump_disasm.txt:842309:383b76: 5488 7a91                              |0039: iget-object v8, v8, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:842310:383b7a: 54f9 2691                              |003b: iget-object v9, v15, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$ColumnsPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;
+ // field@9126
+> dexdump_disasm.txt:842313:383b86: 6e20 9e60 9800                         |0041: invoke-virtual {v8, v9}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.setBold:(Z)V // method@609e
+  dexdump_disasm.txt:842314:383b8c: 54f8 2691                              |0044: iget-object v8, v15, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$ColumnsPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;
+ // field@9126
+  dexdump_disasm.txt:842315:383b90: 5488 7a91                              |0046: iget-object v8, v8, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:842316:383b94: 54f9 2691                              |0048: iget-object v9, v15, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$ColumnsPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;
+ // field@9126
+> dexdump_disasm.txt:842325:383bba: 6e20 a060 9800                         |005b: invoke-virtual {v8, v9}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.setGray:(I)V // method@60a0
+  dexdump_disasm.txt:842326:383bc0: 54f8 2691                              |005e: iget-object v8, v15, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$ColumnsPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;
+ // field@9126
+  dexdump_disasm.txt:842327:383bc4: 5588 7391                              |0060: iget-boolean v8, v8, 
+Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;.isOpeningItalic:Z // field@9173
+  dexdump_disasm.txt:842328:383bc8: 3808 0900                              |0062: if-eqz v8, 006b // +0009
+> dexdump_disasm.txt:842344:383c0a: 6e30 8e60 9806                         |0083: invoke-virtual {v8, v9, v6}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.enlargeFontSize:(II)V // method@608e
+  dexdump_disasm.txt:842345:383c10: 54f8 2691                              |0086: iget-object v8, v15, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$ColumnsPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;
+ // field@9126
+  dexdump_disasm.txt:842346:383c14: 5488 7a91                              |0088: iget-object v8, v8, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:842347:383c18: 2430 d214 1200                         |008a: filled-new-array {v2, v1, v0}, 
+[Ljava/lang/String; // type@14d2
+> dexdump_disasm.txt:842404:383d02: 6e10 9760 0000                         |00ff: invoke-virtual {v0}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.printString:()V // method@6097
+  dexdump_disasm.txt:842405:383d08: 54f0 2691                              |0102: iget-object v0, v15, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$ColumnsPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;
+ // field@9126
+  dexdump_disasm.txt:842406:383d0c: 5400 7a91                              |0104: iget-object v0, v0, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:842407:383d10: 1301 1400                              |0106: const/16 v1, #int 20 // #14
+> dexdump_disasm.txt:843251:3845be: 6e20 a060 6500                         |0031: invoke-virtual {v5, v6}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.setGray:(I)V // method@60a0
+  dexdump_disasm.txt:843252:3845c4: 5485 2b91                              |0034: iget-object v5, v8, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity$ShortTextPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity
+; // field@912b
+  dexdump_disasm.txt:843253:3845c8: 5455 7a91                              |0036: iget-object v5, v5, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:843254:3845cc: 5486 2b91                              |0038: iget-object v6, v8, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity$ShortTextPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity
+; // field@912b
+> dexdump_disasm.txt:843259:3845e0: 6e30 8860 6507                         |0042: invoke-virtual {v5, v6, v7}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.addStringOffset:(ILjava/lang/String;)V // method@6088
+  dexdump_disasm.txt:843260:3845e6: 5485 2b91                              |0045: iget-object v5, v8, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity$ShortTextPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity
+; // field@912b
+  dexdump_disasm.txt:843261:3845ea: 5455 7a91                              |0047: iget-object v5, v5, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:843262:3845ee: 6e10 8d60 0500                         |0049: invoke-virtual {v5}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.endLine:()V // method@608d
+> dexdump_disasm.txt:843265:3845fc: 6e10 9760 0500                         |0050: invoke-virtual {v5}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.printString:()V // method@6097
+  dexdump_disasm.txt:843266:384602: 5485 2b91                              |0053: iget-object v5, v8, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity$ShortTextPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity
+; // field@912b
+  dexdump_disasm.txt:843267:384606: 5455 7a91                              |0055: iget-object v5, v5, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:843268:38460a: 1306 1400                              |0057: const/16 v6, #int 20 // #14
+> dexdump_disasm.txt:843485:38483c: 6e20 a060 6500                         |001a: invoke-virtual {v5, v6}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.setGray:(I)V // method@60a0
+  dexdump_disasm.txt:843486:384842: 54a5 2c91                              |001d: iget-object v5, v10, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$barcodePrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;
+ // field@912c
+  dexdump_disasm.txt:843487:384846: 6206 4b91                              |001f: sget-object v6, 
+Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;.barcodeStr:Ljava/lang/String; // field@914b
+  dexdump_disasm.txt:843488:38484a: 6207 6a86                              |0021: sget-object v7, 
+Lcom/google/zxing/BarcodeFormat;.CODE_128:Lcom/google/zxing/BarcodeFormat; // field@866a
+> dexdump_disasm.txt:843500:38487c: 6e20 8760 6500                         |003a: invoke-virtual {v5, v6}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.addString:(Ljava/lang/String;)V // method@6087
+  dexdump_disasm.txt:843501:384882: 54a5 2c91                              |003d: iget-object v5, v10, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$barcodePrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;
+ // field@912c
+  dexdump_disasm.txt:843502:384886: 5455 7a91                              |003f: iget-object v5, v5, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+> dexdump_disasm.txt:843503:38488a: 6e10 9760 0500                         |0041: invoke-virtual {v5}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.printString:()V // method@6097
+  dexdump_disasm.txt:843504:384890: 54a5 2c91                              |0044: iget-object v5, v10, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$barcodePrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;
+ // field@912c
+  dexdump_disasm.txt:843505:384894: 5455 7a91                              |0046: iget-object v5, v5, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:843506:384898: 1306 1400                              |0048: const/16 v6, #int 20 // #14
+> dexdump_disasm.txt:843791:384b3c: 6e20 9b60 6800                         |0018: invoke-virtual {v8, v6}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.setAlgin:(I)V // method@609b
+  dexdump_disasm.txt:843792:384b42: 54b8 2e91                              |001b: iget-object v8, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;
+ // field@912e
+  dexdump_disasm.txt:843793:384b46: 5488 7a91                              |001d: iget-object v8, v8, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:843794:384b4a: 54b9 2e91                              |001f: iget-object v9, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;
+ // field@912e
+> dexdump_disasm.txt:843803:384b70: 6e20 a460 9800                         |0032: invoke-virtual {v8, v9}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.setLineSpace:(I)V // method@60a4
+  dexdump_disasm.txt:843804:384b76: 54b8 2e91                              |0035: iget-object v8, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;
+ // field@912e
+  dexdump_disasm.txt:843805:384b7a: 5488 7a91                              |0037: iget-object v8, v8, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:843806:384b7e: 54b9 2e91                              |0039: iget-object v9, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;
+ // field@912e
+> dexdump_disasm.txt:843809:384b8a: 6e20 9e60 9800                         |003f: invoke-virtual {v8, v9}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.setBold:(Z)V // method@609e
+  dexdump_disasm.txt:843810:384b90: 54b8 2e91                              |0042: iget-object v8, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;
+ // field@912e
+  dexdump_disasm.txt:843811:384b94: 5488 7a91                              |0044: iget-object v8, v8, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:843812:384b98: 54b9 2e91                              |0046: iget-object v9, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;
+ // field@912e
+> dexdump_disasm.txt:843821:384bbe: 6e20 a060 9800                         |0059: invoke-virtual {v8, v9}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.setGray:(I)V // method@60a0
+  dexdump_disasm.txt:843822:384bc4: 54b8 2e91                              |005c: iget-object v8, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;
+ // field@912e
+  dexdump_disasm.txt:843823:384bc8: 5588 7391                              |005e: iget-boolean v8, v8, 
+Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;.isOpeningItalic:Z // field@9173
+  dexdump_disasm.txt:843824:384bcc: 3808 0900                              |0060: if-eqz v8, 0069 // +0009
+> dexdump_disasm.txt:843840:384c0e: 6e30 8e60 9807                         |0081: invoke-virtual {v8, v9, v7}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.enlargeFontSize:(II)V // method@608e
+  dexdump_disasm.txt:843841:384c14: 54b8 2e91                              |0084: iget-object v8, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;
+ // field@912e
+  dexdump_disasm.txt:843842:384c18: 5488 7a91                              |0086: iget-object v8, v8, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:843843:384c1c: 6209 8491                              |0088: sget-object v9, 
+Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;.printContent:Ljava/lang/String; // field@9184
+> dexdump_disasm.txt:843844:384c20: 6e20 8760 9800                         |008a: invoke-virtual {v8, v9}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.addString:(Ljava/lang/String;)V // method@6087
+  dexdump_disasm.txt:843845:384c26: 54b8 2e91                              |008d: iget-object v8, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;
+ // field@912e
+  dexdump_disasm.txt:843846:384c2a: 5488 7a91                              |008f: iget-object v8, v8, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+> dexdump_disasm.txt:843847:384c2e: 6e10 9760 0800                         |0091: invoke-virtual {v8}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.printString:()V // method@6097
+  dexdump_disasm.txt:843848:384c34: 54b8 2e91                              |0094: iget-object v8, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$contentPrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;
+ // field@912e
+  dexdump_disasm.txt:843849:384c38: 5488 7a91                              |0096: iget-object v8, v8, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:843850:384c3c: 1309 1400                              |0098: const/16 v9, #int 20 // #14
+> dexdump_disasm.txt:844340:385160: 6e20 a060 6500                         |001a: invoke-virtual {v5, v6}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.setGray:(I)V // method@60a0
+  dexdump_disasm.txt:844341:385166: 5485 3091                              |001d: iget-object v5, v8, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity$printBlackPicture;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; 
+// field@9130
+  dexdump_disasm.txt:844342:38516a: 5455 7a91                              |001f: iget-object v5, v5, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+> dexdump_disasm.txt:844343:38516e: 6e20 9b60 3500                         |0021: invoke-virtual {v5, v3}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.setAlgin:(I)V // method@609b
+  dexdump_disasm.txt:844344:385174: 5485 3091                              |0024: iget-object v5, v8, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity$printBlackPicture;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; 
+// field@9130
+  dexdump_disasm.txt:844345:385178: 5455 7a91                              |0026: iget-object v5, v5, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:844346:38517c: 5486 3091                              |0028: iget-object v6, v8, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity$printBlackPicture;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; 
+// field@9130
+> dexdump_disasm.txt:844567:3853cc: 6e20 a060 6500                         |001a: invoke-virtual {v5, v6}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.setGray:(I)V // method@60a0
+  dexdump_disasm.txt:844568:3853d2: 5495 3191                              |001d: iget-object v5, v9, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity$printLongPicture;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; 
+// field@9131
+  dexdump_disasm.txt:844569:3853d6: 5455 7a91                              |001f: iget-object v5, v5, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+> dexdump_disasm.txt:844570:3853da: 6e20 9b60 3500                         |0021: invoke-virtual {v5, v3}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.setAlgin:(I)V // method@609b
+  dexdump_disasm.txt:844571:3853e0: 2205 2613                              |0024: new-instance v5, Ljava/io/File; // 
+type@1326
+  dexdump_disasm.txt:844572:3853e4: 5496 3191                              |0026: iget-object v6, v9, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity$printLongPicture;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; 
+// field@9131
+  dexdump_disasm.txt:844573:3853e8: 7110 6298 0600                         |0028: invoke-static {v6}, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.access$4300:(Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;)Ljava/lang/St
+ring; // method@9862
+> dexdump_disasm.txt:844846:3856fc: 6e20 9b60 5600                         |0016: invoke-virtual {v6, v5}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.setAlgin:(I)V // method@609b
+  dexdump_disasm.txt:844847:385702: 54b6 3291                              |0019: iget-object v6, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+  dexdump_disasm.txt:844848:385706: 5466 7a91                              |001b: iget-object v6, v6, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:844849:38570a: 1257                                   |001d: const/4 v7, #int 5 // #5
+> dexdump_disasm.txt:844850:38570c: 6e20 a460 7600                         |001e: invoke-virtual {v6, v7}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.setLineSpace:(I)V // method@60a4
+  dexdump_disasm.txt:844851:385712: 54b6 3291                              |0021: iget-object v6, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+  dexdump_disasm.txt:844852:385716: 5466 7a91                              |0023: iget-object v6, v6, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:844853:38571a: 54b7 3291                              |0025: iget-object v7, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+> dexdump_disasm.txt:844856:385726: 6e20 9e60 7600                         |002b: invoke-virtual {v6, v7}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.setBold:(Z)V // method@609e
+  dexdump_disasm.txt:844857:38572c: 54b6 3291                              |002e: iget-object v6, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+  dexdump_disasm.txt:844858:385730: 5466 7a91                              |0030: iget-object v6, v6, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:844859:385734: 54b7 3291                              |0032: iget-object v7, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+> dexdump_disasm.txt:844868:38575a: 6e20 a060 7600                         |0045: invoke-virtual {v6, v7}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.setGray:(I)V // method@60a0
+  dexdump_disasm.txt:844869:385760: 54b6 3291                              |0048: iget-object v6, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+  dexdump_disasm.txt:844870:385764: 5566 7391                              |004a: iget-boolean v6, v6, 
+Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;.isOpeningItalic:Z // field@9173
+  dexdump_disasm.txt:844871:385768: 3806 0900                              |004c: if-eqz v6, 0055 // +0009
+> dexdump_disasm.txt:844887:3857aa: 6e30 8e60 7605                         |006d: invoke-virtual {v6, v7, v5}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.enlargeFontSize:(II)V // method@608e
+  dexdump_disasm.txt:844888:3857b0: 54b6 3291                              |0070: iget-object v6, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+  dexdump_disasm.txt:844889:3857b4: 5466 7a91                              |0072: iget-object v6, v6, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:844890:3857b8: 2207 7513                              |0074: new-instance v7, 
+Ljava/lang/StringBuilder; // type@1375
+> dexdump_disasm.txt:844898:3857de: 6e20 8760 7600                         |0087: invoke-virtual {v6, v7}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.addString:(Ljava/lang/String;)V // method@6087
+  dexdump_disasm.txt:844899:3857e4: 54b6 3291                              |008a: iget-object v6, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+  dexdump_disasm.txt:844900:3857e8: 5466 7a91                              |008c: iget-object v6, v6, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:844901:3857ec: 2207 7513                              |008e: new-instance v7, 
+Ljava/lang/StringBuilder; // type@1375
+> dexdump_disasm.txt:844909:385812: 6e20 8760 7600                         |00a1: invoke-virtual {v6, v7}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.addString:(Ljava/lang/String;)V // method@6087
+  dexdump_disasm.txt:844910:385818: 54b6 3291                              |00a4: iget-object v6, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+  dexdump_disasm.txt:844911:38581c: 5466 7a91                              |00a6: iget-object v6, v6, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:844912:385820: 2207 7513                              |00a8: new-instance v7, 
+Ljava/lang/StringBuilder; // type@1375
+> dexdump_disasm.txt:844920:385846: 6e20 8760 7600                         |00bb: invoke-virtual {v6, v7}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.addString:(Ljava/lang/String;)V // method@6087
+  dexdump_disasm.txt:844921:38584c: 54b6 3291                              |00be: iget-object v6, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+  dexdump_disasm.txt:844922:385850: 5466 7a91                              |00c0: iget-object v6, v6, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:844923:385854: 2207 7513                              |00c2: new-instance v7, 
+Ljava/lang/StringBuilder; // type@1375
+> dexdump_disasm.txt:844931:38587a: 6e20 8760 7600                         |00d5: invoke-virtual {v6, v7}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.addString:(Ljava/lang/String;)V // method@6087
+  dexdump_disasm.txt:844932:385880: 54b6 3291                              |00d8: iget-object v6, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+  dexdump_disasm.txt:844933:385884: 5466 7a91                              |00da: iget-object v6, v6, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:844934:385888: 2207 7513                              |00dc: new-instance v7, 
+Ljava/lang/StringBuilder; // type@1375
+> dexdump_disasm.txt:844942:3858ae: 6e20 8760 7600                         |00ef: invoke-virtual {v6, v7}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.addString:(Ljava/lang/String;)V // method@6087
+  dexdump_disasm.txt:844943:3858b4: 54b6 3291                              |00f2: iget-object v6, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+  dexdump_disasm.txt:844944:3858b8: 5466 7a91                              |00f4: iget-object v6, v6, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:844945:3858bc: 2207 7513                              |00f6: new-instance v7, 
+Ljava/lang/StringBuilder; // type@1375
+> dexdump_disasm.txt:844953:3858e2: 6e20 8760 7600                         |0109: invoke-virtual {v6, v7}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.addString:(Ljava/lang/String;)V // method@6087
+  dexdump_disasm.txt:844954:3858e8: 54b6 3291                              |010c: iget-object v6, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+  dexdump_disasm.txt:844955:3858ec: 5466 7a91                              |010e: iget-object v6, v6, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:844956:3858f0: 2207 7513                              |0110: new-instance v7, 
+Ljava/lang/StringBuilder; // type@1375
+> dexdump_disasm.txt:844964:385916: 6e20 8760 7600                         |0123: invoke-virtual {v6, v7}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.addString:(Ljava/lang/String;)V // method@6087
+  dexdump_disasm.txt:844965:38591c: 54b6 3291                              |0126: iget-object v6, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+  dexdump_disasm.txt:844966:385920: 5466 7a91                              |0128: iget-object v6, v6, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:844967:385924: 2207 7513                              |012a: new-instance v7, 
+Ljava/lang/StringBuilder; // type@1375
+> dexdump_disasm.txt:844975:38594a: 6e20 8760 7600                         |013d: invoke-virtual {v6, v7}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.addString:(Ljava/lang/String;)V // method@6087
+  dexdump_disasm.txt:844976:385950: 54b6 3291                              |0140: iget-object v6, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+  dexdump_disasm.txt:844977:385954: 5466 7a91                              |0142: iget-object v6, v6, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+> dexdump_disasm.txt:844978:385958: 6e10 9760 0600                         |0144: invoke-virtual {v6}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.printString:()V // method@6097
+  dexdump_disasm.txt:844979:38595e: 54b6 3291                              |0147: iget-object v6, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+  dexdump_disasm.txt:844980:385962: 5466 7a91                              |0149: iget-object v6, v6, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:844981:385966: 1307 3200                              |014b: const/16 v7, #int 50 // #32
+> dexdump_disasm.txt:844994:38599e: 6e20 9b60 5800                         |0167: invoke-virtual {v8, v5}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.setAlgin:(I)V // method@609b
+  dexdump_disasm.txt:844995:3859a4: 54b8 3291                              |016a: iget-object v8, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+  dexdump_disasm.txt:844996:3859a8: 5488 7a91                              |016c: iget-object v8, v8, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:844997:3859ac: 54b9 3291                              |016e: iget-object v9, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+> dexdump_disasm.txt:845000:3859b8: 6e20 a060 9800                         |0174: invoke-virtual {v8, v9}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.setGray:(I)V // method@60a0
+  dexdump_disasm.txt:845001:3859be: 54b8 3291                              |0177: iget-object v8, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+  dexdump_disasm.txt:845002:3859c2: 5488 7a91                              |0179: iget-object v8, v8, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+> dexdump_disasm.txt:845003:3859c6: 6e20 8760 0800                         |017b: invoke-virtual {v8, v0}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.addString:(Ljava/lang/String;)V // method@6087
+  dexdump_disasm.txt:845004:3859cc: 54b8 3291                              |017e: iget-object v8, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+  dexdump_disasm.txt:845005:3859d0: 5488 7a91                              |0180: iget-object v8, v8, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+> dexdump_disasm.txt:845006:3859d4: 6e10 9760 0800                         |0182: invoke-virtual {v8}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.printString:()V // method@6097
+  dexdump_disasm.txt:845007:3859da: 3806 2c00                              |0185: if-eqz v6, 01b1 // +002c
+  dexdump_disasm.txt:845008:3859de: 54b8 3291                              |0187: iget-object v8, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+  dexdump_disasm.txt:845009:3859e2: 5488 7a91                              |0189: iget-object v8, v8, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+> dexdump_disasm.txt:845016:385a02: 6e20 8760 0800                         |0199: invoke-virtual {v8, v0}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.addString:(Ljava/lang/String;)V // method@6087
+  dexdump_disasm.txt:845017:385a08: 54b8 3291                              |019c: iget-object v8, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+  dexdump_disasm.txt:845018:385a0c: 5488 7a91                              |019e: iget-object v8, v8, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+> dexdump_disasm.txt:845019:385a10: 6e10 9760 0800                         |01a0: invoke-virtual {v8}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.printString:()V // method@6097
+  dexdump_disasm.txt:845020:385a16: 54b8 3291                              |01a3: iget-object v8, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+  dexdump_disasm.txt:845021:385a1a: 5488 7a91                              |01a5: iget-object v8, v8, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:845022:385a1e: 6e30 9460 6804                         |01a7: invoke-virtual {v8, v6, v4}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.printLogo:(Landroid/graphics/Bitmap;Z)V // method@6094
+> dexdump_disasm.txt:845028:385a3a: 6e20 9b60 5600                         |01b5: invoke-virtual {v6, v5}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.setAlgin:(I)V // method@609b
+  dexdump_disasm.txt:845029:385a40: 54b6 3291                              |01b8: iget-object v6, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+  dexdump_disasm.txt:845030:385a44: 5466 7a91                              |01ba: iget-object v6, v6, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:845031:385a48: 54b7 3291                              |01bc: iget-object v7, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+> dexdump_disasm.txt:845034:385a54: 6e20 a060 7600                         |01c2: invoke-virtual {v6, v7}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.setGray:(I)V // method@60a0
+  dexdump_disasm.txt:845035:385a5a: 54b6 3291                              |01c5: iget-object v6, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+  dexdump_disasm.txt:845036:385a5e: 5466 7a91                              |01c7: iget-object v6, v6, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+> dexdump_disasm.txt:845037:385a62: 6e20 8760 0600                         |01c9: invoke-virtual {v6, v0}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.addString:(Ljava/lang/String;)V // method@6087
+  dexdump_disasm.txt:845038:385a68: 54b0 3291                              |01cc: iget-object v0, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+  dexdump_disasm.txt:845039:385a6c: 5400 7a91                              |01ce: iget-object v0, v0, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+> dexdump_disasm.txt:845040:385a70: 6e10 9760 0000                         |01d0: invoke-virtual {v0}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.printString:()V // method@6097
+  dexdump_disasm.txt:845041:385a76: 54b0 3291                              |01d3: iget-object v0, v11, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$printLongText;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9132
+  dexdump_disasm.txt:845042:385a7a: 5400 7a91                              |01d5: iget-object v0, v0, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:845043:385a7e: 1306 1400                              |01d7: const/16 v6, #int 20 // #14
+> dexdump_disasm.txt:845291:385cb0: 6e20 a060 6500                         |001a: invoke-virtual {v5, v6}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.setGray:(I)V // method@60a0
+  dexdump_disasm.txt:845292:385cb6: 5485 3391                              |001d: iget-object v5, v8, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity$printPicture;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9133
+  dexdump_disasm.txt:845293:385cba: 5455 7a91                              |001f: iget-object v5, v5, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+> dexdump_disasm.txt:845294:385cbe: 6e20 9b60 3500                         |0021: invoke-virtual {v5, v3}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.setAlgin:(I)V // method@609b
+  dexdump_disasm.txt:845295:385cc4: 2205 2613                              |0024: new-instance v5, Ljava/io/File; // 
+type@1326
+  dexdump_disasm.txt:845296:385cc8: 5486 3391                              |0026: iget-object v6, v8, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity$printPicture;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; // 
+field@9133
+  dexdump_disasm.txt:845297:385ccc: 7110 6298 0600                         |0028: invoke-static {v6}, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.access$4300:(Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;)Ljava/lang/St
+ring; // method@9862
+> dexdump_disasm.txt:845524:385f30: 6e20 a060 6500                         |001a: invoke-virtual {v5, v6}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.setGray:(I)V // method@60a0
+  dexdump_disasm.txt:845525:385f36: 1305 0001                              |001d: const/16 v5, #int 256 // #100
+  dexdump_disasm.txt:845526:385f3a: 54a6 3491                              |001f: iget-object v6, v10, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$qrcodePrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; 
+// field@9134
+  dexdump_disasm.txt:845527:385f3e: 6207 8e91                              |0021: sget-object v7, 
+Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity;.qrcodeStr:Ljava/lang/String; // field@918e
+> dexdump_disasm.txt:845543:385f7e: 6e20 8760 6500                         |0041: invoke-virtual {v5, v6}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.addString:(Ljava/lang/String;)V // method@6087
+  dexdump_disasm.txt:845544:385f84: 54a5 3491                              |0044: iget-object v5, v10, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$qrcodePrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; 
+// field@9134
+  dexdump_disasm.txt:845545:385f88: 5455 7a91                              |0046: iget-object v5, v5, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+> dexdump_disasm.txt:845546:385f8c: 6e10 9760 0500                         |0048: invoke-virtual {v5}, 
+Lcom/common/apiutil/printer/UsbThermalPrinter;.printString:()V // method@6097
+  dexdump_disasm.txt:845547:385f92: 54a5 3491                              |004b: iget-object v5, v10, Lcom/telpo/tps55
+0/api/demo/printer/UsbPrinterActivity$qrcodePrintThread;.this$0:Lcom/telpo/tps550/api/demo/printer/UsbPrinterActivity; 
+// field@9134
+  dexdump_disasm.txt:845548:385f96: 5455 7a91                              |004d: iget-object v5, v5, Lcom/telpo/tps550
+/api/demo/printer/UsbPrinterActivity;.mUsbThermalPrinter:Lcom/common/apiutil/printer/UsbThermalPrinter; // field@917a
+  dexdump_disasm.txt:845549:385f9a: 1306 1400                              |004f: const/16 v6, #int 20 // #14
+> dexdump_disasm.txt:1216948:37f02c: 7100 3260 0000                         |0000: invoke-static {}, 
+Lcom/common/apiutil/printer/ThermalPrinter;.checkStatus:()I // method@6032
+  dexdump_disasm.txt:1216949:37f032: 0a00                                   |0003: move-result v0
+  dexdump_disasm.txt:1216950:37f034: 5521 e590                              |0004: iget-boolean v1, v2, 
+Lcom/telpo/tps550/api/demo/printer/PrinterActivitySY581;.has80mmUsbPrinter:Z // field@90e5
+  dexdump_disasm.txt:1216951:37f038: 3801 3100                              |0006: if-eqz v1, 0037 // +0031
+
+

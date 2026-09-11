@@ -5,20 +5,19 @@ import '../services/notification_service.dart';
 class NotificationProvider extends ChangeNotifier {
   final NotificationService _service = NotificationService();
   List<models.Notification> _notifications = [];
-  models.NotificationStats? _stats;
   bool _loading = false;
+  int _nonLues = 0;
 
   List<models.Notification> get notifications => _notifications;
-  models.NotificationStats? get stats => _stats;
   bool get loading => _loading;
-  int get nonLues => _stats?.nonLues ?? 0;
+  int get nonLues => _nonLues;
 
   Future<void> load() async {
     _loading = true;
     notifyListeners();
     try {
       _notifications = await _service.list();
-      _stats = await _service.statistiques();
+      _nonLues = await _service.countNonLues();
     } catch (e) {
       debugPrint('Error loading notifications: $e');
     } finally {
@@ -33,16 +32,16 @@ class NotificationProvider extends ChangeNotifier {
     if (index != -1) {
       _notifications[index] = models.Notification(
         id: _notifications[index].id,
-        type: _notifications[index].type,
-        titre: _notifications[index].titre,
+        typeNotification: _notifications[index].typeNotification,
+        sujet: _notifications[index].sujet,
         message: _notifications[index].message,
-        lu: true,
+        estLue: true,
+        dateEnvoi: _notifications[index].dateEnvoi,
+        dateLecture: DateTime.now(),
+        lienAction: _notifications[index].lienAction,
         createdAt: _notifications[index].createdAt,
       );
-      _stats = models.NotificationStats(
-        total: _stats?.total ?? 0,
-        nonLues: (_stats?.nonLues ?? 1) - 1,
-      );
+      _nonLues = (_nonLues - 1).clamp(0, 9999);
       notifyListeners();
     }
   }
@@ -51,13 +50,23 @@ class NotificationProvider extends ChangeNotifier {
     await _service.marquerToutesCommeLues();
     _notifications = _notifications.map((n) => models.Notification(
       id: n.id,
-      type: n.type,
-      titre: n.titre,
+      typeNotification: n.typeNotification,
+      sujet: n.sujet,
       message: n.message,
-      lu: true,
+      estLue: true,
+      dateEnvoi: n.dateEnvoi,
+      dateLecture: DateTime.now(),
+      lienAction: n.lienAction,
       createdAt: n.createdAt,
     )).toList();
-    _stats = models.NotificationStats(total: _stats?.total ?? 0, nonLues: 0);
+    _nonLues = 0;
+    notifyListeners();
+  }
+
+  Future<void> delete(int id) async {
+    await _service.delete(id);
+    _notifications.removeWhere((n) => n.id == id);
+    _nonLues = _notifications.where((n) => !n.estLue).length;
     notifyListeners();
   }
 }

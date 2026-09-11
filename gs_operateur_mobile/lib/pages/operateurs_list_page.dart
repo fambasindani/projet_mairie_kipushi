@@ -14,17 +14,33 @@ class OperateursListPage extends StatefulWidget {
   State<OperateursListPage> createState() => _OperateursListPageState();
 }
 
-class _OperateursListPageState extends State<OperateursListPage> {
+class _OperateursListPageState extends State<OperateursListPage> with SingleTickerProviderStateMixin {
   final _searchController = TextEditingController();
   final _scrollController = ScrollController();
+  late TabController _tabController;
+
+  static const List<Map<String, String?>> _tabs = [
+    {'label': 'Tous', 'status': null},
+    {'label': 'En attente', 'status': 'en_attente'},
+    {'label': 'Validés', 'status': 'valide'},
+  ];
 
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: _tabs.length, vsync: this);
+    _tabController.addListener(_onTabChanged);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<PersonneProvider>().load(refresh: true);
     });
     _scrollController.addListener(_onScroll);
+  }
+
+  void _onTabChanged() {
+    if (!_tabController.indexIsChanging) {
+      final status = _tabs[_tabController.index]['status'];
+      context.read<PersonneProvider>().load(statutInscription: status, refresh: true);
+    }
   }
 
   void _onScroll() {
@@ -53,34 +69,46 @@ class _OperateursListPageState extends State<OperateursListPage> {
             ),
         ],
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(60),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-            child: TextField(
-              controller: _searchController,
-              style: const TextStyle(color: AppColors.textPrimary),
-              decoration: InputDecoration(
-                hintText: 'Rechercher un opérateur...',
-                prefixIcon: const Icon(Icons.search, color: AppColors.textMuted, size: 20),
-                suffixIcon: _searchController.text.isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(Icons.clear, color: AppColors.textMuted, size: 20),
-                        onPressed: () {
-                          _searchController.clear();
-                          context.read<PersonneProvider>().load(refresh: true);
-                        },
-                      )
-                    : null,
-                filled: true,
-                fillColor: AppColors.bgInput,
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: BorderSide.none),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          preferredSize: const Size.fromHeight(100),
+          child: Column(
+            children: [
+              TabBar(
+                controller: _tabController,
+                indicatorColor: AppColors.primary,
+                labelColor: AppColors.primary,
+                unselectedLabelColor: AppColors.textMuted,
+                labelStyle: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+                tabs: _tabs.map((t) => Tab(text: t['label'])).toList(),
               ),
-              onChanged: (v) {
-                setState(() {});
-                context.read<PersonneProvider>().load(search: v, refresh: true);
-              },
-            ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+                child: TextField(
+                  controller: _searchController,
+                  style: const TextStyle(color: AppColors.textPrimary),
+                  decoration: InputDecoration(
+                    hintText: 'Rechercher un opérateur...',
+                    prefixIcon: const Icon(Icons.search, color: AppColors.textMuted, size: 20),
+                    suffixIcon: _searchController.text.isNotEmpty
+                        ? IconButton(
+                            icon: const Icon(Icons.clear, color: AppColors.textMuted, size: 20),
+                            onPressed: () {
+                              _searchController.clear();
+                              context.read<PersonneProvider>().load(refresh: true);
+                            },
+                          )
+                        : null,
+                    filled: true,
+                    fillColor: AppColors.bgInput,
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: BorderSide.none),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  ),
+                  onChanged: (v) {
+                    setState(() {});
+                    context.read<PersonneProvider>().load(search: v, refresh: true);
+                  },
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -120,6 +148,7 @@ class _OperateursListPageState extends State<OperateursListPage> {
 
   @override
   void dispose() {
+    _tabController.dispose();
     _searchController.dispose();
     _scrollController.dispose();
     super.dispose();

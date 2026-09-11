@@ -1,0 +1,1992 @@
+﻿
+> dexdump_full.txt:290691:  Class descriptor  : 'Lcom/common/apiutil/printer/ThermalPrinter;'
+  dexdump_full.txt:290692:  Access flags      : 0x0001 (PUBLIC)
+  dexdump_full.txt:290693:  Superclass        : 'Ljava/lang/Object;'
+  dexdump_full.txt:290694:  Interfaces        -
+  dexdump_full.txt:290695:  Static fields     -
+> dexdump_full.txt:290696:    #0              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290697:      name          : 'ALGIN_LEFT'
+  dexdump_full.txt:290698:      type          : 'I'
+  dexdump_full.txt:290699:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290700:      value         : 0
+> dexdump_full.txt:290701:    #1              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290702:      name          : 'ALGIN_MIDDLE'
+  dexdump_full.txt:290703:      type          : 'I'
+  dexdump_full.txt:290704:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290705:      value         : 1
+> dexdump_full.txt:290706:    #2              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290707:      name          : 'ALGIN_RIGHT'
+  dexdump_full.txt:290708:      type          : 'I'
+  dexdump_full.txt:290709:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290710:      value         : 2
+> dexdump_full.txt:290711:    #3              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290712:      name          : 'BARCODE_TYPE_CODABAR'
+  dexdump_full.txt:290713:      type          : 'I'
+  dexdump_full.txt:290714:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290715:      value         : 71
+> dexdump_full.txt:290716:    #4              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290717:      name          : 'BARCODE_TYPE_CODE128'
+  dexdump_full.txt:290718:      type          : 'I'
+  dexdump_full.txt:290719:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290720:      value         : 73
+> dexdump_full.txt:290721:    #5              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290722:      name          : 'BARCODE_TYPE_CODE39'
+  dexdump_full.txt:290723:      type          : 'I'
+  dexdump_full.txt:290724:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290725:      value         : 69
+> dexdump_full.txt:290726:    #6              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290727:      name          : 'BARCODE_TYPE_CODE93'
+  dexdump_full.txt:290728:      type          : 'I'
+  dexdump_full.txt:290729:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290730:      value         : 72
+> dexdump_full.txt:290731:    #7              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290732:      name          : 'BARCODE_TYPE_EAN13'
+  dexdump_full.txt:290733:      type          : 'I'
+  dexdump_full.txt:290734:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290735:      value         : 67
+> dexdump_full.txt:290736:    #8              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290737:      name          : 'BARCODE_TYPE_EAN8'
+  dexdump_full.txt:290738:      type          : 'I'
+  dexdump_full.txt:290739:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290740:      value         : 68
+> dexdump_full.txt:290741:    #9              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290742:      name          : 'BARCODE_TYPE_ITF'
+  dexdump_full.txt:290743:      type          : 'I'
+  dexdump_full.txt:290744:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290745:      value         : 70
+> dexdump_full.txt:290746:    #10              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290747:      name          : 'BARCODE_TYPE_UPCA'
+  dexdump_full.txt:290748:      type          : 'I'
+  dexdump_full.txt:290749:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290750:      value         : 65
+> dexdump_full.txt:290751:    #11              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290752:      name          : 'BARCODE_TYPE_UPCE'
+  dexdump_full.txt:290753:      type          : 'I'
+  dexdump_full.txt:290754:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290755:      value         : 66
+> dexdump_full.txt:290756:    #12              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290757:      name          : 'CAMBODIA'
+  dexdump_full.txt:290758:      type          : 'Ljava/lang/String;'
+  dexdump_full.txt:290759:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290760:      value         : "UTF-16BE_Cambodia"
+> dexdump_full.txt:290761:    #13              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290762:      name          : 'CHINESE'
+  dexdump_full.txt:290763:      type          : 'Ljava/lang/String;'
+  dexdump_full.txt:290764:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290765:      value         : "gb2312"
+> dexdump_full.txt:290766:    #14              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290767:      name          : 'DIRECTION_BACK'
+  dexdump_full.txt:290768:      type          : 'I'
+  dexdump_full.txt:290769:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290770:      value         : 1
+> dexdump_full.txt:290771:    #15              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290772:      name          : 'DIRECTION_FORWORD'
+  dexdump_full.txt:290773:      type          : 'I'
+  dexdump_full.txt:290774:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290775:      value         : 0
+> dexdump_full.txt:290776:    #16              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290777:      name          : 'ENGLISH'
+  dexdump_full.txt:290778:      type          : 'Ljava/lang/String;'
+  dexdump_full.txt:290779:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290780:      value         : "ASCII"
+> dexdump_full.txt:290781:    #17              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290782:      name          : 'FRENCH'
+  dexdump_full.txt:290783:      type          : 'Ljava/lang/String;'
+  dexdump_full.txt:290784:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290785:      value         : "UTF-16BE_FRENCH"
+> dexdump_full.txt:290786:    #18              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290787:      name          : 'JAPANESE'
+  dexdump_full.txt:290788:      type          : 'Ljava/lang/String;'
+  dexdump_full.txt:290789:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290790:      value         : "Shift-JIS"
+> dexdump_full.txt:290791:    #19              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290792:      name          : 'KOREAN'
+  dexdump_full.txt:290793:      type          : 'Ljava/lang/String;'
+  dexdump_full.txt:290794:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290795:      value         : "KSC5601"
+> dexdump_full.txt:290796:    #20              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290797:      name          : 'LAOS'
+  dexdump_full.txt:290798:      type          : 'Ljava/lang/String;'
+  dexdump_full.txt:290799:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290800:      value         : "LAOS"
+> dexdump_full.txt:290801:    #21              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290802:      name          : 'PAPER_58mm'
+  dexdump_full.txt:290803:      type          : 'I'
+  dexdump_full.txt:290804:      access        : 0x0009 (PUBLIC STATIC)
+  dexdump_full.txt:290805:      value         : 0
+> dexdump_full.txt:290806:    #22              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290807:      name          : 'PAPER_80mm'
+  dexdump_full.txt:290808:      type          : 'I'
+  dexdump_full.txt:290809:      access        : 0x0009 (PUBLIC STATIC)
+  dexdump_full.txt:290810:      value         : 0
+> dexdump_full.txt:290811:    #23              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290812:      name          : 'PERSIAN'
+  dexdump_full.txt:290813:      type          : 'Ljava/lang/String;'
+  dexdump_full.txt:290814:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290815:      value         : "UTF-16BE_PERSIAN"
+> dexdump_full.txt:290816:    #24              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290817:      name          : 'RUSSIAN'
+  dexdump_full.txt:290818:      type          : 'Ljava/lang/String;'
+  dexdump_full.txt:290819:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290820:      value         : "UTF-16BE_RUSSIAN"
+> dexdump_full.txt:290821:    #25              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290822:      name          : 'STATUS_BOX_OPEN'
+  dexdump_full.txt:290823:      type          : 'I'
+  dexdump_full.txt:290824:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290825:      value         : 5
+> dexdump_full.txt:290826:    #26              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290827:      name          : 'STATUS_CUT_WRONG'
+  dexdump_full.txt:290828:      type          : 'I'
+  dexdump_full.txt:290829:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290830:      value         : 6
+> dexdump_full.txt:290831:    #27              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290832:      name          : 'STATUS_HARDWARE_ALARM'
+  dexdump_full.txt:290833:      type          : 'I'
+  dexdump_full.txt:290834:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290835:      value         : 10002
+> dexdump_full.txt:290836:    #28              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290837:      name          : 'STATUS_NO_PAPER'
+  dexdump_full.txt:290838:      type          : 'I'
+  dexdump_full.txt:290839:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290840:      value         : 1
+> dexdump_full.txt:290841:    #29              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290842:      name          : 'STATUS_OK'
+  dexdump_full.txt:290843:      type          : 'I'
+  dexdump_full.txt:290844:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290845:      value         : 0
+> dexdump_full.txt:290846:    #30              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290847:      name          : 'STATUS_OVER_FLOW'
+  dexdump_full.txt:290848:      type          : 'I'
+  dexdump_full.txt:290849:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290850:      value         : 3
+> dexdump_full.txt:290851:    #31              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290852:      name          : 'STATUS_OVER_HEAT'
+  dexdump_full.txt:290853:      type          : 'I'
+  dexdump_full.txt:290854:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290855:      value         : 2
+> dexdump_full.txt:290856:    #32              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290857:      name          : 'STATUS_PAPER_ALREADY'
+  dexdump_full.txt:290858:      type          : 'I'
+  dexdump_full.txt:290859:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290860:      value         : 26
+> dexdump_full.txt:290861:    #33              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290862:      name          : 'STATUS_RESET'
+  dexdump_full.txt:290863:      type          : 'I'
+  dexdump_full.txt:290864:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290865:      value         : 10001
+> dexdump_full.txt:290866:    #34              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290867:      name          : 'STATUS_UNKNOWN'
+  dexdump_full.txt:290868:      type          : 'I'
+  dexdump_full.txt:290869:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290870:      value         : 4
+> dexdump_full.txt:290871:    #35              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290872:      name          : 'TAG'
+  dexdump_full.txt:290873:      type          : 'Ljava/lang/String;'
+  dexdump_full.txt:290874:      access        : 0x001a (PRIVATE STATIC FINAL)
+  dexdump_full.txt:290875:      value         : null
+> dexdump_full.txt:290876:    #36              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290877:      name          : 'THAILAND'
+  dexdump_full.txt:290878:      type          : 'Ljava/lang/String;'
+  dexdump_full.txt:290879:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290880:      value         : "UTF-16BE_Thailand"
+> dexdump_full.txt:290881:    #37              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290882:      name          : 'WALK_DOTLINE'
+  dexdump_full.txt:290883:      type          : 'I'
+  dexdump_full.txt:290884:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290885:      value         : 0
+> dexdump_full.txt:290886:    #38              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290887:      name          : 'WALK_LINE'
+  dexdump_full.txt:290888:      type          : 'I'
+  dexdump_full.txt:290889:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:290890:      value         : 1
+> dexdump_full.txt:290891:    #39              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290892:      name          : 'clazz'
+  dexdump_full.txt:290893:      type          : 'Ljava/lang/Class;'
+  dexdump_full.txt:290894:      access        : 0x000a (PRIVATE STATIC)
+> dexdump_full.txt:290895:    #40              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290896:      name          : 'errorStop'
+  dexdump_full.txt:290897:      type          : 'Z'
+  dexdump_full.txt:290898:      access        : 0x0009 (PUBLIC STATIC)
+> dexdump_full.txt:290899:    #41              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290900:      name          : 'owner'
+  dexdump_full.txt:290901:      type          : 'Ljava/lang/Object;'
+  dexdump_full.txt:290902:      access        : 0x000a (PRIVATE STATIC)
+> dexdump_full.txt:290903:    #42              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290904:      name          : 'xon'
+  dexdump_full.txt:290905:      type          : 'Z'
+  dexdump_full.txt:290906:      access        : 0x0009 (PUBLIC STATIC)
+  dexdump_full.txt:290907:  Instance fields   -
+  dexdump_full.txt:290908:  Direct methods    -
+> dexdump_full.txt:290909:    #0              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290910:      name          : '<clinit>'
+  dexdump_full.txt:290911:      type          : '()V'
+  dexdump_full.txt:290912:      access        : 0x10008 (STATIC CONSTRUCTOR)
+  dexdump_full.txt:290913:      code          -
+  dexdump_full.txt:290914:      registers     : 1
+  dexdump_full.txt:290915:      ins           : 0
+  dexdump_full.txt:290916:      outs          : 1
+  dexdump_full.txt:290917:      insns size    : 23 16-bit code units
+  dexdump_full.txt:290918:      catches       : (none)
+  dexdump_full.txt:290919:      positions     :
+  dexdump_full.txt:290920:        0x0000 line=22
+  dexdump_full.txt:290921:        0x000a line=112
+  dexdump_full.txt:290922:        0x000e line=113
+  dexdump_full.txt:290923:        0x0011 line=115
+  dexdump_full.txt:290924:        0x0014 line=116
+  dexdump_full.txt:290925:      locals        :
+> dexdump_full.txt:290926:    #1              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290927:      name          : '<init>'
+  dexdump_full.txt:290928:      type          : '()V'
+  dexdump_full.txt:290929:      access        : 0x10001 (PUBLIC CONSTRUCTOR)
+  dexdump_full.txt:290930:      code          -
+  dexdump_full.txt:290931:      registers     : 1
+  dexdump_full.txt:290932:      ins           : 1
+  dexdump_full.txt:290933:      outs          : 1
+  dexdump_full.txt:290934:      insns size    : 4 16-bit code units
+  dexdump_full.txt:290935:      catches       : (none)
+  dexdump_full.txt:290936:      positions     :
+  dexdump_full.txt:290937:        0x0000 line=20
+  dexdump_full.txt:290938:      locals        :
+> dexdump_full.txt:290939:        0x0000 - 0x0004 reg=0 this Lcom/common/apiutil/printer/ThermalPrinter;
+> dexdump_full.txt:290940:    #2              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290941:      name          : 'addBarcode'
+  dexdump_full.txt:290942:      type          : '(Ljava/lang/String;)V'
+  dexdump_full.txt:290943:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:290944:      code          -
+  dexdump_full.txt:290945:      registers     : 8
+  dexdump_full.txt:290946:      ins           : 1
+  dexdump_full.txt:290947:      outs          : 3
+  dexdump_full.txt:290948:      insns size    : 65 16-bit code units
+  dexdump_full.txt:290949:      catches       : 3
+  dexdump_full.txt:290950:        0x0003 - 0x001c
+  dexdump_full.txt:290951:          Ljava/lang/IllegalAccessException; -> 0x0035
+  dexdump_full.txt:290952:          Ljava/lang/reflect/InvocationTargetException; -> 0x002f
+  dexdump_full.txt:290953:          Ljava/lang/NoSuchMethodException; -> 0x0025
+  dexdump_full.txt:290954:          Ljava/lang/NullPointerException; -> 0x001f
+  dexdump_full.txt:290955:          <any> -> 0x001d
+  dexdump_full.txt:290956:        0x001f - 0x0033
+  dexdump_full.txt:290957:          <any> -> 0x001d
+  dexdump_full.txt:290958:        0x0036 - 0x003f
+  dexdump_full.txt:290959:          <any> -> 0x001d
+  dexdump_full.txt:290960:      positions     :
+  dexdump_full.txt:290961:        0x0003 line=584
+  dexdump_full.txt:290962:        0x0013 line=585
+  dexdump_full.txt:290963:        0x001f line=595
+  dexdump_full.txt:290964:        0x0026 line=592
+  dexdump_full.txt:290965:        0x0029 line=593
+  dexdump_full.txt:290966:        0x0030 line=590
+  dexdump_full.txt:290967:        0x0033 line=597
+  dexdump_full.txt:290968:        0x0036 line=587
+  dexdump_full.txt:290969:        0x0039 line=588
+  dexdump_full.txt:290970:      locals        :
+  dexdump_full.txt:290971:        0x0000 - 0x0041 reg=7 (null) Ljava/lang/String;
+> dexdump_full.txt:290972:    #3              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:290973:      name          : 'addString'
+  dexdump_full.txt:290974:      type          : '(Ljava/lang/String;)V'
+  dexdump_full.txt:290975:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:290976:      code          -
+  dexdump_full.txt:290977:      registers     : 8
+  dexdump_full.txt:290978:      ins           : 1
+  dexdump_full.txt:290979:      outs          : 3
+  dexdump_full.txt:290980:      insns size    : 65 16-bit code units
+  dexdump_full.txt:290981:      catches       : 3
+  dexdump_full.txt:290982:        0x0003 - 0x001c
+  dexdump_full.txt:290983:          Ljava/lang/IllegalAccessException; -> 0x0035
+  dexdump_full.txt:290984:          Ljava/lang/reflect/InvocationTargetException; -> 0x002f
+  dexdump_full.txt:290985:          Ljava/lang/NoSuchMethodException; -> 0x0025
+  dexdump_full.txt:290986:          Ljava/lang/NullPointerException; -> 0x001f
+  dexdump_full.txt:290987:          <any> -> 0x001d
+  dexdump_full.txt:290988:        0x001f - 0x0033
+  dexdump_full.txt:290989:          <any> -> 0x001d
+  dexdump_full.txt:290990:        0x0036 - 0x003f
+  dexdump_full.txt:290991:          <any> -> 0x001d
+  dexdump_full.txt:290992:      positions     :
+  dexdump_full.txt:290993:        0x0003 line=567
+  dexdump_full.txt:290994:        0x0013 line=568
+  dexdump_full.txt:290995:        0x001f line=578
+  dexdump_full.txt:290996:        0x0026 line=575
+  dexdump_full.txt:290997:        0x0029 line=576
+  dexdump_full.txt:290998:        0x0030 line=573
+  dexdump_full.txt:290999:        0x0033 line=580
+  dexdump_full.txt:291000:        0x0036 line=570
+  dexdump_full.txt:291001:        0x0039 line=571
+  dexdump_full.txt:291002:      locals        :
+  dexdump_full.txt:291003:        0x0000 - 0x0041 reg=7 (null) Ljava/lang/String;
+> dexdump_full.txt:291004:    #4              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291005:      name          : 'checkStatus'
+  dexdump_full.txt:291006:      type          : '()I'
+  dexdump_full.txt:291007:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291008:      code          -
+  dexdump_full.txt:291009:      registers     : 5
+  dexdump_full.txt:291010:      ins           : 0
+  dexdump_full.txt:291011:      outs          : 3
+  dexdump_full.txt:291012:      insns size    : 67 16-bit code units
+  dexdump_full.txt:291013:      catches       : 3
+  dexdump_full.txt:291014:        0x0003 - 0x001c
+  dexdump_full.txt:291015:          Ljava/lang/IllegalAccessException; -> 0x0037
+  dexdump_full.txt:291016:          Ljava/lang/reflect/InvocationTargetException; -> 0x0030
+  dexdump_full.txt:291017:          Ljava/lang/NoSuchMethodException; -> 0x0026
+  dexdump_full.txt:291018:          Ljava/lang/NullPointerException; -> 0x0020
+  dexdump_full.txt:291019:          <any> -> 0x001e
+  dexdump_full.txt:291020:        0x0020 - 0x0034
+  dexdump_full.txt:291021:          <any> -> 0x001e
+  dexdump_full.txt:291022:        0x0038 - 0x0041
+  dexdump_full.txt:291023:          <any> -> 0x001e
+  dexdump_full.txt:291024:      positions     :
+  dexdump_full.txt:291025:        0x0003 line=416
+  dexdump_full.txt:291026:        0x000e line=417
+  dexdump_full.txt:291027:        0x0020 line=427
+  dexdump_full.txt:291028:        0x0027 line=424
+  dexdump_full.txt:291029:        0x002a line=425
+  dexdump_full.txt:291030:        0x0031 line=422
+  dexdump_full.txt:291031:        0x0035 line=429
+  dexdump_full.txt:291032:        0x0038 line=419
+  dexdump_full.txt:291033:        0x003b line=420
+  dexdump_full.txt:291034:      locals        :
+> dexdump_full.txt:291035:    #5              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291036:      name          : 'clearSerialSY581'
+  dexdump_full.txt:291037:      type          : '()V'
+  dexdump_full.txt:291038:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291039:      code          -
+  dexdump_full.txt:291040:      registers     : 5
+  dexdump_full.txt:291041:      ins           : 0
+  dexdump_full.txt:291042:      outs          : 3
+  dexdump_full.txt:291043:      insns size    : 58 16-bit code units
+  dexdump_full.txt:291044:      catches       : 3
+  dexdump_full.txt:291045:        0x0003 - 0x0015
+  dexdump_full.txt:291046:          Ljava/lang/IllegalAccessException; -> 0x002e
+  dexdump_full.txt:291047:          Ljava/lang/reflect/InvocationTargetException; -> 0x0028
+  dexdump_full.txt:291048:          Ljava/lang/NoSuchMethodException; -> 0x001e
+  dexdump_full.txt:291049:          Ljava/lang/NullPointerException; -> 0x0018
+  dexdump_full.txt:291050:          <any> -> 0x0016
+  dexdump_full.txt:291051:        0x0018 - 0x002c
+  dexdump_full.txt:291052:          <any> -> 0x0016
+  dexdump_full.txt:291053:        0x002f - 0x0038
+  dexdump_full.txt:291054:          <any> -> 0x0016
+  dexdump_full.txt:291055:      positions     :
+  dexdump_full.txt:291056:        0x0003 line=267
+  dexdump_full.txt:291057:        0x000e line=268
+  dexdump_full.txt:291058:        0x0018 line=278
+  dexdump_full.txt:291059:        0x001f line=275
+  dexdump_full.txt:291060:        0x0022 line=276
+  dexdump_full.txt:291061:        0x0029 line=273
+  dexdump_full.txt:291062:        0x002c line=280
+  dexdump_full.txt:291063:        0x002f line=270
+  dexdump_full.txt:291064:        0x0032 line=271
+  dexdump_full.txt:291065:      locals        :
+> dexdump_full.txt:291066:    #6              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291067:      name          : 'clearString'
+  dexdump_full.txt:291068:      type          : '()V'
+  dexdump_full.txt:291069:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291070:      code          -
+  dexdump_full.txt:291071:      registers     : 5
+  dexdump_full.txt:291072:      ins           : 0
+  dexdump_full.txt:291073:      outs          : 3
+  dexdump_full.txt:291074:      insns size    : 58 16-bit code units
+  dexdump_full.txt:291075:      catches       : 3
+  dexdump_full.txt:291076:        0x0003 - 0x0015
+  dexdump_full.txt:291077:          Ljava/lang/IllegalAccessException; -> 0x002e
+  dexdump_full.txt:291078:          Ljava/lang/reflect/InvocationTargetException; -> 0x0028
+  dexdump_full.txt:291079:          Ljava/lang/NoSuchMethodException; -> 0x001e
+  dexdump_full.txt:291080:          Ljava/lang/NullPointerException; -> 0x0018
+  dexdump_full.txt:291081:          <any> -> 0x0016
+  dexdump_full.txt:291082:        0x0018 - 0x002c
+  dexdump_full.txt:291083:          <any> -> 0x0016
+  dexdump_full.txt:291084:        0x002f - 0x0038
+  dexdump_full.txt:291085:          <any> -> 0x0016
+  dexdump_full.txt:291086:      positions     :
+  dexdump_full.txt:291087:        0x0003 line=601
+  dexdump_full.txt:291088:        0x000e line=602
+  dexdump_full.txt:291089:        0x0018 line=612
+  dexdump_full.txt:291090:        0x001f line=609
+  dexdump_full.txt:291091:        0x0022 line=610
+  dexdump_full.txt:291092:        0x0029 line=607
+  dexdump_full.txt:291093:        0x002c line=614
+  dexdump_full.txt:291094:        0x002f line=604
+  dexdump_full.txt:291095:        0x0032 line=605
+  dexdump_full.txt:291096:      locals        :
+> dexdump_full.txt:291097:    #7              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291098:      name          : 'enlargeFontSize'
+  dexdump_full.txt:291099:      type          : '(II)V'
+  dexdump_full.txt:291100:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291101:      code          -
+  dexdump_full.txt:291102:      registers     : 10
+  dexdump_full.txt:291103:      ins           : 2
+  dexdump_full.txt:291104:      outs          : 3
+  dexdump_full.txt:291105:      insns size    : 80 16-bit code units
+  dexdump_full.txt:291106:      catches       : 3
+  dexdump_full.txt:291107:        0x0003 - 0x002b
+  dexdump_full.txt:291108:          Ljava/lang/IllegalAccessException; -> 0x0044
+  dexdump_full.txt:291109:          Ljava/lang/reflect/InvocationTargetException; -> 0x003e
+  dexdump_full.txt:291110:          Ljava/lang/NoSuchMethodException; -> 0x0034
+  dexdump_full.txt:291111:          Ljava/lang/NullPointerException; -> 0x002e
+  dexdump_full.txt:291112:          <any> -> 0x002c
+  dexdump_full.txt:291113:        0x002e - 0x0042
+  dexdump_full.txt:291114:          <any> -> 0x002c
+  dexdump_full.txt:291115:        0x0045 - 0x004e
+  dexdump_full.txt:291116:          <any> -> 0x002c
+  dexdump_full.txt:291117:      positions     :
+  dexdump_full.txt:291118:        0x0003 line=440
+  dexdump_full.txt:291119:        0x0018 line=441
+  dexdump_full.txt:291120:        0x002e line=451
+  dexdump_full.txt:291121:        0x0035 line=448
+  dexdump_full.txt:291122:        0x0038 line=449
+  dexdump_full.txt:291123:        0x003f line=446
+  dexdump_full.txt:291124:        0x0042 line=453
+  dexdump_full.txt:291125:        0x0045 line=443
+  dexdump_full.txt:291126:        0x0048 line=444
+  dexdump_full.txt:291127:      locals        :
+  dexdump_full.txt:291128:        0x0000 - 0x0050 reg=8 (null) I
+  dexdump_full.txt:291129:        0x0000 - 0x0050 reg=9 (null) I
+> dexdump_full.txt:291130:    #8              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291131:      name          : 'getCutCount'
+  dexdump_full.txt:291132:      type          : '()J'
+  dexdump_full.txt:291133:      access        : 0x0009 (PUBLIC STATIC)
+  dexdump_full.txt:291134:      code          -
+  dexdump_full.txt:291135:      registers     : 4
+  dexdump_full.txt:291136:      ins           : 0
+  dexdump_full.txt:291137:      outs          : 3
+  dexdump_full.txt:291138:      insns size    : 48 16-bit code units
+  dexdump_full.txt:291139:      catches       : 1
+  dexdump_full.txt:291140:        0x0000 - 0x0019
+  dexdump_full.txt:291141:          Ljava/lang/IllegalAccessException; -> 0x0029
+  dexdump_full.txt:291142:          Ljava/lang/reflect/InvocationTargetException; -> 0x0024
+  dexdump_full.txt:291143:          Ljava/lang/NoSuchMethodException; -> 0x001f
+  dexdump_full.txt:291144:          Ljava/lang/NullPointerException; -> 0x001a
+  dexdump_full.txt:291145:      positions     :
+  dexdump_full.txt:291146:        0x0000 line=1083
+  dexdump_full.txt:291147:        0x000b line=1084
+  dexdump_full.txt:291148:        0x001b line=1092
+  dexdump_full.txt:291149:        0x0020 line=1090
+  dexdump_full.txt:291150:        0x0025 line=1088
+  dexdump_full.txt:291151:        0x002a line=1086
+  dexdump_full.txt:291152:      locals        :
+> dexdump_full.txt:291153:    #9              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291154:      name          : 'getPrintCount'
+  dexdump_full.txt:291155:      type          : '()J'
+  dexdump_full.txt:291156:      access        : 0x0009 (PUBLIC STATIC)
+  dexdump_full.txt:291157:      code          -
+  dexdump_full.txt:291158:      registers     : 4
+  dexdump_full.txt:291159:      ins           : 0
+  dexdump_full.txt:291160:      outs          : 3
+  dexdump_full.txt:291161:      insns size    : 48 16-bit code units
+  dexdump_full.txt:291162:      catches       : 1
+  dexdump_full.txt:291163:        0x0000 - 0x0019
+  dexdump_full.txt:291164:          Ljava/lang/IllegalAccessException; -> 0x0029
+  dexdump_full.txt:291165:          Ljava/lang/reflect/InvocationTargetException; -> 0x0024
+  dexdump_full.txt:291166:          Ljava/lang/NoSuchMethodException; -> 0x001f
+  dexdump_full.txt:291167:          Ljava/lang/NullPointerException; -> 0x001a
+  dexdump_full.txt:291168:      positions     :
+  dexdump_full.txt:291169:        0x0000 line=1063
+  dexdump_full.txt:291170:        0x000b line=1064
+  dexdump_full.txt:291171:        0x001b line=1072
+  dexdump_full.txt:291172:        0x0020 line=1070
+  dexdump_full.txt:291173:        0x0025 line=1068
+  dexdump_full.txt:291174:        0x002a line=1066
+  dexdump_full.txt:291175:      locals        :
+> dexdump_full.txt:291176:    #10              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291177:      name          : 'getPrintTextTime'
+  dexdump_full.txt:291178:      type          : '()J'
+  dexdump_full.txt:291179:      access        : 0x0009 (PUBLIC STATIC)
+  dexdump_full.txt:291180:      code          -
+  dexdump_full.txt:291181:      registers     : 4
+  dexdump_full.txt:291182:      ins           : 0
+  dexdump_full.txt:291183:      outs          : 3
+  dexdump_full.txt:291184:      insns size    : 48 16-bit code units
+  dexdump_full.txt:291185:      catches       : 1
+  dexdump_full.txt:291186:        0x0000 - 0x0019
+  dexdump_full.txt:291187:          Ljava/lang/IllegalAccessException; -> 0x0029
+  dexdump_full.txt:291188:          Ljava/lang/reflect/InvocationTargetException; -> 0x0024
+  dexdump_full.txt:291189:          Ljava/lang/NoSuchMethodException; -> 0x001f
+  dexdump_full.txt:291190:          Ljava/lang/NullPointerException; -> 0x001a
+  dexdump_full.txt:291191:      positions     :
+  dexdump_full.txt:291192:        0x0000 line=1103
+  dexdump_full.txt:291193:        0x000b line=1104
+  dexdump_full.txt:291194:        0x001b line=1112
+  dexdump_full.txt:291195:        0x0020 line=1110
+  dexdump_full.txt:291196:        0x0025 line=1108
+  dexdump_full.txt:291197:        0x002a line=1106
+  dexdump_full.txt:291198:      locals        :
+> dexdump_full.txt:291199:    #11              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291200:      name          : 'getVersion'
+  dexdump_full.txt:291201:      type          : '()Ljava/lang/String;'
+  dexdump_full.txt:291202:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291203:      code          -
+  dexdump_full.txt:291204:      registers     : 5
+  dexdump_full.txt:291205:      ins           : 0
+  dexdump_full.txt:291206:      outs          : 3
+  dexdump_full.txt:291207:      insns size    : 63 16-bit code units
+  dexdump_full.txt:291208:      catches       : 3
+  dexdump_full.txt:291209:        0x0003 - 0x0018
+  dexdump_full.txt:291210:          Ljava/lang/IllegalAccessException; -> 0x0033
+  dexdump_full.txt:291211:          Ljava/lang/reflect/InvocationTargetException; -> 0x002c
+  dexdump_full.txt:291212:          Ljava/lang/NoSuchMethodException; -> 0x0022
+  dexdump_full.txt:291213:          Ljava/lang/NullPointerException; -> 0x001c
+  dexdump_full.txt:291214:          <any> -> 0x001a
+  dexdump_full.txt:291215:        0x001c - 0x0030
+  dexdump_full.txt:291216:          <any> -> 0x001a
+  dexdump_full.txt:291217:        0x0034 - 0x003d
+  dexdump_full.txt:291218:          <any> -> 0x001a
+  dexdump_full.txt:291219:      positions     :
+  dexdump_full.txt:291220:        0x0003 line=826
+  dexdump_full.txt:291221:        0x000e line=827
+  dexdump_full.txt:291222:        0x001c line=837
+  dexdump_full.txt:291223:        0x0023 line=834
+  dexdump_full.txt:291224:        0x0026 line=835
+  dexdump_full.txt:291225:        0x002d line=832
+  dexdump_full.txt:291226:        0x0031 line=839
+  dexdump_full.txt:291227:        0x0034 line=829
+  dexdump_full.txt:291228:        0x0037 line=830
+  dexdump_full.txt:291229:      locals        :
+> dexdump_full.txt:291230:    #12              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291231:      name          : 'init'
+  dexdump_full.txt:291232:      type          : '(Landroid/content/Context;)V'
+  dexdump_full.txt:291233:      access        : 0x0009 (PUBLIC STATIC)
+  dexdump_full.txt:291234:      code          -
+  dexdump_full.txt:291235:      registers     : 3
+  dexdump_full.txt:291236:      ins           : 1
+  dexdump_full.txt:291237:      outs          : 3
+  dexdump_full.txt:291238:      insns size    : 62 16-bit code units
+  dexdump_full.txt:291239:      catches       : 1
+  dexdump_full.txt:291240:        0x000a - 0x0023
+  dexdump_full.txt:291241:          Landroid/content/pm/PackageManager$NameNotFoundException; -> 0x0039
+  dexdump_full.txt:291242:          Ljava/lang/ClassNotFoundException; -> 0x0037
+  dexdump_full.txt:291243:          Ljava/lang/IllegalAccessException; -> 0x0032
+  dexdump_full.txt:291244:          Ljava/lang/InstantiationException; -> 0x002d
+  dexdump_full.txt:291245:          Ljava/lang/NullPointerException; -> 0x0024
+  dexdump_full.txt:291246:      positions     :
+  dexdump_full.txt:291247:        0x0000 line=122
+  dexdump_full.txt:291248:        0x0003 line=124
+  dexdump_full.txt:291249:        0x000d line=129
+  dexdump_full.txt:291250:        0x0011 line=131
+  dexdump_full.txt:291251:        0x001d line=142
+  dexdump_full.txt:291252:        0x0024 line=150
+  dexdump_full.txt:291253:        0x002e line=148
+  dexdump_full.txt:291254:        0x0033 line=146
+  dexdump_full.txt:291255:        0x003a line=144
+  dexdump_full.txt:291256:      locals        :
+  dexdump_full.txt:291257:        0x0000 - 0x003e reg=2 (null) Landroid/content/Context;
+> dexdump_full.txt:291258:    #13              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291259:      name          : 'init80mmSerialPrinter'
+  dexdump_full.txt:291260:      type          : '()V'
+  dexdump_full.txt:291261:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291262:      code          -
+  dexdump_full.txt:291263:      registers     : 7
+  dexdump_full.txt:291264:      ins           : 0
+  dexdump_full.txt:291265:      outs          : 3
+  dexdump_full.txt:291266:      insns size    : 58 16-bit code units
+  dexdump_full.txt:291267:      catches       : 2
+  dexdump_full.txt:291268:        0x0003 - 0x0020
+  dexdump_full.txt:291269:          Ljava/lang/IllegalAccessException; -> 0x0032
+  dexdump_full.txt:291270:          Ljava/lang/reflect/InvocationTargetException; -> 0x002d
+  dexdump_full.txt:291271:          Ljava/lang/NoSuchMethodException; -> 0x0028
+  dexdump_full.txt:291272:          Ljava/lang/NullPointerException; -> 0x0023
+  dexdump_full.txt:291273:          <any> -> 0x0021
+  dexdump_full.txt:291274:        0x0024 - 0x0036
+  dexdump_full.txt:291275:          <any> -> 0x0021
+  dexdump_full.txt:291276:      positions     :
+  dexdump_full.txt:291277:        0x0003 line=983
+  dexdump_full.txt:291278:        0x0013 line=984
+  dexdump_full.txt:291279:        0x0024 line=992
+  dexdump_full.txt:291280:        0x0029 line=990
+  dexdump_full.txt:291281:        0x002e line=988
+  dexdump_full.txt:291282:        0x0033 line=986
+  dexdump_full.txt:291283:        0x0036 line=994
+  dexdump_full.txt:291284:      locals        :
+> dexdump_full.txt:291285:    #14              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291286:      name          : 'init80mmUsbPrinter'
+  dexdump_full.txt:291287:      type          : '(Landroid/content/Context;)Z'
+  dexdump_full.txt:291288:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291289:      code          -
+  dexdump_full.txt:291290:      registers     : 8
+  dexdump_full.txt:291291:      ins           : 1
+  dexdump_full.txt:291292:      outs          : 3
+  dexdump_full.txt:291293:      insns size    : 62 16-bit code units
+  dexdump_full.txt:291294:      catches       : 2
+  dexdump_full.txt:291295:        0x0004 - 0x0023
+  dexdump_full.txt:291296:          Ljava/lang/IllegalAccessException; -> 0x0036
+  dexdump_full.txt:291297:          Ljava/lang/reflect/InvocationTargetException; -> 0x0031
+  dexdump_full.txt:291298:          Ljava/lang/NoSuchMethodException; -> 0x002c
+  dexdump_full.txt:291299:          Ljava/lang/NullPointerException; -> 0x0027
+  dexdump_full.txt:291300:          <any> -> 0x0025
+  dexdump_full.txt:291301:        0x0028 - 0x003a
+  dexdump_full.txt:291302:          <any> -> 0x0025
+  dexdump_full.txt:291303:      positions     :
+  dexdump_full.txt:291304:        0x0004 line=1003
+  dexdump_full.txt:291305:        0x0013 line=1004
+  dexdump_full.txt:291306:        0x0028 line=1012
+  dexdump_full.txt:291307:        0x002d line=1010
+  dexdump_full.txt:291308:        0x0032 line=1008
+  dexdump_full.txt:291309:        0x0037 line=1006
+  dexdump_full.txt:291310:        0x003a line=1014
+  dexdump_full.txt:291311:      locals        :
+  dexdump_full.txt:291312:        0x0000 - 0x003e reg=7 (null) Landroid/content/Context;
+> dexdump_full.txt:291313:    #15              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291314:      name          : 'paperCut'
+  dexdump_full.txt:291315:      type          : '()V'
+  dexdump_full.txt:291316:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291317:      code          -
+  dexdump_full.txt:291318:      registers     : 5
+  dexdump_full.txt:291319:      ins           : 0
+  dexdump_full.txt:291320:      outs          : 3
+  dexdump_full.txt:291321:      insns size    : 58 16-bit code units
+  dexdump_full.txt:291322:      catches       : 3
+  dexdump_full.txt:291323:        0x0003 - 0x0015
+  dexdump_full.txt:291324:          Ljava/lang/IllegalAccessException; -> 0x002e
+  dexdump_full.txt:291325:          Ljava/lang/reflect/InvocationTargetException; -> 0x0028
+  dexdump_full.txt:291326:          Ljava/lang/NoSuchMethodException; -> 0x001e
+  dexdump_full.txt:291327:          Ljava/lang/NullPointerException; -> 0x0018
+  dexdump_full.txt:291328:          <any> -> 0x0016
+  dexdump_full.txt:291329:        0x0018 - 0x002c
+  dexdump_full.txt:291330:          <any> -> 0x0016
+  dexdump_full.txt:291331:        0x002f - 0x0038
+  dexdump_full.txt:291332:          <any> -> 0x0016
+  dexdump_full.txt:291333:      positions     :
+  dexdump_full.txt:291334:        0x0003 line=888
+  dexdump_full.txt:291335:        0x000e line=889
+  dexdump_full.txt:291336:        0x0018 line=899
+  dexdump_full.txt:291337:        0x001f line=896
+  dexdump_full.txt:291338:        0x0022 line=897
+  dexdump_full.txt:291339:        0x0029 line=894
+  dexdump_full.txt:291340:        0x002c line=901
+  dexdump_full.txt:291341:        0x002f line=891
+  dexdump_full.txt:291342:        0x0032 line=892
+  dexdump_full.txt:291343:      locals        :
+> dexdump_full.txt:291344:    #16              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291345:      name          : 'paperCutAll'
+  dexdump_full.txt:291346:      type          : '()V'
+  dexdump_full.txt:291347:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291348:      code          -
+  dexdump_full.txt:291349:      registers     : 5
+  dexdump_full.txt:291350:      ins           : 0
+  dexdump_full.txt:291351:      outs          : 3
+  dexdump_full.txt:291352:      insns size    : 58 16-bit code units
+  dexdump_full.txt:291353:      catches       : 3
+  dexdump_full.txt:291354:        0x0003 - 0x0015
+  dexdump_full.txt:291355:          Ljava/lang/IllegalAccessException; -> 0x002e
+  dexdump_full.txt:291356:          Ljava/lang/reflect/InvocationTargetException; -> 0x0028
+  dexdump_full.txt:291357:          Ljava/lang/NoSuchMethodException; -> 0x001e
+  dexdump_full.txt:291358:          Ljava/lang/NullPointerException; -> 0x0018
+  dexdump_full.txt:291359:          <any> -> 0x0016
+  dexdump_full.txt:291360:        0x0018 - 0x002c
+  dexdump_full.txt:291361:          <any> -> 0x0016
+  dexdump_full.txt:291362:        0x002f - 0x0038
+  dexdump_full.txt:291363:          <any> -> 0x0016
+  dexdump_full.txt:291364:      positions     :
+  dexdump_full.txt:291365:        0x0003 line=905
+  dexdump_full.txt:291366:        0x000e line=906
+  dexdump_full.txt:291367:        0x0018 line=916
+  dexdump_full.txt:291368:        0x001f line=913
+  dexdump_full.txt:291369:        0x0022 line=914
+  dexdump_full.txt:291370:        0x0029 line=911
+  dexdump_full.txt:291371:        0x002c line=918
+  dexdump_full.txt:291372:        0x002f line=908
+  dexdump_full.txt:291373:        0x0032 line=909
+  dexdump_full.txt:291374:      locals        :
+> dexdump_full.txt:291375:    #17              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291376:      name          : 'printLogo'
+  dexdump_full.txt:291377:      type          : '(II[C)V'
+  dexdump_full.txt:291378:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291379:      code          -
+  dexdump_full.txt:291380:      registers     : 12
+  dexdump_full.txt:291381:      ins           : 3
+  dexdump_full.txt:291382:      outs          : 3
+  dexdump_full.txt:291383:      insns size    : 87 16-bit code units
+  dexdump_full.txt:291384:      catches       : 3
+  dexdump_full.txt:291385:        0x0003 - 0x0032
+  dexdump_full.txt:291386:          Ljava/lang/IllegalAccessException; -> 0x004b
+  dexdump_full.txt:291387:          Ljava/lang/reflect/InvocationTargetException; -> 0x0045
+  dexdump_full.txt:291388:          Ljava/lang/NoSuchMethodException; -> 0x003b
+  dexdump_full.txt:291389:          Ljava/lang/NullPointerException; -> 0x0035
+  dexdump_full.txt:291390:          <any> -> 0x0033
+  dexdump_full.txt:291391:        0x0035 - 0x0049
+  dexdump_full.txt:291392:          <any> -> 0x0033
+  dexdump_full.txt:291393:        0x004c - 0x0055
+  dexdump_full.txt:291394:          <any> -> 0x0033
+  dexdump_full.txt:291395:      positions     :
+  dexdump_full.txt:291396:        0x0003 line=782
+  dexdump_full.txt:291397:        0x001d line=783
+  dexdump_full.txt:291398:        0x0035 line=793
+  dexdump_full.txt:291399:        0x003c line=790
+  dexdump_full.txt:291400:        0x003f line=791
+  dexdump_full.txt:291401:        0x0046 line=788
+  dexdump_full.txt:291402:        0x0049 line=795
+  dexdump_full.txt:291403:        0x004c line=785
+  dexdump_full.txt:291404:        0x004f line=786
+  dexdump_full.txt:291405:      locals        :
+  dexdump_full.txt:291406:        0x0000 - 0x0057 reg=9 (null) I
+  dexdump_full.txt:291407:        0x0000 - 0x0057 reg=10 (null) I
+  dexdump_full.txt:291408:        0x0000 - 0x0057 reg=11 (null) [C
+> dexdump_full.txt:291409:    #18              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291410:      name          : 'printLogo'
+  dexdump_full.txt:291411:      type          : '(Landroid/graphics/Bitmap;)V'
+  dexdump_full.txt:291412:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291413:      code          -
+  dexdump_full.txt:291414:      registers     : 8
+  dexdump_full.txt:291415:      ins           : 1
+  dexdump_full.txt:291416:      outs          : 3
+  dexdump_full.txt:291417:      insns size    : 65 16-bit code units
+  dexdump_full.txt:291418:      catches       : 3
+  dexdump_full.txt:291419:        0x0003 - 0x001c
+  dexdump_full.txt:291420:          Ljava/lang/IllegalAccessException; -> 0x0035
+  dexdump_full.txt:291421:          Ljava/lang/reflect/InvocationTargetException; -> 0x002f
+  dexdump_full.txt:291422:          Ljava/lang/NoSuchMethodException; -> 0x0025
+  dexdump_full.txt:291423:          Ljava/lang/NullPointerException; -> 0x001f
+  dexdump_full.txt:291424:          <any> -> 0x001d
+  dexdump_full.txt:291425:        0x001f - 0x0033
+  dexdump_full.txt:291426:          <any> -> 0x001d
+  dexdump_full.txt:291427:        0x0036 - 0x003f
+  dexdump_full.txt:291428:          <any> -> 0x001d
+  dexdump_full.txt:291429:      positions     :
+  dexdump_full.txt:291430:        0x0003 line=804
+  dexdump_full.txt:291431:        0x0013 line=805
+  dexdump_full.txt:291432:        0x001f line=815
+  dexdump_full.txt:291433:        0x0026 line=812
+  dexdump_full.txt:291434:        0x0029 line=813
+  dexdump_full.txt:291435:        0x0030 line=810
+  dexdump_full.txt:291436:        0x0033 line=817
+  dexdump_full.txt:291437:        0x0036 line=807
+  dexdump_full.txt:291438:        0x0039 line=808
+  dexdump_full.txt:291439:      locals        :
+  dexdump_full.txt:291440:        0x0000 - 0x0041 reg=7 (null) Landroid/graphics/Bitmap;
+> dexdump_full.txt:291441:    #19              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291442:      name          : 'printLogo'
+  dexdump_full.txt:291443:      type          : '(Landroid/graphics/Bitmap;I)V'
+  dexdump_full.txt:291444:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291445:      code          -
+  dexdump_full.txt:291446:      registers     : 10
+  dexdump_full.txt:291447:      ins           : 2
+  dexdump_full.txt:291448:      outs          : 3
+  dexdump_full.txt:291449:      insns size    : 76 16-bit code units
+  dexdump_full.txt:291450:      catches       : 3
+  dexdump_full.txt:291451:        0x0003 - 0x0027
+  dexdump_full.txt:291452:          Ljava/lang/IllegalAccessException; -> 0x0040
+  dexdump_full.txt:291453:          Ljava/lang/reflect/InvocationTargetException; -> 0x003a
+  dexdump_full.txt:291454:          Ljava/lang/NoSuchMethodException; -> 0x0030
+  dexdump_full.txt:291455:          Ljava/lang/NullPointerException; -> 0x002a
+  dexdump_full.txt:291456:          <any> -> 0x0028
+  dexdump_full.txt:291457:        0x002a - 0x003e
+  dexdump_full.txt:291458:          <any> -> 0x0028
+  dexdump_full.txt:291459:        0x0041 - 0x004a
+  dexdump_full.txt:291460:          <any> -> 0x0028
+  dexdump_full.txt:291461:      positions     :
+  dexdump_full.txt:291462:        0x0003 line=844
+  dexdump_full.txt:291463:        0x0018 line=845
+  dexdump_full.txt:291464:        0x002a line=855
+  dexdump_full.txt:291465:        0x0031 line=852
+  dexdump_full.txt:291466:        0x0034 line=853
+  dexdump_full.txt:291467:        0x003b line=850
+  dexdump_full.txt:291468:        0x003e line=857
+  dexdump_full.txt:291469:        0x0041 line=847
+  dexdump_full.txt:291470:        0x0044 line=848
+  dexdump_full.txt:291471:      locals        :
+  dexdump_full.txt:291472:        0x0000 - 0x004c reg=8 (null) Landroid/graphics/Bitmap;
+  dexdump_full.txt:291473:        0x0000 - 0x004c reg=9 (null) I
+> dexdump_full.txt:291474:    #20              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291475:      name          : 'printLogo581Left'
+  dexdump_full.txt:291476:      type          : '(ILandroid/graphics/Bitmap;)V'
+  dexdump_full.txt:291477:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291478:      code          -
+  dexdump_full.txt:291479:      registers     : 10
+  dexdump_full.txt:291480:      ins           : 2
+  dexdump_full.txt:291481:      outs          : 3
+  dexdump_full.txt:291482:      insns size    : 76 16-bit code units
+  dexdump_full.txt:291483:      catches       : 3
+  dexdump_full.txt:291484:        0x0003 - 0x0027
+  dexdump_full.txt:291485:          Ljava/lang/IllegalAccessException; -> 0x0040
+  dexdump_full.txt:291486:          Ljava/lang/reflect/InvocationTargetException; -> 0x003a
+  dexdump_full.txt:291487:          Ljava/lang/NoSuchMethodException; -> 0x0030
+  dexdump_full.txt:291488:          Ljava/lang/NullPointerException; -> 0x002a
+  dexdump_full.txt:291489:          <any> -> 0x0028
+  dexdump_full.txt:291490:        0x002a - 0x003e
+  dexdump_full.txt:291491:          <any> -> 0x0028
+  dexdump_full.txt:291492:        0x0041 - 0x004a
+  dexdump_full.txt:291493:          <any> -> 0x0028
+  dexdump_full.txt:291494:      positions     :
+  dexdump_full.txt:291495:        0x0003 line=747
+  dexdump_full.txt:291496:        0x0018 line=748
+  dexdump_full.txt:291497:        0x002a line=758
+  dexdump_full.txt:291498:        0x0031 line=755
+  dexdump_full.txt:291499:        0x0034 line=756
+  dexdump_full.txt:291500:        0x003b line=753
+  dexdump_full.txt:291501:        0x003e line=760
+  dexdump_full.txt:291502:        0x0041 line=750
+  dexdump_full.txt:291503:        0x0044 line=751
+  dexdump_full.txt:291504:      locals        :
+  dexdump_full.txt:291505:        0x0000 - 0x004c reg=8 (null) I
+  dexdump_full.txt:291506:        0x0000 - 0x004c reg=9 (null) Landroid/graphics/Bitmap;
+> dexdump_full.txt:291507:    #21              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291508:      name          : 'printString'
+  dexdump_full.txt:291509:      type          : '()V'
+  dexdump_full.txt:291510:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291511:      code          -
+  dexdump_full.txt:291512:      registers     : 5
+  dexdump_full.txt:291513:      ins           : 0
+  dexdump_full.txt:291514:      outs          : 3
+  dexdump_full.txt:291515:      insns size    : 58 16-bit code units
+  dexdump_full.txt:291516:      catches       : 3
+  dexdump_full.txt:291517:        0x0003 - 0x0015
+  dexdump_full.txt:291518:          Ljava/lang/IllegalAccessException; -> 0x002e
+  dexdump_full.txt:291519:          Ljava/lang/reflect/InvocationTargetException; -> 0x0028
+  dexdump_full.txt:291520:          Ljava/lang/NoSuchMethodException; -> 0x001e
+  dexdump_full.txt:291521:          Ljava/lang/NullPointerException; -> 0x0018
+  dexdump_full.txt:291522:          <any> -> 0x0016
+  dexdump_full.txt:291523:        0x0018 - 0x002c
+  dexdump_full.txt:291524:          <any> -> 0x0016
+  dexdump_full.txt:291525:        0x002f - 0x0038
+  dexdump_full.txt:291526:          <any> -> 0x0016
+  dexdump_full.txt:291527:      positions     :
+  dexdump_full.txt:291528:        0x0003 line=622
+  dexdump_full.txt:291529:        0x000e line=623
+  dexdump_full.txt:291530:        0x0018 line=633
+  dexdump_full.txt:291531:        0x001f line=630
+  dexdump_full.txt:291532:        0x0022 line=631
+  dexdump_full.txt:291533:        0x0029 line=628
+  dexdump_full.txt:291534:        0x002c line=635
+  dexdump_full.txt:291535:        0x002f line=625
+  dexdump_full.txt:291536:        0x0032 line=626
+  dexdump_full.txt:291537:      locals        :
+> dexdump_full.txt:291538:    #22              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291539:      name          : 'printString'
+  dexdump_full.txt:291540:      type          : '(Ljava/lang/String;)V'
+  dexdump_full.txt:291541:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291542:      code          -
+  dexdump_full.txt:291543:      registers     : 8
+  dexdump_full.txt:291544:      ins           : 1
+  dexdump_full.txt:291545:      outs          : 3
+  dexdump_full.txt:291546:      insns size    : 65 16-bit code units
+  dexdump_full.txt:291547:      catches       : 3
+  dexdump_full.txt:291548:        0x0003 - 0x001c
+  dexdump_full.txt:291549:          Ljava/lang/IllegalAccessException; -> 0x0035
+  dexdump_full.txt:291550:          Ljava/lang/reflect/InvocationTargetException; -> 0x002f
+  dexdump_full.txt:291551:          Ljava/lang/NoSuchMethodException; -> 0x0025
+  dexdump_full.txt:291552:          Ljava/lang/NullPointerException; -> 0x001f
+  dexdump_full.txt:291553:          <any> -> 0x001d
+  dexdump_full.txt:291554:        0x001f - 0x0033
+  dexdump_full.txt:291555:          <any> -> 0x001d
+  dexdump_full.txt:291556:        0x0036 - 0x003f
+  dexdump_full.txt:291557:          <any> -> 0x001d
+  dexdump_full.txt:291558:      positions     :
+  dexdump_full.txt:291559:        0x0003 line=651
+  dexdump_full.txt:291560:        0x0013 line=652
+  dexdump_full.txt:291561:        0x001f line=662
+  dexdump_full.txt:291562:        0x0026 line=659
+  dexdump_full.txt:291563:        0x0029 line=660
+  dexdump_full.txt:291564:        0x0030 line=657
+  dexdump_full.txt:291565:        0x0033 line=664
+  dexdump_full.txt:291566:        0x0036 line=654
+  dexdump_full.txt:291567:        0x0039 line=655
+  dexdump_full.txt:291568:      locals        :
+  dexdump_full.txt:291569:        0x0000 - 0x0041 reg=7 (null) Ljava/lang/String;
+> dexdump_full.txt:291570:    #23              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291571:      name          : 'printStringAndWalk'
+  dexdump_full.txt:291572:      type          : '(III)V'
+  dexdump_full.txt:291573:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291574:      code          -
+  dexdump_full.txt:291575:      registers     : 12
+  dexdump_full.txt:291576:      ins           : 3
+  dexdump_full.txt:291577:      outs          : 3
+  dexdump_full.txt:291578:      insns size    : 91 16-bit code units
+  dexdump_full.txt:291579:      catches       : 3
+  dexdump_full.txt:291580:        0x0003 - 0x0036
+  dexdump_full.txt:291581:          Ljava/lang/IllegalAccessException; -> 0x004f
+  dexdump_full.txt:291582:          Ljava/lang/reflect/InvocationTargetException; -> 0x0049
+  dexdump_full.txt:291583:          Ljava/lang/NoSuchMethodException; -> 0x003f
+  dexdump_full.txt:291584:          Ljava/lang/NullPointerException; -> 0x0039
+  dexdump_full.txt:291585:          <any> -> 0x0037
+  dexdump_full.txt:291586:        0x0039 - 0x004d
+  dexdump_full.txt:291587:          <any> -> 0x0037
+  dexdump_full.txt:291588:        0x0050 - 0x0059
+  dexdump_full.txt:291589:          <any> -> 0x0037
+  dexdump_full.txt:291590:      positions     :
+  dexdump_full.txt:291591:        0x0003 line=686
+  dexdump_full.txt:291592:        0x001d line=687
+  dexdump_full.txt:291593:        0x0039 line=697
+  dexdump_full.txt:291594:        0x0040 line=694
+  dexdump_full.txt:291595:        0x0043 line=695
+  dexdump_full.txt:291596:        0x004a line=692
+  dexdump_full.txt:291597:        0x004d line=699
+  dexdump_full.txt:291598:        0x0050 line=689
+  dexdump_full.txt:291599:        0x0053 line=690
+  dexdump_full.txt:291600:      locals        :
+  dexdump_full.txt:291601:        0x0000 - 0x005b reg=9 (null) I
+  dexdump_full.txt:291602:        0x0000 - 0x005b reg=10 (null) I
+  dexdump_full.txt:291603:        0x0000 - 0x005b reg=11 (null) I
+> dexdump_full.txt:291604:    #24              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291605:      name          : 'printStringPersian'
+  dexdump_full.txt:291606:      type          : '()V'
+  dexdump_full.txt:291607:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291608:      code          -
+  dexdump_full.txt:291609:      registers     : 5
+  dexdump_full.txt:291610:      ins           : 0
+  dexdump_full.txt:291611:      outs          : 3
+  dexdump_full.txt:291612:      insns size    : 58 16-bit code units
+  dexdump_full.txt:291613:      catches       : 3
+  dexdump_full.txt:291614:        0x0003 - 0x0015
+  dexdump_full.txt:291615:          Ljava/lang/IllegalAccessException; -> 0x002e
+  dexdump_full.txt:291616:          Ljava/lang/reflect/InvocationTargetException; -> 0x0028
+  dexdump_full.txt:291617:          Ljava/lang/NoSuchMethodException; -> 0x001e
+  dexdump_full.txt:291618:          Ljava/lang/NullPointerException; -> 0x0018
+  dexdump_full.txt:291619:          <any> -> 0x0016
+  dexdump_full.txt:291620:        0x0018 - 0x002c
+  dexdump_full.txt:291621:          <any> -> 0x0016
+  dexdump_full.txt:291622:        0x002f - 0x0038
+  dexdump_full.txt:291623:          <any> -> 0x0016
+  dexdump_full.txt:291624:      positions     :
+  dexdump_full.txt:291625:        0x0003 line=669
+  dexdump_full.txt:291626:        0x000e line=670
+  dexdump_full.txt:291627:        0x0018 line=680
+  dexdump_full.txt:291628:        0x001f line=677
+  dexdump_full.txt:291629:        0x0022 line=678
+  dexdump_full.txt:291630:        0x0029 line=675
+  dexdump_full.txt:291631:        0x002c line=682
+  dexdump_full.txt:291632:        0x002f line=672
+  dexdump_full.txt:291633:        0x0032 line=673
+  dexdump_full.txt:291634:      locals        :
+> dexdump_full.txt:291635:    #25              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291636:      name          : 'printerPowerOff'
+  dexdump_full.txt:291637:      type          : '()V'
+  dexdump_full.txt:291638:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291639:      code          -
+  dexdump_full.txt:291640:      registers     : 5
+  dexdump_full.txt:291641:      ins           : 0
+  dexdump_full.txt:291642:      outs          : 3
+  dexdump_full.txt:291643:      insns size    : 58 16-bit code units
+  dexdump_full.txt:291644:      catches       : 3
+  dexdump_full.txt:291645:        0x0003 - 0x0015
+  dexdump_full.txt:291646:          Ljava/lang/IllegalAccessException; -> 0x002e
+  dexdump_full.txt:291647:          Ljava/lang/reflect/InvocationTargetException; -> 0x0028
+  dexdump_full.txt:291648:          Ljava/lang/NoSuchMethodException; -> 0x001e
+  dexdump_full.txt:291649:          Ljava/lang/NullPointerException; -> 0x0018
+  dexdump_full.txt:291650:          <any> -> 0x0016
+  dexdump_full.txt:291651:        0x0018 - 0x002c
+  dexdump_full.txt:291652:          <any> -> 0x0016
+  dexdump_full.txt:291653:        0x002f - 0x0038
+  dexdump_full.txt:291654:          <any> -> 0x0016
+  dexdump_full.txt:291655:      positions     :
+  dexdump_full.txt:291656:        0x0003 line=389
+  dexdump_full.txt:291657:        0x000e line=390
+  dexdump_full.txt:291658:        0x0018 line=400
+  dexdump_full.txt:291659:        0x001f line=397
+  dexdump_full.txt:291660:        0x0022 line=398
+  dexdump_full.txt:291661:        0x0029 line=395
+  dexdump_full.txt:291662:        0x002c line=402
+  dexdump_full.txt:291663:        0x002f line=392
+  dexdump_full.txt:291664:        0x0032 line=393
+  dexdump_full.txt:291665:      locals        :
+> dexdump_full.txt:291666:    #26              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291667:      name          : 'printerPowerOn'
+  dexdump_full.txt:291668:      type          : '()V'
+  dexdump_full.txt:291669:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291670:      code          -
+  dexdump_full.txt:291671:      registers     : 5
+  dexdump_full.txt:291672:      ins           : 0
+  dexdump_full.txt:291673:      outs          : 3
+  dexdump_full.txt:291674:      insns size    : 58 16-bit code units
+  dexdump_full.txt:291675:      catches       : 3
+  dexdump_full.txt:291676:        0x0003 - 0x0015
+  dexdump_full.txt:291677:          Ljava/lang/IllegalAccessException; -> 0x002e
+  dexdump_full.txt:291678:          Ljava/lang/reflect/InvocationTargetException; -> 0x0028
+  dexdump_full.txt:291679:          Ljava/lang/NoSuchMethodException; -> 0x001e
+  dexdump_full.txt:291680:          Ljava/lang/NullPointerException; -> 0x0018
+  dexdump_full.txt:291681:          <any> -> 0x0016
+  dexdump_full.txt:291682:        0x0018 - 0x002c
+  dexdump_full.txt:291683:          <any> -> 0x0016
+  dexdump_full.txt:291684:        0x002f - 0x0038
+  dexdump_full.txt:291685:          <any> -> 0x0016
+  dexdump_full.txt:291686:      positions     :
+  dexdump_full.txt:291687:        0x0003 line=229
+  dexdump_full.txt:291688:        0x000e line=230
+  dexdump_full.txt:291689:        0x0018 line=240
+  dexdump_full.txt:291690:        0x001f line=237
+  dexdump_full.txt:291691:        0x0022 line=238
+  dexdump_full.txt:291692:        0x0029 line=235
+  dexdump_full.txt:291693:        0x002c line=242
+  dexdump_full.txt:291694:        0x002f line=232
+  dexdump_full.txt:291695:        0x0032 line=233
+  dexdump_full.txt:291696:      locals        :
+> dexdump_full.txt:291697:    #27              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291698:      name          : 'reset'
+  dexdump_full.txt:291699:      type          : '()V'
+  dexdump_full.txt:291700:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291701:      code          -
+  dexdump_full.txt:291702:      registers     : 5
+  dexdump_full.txt:291703:      ins           : 0
+  dexdump_full.txt:291704:      outs          : 3
+  dexdump_full.txt:291705:      insns size    : 58 16-bit code units
+  dexdump_full.txt:291706:      catches       : 3
+  dexdump_full.txt:291707:        0x0003 - 0x0015
+  dexdump_full.txt:291708:          Ljava/lang/IllegalAccessException; -> 0x002e
+  dexdump_full.txt:291709:          Ljava/lang/reflect/InvocationTargetException; -> 0x0028
+  dexdump_full.txt:291710:          Ljava/lang/NoSuchMethodException; -> 0x001e
+  dexdump_full.txt:291711:          Ljava/lang/NullPointerException; -> 0x0018
+  dexdump_full.txt:291712:          <any> -> 0x0016
+  dexdump_full.txt:291713:        0x0018 - 0x002c
+  dexdump_full.txt:291714:          <any> -> 0x0016
+  dexdump_full.txt:291715:        0x002f - 0x0038
+  dexdump_full.txt:291716:          <any> -> 0x0016
+  dexdump_full.txt:291717:      positions     :
+  dexdump_full.txt:291718:        0x0003 line=250
+  dexdump_full.txt:291719:        0x000e line=251
+  dexdump_full.txt:291720:        0x0018 line=261
+  dexdump_full.txt:291721:        0x001f line=258
+  dexdump_full.txt:291722:        0x0022 line=259
+  dexdump_full.txt:291723:        0x0029 line=256
+  dexdump_full.txt:291724:        0x002c line=263
+  dexdump_full.txt:291725:        0x002f line=253
+  dexdump_full.txt:291726:        0x0032 line=254
+  dexdump_full.txt:291727:      locals        :
+> dexdump_full.txt:291728:    #28              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291729:      name          : 'searchMark'
+  dexdump_full.txt:291730:      type          : '(II)V'
+  dexdump_full.txt:291731:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291732:      code          -
+  dexdump_full.txt:291733:      registers     : 10
+  dexdump_full.txt:291734:      ins           : 2
+  dexdump_full.txt:291735:      outs          : 3
+  dexdump_full.txt:291736:      insns size    : 80 16-bit code units
+  dexdump_full.txt:291737:      catches       : 3
+  dexdump_full.txt:291738:        0x0003 - 0x002b
+  dexdump_full.txt:291739:          Ljava/lang/IllegalAccessException; -> 0x0044
+  dexdump_full.txt:291740:          Ljava/lang/reflect/InvocationTargetException; -> 0x003e
+  dexdump_full.txt:291741:          Ljava/lang/NoSuchMethodException; -> 0x0034
+  dexdump_full.txt:291742:          Ljava/lang/NullPointerException; -> 0x002e
+  dexdump_full.txt:291743:          <any> -> 0x002c
+  dexdump_full.txt:291744:        0x002e - 0x0042
+  dexdump_full.txt:291745:          <any> -> 0x002c
+  dexdump_full.txt:291746:        0x0045 - 0x004e
+  dexdump_full.txt:291747:          <any> -> 0x002c
+  dexdump_full.txt:291748:      positions     :
+  dexdump_full.txt:291749:        0x0003 line=867
+  dexdump_full.txt:291750:        0x0018 line=868
+  dexdump_full.txt:291751:        0x002e line=878
+  dexdump_full.txt:291752:        0x0035 line=875
+  dexdump_full.txt:291753:        0x0038 line=876
+  dexdump_full.txt:291754:        0x003f line=873
+  dexdump_full.txt:291755:        0x0042 line=880
+  dexdump_full.txt:291756:        0x0045 line=870
+  dexdump_full.txt:291757:        0x0048 line=871
+  dexdump_full.txt:291758:      locals        :
+  dexdump_full.txt:291759:        0x0000 - 0x0050 reg=8 (null) I
+  dexdump_full.txt:291760:        0x0000 - 0x0050 reg=9 (null) I
+> dexdump_full.txt:291761:    #29              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291762:      name          : 'sendCommand'
+  dexdump_full.txt:291763:      type          : '(Ljava/lang/String;)V'
+  dexdump_full.txt:291764:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291765:      code          -
+  dexdump_full.txt:291766:      registers     : 8
+  dexdump_full.txt:291767:      ins           : 1
+  dexdump_full.txt:291768:      outs          : 3
+  dexdump_full.txt:291769:      insns size    : 65 16-bit code units
+  dexdump_full.txt:291770:      catches       : 3
+  dexdump_full.txt:291771:        0x0003 - 0x001c
+  dexdump_full.txt:291772:          Ljava/lang/IllegalAccessException; -> 0x0035
+  dexdump_full.txt:291773:          Ljava/lang/reflect/InvocationTargetException; -> 0x002f
+  dexdump_full.txt:291774:          Ljava/lang/NoSuchMethodException; -> 0x0025
+  dexdump_full.txt:291775:          Ljava/lang/NullPointerException; -> 0x001f
+  dexdump_full.txt:291776:          <any> -> 0x001d
+  dexdump_full.txt:291777:        0x001f - 0x0033
+  dexdump_full.txt:291778:          <any> -> 0x001d
+  dexdump_full.txt:291779:        0x0036 - 0x003f
+  dexdump_full.txt:291780:          <any> -> 0x001d
+  dexdump_full.txt:291781:      positions     :
+  dexdump_full.txt:291782:        0x0003 line=922
+  dexdump_full.txt:291783:        0x0013 line=923
+  dexdump_full.txt:291784:        0x001f line=933
+  dexdump_full.txt:291785:        0x0026 line=930
+  dexdump_full.txt:291786:        0x0029 line=931
+  dexdump_full.txt:291787:        0x0030 line=928
+  dexdump_full.txt:291788:        0x0033 line=935
+  dexdump_full.txt:291789:        0x0036 line=925
+  dexdump_full.txt:291790:        0x0039 line=926
+  dexdump_full.txt:291791:      locals        :
+  dexdump_full.txt:291792:        0x0000 - 0x0041 reg=7 (null) Ljava/lang/String;
+> dexdump_full.txt:291793:    #30              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291794:      name          : 'sendCommand'
+  dexdump_full.txt:291795:      type          : '([BI)V'
+  dexdump_full.txt:291796:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291797:      code          -
+  dexdump_full.txt:291798:      registers     : 10
+  dexdump_full.txt:291799:      ins           : 2
+  dexdump_full.txt:291800:      outs          : 3
+  dexdump_full.txt:291801:      insns size    : 76 16-bit code units
+  dexdump_full.txt:291802:      catches       : 3
+  dexdump_full.txt:291803:        0x0003 - 0x0027
+  dexdump_full.txt:291804:          Ljava/lang/IllegalAccessException; -> 0x0040
+  dexdump_full.txt:291805:          Ljava/lang/reflect/InvocationTargetException; -> 0x003a
+  dexdump_full.txt:291806:          Ljava/lang/NoSuchMethodException; -> 0x0030
+  dexdump_full.txt:291807:          Ljava/lang/NullPointerException; -> 0x002a
+  dexdump_full.txt:291808:          <any> -> 0x0028
+  dexdump_full.txt:291809:        0x002a - 0x003e
+  dexdump_full.txt:291810:          <any> -> 0x0028
+  dexdump_full.txt:291811:        0x0041 - 0x004a
+  dexdump_full.txt:291812:          <any> -> 0x0028
+  dexdump_full.txt:291813:      positions     :
+  dexdump_full.txt:291814:        0x0003 line=945
+  dexdump_full.txt:291815:        0x0018 line=946
+  dexdump_full.txt:291816:        0x002a line=956
+  dexdump_full.txt:291817:        0x0031 line=953
+  dexdump_full.txt:291818:        0x0034 line=954
+  dexdump_full.txt:291819:        0x003b line=951
+  dexdump_full.txt:291820:        0x003e line=958
+  dexdump_full.txt:291821:        0x0041 line=948
+  dexdump_full.txt:291822:        0x0044 line=949
+  dexdump_full.txt:291823:      locals        :
+  dexdump_full.txt:291824:        0x0000 - 0x004c reg=8 (null) [B
+  dexdump_full.txt:291825:        0x0000 - 0x004c reg=9 (null) I
+> dexdump_full.txt:291826:    #31              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291827:      name          : 'setAlgin'
+  dexdump_full.txt:291828:      type          : '(I)V'
+  dexdump_full.txt:291829:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291830:      code          -
+  dexdump_full.txt:291831:      registers     : 8
+  dexdump_full.txt:291832:      ins           : 1
+  dexdump_full.txt:291833:      outs          : 3
+  dexdump_full.txt:291834:      insns size    : 69 16-bit code units
+  dexdump_full.txt:291835:      catches       : 3
+  dexdump_full.txt:291836:        0x0003 - 0x0020
+  dexdump_full.txt:291837:          Ljava/lang/IllegalAccessException; -> 0x0039
+  dexdump_full.txt:291838:          Ljava/lang/reflect/InvocationTargetException; -> 0x0033
+  dexdump_full.txt:291839:          Ljava/lang/NoSuchMethodException; -> 0x0029
+  dexdump_full.txt:291840:          Ljava/lang/NullPointerException; -> 0x0023
+  dexdump_full.txt:291841:          <any> -> 0x0021
+  dexdump_full.txt:291842:        0x0023 - 0x0037
+  dexdump_full.txt:291843:          <any> -> 0x0021
+  dexdump_full.txt:291844:        0x003a - 0x0043
+  dexdump_full.txt:291845:          <any> -> 0x0021
+  dexdump_full.txt:291846:      positions     :
+  dexdump_full.txt:291847:        0x0003 line=545
+  dexdump_full.txt:291848:        0x0013 line=546
+  dexdump_full.txt:291849:        0x0023 line=556
+  dexdump_full.txt:291850:        0x002a line=553
+  dexdump_full.txt:291851:        0x002d line=554
+  dexdump_full.txt:291852:        0x0034 line=551
+  dexdump_full.txt:291853:        0x0037 line=558
+  dexdump_full.txt:291854:        0x003a line=548
+  dexdump_full.txt:291855:        0x003d line=549
+  dexdump_full.txt:291856:      locals        :
+  dexdump_full.txt:291857:        0x0000 - 0x0045 reg=7 (null) I
+> dexdump_full.txt:291858:    #32              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291859:      name          : 'setBold'
+  dexdump_full.txt:291860:      type          : '(Z)V'
+  dexdump_full.txt:291861:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291862:      code          -
+  dexdump_full.txt:291863:      registers     : 8
+  dexdump_full.txt:291864:      ins           : 1
+  dexdump_full.txt:291865:      outs          : 3
+  dexdump_full.txt:291866:      insns size    : 69 16-bit code units
+  dexdump_full.txt:291867:      catches       : 3
+  dexdump_full.txt:291868:        0x0003 - 0x0020
+  dexdump_full.txt:291869:          Ljava/lang/IllegalAccessException; -> 0x0039
+  dexdump_full.txt:291870:          Ljava/lang/reflect/InvocationTargetException; -> 0x0033
+  dexdump_full.txt:291871:          Ljava/lang/NoSuchMethodException; -> 0x0029
+  dexdump_full.txt:291872:          Ljava/lang/NullPointerException; -> 0x0023
+  dexdump_full.txt:291873:          <any> -> 0x0021
+  dexdump_full.txt:291874:        0x0023 - 0x0037
+  dexdump_full.txt:291875:          <any> -> 0x0021
+  dexdump_full.txt:291876:        0x003a - 0x0043
+  dexdump_full.txt:291877:          <any> -> 0x0021
+  dexdump_full.txt:291878:      positions     :
+  dexdump_full.txt:291879:        0x0003 line=962
+  dexdump_full.txt:291880:        0x0013 line=963
+  dexdump_full.txt:291881:        0x0023 line=973
+  dexdump_full.txt:291882:        0x002a line=970
+  dexdump_full.txt:291883:        0x002d line=971
+  dexdump_full.txt:291884:        0x0034 line=968
+  dexdump_full.txt:291885:        0x0037 line=976
+  dexdump_full.txt:291886:        0x003a line=965
+  dexdump_full.txt:291887:        0x003d line=966
+  dexdump_full.txt:291888:      locals        :
+  dexdump_full.txt:291889:        0x0000 - 0x0045 reg=7 (null) Z
+> dexdump_full.txt:291890:    #33              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291891:      name          : 'setFontSize'
+  dexdump_full.txt:291892:      type          : '(I)V'
+  dexdump_full.txt:291893:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291894:      code          -
+  dexdump_full.txt:291895:      registers     : 8
+  dexdump_full.txt:291896:      ins           : 1
+  dexdump_full.txt:291897:      outs          : 3
+  dexdump_full.txt:291898:      insns size    : 69 16-bit code units
+  dexdump_full.txt:291899:      catches       : 3
+  dexdump_full.txt:291900:        0x0003 - 0x0020
+  dexdump_full.txt:291901:          Ljava/lang/IllegalAccessException; -> 0x0039
+  dexdump_full.txt:291902:          Ljava/lang/reflect/InvocationTargetException; -> 0x0033
+  dexdump_full.txt:291903:          Ljava/lang/NoSuchMethodException; -> 0x0029
+  dexdump_full.txt:291904:          Ljava/lang/NullPointerException; -> 0x0023
+  dexdump_full.txt:291905:          <any> -> 0x0021
+  dexdump_full.txt:291906:        0x0023 - 0x0037
+  dexdump_full.txt:291907:          <any> -> 0x0021
+  dexdump_full.txt:291908:        0x003a - 0x0043
+  dexdump_full.txt:291909:          <any> -> 0x0021
+  dexdump_full.txt:291910:      positions     :
+  dexdump_full.txt:291911:        0x0003 line=464
+  dexdump_full.txt:291912:        0x0013 line=465
+  dexdump_full.txt:291913:        0x0023 line=475
+  dexdump_full.txt:291914:        0x002a line=472
+  dexdump_full.txt:291915:        0x002d line=473
+  dexdump_full.txt:291916:        0x0034 line=470
+  dexdump_full.txt:291917:        0x0037 line=477
+  dexdump_full.txt:291918:        0x003a line=467
+  dexdump_full.txt:291919:        0x003d line=468
+  dexdump_full.txt:291920:      locals        :
+  dexdump_full.txt:291921:        0x0000 - 0x0045 reg=7 (null) I
+> dexdump_full.txt:291922:    #34              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291923:      name          : 'setGray'
+  dexdump_full.txt:291924:      type          : '(I)V'
+  dexdump_full.txt:291925:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291926:      code          -
+  dexdump_full.txt:291927:      registers     : 8
+  dexdump_full.txt:291928:      ins           : 1
+  dexdump_full.txt:291929:      outs          : 3
+  dexdump_full.txt:291930:      insns size    : 69 16-bit code units
+  dexdump_full.txt:291931:      catches       : 3
+  dexdump_full.txt:291932:        0x0003 - 0x0020
+  dexdump_full.txt:291933:          Ljava/lang/IllegalAccessException; -> 0x0039
+  dexdump_full.txt:291934:          Ljava/lang/reflect/InvocationTargetException; -> 0x0033
+  dexdump_full.txt:291935:          Ljava/lang/NoSuchMethodException; -> 0x0029
+  dexdump_full.txt:291936:          Ljava/lang/NullPointerException; -> 0x0023
+  dexdump_full.txt:291937:          <any> -> 0x0021
+  dexdump_full.txt:291938:        0x0023 - 0x0037
+  dexdump_full.txt:291939:          <any> -> 0x0021
+  dexdump_full.txt:291940:        0x003a - 0x0043
+  dexdump_full.txt:291941:          <any> -> 0x0021
+  dexdump_full.txt:291942:      positions     :
+  dexdump_full.txt:291943:        0x0003 line=520
+  dexdump_full.txt:291944:        0x0013 line=521
+  dexdump_full.txt:291945:        0x0023 line=531
+  dexdump_full.txt:291946:        0x002a line=528
+  dexdump_full.txt:291947:        0x002d line=529
+  dexdump_full.txt:291948:        0x0034 line=526
+  dexdump_full.txt:291949:        0x0037 line=533
+  dexdump_full.txt:291950:        0x003a line=523
+  dexdump_full.txt:291951:        0x003d line=524
+  dexdump_full.txt:291952:      locals        :
+  dexdump_full.txt:291953:        0x0000 - 0x0045 reg=7 (null) I
+> dexdump_full.txt:291954:    #35              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291955:      name          : 'setHighlight'
+  dexdump_full.txt:291956:      type          : '(Z)V'
+  dexdump_full.txt:291957:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:291958:      code          -
+  dexdump_full.txt:291959:      registers     : 8
+  dexdump_full.txt:291960:      ins           : 1
+  dexdump_full.txt:291961:      outs          : 3
+  dexdump_full.txt:291962:      insns size    : 69 16-bit code units
+  dexdump_full.txt:291963:      catches       : 3
+  dexdump_full.txt:291964:        0x0003 - 0x0020
+  dexdump_full.txt:291965:          Ljava/lang/IllegalAccessException; -> 0x0039
+  dexdump_full.txt:291966:          Ljava/lang/reflect/InvocationTargetException; -> 0x0033
+  dexdump_full.txt:291967:          Ljava/lang/NoSuchMethodException; -> 0x0029
+  dexdump_full.txt:291968:          Ljava/lang/NullPointerException; -> 0x0023
+  dexdump_full.txt:291969:          <any> -> 0x0021
+  dexdump_full.txt:291970:        0x0023 - 0x0037
+  dexdump_full.txt:291971:          <any> -> 0x0021
+  dexdump_full.txt:291972:        0x003a - 0x0043
+  dexdump_full.txt:291973:          <any> -> 0x0021
+  dexdump_full.txt:291974:      positions     :
+  dexdump_full.txt:291975:        0x0003 line=498
+  dexdump_full.txt:291976:        0x0013 line=499
+  dexdump_full.txt:291977:        0x0023 line=509
+  dexdump_full.txt:291978:        0x002a line=506
+  dexdump_full.txt:291979:        0x002d line=507
+  dexdump_full.txt:291980:        0x0034 line=504
+  dexdump_full.txt:291981:        0x0037 line=511
+  dexdump_full.txt:291982:        0x003a line=501
+  dexdump_full.txt:291983:        0x003d line=502
+  dexdump_full.txt:291984:      locals        :
+  dexdump_full.txt:291985:        0x0000 - 0x0045 reg=7 (null) Z
+> dexdump_full.txt:291986:    #36              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:291987:      name          : 'setInverse'
+  dexdump_full.txt:291988:      type          : '(Z)V'
+  dexdump_full.txt:291989:      access        : 0x0009 (PUBLIC STATIC)
+  dexdump_full.txt:291990:      code          -
+  dexdump_full.txt:291991:      registers     : 7
+  dexdump_full.txt:291992:      ins           : 1
+  dexdump_full.txt:291993:      outs          : 3
+  dexdump_full.txt:291994:      insns size    : 51 16-bit code units
+  dexdump_full.txt:291995:      catches       : 1
+  dexdump_full.txt:291996:        0x0000 - 0x001d
+  dexdump_full.txt:291997:          Ljava/lang/IllegalAccessException; -> 0x002e
+  dexdump_full.txt:291998:          Ljava/lang/reflect/InvocationTargetException; -> 0x0029
+  dexdump_full.txt:291999:          Ljava/lang/NoSuchMethodException; -> 0x0024
+  dexdump_full.txt:292000:          Ljava/lang/NullPointerException; -> 0x001e
+  dexdump_full.txt:292001:      positions     :
+  dexdump_full.txt:292002:        0x0000 line=1024
+  dexdump_full.txt:292003:        0x0010 line=1025
+  dexdump_full.txt:292004:        0x001e line=1033
+  dexdump_full.txt:292005:        0x0025 line=1031
+  dexdump_full.txt:292006:        0x002a line=1029
+  dexdump_full.txt:292007:        0x002f line=1027
+  dexdump_full.txt:292008:      locals        :
+  dexdump_full.txt:292009:        0x0000 - 0x0033 reg=6 (null) Z
+> dexdump_full.txt:292010:    #37              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:292011:      name          : 'setLeftIndent'
+  dexdump_full.txt:292012:      type          : '(I)V'
+  dexdump_full.txt:292013:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:292014:      code          -
+  dexdump_full.txt:292015:      registers     : 8
+  dexdump_full.txt:292016:      ins           : 1
+  dexdump_full.txt:292017:      outs          : 3
+  dexdump_full.txt:292018:      insns size    : 69 16-bit code units
+  dexdump_full.txt:292019:      catches       : 3
+  dexdump_full.txt:292020:        0x0003 - 0x0020
+  dexdump_full.txt:292021:          Ljava/lang/IllegalAccessException; -> 0x0039
+  dexdump_full.txt:292022:          Ljava/lang/reflect/InvocationTargetException; -> 0x0033
+  dexdump_full.txt:292023:          Ljava/lang/NoSuchMethodException; -> 0x0029
+  dexdump_full.txt:292024:          Ljava/lang/NullPointerException; -> 0x0023
+  dexdump_full.txt:292025:          <any> -> 0x0021
+  dexdump_full.txt:292026:        0x0023 - 0x0037
+  dexdump_full.txt:292027:          <any> -> 0x0021
+  dexdump_full.txt:292028:        0x003a - 0x0043
+  dexdump_full.txt:292029:          <any> -> 0x0021
+  dexdump_full.txt:292030:      positions     :
+  dexdump_full.txt:292031:        0x0003 line=730
+  dexdump_full.txt:292032:        0x0013 line=731
+  dexdump_full.txt:292033:        0x0023 line=741
+  dexdump_full.txt:292034:        0x002a line=738
+  dexdump_full.txt:292035:        0x002d line=739
+  dexdump_full.txt:292036:        0x0034 line=736
+  dexdump_full.txt:292037:        0x0037 line=743
+  dexdump_full.txt:292038:        0x003a line=733
+  dexdump_full.txt:292039:        0x003d line=734
+  dexdump_full.txt:292040:      locals        :
+  dexdump_full.txt:292041:        0x0000 - 0x0045 reg=7 (null) I
+> dexdump_full.txt:292042:    #38              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:292043:      name          : 'setLineSpace'
+  dexdump_full.txt:292044:      type          : '(I)V'
+  dexdump_full.txt:292045:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:292046:      code          -
+  dexdump_full.txt:292047:      registers     : 8
+  dexdump_full.txt:292048:      ins           : 1
+  dexdump_full.txt:292049:      outs          : 3
+  dexdump_full.txt:292050:      insns size    : 69 16-bit code units
+  dexdump_full.txt:292051:      catches       : 3
+  dexdump_full.txt:292052:        0x0003 - 0x0020
+  dexdump_full.txt:292053:          Ljava/lang/IllegalAccessException; -> 0x0039
+  dexdump_full.txt:292054:          Ljava/lang/reflect/InvocationTargetException; -> 0x0033
+  dexdump_full.txt:292055:          Ljava/lang/NoSuchMethodException; -> 0x0029
+  dexdump_full.txt:292056:          Ljava/lang/NullPointerException; -> 0x0023
+  dexdump_full.txt:292057:          <any> -> 0x0021
+  dexdump_full.txt:292058:        0x0023 - 0x0037
+  dexdump_full.txt:292059:          <any> -> 0x0021
+  dexdump_full.txt:292060:        0x003a - 0x0043
+  dexdump_full.txt:292061:          <any> -> 0x0021
+  dexdump_full.txt:292062:      positions     :
+  dexdump_full.txt:292063:        0x0003 line=708
+  dexdump_full.txt:292064:        0x0013 line=709
+  dexdump_full.txt:292065:        0x0023 line=719
+  dexdump_full.txt:292066:        0x002a line=716
+  dexdump_full.txt:292067:        0x002d line=717
+  dexdump_full.txt:292068:        0x0034 line=714
+  dexdump_full.txt:292069:        0x0037 line=721
+  dexdump_full.txt:292070:        0x003a line=711
+  dexdump_full.txt:292071:        0x003d line=712
+  dexdump_full.txt:292072:      locals        :
+  dexdump_full.txt:292073:        0x0000 - 0x0045 reg=7 (null) I
+> dexdump_full.txt:292074:    #39              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:292075:      name          : 'setPaperWidth'
+  dexdump_full.txt:292076:      type          : '(I)V'
+  dexdump_full.txt:292077:      access        : 0x0009 (PUBLIC STATIC)
+  dexdump_full.txt:292078:      code          -
+  dexdump_full.txt:292079:      registers     : 7
+  dexdump_full.txt:292080:      ins           : 1
+  dexdump_full.txt:292081:      outs          : 3
+  dexdump_full.txt:292082:      insns size    : 50 16-bit code units
+  dexdump_full.txt:292083:      catches       : 1
+  dexdump_full.txt:292084:        0x0000 - 0x001d
+  dexdump_full.txt:292085:          Ljava/lang/IllegalAccessException; -> 0x002d
+  dexdump_full.txt:292086:          Ljava/lang/reflect/InvocationTargetException; -> 0x0028
+  dexdump_full.txt:292087:          Ljava/lang/NoSuchMethodException; -> 0x0023
+  dexdump_full.txt:292088:          Ljava/lang/NullPointerException; -> 0x001e
+  dexdump_full.txt:292089:      positions     :
+  dexdump_full.txt:292090:        0x0000 line=1043
+  dexdump_full.txt:292091:        0x0010 line=1044
+  dexdump_full.txt:292092:        0x001f line=1052
+  dexdump_full.txt:292093:        0x0024 line=1050
+  dexdump_full.txt:292094:        0x0029 line=1048
+  dexdump_full.txt:292095:        0x002e line=1046
+  dexdump_full.txt:292096:      locals        :
+  dexdump_full.txt:292097:        0x0000 - 0x0032 reg=6 (null) I
+> dexdump_full.txt:292098:    #40              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:292099:      name          : 'setTem'
+  dexdump_full.txt:292100:      type          : '(I)V'
+  dexdump_full.txt:292101:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:292102:      code          -
+  dexdump_full.txt:292103:      registers     : 8
+  dexdump_full.txt:292104:      ins           : 1
+  dexdump_full.txt:292105:      outs          : 3
+  dexdump_full.txt:292106:      insns size    : 69 16-bit code units
+  dexdump_full.txt:292107:      catches       : 3
+  dexdump_full.txt:292108:        0x0003 - 0x0020
+  dexdump_full.txt:292109:          Ljava/lang/IllegalAccessException; -> 0x0039
+  dexdump_full.txt:292110:          Ljava/lang/reflect/InvocationTargetException; -> 0x0033
+  dexdump_full.txt:292111:          Ljava/lang/NoSuchMethodException; -> 0x0029
+  dexdump_full.txt:292112:          Ljava/lang/NullPointerException; -> 0x0023
+  dexdump_full.txt:292113:          <any> -> 0x0021
+  dexdump_full.txt:292114:        0x0023 - 0x0037
+  dexdump_full.txt:292115:          <any> -> 0x0021
+  dexdump_full.txt:292116:        0x003a - 0x0043
+  dexdump_full.txt:292117:          <any> -> 0x0021
+  dexdump_full.txt:292118:      positions     :
+  dexdump_full.txt:292119:        0x0003 line=481
+  dexdump_full.txt:292120:        0x0013 line=482
+  dexdump_full.txt:292121:        0x0023 line=492
+  dexdump_full.txt:292122:        0x002a line=489
+  dexdump_full.txt:292123:        0x002d line=490
+  dexdump_full.txt:292124:        0x0034 line=487
+  dexdump_full.txt:292125:        0x0037 line=494
+  dexdump_full.txt:292126:        0x003a line=484
+  dexdump_full.txt:292127:        0x003d line=485
+  dexdump_full.txt:292128:      locals        :
+  dexdump_full.txt:292129:        0x0000 - 0x0045 reg=7 (null) I
+> dexdump_full.txt:292130:    #41              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:292131:      name          : 'start'
+  dexdump_full.txt:292132:      type          : '()V'
+  dexdump_full.txt:292133:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:292134:      code          -
+  dexdump_full.txt:292135:      registers     : 5
+  dexdump_full.txt:292136:      ins           : 0
+  dexdump_full.txt:292137:      outs          : 3
+  dexdump_full.txt:292138:      insns size    : 58 16-bit code units
+  dexdump_full.txt:292139:      catches       : 3
+  dexdump_full.txt:292140:        0x0003 - 0x0015
+  dexdump_full.txt:292141:          Ljava/lang/IllegalAccessException; -> 0x002e
+  dexdump_full.txt:292142:          Ljava/lang/reflect/InvocationTargetException; -> 0x0028
+  dexdump_full.txt:292143:          Ljava/lang/NoSuchMethodException; -> 0x001e
+  dexdump_full.txt:292144:          Ljava/lang/NullPointerException; -> 0x0018
+  dexdump_full.txt:292145:          <any> -> 0x0016
+  dexdump_full.txt:292146:        0x0018 - 0x002c
+  dexdump_full.txt:292147:          <any> -> 0x0016
+  dexdump_full.txt:292148:        0x002f - 0x0038
+  dexdump_full.txt:292149:          <any> -> 0x0016
+  dexdump_full.txt:292150:      positions     :
+  dexdump_full.txt:292151:        0x0003 line=156
+  dexdump_full.txt:292152:        0x000e line=157
+  dexdump_full.txt:292153:        0x0018 line=167
+  dexdump_full.txt:292154:        0x001f line=164
+  dexdump_full.txt:292155:        0x0022 line=165
+  dexdump_full.txt:292156:        0x0029 line=162
+  dexdump_full.txt:292157:        0x002c line=169
+  dexdump_full.txt:292158:        0x002f line=159
+  dexdump_full.txt:292159:        0x0032 line=160
+  dexdump_full.txt:292160:      locals        :
+> dexdump_full.txt:292161:    #42              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:292162:      name          : 'start'
+  dexdump_full.txt:292163:      type          : '(Landroid/content/Context;)V'
+  dexdump_full.txt:292164:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:292165:      code          -
+  dexdump_full.txt:292166:      registers     : 8
+  dexdump_full.txt:292167:      ins           : 1
+  dexdump_full.txt:292168:      outs          : 3
+  dexdump_full.txt:292169:      insns size    : 65 16-bit code units
+  dexdump_full.txt:292170:      catches       : 3
+  dexdump_full.txt:292171:        0x0003 - 0x001c
+  dexdump_full.txt:292172:          Ljava/lang/IllegalAccessException; -> 0x0035
+  dexdump_full.txt:292173:          Ljava/lang/reflect/InvocationTargetException; -> 0x002f
+  dexdump_full.txt:292174:          Ljava/lang/NoSuchMethodException; -> 0x0025
+  dexdump_full.txt:292175:          Ljava/lang/NullPointerException; -> 0x001f
+  dexdump_full.txt:292176:          <any> -> 0x001d
+  dexdump_full.txt:292177:        0x001f - 0x0033
+  dexdump_full.txt:292178:          <any> -> 0x001d
+  dexdump_full.txt:292179:        0x0036 - 0x003f
+  dexdump_full.txt:292180:          <any> -> 0x001d
+  dexdump_full.txt:292181:      positions     :
+  dexdump_full.txt:292182:        0x0003 line=195
+  dexdump_full.txt:292183:        0x0013 line=196
+  dexdump_full.txt:292184:        0x001f line=206
+  dexdump_full.txt:292185:        0x0026 line=203
+  dexdump_full.txt:292186:        0x0029 line=204
+  dexdump_full.txt:292187:        0x0030 line=201
+  dexdump_full.txt:292188:        0x0033 line=208
+  dexdump_full.txt:292189:        0x0036 line=198
+  dexdump_full.txt:292190:        0x0039 line=199
+  dexdump_full.txt:292191:      locals        :
+  dexdump_full.txt:292192:        0x0000 - 0x0041 reg=7 (null) Landroid/content/Context;
+> dexdump_full.txt:292193:    #43              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:292194:      name          : 'start'
+  dexdump_full.txt:292195:      type          : '(Landroid/content/Context;Z)V'
+  dexdump_full.txt:292196:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:292197:      code          -
+  dexdump_full.txt:292198:      registers     : 10
+  dexdump_full.txt:292199:      ins           : 2
+  dexdump_full.txt:292200:      outs          : 3
+  dexdump_full.txt:292201:      insns size    : 76 16-bit code units
+  dexdump_full.txt:292202:      catches       : 3
+  dexdump_full.txt:292203:        0x0003 - 0x0027
+  dexdump_full.txt:292204:          Ljava/lang/IllegalAccessException; -> 0x0040
+  dexdump_full.txt:292205:          Ljava/lang/reflect/InvocationTargetException; -> 0x003a
+  dexdump_full.txt:292206:          Ljava/lang/NoSuchMethodException; -> 0x0030
+  dexdump_full.txt:292207:          Ljava/lang/NullPointerException; -> 0x002a
+  dexdump_full.txt:292208:          <any> -> 0x0028
+  dexdump_full.txt:292209:        0x002a - 0x003e
+  dexdump_full.txt:292210:          <any> -> 0x0028
+  dexdump_full.txt:292211:        0x0041 - 0x004a
+  dexdump_full.txt:292212:          <any> -> 0x0028
+  dexdump_full.txt:292213:      positions     :
+  dexdump_full.txt:292214:        0x0003 line=212
+  dexdump_full.txt:292215:        0x0018 line=213
+  dexdump_full.txt:292216:        0x002a line=223
+  dexdump_full.txt:292217:        0x0031 line=220
+  dexdump_full.txt:292218:        0x0034 line=221
+  dexdump_full.txt:292219:        0x003b line=218
+  dexdump_full.txt:292220:        0x003e line=225
+  dexdump_full.txt:292221:        0x0041 line=215
+  dexdump_full.txt:292222:        0x0044 line=216
+  dexdump_full.txt:292223:      locals        :
+  dexdump_full.txt:292224:        0x0000 - 0x004c reg=8 (null) Landroid/content/Context;
+  dexdump_full.txt:292225:        0x0000 - 0x004c reg=9 (null) Z
+> dexdump_full.txt:292226:    #44              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:292227:      name          : 'start'
+  dexdump_full.txt:292228:      type          : '(Z)V'
+  dexdump_full.txt:292229:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:292230:      code          -
+  dexdump_full.txt:292231:      registers     : 8
+  dexdump_full.txt:292232:      ins           : 1
+  dexdump_full.txt:292233:      outs          : 3
+  dexdump_full.txt:292234:      insns size    : 69 16-bit code units
+  dexdump_full.txt:292235:      catches       : 3
+  dexdump_full.txt:292236:        0x0003 - 0x0020
+  dexdump_full.txt:292237:          Ljava/lang/IllegalAccessException; -> 0x0039
+  dexdump_full.txt:292238:          Ljava/lang/reflect/InvocationTargetException; -> 0x0033
+  dexdump_full.txt:292239:          Ljava/lang/NoSuchMethodException; -> 0x0029
+  dexdump_full.txt:292240:          Ljava/lang/NullPointerException; -> 0x0023
+  dexdump_full.txt:292241:          <any> -> 0x0021
+  dexdump_full.txt:292242:        0x0023 - 0x0037
+  dexdump_full.txt:292243:          <any> -> 0x0021
+  dexdump_full.txt:292244:        0x003a - 0x0043
+  dexdump_full.txt:292245:          <any> -> 0x0021
+  dexdump_full.txt:292246:      positions     :
+  dexdump_full.txt:292247:        0x0003 line=173
+  dexdump_full.txt:292248:        0x0013 line=174
+  dexdump_full.txt:292249:        0x0023 line=184
+  dexdump_full.txt:292250:        0x002a line=181
+  dexdump_full.txt:292251:        0x002d line=182
+  dexdump_full.txt:292252:        0x0034 line=179
+  dexdump_full.txt:292253:        0x0037 line=186
+  dexdump_full.txt:292254:        0x003a line=176
+  dexdump_full.txt:292255:        0x003d line=177
+  dexdump_full.txt:292256:      locals        :
+  dexdump_full.txt:292257:        0x0000 - 0x0045 reg=7 (null) Z
+> dexdump_full.txt:292258:    #45              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:292259:      name          : 'stop'
+  dexdump_full.txt:292260:      type          : '()V'
+  dexdump_full.txt:292261:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:292262:      code          -
+  dexdump_full.txt:292263:      registers     : 5
+  dexdump_full.txt:292264:      ins           : 0
+  dexdump_full.txt:292265:      outs          : 3
+  dexdump_full.txt:292266:      insns size    : 51 16-bit code units
+  dexdump_full.txt:292267:      catches       : 2
+  dexdump_full.txt:292268:        0x0003 - 0x0015
+  dexdump_full.txt:292269:          Ljava/lang/IllegalAccessException; -> 0x002b
+  dexdump_full.txt:292270:          Ljava/lang/reflect/InvocationTargetException; -> 0x0026
+  dexdump_full.txt:292271:          Ljava/lang/NoSuchMethodException; -> 0x0021
+  dexdump_full.txt:292272:          Ljava/lang/NullPointerException; -> 0x0018
+  dexdump_full.txt:292273:          <any> -> 0x0016
+  dexdump_full.txt:292274:        0x0018 - 0x002f
+  dexdump_full.txt:292275:          <any> -> 0x0016
+  dexdump_full.txt:292276:      positions     :
+  dexdump_full.txt:292277:        0x0003 line=323
+  dexdump_full.txt:292278:        0x000e line=324
+  dexdump_full.txt:292279:        0x0018 line=332
+  dexdump_full.txt:292280:        0x0022 line=330
+  dexdump_full.txt:292281:        0x0027 line=328
+  dexdump_full.txt:292282:        0x002c line=326
+  dexdump_full.txt:292283:        0x002f line=334
+  dexdump_full.txt:292284:      locals        :
+> dexdump_full.txt:292285:    #46              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:292286:      name          : 'stop'
+  dexdump_full.txt:292287:      type          : '(Landroid/content/Context;)V'
+  dexdump_full.txt:292288:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:292289:      code          -
+  dexdump_full.txt:292290:      registers     : 8
+  dexdump_full.txt:292291:      ins           : 1
+  dexdump_full.txt:292292:      outs          : 3
+  dexdump_full.txt:292293:      insns size    : 58 16-bit code units
+  dexdump_full.txt:292294:      catches       : 2
+  dexdump_full.txt:292295:        0x0003 - 0x001c
+  dexdump_full.txt:292296:          Ljava/lang/IllegalAccessException; -> 0x0032
+  dexdump_full.txt:292297:          Ljava/lang/reflect/InvocationTargetException; -> 0x002d
+  dexdump_full.txt:292298:          Ljava/lang/NoSuchMethodException; -> 0x0028
+  dexdump_full.txt:292299:          Ljava/lang/NullPointerException; -> 0x001f
+  dexdump_full.txt:292300:          <any> -> 0x001d
+  dexdump_full.txt:292301:        0x001f - 0x0036
+  dexdump_full.txt:292302:          <any> -> 0x001d
+  dexdump_full.txt:292303:      positions     :
+  dexdump_full.txt:292304:        0x0003 line=357
+  dexdump_full.txt:292305:        0x0013 line=358
+  dexdump_full.txt:292306:        0x001f line=366
+  dexdump_full.txt:292307:        0x0029 line=364
+  dexdump_full.txt:292308:        0x002e line=362
+  dexdump_full.txt:292309:        0x0033 line=360
+  dexdump_full.txt:292310:        0x0036 line=368
+  dexdump_full.txt:292311:      locals        :
+  dexdump_full.txt:292312:        0x0000 - 0x003a reg=7 (null) Landroid/content/Context;
+> dexdump_full.txt:292313:    #47              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:292314:      name          : 'stop'
+  dexdump_full.txt:292315:      type          : '(Landroid/content/Context;Z)V'
+  dexdump_full.txt:292316:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:292317:      code          -
+  dexdump_full.txt:292318:      registers     : 8
+  dexdump_full.txt:292319:      ins           : 2
+  dexdump_full.txt:292320:      outs          : 3
+  dexdump_full.txt:292321:      insns size    : 74 16-bit code units
+  dexdump_full.txt:292322:      catches       : 3
+  dexdump_full.txt:292323:        0x0003 - 0x0025
+  dexdump_full.txt:292324:          Ljava/lang/IllegalAccessException; -> 0x003e
+  dexdump_full.txt:292325:          Ljava/lang/reflect/InvocationTargetException; -> 0x0038
+  dexdump_full.txt:292326:          Ljava/lang/NoSuchMethodException; -> 0x002e
+  dexdump_full.txt:292327:          Ljava/lang/NullPointerException; -> 0x0028
+  dexdump_full.txt:292328:          <any> -> 0x0026
+  dexdump_full.txt:292329:        0x0028 - 0x003c
+  dexdump_full.txt:292330:          <any> -> 0x0026
+  dexdump_full.txt:292331:        0x003f - 0x0048
+  dexdump_full.txt:292332:          <any> -> 0x0026
+  dexdump_full.txt:292333:      positions     :
+  dexdump_full.txt:292334:        0x0003 line=372
+  dexdump_full.txt:292335:        0x0018 line=373
+  dexdump_full.txt:292336:        0x0028 line=383
+  dexdump_full.txt:292337:        0x002f line=380
+  dexdump_full.txt:292338:        0x0032 line=381
+  dexdump_full.txt:292339:        0x0039 line=378
+  dexdump_full.txt:292340:        0x003c line=385
+  dexdump_full.txt:292341:        0x003f line=375
+  dexdump_full.txt:292342:        0x0042 line=376
+  dexdump_full.txt:292343:      locals        :
+  dexdump_full.txt:292344:        0x0000 - 0x004a reg=6 (null) Landroid/content/Context;
+  dexdump_full.txt:292345:        0x0000 - 0x004a reg=7 (null) Z
+> dexdump_full.txt:292346:    #48              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:292347:      name          : 'stop'
+  dexdump_full.txt:292348:      type          : '(Z)V'
+  dexdump_full.txt:292349:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:292350:      code          -
+  dexdump_full.txt:292351:      registers     : 8
+  dexdump_full.txt:292352:      ins           : 1
+  dexdump_full.txt:292353:      outs          : 3
+  dexdump_full.txt:292354:      insns size    : 62 16-bit code units
+  dexdump_full.txt:292355:      catches       : 2
+  dexdump_full.txt:292356:        0x0003 - 0x0020
+  dexdump_full.txt:292357:          Ljava/lang/IllegalAccessException; -> 0x0036
+  dexdump_full.txt:292358:          Ljava/lang/reflect/InvocationTargetException; -> 0x0031
+  dexdump_full.txt:292359:          Ljava/lang/NoSuchMethodException; -> 0x002c
+  dexdump_full.txt:292360:          Ljava/lang/NullPointerException; -> 0x0023
+  dexdump_full.txt:292361:          <any> -> 0x0021
+  dexdump_full.txt:292362:        0x0023 - 0x003a
+  dexdump_full.txt:292363:          <any> -> 0x0021
+  dexdump_full.txt:292364:      positions     :
+  dexdump_full.txt:292365:        0x0003 line=338
+  dexdump_full.txt:292366:        0x0013 line=339
+  dexdump_full.txt:292367:        0x0023 line=347
+  dexdump_full.txt:292368:        0x002d line=345
+  dexdump_full.txt:292369:        0x0032 line=343
+  dexdump_full.txt:292370:        0x0037 line=341
+  dexdump_full.txt:292371:        0x003a line=349
+  dexdump_full.txt:292372:      locals        :
+  dexdump_full.txt:292373:        0x0000 - 0x003e reg=7 (null) Z
+> dexdump_full.txt:292374:    #49              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:292375:      name          : 'throwException'
+  dexdump_full.txt:292376:      type          : '(Ljava/lang/reflect/InvocationTargetException;)V'
+  dexdump_full.txt:292377:      access        : 0x000a (PRIVATE STATIC)
+  dexdump_full.txt:292378:      code          -
+  dexdump_full.txt:292379:      registers     : 3
+  dexdump_full.txt:292380:      ins           : 1
+  dexdump_full.txt:292381:      outs          : 2
+  dexdump_full.txt:292382:      insns size    : 309 16-bit code units
+  dexdump_full.txt:292383:      catches       : (none)
+  dexdump_full.txt:292384:      positions     :
+  dexdump_full.txt:292385:        0x0000 line=1119
+  dexdump_full.txt:292386:        0x0010 line=1121
+  dexdump_full.txt:292387:        0x0020 line=1123
+  dexdump_full.txt:292388:        0x0030 line=1125
+  dexdump_full.txt:292389:        0x0040 line=1127
+  dexdump_full.txt:292390:        0x0050 line=1129
+  dexdump_full.txt:292391:        0x0060 line=1131
+  dexdump_full.txt:292392:        0x0070 line=1133
+  dexdump_full.txt:292393:        0x0080 line=1135
+  dexdump_full.txt:292394:        0x0090 line=1137
+  dexdump_full.txt:292395:        0x00a1 line=1139
+  dexdump_full.txt:292396:        0x00b1 line=1141
+  dexdump_full.txt:292397:        0x00c1 line=1143
+  dexdump_full.txt:292398:        0x00d1 line=1145
+  dexdump_full.txt:292399:        0x00e1 line=1146
+  dexdump_full.txt:292400:        0x00e7 line=1148
+  dexdump_full.txt:292401:        0x00ed line=1144
+  dexdump_full.txt:292402:        0x00f3 line=1142
+  dexdump_full.txt:292403:        0x00f9 line=1140
+  dexdump_full.txt:292404:        0x00ff line=1136
+  dexdump_full.txt:292405:        0x0105 line=1134
+  dexdump_full.txt:292406:        0x010b line=1132
+  dexdump_full.txt:292407:        0x0111 line=1130
+  dexdump_full.txt:292408:        0x0117 line=1128
+  dexdump_full.txt:292409:        0x011d line=1126
+  dexdump_full.txt:292410:        0x0123 line=1124
+  dexdump_full.txt:292411:        0x0129 line=1122
+  dexdump_full.txt:292412:        0x012f line=1120
+  dexdump_full.txt:292413:      locals        :
+  dexdump_full.txt:292414:        0x0000 - 0x0135 reg=2 (null) Ljava/lang/reflect/InvocationTargetException;
+> dexdump_full.txt:292415:    #50              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:292416:      name          : 'toGrayscale'
+  dexdump_full.txt:292417:      type          : '(Landroid/graphics/Bitmap;)Landroid/graphics/Bitmap;'
+  dexdump_full.txt:292418:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:292419:      code          -
+  dexdump_full.txt:292420:      registers     : 8
+  dexdump_full.txt:292421:      ins           : 1
+  dexdump_full.txt:292422:      outs          : 3
+  dexdump_full.txt:292423:      insns size    : 70 16-bit code units
+  dexdump_full.txt:292424:      catches       : 3
+  dexdump_full.txt:292425:        0x0003 - 0x001f
+  dexdump_full.txt:292426:          Ljava/lang/IllegalAccessException; -> 0x003a
+  dexdump_full.txt:292427:          Ljava/lang/reflect/InvocationTargetException; -> 0x0033
+  dexdump_full.txt:292428:          Ljava/lang/NoSuchMethodException; -> 0x0029
+  dexdump_full.txt:292429:          Ljava/lang/NullPointerException; -> 0x0023
+  dexdump_full.txt:292430:          <any> -> 0x0021
+  dexdump_full.txt:292431:        0x0023 - 0x0037
+  dexdump_full.txt:292432:          <any> -> 0x0021
+  dexdump_full.txt:292433:        0x003b - 0x0044
+  dexdump_full.txt:292434:          <any> -> 0x0021
+  dexdump_full.txt:292435:      positions     :
+  dexdump_full.txt:292436:        0x0003 line=764
+  dexdump_full.txt:292437:        0x0013 line=765
+  dexdump_full.txt:292438:        0x0023 line=775
+  dexdump_full.txt:292439:        0x002a line=772
+  dexdump_full.txt:292440:        0x002d line=773
+  dexdump_full.txt:292441:        0x0034 line=770
+  dexdump_full.txt:292442:        0x0038 line=777
+  dexdump_full.txt:292443:        0x003b line=767
+  dexdump_full.txt:292444:        0x003e line=768
+  dexdump_full.txt:292445:      locals        :
+  dexdump_full.txt:292446:        0x0000 - 0x0046 reg=7 (null) Landroid/graphics/Bitmap;
+> dexdump_full.txt:292447:    #51              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:292448:      name          : 'walkPaper'
+  dexdump_full.txt:292449:      type          : '(I)V'
+  dexdump_full.txt:292450:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:292451:      code          -
+  dexdump_full.txt:292452:      registers     : 8
+  dexdump_full.txt:292453:      ins           : 1
+  dexdump_full.txt:292454:      outs          : 3
+  dexdump_full.txt:292455:      insns size    : 69 16-bit code units
+  dexdump_full.txt:292456:      catches       : 3
+  dexdump_full.txt:292457:        0x0003 - 0x0020
+  dexdump_full.txt:292458:          Ljava/lang/IllegalAccessException; -> 0x0039
+  dexdump_full.txt:292459:          Ljava/lang/reflect/InvocationTargetException; -> 0x0033
+  dexdump_full.txt:292460:          Ljava/lang/NoSuchMethodException; -> 0x0029
+  dexdump_full.txt:292461:          Ljava/lang/NullPointerException; -> 0x0023
+  dexdump_full.txt:292462:          <any> -> 0x0021
+  dexdump_full.txt:292463:        0x0023 - 0x0037
+  dexdump_full.txt:292464:          <any> -> 0x0021
+  dexdump_full.txt:292465:        0x003a - 0x0043
+  dexdump_full.txt:292466:          <any> -> 0x0021
+  dexdump_full.txt:292467:      positions     :
+  dexdump_full.txt:292468:        0x0003 line=289
+  dexdump_full.txt:292469:        0x0013 line=290
+  dexdump_full.txt:292470:        0x0023 line=300
+  dexdump_full.txt:292471:        0x002a line=297
+  dexdump_full.txt:292472:        0x002d line=298
+  dexdump_full.txt:292473:        0x0034 line=295
+  dexdump_full.txt:292474:        0x0037 line=302
+  dexdump_full.txt:292475:        0x003a line=292
+  dexdump_full.txt:292476:        0x003d line=293
+  dexdump_full.txt:292477:      locals        :
+  dexdump_full.txt:292478:        0x0000 - 0x0045 reg=7 (null) I
+> dexdump_full.txt:292479:    #52              : (in Lcom/common/apiutil/printer/ThermalPrinter;)
+  dexdump_full.txt:292480:      name          : 'walkPaper681'
+  dexdump_full.txt:292481:      type          : '(I)V'
+  dexdump_full.txt:292482:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:292483:      code          -
+  dexdump_full.txt:292484:      registers     : 8
+  dexdump_full.txt:292485:      ins           : 1
+  dexdump_full.txt:292486:      outs          : 3
+  dexdump_full.txt:292487:      insns size    : 69 16-bit code units
+  dexdump_full.txt:292488:      catches       : 3
+  dexdump_full.txt:292489:        0x0003 - 0x0020
+  dexdump_full.txt:292490:          Ljava/lang/IllegalAccessException; -> 0x0039
+  dexdump_full.txt:292491:          Ljava/lang/reflect/InvocationTargetException; -> 0x0033
+  dexdump_full.txt:292492:          Ljava/lang/NoSuchMethodException; -> 0x0029
+  dexdump_full.txt:292493:          Ljava/lang/NullPointerException; -> 0x0023
+  dexdump_full.txt:292494:          <any> -> 0x0021
+  dexdump_full.txt:292495:        0x0023 - 0x0037
+  dexdump_full.txt:292496:          <any> -> 0x0021
+  dexdump_full.txt:292497:        0x003a - 0x0043
+  dexdump_full.txt:292498:          <any> -> 0x0021
+  dexdump_full.txt:292499:      positions     :
+  dexdump_full.txt:292500:        0x0003 line=306
+  dexdump_full.txt:292501:        0x0013 line=307
+  dexdump_full.txt:292502:        0x0023 line=317
+  dexdump_full.txt:292503:        0x002a line=314
+  dexdump_full.txt:292504:        0x002d line=315
+  dexdump_full.txt:292505:        0x0034 line=312
+  dexdump_full.txt:292506:        0x0037 line=319
+  dexdump_full.txt:292507:        0x003a line=309
+  dexdump_full.txt:292508:        0x003d line=310
+  dexdump_full.txt:292509:      locals        :
+  dexdump_full.txt:292510:        0x0000 - 0x0045 reg=7 (null) I
+  dexdump_full.txt:292511:  Virtual methods   -
+  dexdump_full.txt:292512:  source_file_idx   : 17380 (ThermalPrinter.java)
+  dexdump_full.txt:292513:
+  dexdump_full.txt:292514:Class #1673            -
+  dexdump_full.txt:292515:  Class descriptor  : 'Lcom/common/apiutil/printer/ThermalPrinterSY581;'
+  dexdump_full.txt:292516:  Access flags      : 0x0001 (PUBLIC)
+  dexdump_full.txt:292517:  Superclass        : 'Ljava/lang/Object;'
+  dexdump_full.txt:292518:  Interfaces        -
+  dexdump_full.txt:292519:  Static fields     -
+  dexdump_full.txt:292520:    #0              : (in Lcom/common/apiutil/printer/ThermalPrinterSY581;)
+  dexdump_full.txt:292521:      name          : 'ALGIN_LEFT'
+  dexdump_full.txt:292522:      type          : 'I'
+  dexdump_full.txt:292523:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:292524:      value         : 0
+  dexdump_full.txt:292525:    #1              : (in Lcom/common/apiutil/printer/ThermalPrinterSY581;)
+  dexdump_full.txt:292526:      name          : 'ALGIN_MIDDLE'
+  dexdump_full.txt:292527:      type          : 'I'
+  dexdump_full.txt:292528:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:292529:      value         : 1
+  dexdump_full.txt:292530:    #2              : (in Lcom/common/apiutil/printer/ThermalPrinterSY581;)
+  dexdump_full.txt:292531:      name          : 'ALGIN_RIGHT'
+  dexdump_full.txt:292532:      type          : 'I'
+  dexdump_full.txt:292533:      access        : 0x0019 (PUBLIC STATIC FINAL)
+  dexdump_full.txt:292534:      value         : 2
+  dexdump_full.txt:292535:    #3              : (in Lcom/common/apiutil/printer/ThermalPrinterSY581;)
+  dexdump_full.txt:292536:      name          : 'clazz'
+  dexdump_full.txt:292537:      type          : 'Ljava/lang/Class;'
+  dexdump_full.txt:292538:      access        : 0x000a (PRIVATE STATIC)
+  dexdump_full.txt:292539:    #4              : (in Lcom/common/apiutil/printer/ThermalPrinterSY581;)
+  dexdump_full.txt:292540:      name          : 'owner'
+  dexdump_full.txt:292541:      type          : 'Ljava/lang/Object;'
+  dexdump_full.txt:292542:      access        : 0x000a (PRIVATE STATIC)
+  dexdump_full.txt:292543:  Instance fields   -
+  dexdump_full.txt:292544:  Direct methods    -
+  dexdump_full.txt:292545:    #0              : (in Lcom/common/apiutil/printer/ThermalPrinterSY581;)
+  dexdump_full.txt:292546:      name          : '<init>'
+  dexdump_full.txt:292547:      type          : '()V'
+  dexdump_full.txt:292548:      access        : 0x10001 (PUBLIC CONSTRUCTOR)
+  dexdump_full.txt:292549:      code          -
+  dexdump_full.txt:292550:      registers     : 1
+  dexdump_full.txt:292551:      ins           : 1
+  dexdump_full.txt:292552:      outs          : 1
+  dexdump_full.txt:292553:      insns size    : 4 16-bit code units
+  dexdump_full.txt:292554:      catches       : (none)
+  dexdump_full.txt:292555:      positions     :
+  dexdump_full.txt:292556:        0x0000 line=13
+  dexdump_full.txt:292557:      locals        :
+  dexdump_full.txt:292558:        0x0000 - 0x0004 reg=0 this Lcom/common/apiutil/printer/ThermalPrinterSY581;
+  dexdump_full.txt:292559:    #1              : (in Lcom/common/apiutil/printer/ThermalPrinterSY581;)
+  dexdump_full.txt:292560:      name          : 'checkStatus'
+  dexdump_full.txt:292561:      type          : '()V'
+  dexdump_full.txt:292562:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:292563:      code          -
+  dexdump_full.txt:292564:      registers     : 5
+  dexdump_full.txt:292565:      ins           : 0
+  dexdump_full.txt:292566:      outs          : 3
+  dexdump_full.txt:292567:      insns size    : 51 16-bit code units
+  dexdump_full.txt:292568:      catches       : 2
+  dexdump_full.txt:292569:        0x0003 - 0x0015
+  dexdump_full.txt:292570:          Ljava/lang/IllegalAccessException; -> 0x002b
+  dexdump_full.txt:292571:          Ljava/lang/reflect/InvocationTargetException; -> 0x0026
+  dexdump_full.txt:292572:          Ljava/lang/NoSuchMethodException; -> 0x0021
+  dexdump_full.txt:292573:          Ljava/lang/NullPointerException; -> 0x0018
+  dexdump_full.txt:292574:          <any> -> 0x0016
+  dexdump_full.txt:292575:        0x0018 - 0x002f
+  dexdump_full.txt:292576:          <any> -> 0x0016
+  dexdump_full.txt:292577:      positions     :
+  dexdump_full.txt:292578:        0x0003 line=102
+  dexdump_full.txt:292579:        0x000e line=103
+  dexdump_full.txt:292580:        0x0018 line=111
+  dexdump_full.txt:292581:        0x0022 line=109
+  dexdump_full.txt:292582:        0x0027 line=107
+  dexdump_full.txt:292583:        0x002c line=105
+  dexdump_full.txt:292584:        0x002f line=113
+  dexdump_full.txt:292585:      locals        :
+  dexdump_full.txt:292586:    #2              : (in Lcom/common/apiutil/printer/ThermalPrinterSY581;)
+  dexdump_full.txt:292587:      name          : 'checkStatusCMD'
+  dexdump_full.txt:292588:      type          : '()[B'
+  dexdump_full.txt:292589:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:292590:      code          -
+  dexdump_full.txt:292591:      registers     : 5
+  dexdump_full.txt:292592:      ins           : 0
+  dexdump_full.txt:292593:      outs          : 3
+  dexdump_full.txt:292594:      insns size    : 58 16-bit code units
+  dexdump_full.txt:292595:      catches       : 2
+  dexdump_full.txt:292596:        0x0003 - 0x001a
+  dexdump_full.txt:292597:          Ljava/lang/IllegalAccessException; -> 0x0031
+  dexdump_full.txt:292598:          Ljava/lang/reflect/InvocationTargetException; -> 0x002c
+  dexdump_full.txt:292599:          Ljava/lang/NoSuchMethodException; -> 0x0027
+  dexdump_full.txt:292600:          Ljava/lang/NullPointerException; -> 0x001e
+  dexdump_full.txt:292601:          <any> -> 0x001c
+  dexdump_full.txt:292602:        0x001e - 0x0035
+  dexdump_full.txt:292603:          <any> -> 0x001c
+  dexdump_full.txt:292604:      positions     :
+  dexdump_full.txt:292605:        0x0003 line=132
+  dexdump_full.txt:292606:        0x000e line=133
+  dexdump_full.txt:292607:        0x001e line=141
+  dexdump_full.txt:292608:        0x0028 line=139
+  dexdump_full.txt:292609:        0x002d line=137
+  dexdump_full.txt:292610:        0x0032 line=135
+  dexdump_full.txt:292611:        0x0036 line=143
+  dexdump_full.txt:292612:      locals        :
+  dexdump_full.txt:292613:    #3              : (in Lcom/common/apiutil/printer/ThermalPrinterSY581;)
+  dexdump_full.txt:292614:      name          : 'clearSerial'
+  dexdump_full.txt:292615:      type          : '()V'
+  dexdump_full.txt:292616:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:292617:      code          -
+  dexdump_full.txt:292618:      registers     : 5
+  dexdump_full.txt:292619:      ins           : 0
+  dexdump_full.txt:292620:      outs          : 3
+  dexdump_full.txt:292621:      insns size    : 51 16-bit code units
+  dexdump_full.txt:292622:      catches       : 2
+  dexdump_full.txt:292623:        0x0003 - 0x0015
+  dexdump_full.txt:292624:          Ljava/lang/IllegalAccessException; -> 0x002b
+  dexdump_full.txt:292625:          Ljava/lang/reflect/InvocationTargetException; -> 0x0026
+  dexdump_full.txt:292626:          Ljava/lang/NoSuchMethodException; -> 0x0021
+  dexdump_full.txt:292627:          Ljava/lang/NullPointerException; -> 0x0018
+  dexdump_full.txt:292628:          <any> -> 0x0016
+  dexdump_full.txt:292629:        0x0018 - 0x002f
+  dexdump_full.txt:292630:          <any> -> 0x0016
+  dexdump_full.txt:292631:      positions     :
+  dexdump_full.txt:292632:        0x0003 line=117
+  dexdump_full.txt:292633:        0x000e line=118
+  dexdump_full.txt:292634:        0x0018 line=126
+  dexdump_full.txt:292635:        0x0022 line=124
+  dexdump_full.txt:292636:        0x0027 line=122
+  dexdump_full.txt:292637:        0x002c line=120
+  dexdump_full.txt:292638:        0x002f line=128
+  dexdump_full.txt:292639:      locals        :
+  dexdump_full.txt:292640:    #4              : (in Lcom/common/apiutil/printer/ThermalPrinterSY581;)
+  dexdump_full.txt:292641:      name          : 'cutPaper'
+  dexdump_full.txt:292642:      type          : '()V'
+  dexdump_full.txt:292643:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:292644:      code          -
+  dexdump_full.txt:292645:      registers     : 5
+  dexdump_full.txt:292646:      ins           : 0
+  dexdump_full.txt:292647:      outs          : 3
+  dexdump_full.txt:292648:      insns size    : 51 16-bit code units
+  dexdump_full.txt:292649:      catches       : 2
+  dexdump_full.txt:292650:        0x0003 - 0x0015
+  dexdump_full.txt:292651:          Ljava/lang/IllegalAccessException; -> 0x002b
+  dexdump_full.txt:292652:          Ljava/lang/reflect/InvocationTargetException; -> 0x0026
+  dexdump_full.txt:292653:          Ljava/lang/NoSuchMethodException; -> 0x0021
+  dexdump_full.txt:292654:          Ljava/lang/NullPointerException; -> 0x0018
+  dexdump_full.txt:292655:          <any> -> 0x0016
+  dexdump_full.txt:292656:        0x0018 - 0x002f
+  dexdump_full.txt:292657:          <any> -> 0x0016
+  dexdump_full.txt:292658:      positions     :
+  dexdump_full.txt:292659:        0x0003 line=336
+  dexdump_full.txt:292660:        0x000e line=337
+  dexdump_full.txt:292661:        0x0018 line=345
+  dexdump_full.txt:292662:        0x0022 line=343
+  dexdump_full.txt:292663:        0x0027 line=341
+  dexdump_full.txt:292664:        0x002c line=339
+  dexdump_full.txt:292665:        0x002f line=347
+  dexdump_full.txt:292666:      locals        :
+  dexdump_full.txt:292667:    #5              : (in Lcom/common/apiutil/printer/ThermalPrinterSY581;)
+  dexdump_full.txt:292668:      name          : 'getVersion'
+  dexdump_full.txt:292669:      type          : '()Ljava/lang/String;'
+  dexdump_full.txt:292670:      access        : 0x20009 (PUBLIC STATIC DECLARED_SYNCHRONIZED)
+  dexdump_full.txt:292671:      code          -
+  dexdump_full.txt:292672:      registers     : 5
+  dexdump_full.txt:292673:      ins           : 0
+  dexdump_full.txt:292674:      outs          : 3
+  dexdump_full.txt:292675:      insns size    : 56 16-bit code units
+  dexdump_full.txt:292676:      catches       : 2
+  dexdump_full.txt:292677:        0x0003 - 0x0018
+  dexdump_full.txt:292678:          Ljava/lang/IllegalAccessException; -> 0x002f
+  dexdump_full.txt:292679:          Ljava/lang/reflect/InvocationTargetException; -> 0x002a
+
+

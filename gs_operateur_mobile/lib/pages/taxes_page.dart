@@ -43,6 +43,10 @@ class _TaxesPageState extends State<TaxesPage> {
     final nomCtrl = TextEditingController();
     final descCtrl = TextEditingController();
     final tauxCtrl = TextEditingController();
+    final majorationCtrl = TextEditingController();
+    final interetCtrl = TextEditingController();
+    final delaiGraceCtrl = TextEditingController();
+    final majorationMdmCtrl = TextEditingController();
     String? categorie;
     String? unite;
     String? periodicite;
@@ -73,16 +77,9 @@ class _TaxesPageState extends State<TaxesPage> {
                   label: 'Catégorie *',
                   value: categorie,
                   hint: 'Sélectionner',
-                  items: const [
-                    AppDropdownItem(value: 'patente', label: 'Patente'),
-                    AppDropdownItem(value: 'foncier', label: 'Foncier'),
-                    AppDropdownItem(value: 'revenus_locatifs', label: 'Revenus locatifs'),
-                    AppDropdownItem(value: 'personnel_minimum', label: 'Personnel minimum'),
-                    AppDropdownItem(value: 'vehicule', label: 'Véhicule'),
-                    AppDropdownItem(value: 'permis_construire', label: 'Permis de construire'),
-                    AppDropdownItem(value: 'etalage', label: 'Étalage'),
-                    AppDropdownItem(value: 'autre', label: 'Autre'),
-                  ],
+                  items: Taxe.categories
+                      .map((c) => AppDropdownItem(value: c, label: Taxe.categorieLabel(c)))
+                      .toList(),
                   onChanged: (v) => setSheetState(() => categorie = v),
                 ),
                 const SizedBox(height: 12),
@@ -105,6 +102,8 @@ class _TaxesPageState extends State<TaxesPage> {
                   value: periodicite,
                   hint: 'Sélectionner',
                   items: const [
+                    AppDropdownItem(value: 'journaliere', label: 'Journalière'),
+                    AppDropdownItem(value: 'hebdomadaire', label: 'Hebdomadaire'),
                     AppDropdownItem(value: 'mensuelle', label: 'Mensuelle'),
                     AppDropdownItem(value: 'trimestrielle', label: 'Trimestrielle'),
                     AppDropdownItem(value: 'semestrielle', label: 'Semestrielle'),
@@ -115,6 +114,16 @@ class _TaxesPageState extends State<TaxesPage> {
                 ),
                 const SizedBox(height: 12),
                 AppInput(label: 'Description', hint: 'Description optionnelle', controller: descCtrl, maxLines: 2),
+                const Divider(height: 24),
+                const Text('Pénalités (optionnel)', style: TextStyle(color: AppColors.textSecondary, fontSize: 13, fontWeight: FontWeight.w600)),
+                const SizedBox(height: 12),
+                AppInput(label: 'Majoration retard (%)', hint: 'Ex: 5', controller: majorationCtrl, keyboardType: TextInputType.number),
+                const SizedBox(height: 12),
+                AppInput(label: 'Intérêt mensuel (%)', hint: 'Ex: 2', controller: interetCtrl, keyboardType: TextInputType.number),
+                const SizedBox(height: 12),
+                AppInput(label: 'Délai de grâce (jours)', hint: 'Ex: 10', controller: delaiGraceCtrl, keyboardType: TextInputType.number),
+                const SizedBox(height: 12),
+                AppInput(label: 'Majoration après mise en demeure (%)', hint: 'Ex: 10', controller: majorationMdmCtrl, keyboardType: TextInputType.number),
                 const SizedBox(height: 20),
                 AppButton(
                   label: 'Créer la taxe',
@@ -136,6 +145,10 @@ class _TaxesPageState extends State<TaxesPage> {
                         'unite': unite,
                         'periodicite': periodicite,
                         if (descCtrl.text.isNotEmpty) 'description': descCtrl.text.trim(),
+                        if (majorationCtrl.text.isNotEmpty) 'taux_majoration_retard': double.tryParse(majorationCtrl.text),
+                        if (interetCtrl.text.isNotEmpty) 'taux_interet_mensuel': double.tryParse(interetCtrl.text),
+                        if (delaiGraceCtrl.text.isNotEmpty) 'delai_grace_jours': int.tryParse(delaiGraceCtrl.text),
+                        if (majorationMdmCtrl.text.isNotEmpty) 'taux_majoration_apres_mise_en_demeure': double.tryParse(majorationMdmCtrl.text),
                       });
                       if (mounted) {
                         showAppSnackBar(context, 'Taxe créée avec succès');
@@ -160,6 +173,10 @@ class _TaxesPageState extends State<TaxesPage> {
     final nomCtrl = TextEditingController(text: taxe.nom);
     final tauxCtrl = TextEditingController(text: taxe.taux.toString());
     final descCtrl = TextEditingController(text: taxe.description ?? '');
+    final majorationCtrl = TextEditingController(text: taxe.tauxMajorationRetard?.toString() ?? '');
+    final interetCtrl = TextEditingController(text: taxe.tauxInteretMensuel?.toString() ?? '');
+    final delaiGraceCtrl = TextEditingController(text: taxe.delaiGraceJours?.toString() ?? '');
+    final majorationMdmCtrl = TextEditingController(text: taxe.tauxMajorationApresMiseEnDemeure?.toString() ?? '');
     String categorie = taxe.categorie ?? 'patente';
     String unite = taxe.unite ?? 'fixe';
     String periodicite = taxe.periodicite ?? 'mensuelle';
@@ -187,16 +204,9 @@ class _TaxesPageState extends State<TaxesPage> {
                 AppDropdown<String>(
                   label: 'Catégorie',
                   value: categorie,
-                  items: const [
-                    AppDropdownItem(value: 'patente', label: 'Patente'),
-                    AppDropdownItem(value: 'foncier', label: 'Foncier'),
-                    AppDropdownItem(value: 'revenus_locatifs', label: 'Revenus locatifs'),
-                    AppDropdownItem(value: 'personnel_minimum', label: 'Personnel minimum'),
-                    AppDropdownItem(value: 'vehicule', label: 'Véhicule'),
-                    AppDropdownItem(value: 'permis_construire', label: 'Permis de construire'),
-                    AppDropdownItem(value: 'etalage', label: 'Étalage'),
-                    AppDropdownItem(value: 'autre', label: 'Autre'),
-                  ],
+                  items: Taxe.categories
+                      .map((c) => AppDropdownItem(value: c, label: Taxe.categorieLabel(c)))
+                      .toList(),
                   onChanged: (v) => setSheetState(() => categorie = v ?? categorie),
                 ),
                 const SizedBox(height: 12),
@@ -219,6 +229,8 @@ class _TaxesPageState extends State<TaxesPage> {
                   value: periodicite,
                   hint: 'Sélectionner',
                   items: const [
+                    AppDropdownItem(value: 'journaliere', label: 'Journalière'),
+                    AppDropdownItem(value: 'hebdomadaire', label: 'Hebdomadaire'),
                     AppDropdownItem(value: 'mensuelle', label: 'Mensuelle'),
                     AppDropdownItem(value: 'trimestrielle', label: 'Trimestrielle'),
                     AppDropdownItem(value: 'semestrielle', label: 'Semestrielle'),
@@ -228,6 +240,16 @@ class _TaxesPageState extends State<TaxesPage> {
                 ),
                 const SizedBox(height: 12),
                 AppInput(label: 'Description', controller: descCtrl, maxLines: 2),
+                const Divider(height: 24),
+                const Text('Pénalités', style: TextStyle(color: AppColors.textSecondary, fontSize: 13, fontWeight: FontWeight.w600)),
+                const SizedBox(height: 12),
+                AppInput(label: 'Majoration retard (%)', controller: majorationCtrl, keyboardType: TextInputType.number),
+                const SizedBox(height: 12),
+                AppInput(label: 'Intérêt mensuel (%)', controller: interetCtrl, keyboardType: TextInputType.number),
+                const SizedBox(height: 12),
+                AppInput(label: 'Délai de grâce (jours)', controller: delaiGraceCtrl, keyboardType: TextInputType.number),
+                const SizedBox(height: 12),
+                AppInput(label: 'Majoration après mise en demeure (%)', controller: majorationMdmCtrl, keyboardType: TextInputType.number),
                 const SizedBox(height: 20),
                 SizedBox(
                   width: double.infinity,
@@ -243,6 +265,10 @@ class _TaxesPageState extends State<TaxesPage> {
                           'unite': unite,
                           'periodicite': periodicite,
                           if (descCtrl.text.isNotEmpty) 'description': descCtrl.text.trim(),
+                          if (majorationCtrl.text.isNotEmpty) 'taux_majoration_retard': double.tryParse(majorationCtrl.text),
+                          if (interetCtrl.text.isNotEmpty) 'taux_interet_mensuel': double.tryParse(interetCtrl.text),
+                          if (delaiGraceCtrl.text.isNotEmpty) 'delai_grace_jours': int.tryParse(delaiGraceCtrl.text),
+                          if (majorationMdmCtrl.text.isNotEmpty) 'taux_majoration_apres_mise_en_demeure': double.tryParse(majorationMdmCtrl.text),
                         });
                         if (mounted) {
                           Navigator.pop(ctx);
@@ -337,6 +363,13 @@ class _TaxeTile extends StatelessWidget {
       case 'foncier': catIcon = Icons.home; catColor = AppColors.success; break;
       case 'vehicule': catIcon = Icons.directions_car; catColor = AppColors.warning; break;
       case 'permis_construire': catIcon = Icons.construction; catColor = AppColors.info; break;
+      case 'etalage': catIcon = Icons.shopping_cart; catColor = AppColors.success; break;
+      case 'peage_urbain': catIcon = Icons.linear_scale; catColor = AppColors.warning; break;
+      case 'pont_bascule': catIcon = Icons.scale; catColor = AppColors.info; break;
+      case 'chargement': catIcon = Icons.upload; catColor = AppColors.primary; break;
+      case 'dechargement': catIcon = Icons.download; catColor = AppColors.primary; break;
+      case 'journaliere': catIcon = Icons.calendar_today; catColor = AppColors.warning; break;
+      case 'hebdomadaire': catIcon = Icons.date_range; catColor = AppColors.info; break;
       default: catIcon = Icons.receipt; catColor = AppColors.primary;
     }
 

@@ -4,9 +4,11 @@ import 'api_service.dart';
 class NotificationService {
   final ApiService _api = ApiService();
 
-  Future<List<Notification>> list({int page = 1}) async {
+  Future<List<Notification>> list({String? search, int page = 1, int perPage = 20}) async {
     final response = await _api.get('/notifications', queryParameters: {
       'page': page,
+      'per_page': perPage,
+      if (search != null && search.isNotEmpty) 'search': search,
     });
 
     if (response['success'] == true) {
@@ -34,14 +36,19 @@ class NotificationService {
   }
 
   Future<void> marquerToutesCommeLues() async {
-    await _api.post('/notifications/marquer-toutes-lues');
+    await _api.patch('/notifications/lire-toutes');
   }
 
-  Future<NotificationStats> statistiques() async {
-    final response = await _api.get('/notifications/statistiques');
-    if (response['success'] == true) {
-      return NotificationStats.fromJson(response['data']);
+  Future<void> delete(int id) async {
+    await _api.delete('/notifications/$id');
+  }
+
+  Future<int> countNonLues() async {
+    try {
+      final items = await nonLues();
+      return items.length;
+    } catch (_) {
+      return 0;
     }
-    throw Exception(response['message'] ?? 'Erreur');
   }
 }

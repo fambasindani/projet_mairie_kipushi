@@ -77,6 +77,10 @@ export default function Declarations() {
   const [miseEnDemeureMotif, setMiseEnDemeureMotif] = useState('');
   const [sendingMiseEnDemeure, setSendingMiseEnDemeure] = useState(false);
 
+  const [annulationModal, setAnnulationModal] = useState<{ isOpen: boolean; item: DeclarationPaiement | null }>({ isOpen: false, item: null });
+  const [motifAnnulation, setMotifAnnulation] = useState('');
+  const [sendingAnnulation, setSendingAnnulation] = useState(false);
+
   const [printModal, setPrintModal] = useState<{ isOpen: boolean; item: DeclarationPaiement | null; qrDataUrl: string | null }>({ isOpen: false, item: null, qrDataUrl: null });
   const [openDropdown, setOpenDropdown] = useState<number | null>(null);
 
@@ -144,6 +148,11 @@ export default function Declarations() {
 
   const openConfirm = (item: DeclarationPaiement, action: 'valider' | 'annuler' | 'exonerer') => {
     setOpenDropdown(null);
+    if (action === 'annuler') {
+      setAnnulationModal({ isOpen: true, item });
+      setMotifAnnulation('');
+      return;
+    }
     setConfirmModal({ isOpen: true, item, action });
   };
 
@@ -153,9 +162,6 @@ export default function Declarations() {
       if (confirmModal.action === 'valider') {
         await declarationService.valider(confirmModal.item.id);
         toast.success('Déclaration validée');
-      } else if (confirmModal.action === 'annuler') {
-        await declarationService.annuler(confirmModal.item.id);
-        toast.success('Déclaration annulée');
       } else if (confirmModal.action === 'exonerer') {
         await declarationService.exonerer(confirmModal.item.id);
         toast.success('Déclaration exonérée');
@@ -166,6 +172,24 @@ export default function Declarations() {
     } catch (err: any) {
       const msg = err?.message || 'Erreur lors de l\'action';
       toast.error(msg);
+    }
+  };
+
+  const handleAnnuler = async () => {
+    if (!annulationModal.item || !motifAnnulation.trim()) return;
+    setSendingAnnulation(true);
+    try {
+      await declarationService.annuler(annulationModal.item.id, motifAnnulation.trim());
+      toast.success('Déclaration annulée');
+      setAnnulationModal({ isOpen: false, item: null });
+      setMotifAnnulation('');
+      fetchDeclarations(pagination.currentPage, pagination.perPage, search);
+      fetchStats();
+    } catch (err: any) {
+      const msg = err?.message || 'Erreur lors de l\'annulation';
+      toast.error(msg);
+    } finally {
+      setSendingAnnulation(false);
     }
   };
 
@@ -564,9 +588,9 @@ export default function Declarations() {
         isOpen={confirmModal.isOpen}
         onClose={() => setConfirmModal({ isOpen: false, item: null, action: '' })}
         onConfirm={handleConfirmAction}
-        title={confirmModal.action === 'valider' ? 'Valider' : confirmModal.action === 'annuler' ? 'Annuler' : 'Exonérer'}
+        title={confirmModal.action === 'valider' ? 'Valider' : 'Exonérer'}
         message={confirmMessages[confirmModal.action] ?? ''}
-        confirmText={confirmModal.action === 'valider' ? 'Valider' : confirmModal.action === 'annuler' ? 'Annuler' : 'Exonérer'}
+        confirmText={confirmModal.action === 'valider' ? 'Valider' : 'Exonérer'}
         variant="danger"
       />
 
@@ -579,6 +603,48 @@ export default function Declarations() {
         confirmText="Supprimer"
         variant="danger"
       />
+
+      <Modal
+        isOpen={annulationModal.isOpen}
+        onClose={() => { setAnnulationModal({ isOpen: false, item: null }); setMotifAnnulation(''); }}
+        title="Annuler la déclaration"
+        size="md"
+      >
+        {annulationModal.item && (
+          <div className="space-y-4">
+            <div className="bg-slate-50 rounded-lg p-4">
+              <p className="text-sm text-gray-600 mb-1">
+                <span className="font-medium">Opérateur :</span> {annulationModal.item.personne ? `${annulationModal.item.personne.nom} ${annulationModal.item.personne.prenom ?? ''}`.trim() : ''}
+              </p>
+              <p className="text-sm text-gray-600">
+                <span className="font-medium">Taxe :</span> {annulationModal.item.taxe?.nom}
+              </p>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Motif de l'annulation <span className="text-red-500">*</span></label>
+              <textarea
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                rows={3}
+                placeholder="Saisissez le motif de l'annulation..."
+                value={motifAnnulation}
+                onChange={(e) => setMotifAnnulation(e.target.value)}
+              />
+            </div>
+            <div className="flex justify-end gap-2 pt-4 border-t border-border">
+              <Button variant="secondary" onClick={() => { setAnnulationModal({ isOpen: false, item: null }); setMotifAnnulation(''); }}>
+                Annuler
+              </Button>
+              <Button
+                variant="danger"
+                onClick={handleAnnuler}
+                disabled={!motifAnnulation.trim() || sendingAnnulation}
+              >
+                {sendingAnnulation ? 'Annulation...' : 'Confirmer l\'annulation'}
+              </Button>
+            </div>
+          </div>
+        )}
+      </Modal>
 
       <Modal
         isOpen={penaliteModal.isOpen}

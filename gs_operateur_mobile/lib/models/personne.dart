@@ -2,11 +2,12 @@ class Personne {
   final int id;
   final String? type;
   final String nom;
-  final String postnom;
-  final String prenom;
+  final String? postnom;
+  final String? prenom;
   final String? denominationSociale;
   final String? formeJuridique;
   final String? sexe;
+  final String? nationalite;
   final String? telephone;
   final String? email;
   final String? adresse;
@@ -26,11 +27,12 @@ class Personne {
     required this.id,
     this.type,
     required this.nom,
-    required this.postnom,
-    required this.prenom,
+    this.postnom,
+    this.prenom,
     this.denominationSociale,
     this.formeJuridique,
     this.sexe,
+    this.nationalite,
     this.telephone,
     this.email,
     this.adresse,
@@ -52,11 +54,12 @@ class Personne {
       id: json['id'] ?? 0,
       type: json['type'],
       nom: json['nom'] ?? '',
-      postnom: json['postnom'] ?? '',
-      prenom: json['prenom'] ?? '',
+      postnom: json['postnom'],
+      prenom: json['prenom'],
       denominationSociale: json['denomination_sociale'],
       formeJuridique: json['forme_juridique'],
       sexe: json['sexe'],
+      nationalite: json['nationalite'],
       telephone: json['telephone'],
       email: json['email'],
       adresse: json['adresse'],
@@ -82,17 +85,19 @@ class Personne {
     if (type == 'morale' && denominationSociale != null && denominationSociale!.isNotEmpty) {
       return denominationSociale!;
     }
-    return '$nom $postnom $prenom'.trim();
+    final parts = [nom, postnom, prenom].where((s) => s != null && s.isNotEmpty);
+    return parts.join(' ');
   }
 
   Map<String, dynamic> toJson() => {
         if (type != null) 'type': type,
         if (nom.isNotEmpty) 'nom': nom,
-        if (postnom.isNotEmpty) 'postnom': postnom,
-        if (prenom.isNotEmpty) 'prenom': prenom,
+        if (postnom != null && postnom!.isNotEmpty) 'postnom': postnom,
+        if (prenom != null && prenom!.isNotEmpty) 'prenom': prenom,
         if (denominationSociale != null) 'denomination_sociale': denominationSociale,
         if (formeJuridique != null) 'forme_juridique': formeJuridique,
         if (sexe != null) 'sexe': sexe,
+        if (nationalite != null && nationalite!.isNotEmpty) 'nationalite': nationalite,
         if (telephone != null && telephone!.isNotEmpty) 'telephone': telephone,
         if (email != null && email!.isNotEmpty) 'email': email,
         if (adresse != null && adresse!.isNotEmpty) 'adresse': adresse,

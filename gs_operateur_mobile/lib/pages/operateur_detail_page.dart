@@ -266,13 +266,17 @@ class _OperateurDetailPageState extends State<OperateurDetailPage> {
                 children: [
                   const _SectionTitle(icon: Icons.person, title: 'Informations'),
                   InfoRow(label: 'Nom', value: _personne!.nom),
-                  InfoRow(label: 'Post-nom', value: _personne!.postnom),
-                  InfoRow(label: 'Prénom', value: _personne!.prenom),
+                  if (_personne!.postnom != null && _personne!.postnom!.isNotEmpty)
+                    InfoRow(label: 'Post-nom', value: _personne!.postnom!),
+                  if (_personne!.prenom != null && _personne!.prenom!.isNotEmpty)
+                    InfoRow(label: 'Prénom', value: _personne!.prenom!),
                   InfoRow(label: 'CNI', value: _personne!.cni ?? '-'),
                   if (_personne!.dateNaissance != null)
                     InfoRow(label: 'Né(e) le', value: formatDate(_personne!.dateNaissance)),
                   if (_personne!.lieuNaissance != null)
                     InfoRow(label: 'Lieu', value: _personne!.lieuNaissance!),
+                  if (_personne!.nationalite != null && _personne!.nationalite!.isNotEmpty)
+                    InfoRow(label: 'Nationalité', value: _personne!.nationalite!),
                 ],
               ),
             ),

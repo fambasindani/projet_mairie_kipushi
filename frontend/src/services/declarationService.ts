@@ -36,8 +36,8 @@ export const declarationService = {
     return post<DeclarationPaiement>(`/declarations/${id}/valider`, {});
   },
 
-  annuler(id: number): Promise<DeclarationPaiement> {
-    return post<DeclarationPaiement>(`/declarations/${id}/annuler`, {});
+  annuler(id: number, motif_annulation: string): Promise<DeclarationPaiement> {
+    return post<DeclarationPaiement>(`/declarations/${id}/annuler`, { motif_annulation });
   },
 
   exonerer(id: number, motif?: string): Promise<DeclarationPaiement> {

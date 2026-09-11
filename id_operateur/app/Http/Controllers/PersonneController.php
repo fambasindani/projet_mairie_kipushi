@@ -60,6 +60,13 @@ class PersonneController extends Controller
             $query->where('sexe', $request->sexe);
         }
 
+        // Filtre par statut d'inscription (via table utilisateurs)
+        if ($request->has('statut_inscription') && !empty($request->statut_inscription)) {
+            $query->whereHas('utilisateur', function ($q) use ($request) {
+                $q->where('statut_inscription', $request->statut_inscription);
+            });
+        }
+
         // Filtre par commune
         if ($request->has('commune') && !empty($request->commune)) {
             $query->where('commune', 'LIKE', "%{$request->commune}%");
