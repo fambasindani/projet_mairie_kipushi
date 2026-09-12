@@ -62,7 +62,7 @@ export default function Layout() {
 
         <footer className="px-6 py-4 border-t border-border bg-white">
           <p className="text-center text-xs text-gray-400">
-            &copy; 2026 GS Opérateur &mdash; Tous droits r&eacute;serv&eacute;s.
+            &copy; 2026 I-KIPUSHI &mdash; Tous droits r&eacute;serv&eacute;s.
           </p>
         </footer>
       </div>

@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   static const Map<String, String> _routePermissions = {
     '/operateurs': 'operateur:read',
     '/declarations': 'paiement:read',
-    '/factures': 'facture:read',
+    '/factures': 'paiement:read',
     '/documents': 'document:read',
     '/notifications': 'notification:read',
     '/recus-perception': 'paiement:read',
@@ -31,9 +31,6 @@ class _HomePageState extends State<HomePage> {
     _NavItem(icon: Icons.people_outline, activeIcon: Icons.people, label: 'Opérateurs', route: '/operateurs'),
     _NavItem(icon: Icons.receipt_long_outlined, activeIcon: Icons.receipt_long, label: 'Déclarations', route: '/declarations'),
     _NavItem(icon: Icons.receipt_outlined, activeIcon: Icons.receipt, label: 'Factures', route: '/factures'),
-    _NavItem(icon: Icons.payment_outlined, activeIcon: Icons.payment, label: 'Perception', route: '/recus-perception'),
-    _NavItem(icon: Icons.folder_open_outlined, activeIcon: Icons.folder_open, label: 'Documents', route: '/documents'),
-    _NavItem(icon: Icons.notifications_outlined, activeIcon: Icons.notifications, label: 'Alertes', route: '/notifications'),
     _NavItem(icon: Icons.person_outline, activeIcon: Icons.person, label: 'Profil', route: '/profil'),
   ];
 
@@ -85,7 +82,7 @@ class _HomePageState extends State<HomePage> {
         ),
         child: SafeArea(
           child: SizedBox(
-            height: 60,
+            height: 64,
             child: Row(
               children: _navItems.asMap().entries.map((entry) {
                 final i = entry.key;
@@ -98,45 +95,32 @@ class _HomePageState extends State<HomePage> {
                       setState(() => _currentIndex = i);
                       context.go(item.route);
                     },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            Icon(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                            decoration: isActive ? BoxDecoration(
+                              color: AppColors.primary.withValues(alpha: 0.12),
+                              borderRadius: BorderRadius.circular(16),
+                            ) : null,
+                            child: Icon(
                               isActive ? item.activeIcon : item.icon,
                               color: isActive ? AppColors.primary : AppColors.textMuted,
                               size: 24,
                             ),
-                            if (item.label == 'Alertes')
-                              Consumer<NotificationProvider>(
-                                builder: (_, notifProv, __) {
-                                  if (notifProv.nonLues == 0) return const SizedBox();
-                                  return Positioned(
-                                    right: -6, top: -4,
-                                    child: Container(
-                                      padding: const EdgeInsets.all(4),
-                                      decoration: const BoxDecoration(color: AppColors.error, shape: BoxShape.circle),
-                                      constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
-                                      child: Text('${notifProv.nonLues}', style: const TextStyle(color: Colors.white, fontSize: 9, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
-                                    ),
-                                  );
-                                },
-                              ),
-                          ],
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          item.label,
-                          style: TextStyle(
-                            color: isActive ? AppColors.primary : AppColors.textMuted,
-                            fontSize: 10,
-                            fontWeight: isActive ? FontWeight.w600 : FontWeight.normal,
                           ),
-                        ),
-                      ],
-                    ),
+                          const SizedBox(height: 2),
+                          Text(
+                            item.label,
+                            style: TextStyle(
+                              color: isActive ? AppColors.primary : AppColors.textMuted,
+                              fontSize: 10,
+                              fontWeight: isActive ? FontWeight.w600 : FontWeight.normal,
+                            ),
+                          ),
+                        ],
+                      ),
                   ),
                 );
               }).toList(),
@@ -167,7 +151,7 @@ class HomeContent extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('GS Opérateur'),
+        title: const Text('I-KIPUSHI'),
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
@@ -205,12 +189,10 @@ class HomeContent extends StatelessWidget {
               _QuickAction(icon: Icons.people, label: 'Opérateurs', color: AppColors.primary, onTap: () => context.go('/operateurs')),
             if (can('paiement:read'))
               _QuickAction(icon: Icons.receipt_long, label: 'Déclarations', color: AppColors.success, onTap: () => context.go('/declarations')),
-            if (can('facture:read'))
-              _QuickAction(icon: Icons.receipt, label: 'Factures', color: AppColors.info, onTap: () => context.go('/factures')),
+            if (can('paiement:read'))
+              _QuickAction(icon: Icons.payment, label: 'Factures & Perception', color: AppColors.info, onTap: () => context.go('/factures')),
             if (can('document:read'))
               _QuickAction(icon: Icons.folder_open, label: 'Documents', color: AppColors.warning, onTap: () => context.go('/documents')),
-            if (can('paiement:read'))
-              _QuickAction(icon: Icons.receipt, label: 'Reçus Perception', color: AppColors.secondary, onTap: () => context.go('/recus-perception')),
             if (can('taxe:read'))
               _QuickAction(icon: Icons.receipt, label: 'Taxes', color: AppColors.secondary, onTap: () => context.go('/taxes')),
             if (can('notification:read'))

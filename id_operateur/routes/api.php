@@ -294,6 +294,7 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('/{id}/valider', [DeclarationPaiementController::class, 'validerPaiement'])->name('valider');
             Route::post('/{id}/annuler', [DeclarationPaiementController::class, 'annuler'])->name('annuler');
             Route::post('/{id}/exonerer', [DeclarationPaiementController::class, 'exonerer'])->name('exonerer');
+            Route::get('/{id}/justificatif-exoneration', [DeclarationPaiementController::class, 'justificatifExoneration'])->name('justificatif-exoneration');
         });
     });
 
@@ -342,6 +343,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::middleware(['permission:paiement:update'])->group(function () {
             Route::put('/{id}', [RecuPerceptionController::class, 'update'])->name('update');
+            Route::post('/{id}/valider', [RecuPerceptionController::class, 'valider'])->name('valider');
         });
 
         Route::middleware(['permission:paiement:delete'])->group(function () {

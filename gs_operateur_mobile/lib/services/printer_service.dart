@@ -17,8 +17,8 @@ class PrinterService {
 
   static String _center(String text, int width) {
     if (text.length >= width) return text;
-    final padding = (width - text.length) ~/ 2;
-    return ' ' * padding + text;
+    final pad = (width - text.length) ~/ 2;
+    return ' ' * pad + text;
   }
 
   static Future<void> printDeclaration(DeclarationPaiement declaration) async {
@@ -26,6 +26,7 @@ class PrinterService {
     final date = formatDateTime(declaration.datePaiement ?? declaration.dateDeclaration);
     final operateur = declaration.personne?.displayName ?? 'N/A';
     final taxe = declaration.taxe?.nom ?? '-';
+    final url = 'https://totalconceptrdc.org/id_operateur/verifier-recu/$num';
 
     final sb = StringBuffer();
     sb.writeln(_center('REPUBLIQUE DEMOCRATIQUE DU CONGO', 32));
@@ -59,13 +60,14 @@ class PrinterService {
     sb.writeln(_center('TOTAL PAYE : ${formatMontant(declaration.montantTotal)}', 32));
     sb.writeln(_center('PAIEMENT CONFIRME', 32));
     sb.writeln();
+    sb.writeln('Verifier: $url');
     sb.writeln();
     sb.writeln();
 
     final text = sb.toString();
 
     try {
-      await _channel.invokeMethod('printText', {'text': text});
+      await _channel.invokeMethod('printText', {'text': text, 'qrUrl': url});
       return;
     } catch (e) {}
 
@@ -79,6 +81,8 @@ class PrinterService {
   }
 
   static Future<void> printRecuPerception(RecuPerception recu) async {
+    final url = 'https://totalconceptrdc.org/id_operateur/verifier-recu/${recu.numero}';
+
     final sb = StringBuffer();
     sb.writeln(_center('REPUBLIQUE DEMOCRATIQUE DU CONGO', 32));
     sb.writeln(_center('PROVINCE DU HAUT-KATANGA', 32));
@@ -119,13 +123,14 @@ class PrinterService {
       sb.writeln('Observat.: ${recu.observations}');
     }
     sb.writeln();
+    sb.writeln('Verifier: $url');
     sb.writeln();
     sb.writeln();
 
     final text = sb.toString();
 
     try {
-      await _channel.invokeMethod('printText', {'text': text});
+      await _channel.invokeMethod('printText', {'text': text, 'qrUrl': url});
       return;
     } catch (e) {}
 

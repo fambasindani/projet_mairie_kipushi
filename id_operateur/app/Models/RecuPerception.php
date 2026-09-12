@@ -15,6 +15,7 @@ class RecuPerception extends Model
         'taxe_id',
         'personne_id',
         'percepteur_id',
+        'valide',
         'type_perception',
         'numero',
         'date_emission',
@@ -35,6 +36,7 @@ class RecuPerception extends Model
         'date_emission' => 'date',
         'montant' => 'decimal:2',
         'poids' => 'decimal:2',
+        'valide' => 'boolean',
     ];
 
     // Relations

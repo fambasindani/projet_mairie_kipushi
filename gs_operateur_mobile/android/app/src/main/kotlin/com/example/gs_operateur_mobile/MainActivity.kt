@@ -28,6 +28,7 @@ class MainActivity : FlutterActivity() {
                 "scanPrinter" -> result.success(scanForPrinter())
                 "printText" -> {
                     val text = call.argument<String>("text") ?: ""
+                    _qrUrl = call.argument<String>("qrUrl")
                     try {
                         printViaSDK(text)
                         result.success(true)
@@ -47,6 +48,15 @@ class MainActivity : FlutterActivity() {
                         result.success(true)
                     } catch (e: Exception) {
                         result.error("PRINT_ERROR", e.message, null)
+                    }
+                }
+                "printQrCode" -> {
+                    val data = call.argument<String>("data") ?: ""
+                    try {
+                        printQrCodeEscPos(data)
+                        result.success(true)
+                    } catch (e: Exception) {
+                        result.error("QR_ERROR", e.message, null)
                     }
                 }
                 else -> result.notImplemented()
@@ -273,21 +283,20 @@ class MainActivity : FlutterActivity() {
         _printLog.clear()
         val errors = mutableListOf<String>()
 
-        // If we have a printer instance, use instance methods directly
         if (printerInstance != null) {
             _printLog.add("=== Using instance methods ===")
             val inst = printerInstance!!
-            val steps = listOf(
+
+            val steps = mutableListOf(
                 "start" to arrayOf<Any>(0),
                 "clearString" to arrayOf<Any>(),
-                "setFontSize" to arrayOf<Any>(24),
+                "enlargeFontSize" to arrayOf<Any>(0),
                 "setAlgin" to arrayOf<Any>(0),
                 "setBold" to arrayOf<Any>(true),
                 "addString" to arrayOf<Any>(text),
-                "printString" to arrayOf<Any>(),
-                "paperCut" to arrayOf<Any>(),
-                "stop" to arrayOf<Any>()
+                "printString" to arrayOf<Any>()
             )
+
             for ((name, args) in steps) {
                 try {
                     val m = findMethod(inst.javaClass, name, args)
@@ -296,7 +305,7 @@ class MainActivity : FlutterActivity() {
                         m.invoke(inst, *args)
                         _printLog.add("OK: $name()")
                     } else {
-                        _printLog.add("FAIL: $name not found on instance")
+                        _printLog.add("FAIL: $name not found")
                         errors.add(name)
                     }
                 } catch (e: Exception) {
@@ -305,85 +314,165 @@ class MainActivity : FlutterActivity() {
                     errors.add("$name: $msg")
                 }
             }
-        } else {
-            // Static methods on ThermalPrinter
-            _printLog.add("=== Using static ThermalPrinter ===")
-            val cls = thermalPrinterClass ?: throw Exception("No class")
 
-            // Init
-            try {
-                val m = findStaticMethod(cls, "init", arrayOf(this))
-                m?.invoke(null, this)
-                _printLog.add("OK: init(context)")
-            } catch (e: Exception) { _printLog.add("FAIL: init: ${e.message}") }
+            // Try addBarcode for QR code
+            if (_qrUrl != null) {
+                _printLog.add("=== QR Code via addBarcode ===")
+                val qrPrinted = tryAddBarcode(inst, _qrUrl!!)
+                if (qrPrinted) {
+                    try {
+                        val m = findMethod(inst.javaClass, "printString", emptyArray<Any>())
+                        if (m != null) { m.isAccessible = true; m.invoke(inst); _printLog.add("OK: printString(QR)") }
+                    } catch (_: Exception) {}
+                }
+            }
 
-            // Try creating an instance of NewUsbThermalPrinter
-            val instanceClasses = listOf(
-                "com.common.apiutil.printer.NewUsbThermalPrinter",
-                "com.common.apiutil.printer.UsbThermalPrinter",
-                "com.common.apiutil.printer.ThermalPrinter"
-            )
-            for (clsName in instanceClasses) {
+            for (name in listOf("paperCut", "cutPaper")) {
                 try {
-                    val instCls = serviceClassLoader?.loadClass(clsName) ?: Class.forName(clsName)
-                    // Try constructor with Context
-                    try {
-                        printerInstance = instCls.getDeclaredConstructor(Context::class.java).newInstance(this)
-                        _printLog.add("OK: Instance $clsName(context)")
-                        break
-                    } catch (_: Exception) {}
-                    // Try default constructor
-                    try {
-                        printerInstance = instCls.getDeclaredConstructor().newInstance()
-                        _printLog.add("OK: Instance $clsName()")
-                        break
-                    } catch (_: Exception) {}
+                    val m = findMethod(inst.javaClass, name, emptyArray<Any>())
+                    if (m != null) { m.isAccessible = true; m.invoke(inst); _printLog.add("OK: $name()"); break }
                 } catch (_: Exception) {}
             }
+            try {
+                val m = findMethod(inst.javaClass, "stop", emptyArray<Any>())
+                if (m != null) { m.isAccessible = true; m.invoke(inst); _printLog.add("OK: stop()") }
+            } catch (_: Exception) {}
+        } else {
+            printViaSDKStatic(text)
+        }
+    }
 
-            // If we got an instance, use it
-            if (printerInstance != null) {
-                return printViaSDK(text)  // Re-enter with instance
-            }
+    private var _qrUrl: String? = null
 
-            // Fallback: static methods
-            _printLog.add("=== Static fallback ===")
-            val staticSteps = listOf(
-                "clearString" to emptyArray<Any>(),
-                "setFontSize" to arrayOf<Any>(24),
-                "setAlgin" to arrayOf<Any>(0),
-                "setBold" to arrayOf<Any>(true),
-                "addString" to arrayOf<Any>(text),
-                "printString" to emptyArray<Any>(),
-                "paperCut" to emptyArray<Any>()
-            )
-            for ((name, args) in staticSteps) {
-                try {
-                    val m = findStaticMethod(cls, name, args)
-                    if (m != null) {
-                        m.isAccessible = true
-                        m.invoke(null, *args)
-                        _printLog.add("OK: $name()")
-                    } else {
-                        _printLog.add("FAIL: $name not found static")
-                        errors.add(name)
-                    }
-                } catch (e: Exception) {
-                    val msg = e.cause?.message ?: e.message ?: "null"
-                    _printLog.add("FAIL: $name: $msg")
-                    errors.add("$name: $msg")
+    private fun tryAddBarcode(inst: Any, data: String): Boolean {
+        // addBarcode(String content, int symbology, int width, int height, int hriPosition)
+        // symbology: 65 = QR_CODE
+        val combos = listOf(
+            arrayOf<Any>(data, 65, 4, 4, 0),
+            arrayOf<Any>(data, 65, 3, 3, 0),
+            arrayOf<Any>(data, 65, 4, 0, 0),
+            arrayOf<Any>(data, 65, 3, 0, 0),
+            arrayOf<Any>(data, 65, 4, 4),
+            arrayOf<Any>(data, 65, 3),
+            arrayOf<Any>(data, 65),
+            arrayOf<Any>(data)
+        )
+        for (args in combos) {
+            try {
+                val m = findMethod(inst.javaClass, "addBarcode", args)
+                if (m != null) {
+                    m.isAccessible = true
+                    m.invoke(inst, *args)
+                    _printLog.add("OK: addBarcode(${args.size} params)")
+                    return true
                 }
-            }
+            } catch (_: Exception) {}
+        }
+        _printLog.add("FAIL: addBarcode failed")
+        return false
+    }
+
+    private fun printViaSDKStatic(text: String) {
+        _printLog.add("=== Using static ThermalPrinter ===")
+        val cls = thermalPrinterClass ?: throw Exception("No class")
+
+        try {
+            val m = findStaticMethod(cls, "init", arrayOf<Any>(this))
+            m?.invoke(null, this)
+            _printLog.add("OK: init(context)")
+        } catch (e: Exception) { _printLog.add("FAIL: init: ${e.message}") }
+
+        // Try to create instance
+        for (clsName in listOf("com.common.apiutil.printer.NewUsbThermalPrinter", "com.common.apiutil.printer.UsbThermalPrinter", "com.common.apiutil.printer.ThermalPrinter")) {
+            try {
+                val instCls = serviceClassLoader?.loadClass(clsName) ?: Class.forName(clsName)
+                try { printerInstance = instCls.getDeclaredConstructor(Context::class.java).newInstance(this); _printLog.add("OK: Instance $clsName(context)"); break } catch (_: Exception) {}
+                try { printerInstance = instCls.getDeclaredConstructor().newInstance(); _printLog.add("OK: Instance $clsName()"); break } catch (_: Exception) {}
+            } catch (_: Exception) {}
         }
 
-        if (errors.isNotEmpty()) {
-            _printLog.add("=== ${errors.size} ERRORS ===")
-        } else {
-            _printLog.add("=== ALL OK ===")
+        if (printerInstance != null) {
+            printViaSDK(text)
+            return
+        }
+
+        // Static fallback
+        val staticSteps = mutableListOf(
+            "clearString" to emptyArray<Any>(),
+            "setFontSize" to arrayOf<Any>(24),
+            "setAlgin" to arrayOf<Any>(0),
+            "setBold" to arrayOf<Any>(true),
+            "addString" to arrayOf<Any>(text),
+            "printString" to emptyArray<Any>()
+        )
+        for ((name, args) in staticSteps) {
+            try {
+                val m = findStaticMethod(cls, name, args)
+                if (m != null) { m.isAccessible = true; m.invoke(null, *args); _printLog.add("OK: $name()") }
+            } catch (_: Exception) {}
+        }
+
+        for (name in listOf("paperCut", "cutPaper")) {
+            try { val m = findStaticMethod(cls, name, emptyArray<Any>()); if (m != null) { m.isAccessible = true; m.invoke(null); _printLog.add("OK: $name()"); break } } catch (_: Exception) {}
         }
     }
 
     private var _printLog = mutableListOf<String>()
+
+    private fun printQrCodeEscPos(data: String) {
+        val bytes = buildQrCodeEscPosBytes(data)
+        if (printerInstance != null) {
+            try {
+                val inst = printerInstance!!
+                // Try printQrCode / printQRCode on instance
+                for (name in listOf("printQrCode", "printQRCode")) {
+                    try {
+                        val m = findMethod(inst.javaClass, name, arrayOf<Any>(data, 8, 0))
+                        if (m != null) { m.isAccessible = true; m.invoke(inst, data, 8, 0); return }
+                    } catch (_: Exception) {}
+                    try {
+                        val m = findMethod(inst.javaClass, name, arrayOf<Any>(data))
+                        if (m != null) { m.isAccessible = true; m.invoke(inst, data); return }
+                    } catch (_: Exception) {}
+                }
+                // Try printRawData
+                try {
+                    val m = findMethod(inst.javaClass, "printRawData", arrayOf<Any>(bytes))
+                    if (m != null) { m.isAccessible = true; m.invoke(inst, bytes); return }
+                } catch (_: Exception) {}
+                // Try sendCommand
+                try {
+                    val m = findMethod(inst.javaClass, "sendCommand", arrayOf<Any>(bytes))
+                    if (m != null) { m.isAccessible = true; m.invoke(inst, bytes); return }
+                } catch (_: Exception) {}
+            } catch (_: Exception) {}
+        }
+        // Fallback: raw bytes to serial port
+        printRawBytes(bytes)
+    }
+
+    private fun buildQrCodeEscPosBytes(data: String): ByteArray {
+        val out = mutableListOf<Byte>()
+        val dataBytes = data.toByteArray(Charsets.US_ASCII)
+
+        // GS ( k - Select QR model 2
+        out.addAll(byteArrayOf(0x1D, 0x28, 0x6B, 0x04, 0x00, 0x31, 0x41, 0x32, 0x00).toList())
+        // GS ( k - Set module size (8)
+        out.addAll(byteArrayOf(0x1D, 0x28, 0x6B, 0x03, 0x00, 0x31, 0x43, 0x08).toList())
+        // GS ( k - Store data
+        val pL = (dataBytes.size + 3) % 256
+        val pH = (dataBytes.size + 3) / 256
+        val dL = dataBytes.size % 256
+        val dH = dataBytes.size / 256
+        out.addAll(byteArrayOf(0x1D, 0x28, 0x6B, pL.toByte(), pH.toByte(), 0x30, 0x45, 0x30, dL.toByte(), dH.toByte()).toList())
+        out.addAll(dataBytes.toList())
+        // GS ( k - Print QR
+        out.addAll(byteArrayOf(0x1D, 0x28, 0x6B, 0x03, 0x00, 0x31, 0x51, 0x30).toList())
+        // Feed lines
+        out.addAll(byteArrayOf(0x0A, 0x0A, 0x0A).toList())
+
+        return out.toByteArray()
+    }
 
     private fun printRawBytes(bytes: ByteArray) {
         for (port in listOf("/dev/ttyHS0", "/dev/ttyHS1", "/dev/ttyS0", "/dev/ttyS1",

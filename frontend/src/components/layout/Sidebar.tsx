@@ -266,11 +266,11 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
       >
         <div className="flex items-center justify-between px-5 h-16 shrink-0 border-b border-white/5">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-accent-400 to-primary-500 flex items-center justify-center shadow-lg shadow-primary-500/20">
-              <Grid3X3 size={18} className="text-white" />
+            <div className="w-9 h-9 flex items-center justify-center overflow-hidden">
+              <img src="/src/assets/logo.png" alt="Logo" className="w-9 h-9 object-contain" />
             </div>
             <span className="text-white font-semibold text-[15px] tracking-tight whitespace-nowrap">
-              GS Opérateur
+              I-KIPUSHI
             </span>
           </div>
           <button

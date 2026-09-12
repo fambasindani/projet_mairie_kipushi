@@ -62,8 +62,10 @@ class PaiementService {
     throw Exception(response['message'] ?? 'Erreur lors de la validation');
   }
 
-  Future<DeclarationPaiement> annuler(int id) async {
-    final response = await _api.post('/declarations/$id/annuler');
+  Future<DeclarationPaiement> annuler(int id, String motifAnnulation) async {
+    final response = await _api.post('/declarations/$id/annuler', data: {
+      'motif_annulation': motifAnnulation,
+    });
     if (response['success'] == true) {
       return DeclarationPaiement.fromJson(response['data']);
     }

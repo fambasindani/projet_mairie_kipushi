@@ -56,7 +56,7 @@ export function FicheOperateurDocument({ personne: p, qrDataUrl, photoDataUrl }:
             </View>
             <View>
               <Text style={styles.headerTitle}>FICHE IDENTIFICATION OPÉRATEUR</Text>
-              <Text style={styles.headerSubtitle}>Système de Gestion GS Opérateur</Text>
+              <Text style={styles.headerSubtitle}>Système de Gestion I-KIPUSHI</Text>
             </View>
           </View>
 
@@ -230,7 +230,7 @@ export function FicheOperateurDocument({ personne: p, qrDataUrl, photoDataUrl }:
         </View>
 
         <View style={styles.footer}>
-          <Text style={styles.footerText}>GS Opérateur — Fiche d'identification — {now}</Text>
+          <Text style={styles.footerText}>I-KIPUSHI — Fiche d'identification — {now}</Text>
           <Text style={styles.footerText}>N° {p.id}</Text>
         </View>
       </Page>

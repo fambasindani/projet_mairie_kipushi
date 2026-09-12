@@ -40,8 +40,28 @@ export const declarationService = {
     return post<DeclarationPaiement>(`/declarations/${id}/annuler`, { motif_annulation });
   },
 
-  exonerer(id: number, motif?: string): Promise<DeclarationPaiement> {
-    return post<DeclarationPaiement>(`/declarations/${id}/exonerer`, { motif: motif || '' });
+  exonerer(id: number, motif: string, justificatif: File): Promise<DeclarationPaiement> {
+    const formData = new FormData();
+    formData.append('motif', motif);
+    formData.append('justificatif', justificatif);
+    return post<DeclarationPaiement>(`/declarations/${id}/exonerer`, formData);
+  },
+
+  justificatifExonerationUrl(id: number): string {
+    const BASE_URL = import.meta.env.VITE_API_URL || '/api';
+    return `${BASE_URL}/declarations/${id}/justificatif-exoneration`;
+  },
+
+  async downloadJustificatifExoneration(id: number): Promise<void> {
+    const url = this.justificatifExonerationUrl(id);
+    const token = localStorage.getItem('token');
+    const response = await fetch(url, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!response.ok) throw new Error('Erreur lors du téléchargement');
+    const blob = await response.blob();
+    const blobUrl = URL.createObjectURL(blob);
+    window.open(blobUrl, '_blank');
   },
 
   statistiques(): Promise<Record<string, unknown>> {

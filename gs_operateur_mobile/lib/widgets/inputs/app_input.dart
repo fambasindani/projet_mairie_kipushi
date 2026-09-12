@@ -6,6 +6,7 @@ class AppInput extends StatelessWidget {
   final String label;
   final String? hint;
   final TextEditingController? controller;
+  final String? initialValue;
   final String? Function(String?)? validator;
   final TextInputType? keyboardType;
   final bool obscureText;
@@ -25,6 +26,7 @@ class AppInput extends StatelessWidget {
     required this.label,
     this.hint,
     this.controller,
+    this.initialValue,
     this.validator,
     this.keyboardType,
     this.obscureText = false,
@@ -56,6 +58,7 @@ class AppInput extends StatelessWidget {
         const SizedBox(height: 6),
         TextFormField(
           controller: controller,
+          initialValue: controller == null ? initialValue : null,
           validator: validator,
           keyboardType: keyboardType,
           obscureText: obscureText,

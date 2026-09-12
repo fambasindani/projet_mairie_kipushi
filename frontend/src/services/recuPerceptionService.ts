@@ -25,6 +25,7 @@ export interface RecuPerception {
   taxe_id: number;
   personne_id: number | null;
   percepteur_id: number | null;
+  valide: boolean;
   type_perception: string;
   numero: string;
   date_emission: string;
@@ -90,6 +91,10 @@ export const recuPerceptionService = {
 
   delete(id: number): Promise<void> {
     return del<void>(`/recus-perception/${id}`);
+  },
+
+  valider(id: number): Promise<RecuPerception> {
+    return post<RecuPerception>(`/recus-perception/${id}/valider`);
   },
 
   prochainNumero(typePerception?: string): Promise<{ numero: string }> {

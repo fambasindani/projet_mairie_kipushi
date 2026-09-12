@@ -168,6 +168,9 @@ export interface DeclarationPaiement {
   interet_retard: number;
   mise_en_demeure_envoyee: boolean;
   date_mise_en_demeure: string | null;
+  motif_annulation: string | null;
+  motif_exoneration: string | null;
+  justificatif_exoneration: string | null;
   personne?: Personne;
   taxe?: Taxe;
   created_at: string;

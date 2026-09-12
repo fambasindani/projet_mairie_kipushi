@@ -4,23 +4,23 @@ import toast from 'react-hot-toast';
 import QRCodeLib from 'qrcode';
 import {
   Plus,
-  Trash2,
   Pencil,
+  Trash2,
   Printer,
+  CheckCircle,
   Receipt,
   Search,
   DollarSign,
   FileText,
-  CheckCircle,
 } from 'lucide-react';
 import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
 import PageHeader from '../components/ui/PageHeader';
 import StatCard from '../components/ui/StatCard';
 import Badge from '../components/ui/Badge';
 import DataTable from '../components/ui/DataTable';
-import ConfirmModal from '../components/ui/ConfirmModal';
 import Modal from '../components/ui/Modal';
 import Button from '../components/ui/Button';
+import ConfirmModal from '../components/ui/ConfirmModal';
 import RecuPerceptionPDF from '../components/pdf/RecuPerceptionPDF';
 import {
   recuPerceptionService,
@@ -51,10 +51,10 @@ export default function RecusPerception() {
   const [recus, setRecus] = useState<RecuPerception[]>([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({ currentPage: 1, lastPage: 1, total: 0 });
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [selectedRecu, setSelectedRecu] = useState<RecuPerception | null>(null);
   const [printRecu, setPrintRecu] = useState<RecuPerception | null>(null);
   const [printQrCode, setPrintQrCode] = useState<string | null>(null);
+  const [confirmValider, setConfirmValider] = useState<RecuPerception | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState<RecuPerception | null>(null);
   const [taxes, setTaxes] = useState<Taxe[]>([]);
   const [stats, setStats] = useState({ total_recus: 0, montant_total: 0, par_type: [] as Array<{ type_perception: string; total: number; montant: number }> });
   const [filters, setFilters] = useState({ search: '', date_debut: '', date_fin: '', taxe_id: '', type_perception: '' });
@@ -105,13 +105,33 @@ export default function RecusPerception() {
     } catch {}
   };
 
-  const handleDelete = async () => {
-    if (!selectedRecu) return;
+  const handleValider = async (recu: RecuPerception) => {
+    setConfirmValider(recu);
+  };
+
+  const confirmValiderAction = async () => {
+    if (!confirmValider) return;
     try {
-      await recuPerceptionService.delete(selectedRecu.id);
+      await recuPerceptionService.valider(confirmValider.id);
+      toast.success('Reçu validé');
+      setConfirmValider(null);
+      loadRecus();
+      loadStats();
+    } catch {
+      toast.error('Erreur lors de la validation');
+    }
+  };
+
+  const handleDelete = async (recu: RecuPerception) => {
+    setConfirmDelete(recu);
+  };
+
+  const confirmDeleteAction = async () => {
+    if (!confirmDelete) return;
+    try {
+      await recuPerceptionService.delete(confirmDelete.id);
       toast.success('Reçu supprimé');
-      setShowDeleteModal(false);
-      setSelectedRecu(null);
+      setConfirmDelete(null);
       loadRecus();
       loadStats();
     } catch {
@@ -149,22 +169,32 @@ export default function RecusPerception() {
       return <span className="text-slate-400">—</span>;
     }},
     { key: 'montant', label: 'Montant', render: (r: RecuPerception) => <span className="font-bold text-emerald-600">{formatCdf(r.montant)}</span> },
-    { key: 'conducteur', label: 'Conducteur', render: (r: RecuPerception) => <span className="text-sm">{r.chauffeur_nom || r.conducteur_nom || '—'}</span> },
+    { key: 'statut', label: 'Statut', render: (r: RecuPerception) => (
+      <Badge variant={r.valide ? 'success' : 'warning'}>{r.valide ? 'Validé' : 'En attente'}</Badge>
+    )},
     {
       key: 'actions', label: '', render: (r: RecuPerception) => (
         <div className="flex items-center gap-1">
-          {!isOperateur && (
+          {!isOperateur && !r.valide && (
+            <button onClick={() => handleValider(r)}
+              className="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition cursor-pointer" title="Valider">
+              <CheckCircle size={15} />
+            </button>
+          )}
+          {!isOperateur && !r.valide && (
             <button onClick={() => navigate(`/recus-perception/${r.id}/modifier`)}
               className="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition cursor-pointer" title="Modifier">
               <Pencil size={15} />
             </button>
           )}
-          <button onClick={() => handlePrint(r)}
-            className="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition cursor-pointer" title="Imprimer">
-            <Printer size={15} />
-          </button>
-          {!isOperateur && (
-            <button onClick={() => { setSelectedRecu(r); setShowDeleteModal(true); }}
+          {r.valide && (
+            <button onClick={() => handlePrint(r)}
+              className="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition cursor-pointer" title="Imprimer">
+              <Printer size={15} />
+            </button>
+          )}
+          {!isOperateur && !r.valide && (
+            <button onClick={() => handleDelete(r)}
               className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition cursor-pointer" title="Supprimer">
               <Trash2 size={15} />
             </button>
@@ -242,17 +272,6 @@ export default function RecusPerception() {
         emptyMessage="Aucun reçu de perception"
       />
 
-      {/* Delete Modal */}
-      <ConfirmModal
-        isOpen={showDeleteModal}
-        onClose={() => setShowDeleteModal(false)}
-        onConfirm={handleDelete}
-        title="Supprimer le reçu"
-        message={`Supprimer le reçu ${selectedRecu?.numero} ? Cette action est irréversible.`}
-        confirmText="Supprimer"
-        variant="danger"
-      />
-
       {/* Print Modal */}
       <Modal isOpen={!!printRecu} onClose={() => setPrintRecu(null)} title={`Reçu ${printRecu?.numero || ''}`} size="lg">
         {printRecu && (
@@ -278,6 +297,26 @@ export default function RecusPerception() {
           </div>
         )}
       </Modal>
+
+      <ConfirmModal
+        isOpen={!!confirmValider}
+        onClose={() => setConfirmValider(null)}
+        onConfirm={confirmValiderAction}
+        title="Valider le reçu"
+        message={`Confirmer la validation du reçu ${confirmValider?.numero} ? Cette action est irréversible.`}
+        confirmText="Valider"
+        variant="warning"
+      />
+
+      <ConfirmModal
+        isOpen={!!confirmDelete}
+        onClose={() => setConfirmDelete(null)}
+        onConfirm={confirmDeleteAction}
+        title="Supprimer le reçu"
+        message={`Voulez-vous vraiment supprimer le reçu ${confirmDelete?.numero} ? Cette action est irréversible.`}
+        confirmText="Supprimer"
+        variant="danger"
+      />
     </div>
   );
 }

@@ -9,7 +9,7 @@
     <uses-feature android:name="android.hardware.usb.host" android:required="false"/>
     <uses-feature android:name="android.hardware.usb.accessory" android:required="false"/>
     <application
-        android:label="gs_operateur_mobile"
+        android:label="I-KIPUSHI"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true"

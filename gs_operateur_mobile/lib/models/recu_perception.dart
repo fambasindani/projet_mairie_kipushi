@@ -3,6 +3,7 @@ class RecuPerception {
   final String numero;
   final int taxeId;
   final int? personneId;
+  final bool valide;
   final String typePerception;
   final String dateEmission;
   final String? heureEmission;
@@ -45,6 +46,7 @@ class RecuPerception {
     required this.numero,
     required this.taxeId,
     this.personneId,
+    this.valide = false,
     required this.typePerception,
     required this.dateEmission,
     this.heureEmission,
@@ -71,6 +73,7 @@ class RecuPerception {
       numero: json['numero'] ?? '',
       taxeId: json['taxe_id'] ?? 0,
       personneId: json['personne_id'],
+      valide: json['valide'] ?? false,
       typePerception: json['type_perception'] ?? '',
       dateEmission: json['date_emission'] ?? '',
       heureEmission: json['heure_emission'],

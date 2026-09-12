@@ -38,6 +38,8 @@ class DeclarationPaiement extends Model
         'mise_en_demeure_envoyee',
         'date_mise_en_demeure',
         'motif_annulation',
+        'motif_exoneration',
+        'justificatif_exoneration',
     ];
 
     protected $casts = [

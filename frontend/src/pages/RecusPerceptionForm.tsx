@@ -75,7 +75,10 @@ export default function RecusPerceptionForm() {
   };
 
   const typeOptions = (Object.entries(typePerceptionLabels) as [TypePerception, string][]).map(([k, v]) => ({ label: v, value: k }));
-  const taxeOptions = taxes.map(t => ({ label: t.nom, value: t.id }));
+  const taxeOptions = taxes.map(t => ({
+    label: `${t.nom} — ${t.unite === 'pourcentage' ? t.taux + '%' : new Intl.NumberFormat('fr-CD', { style: 'currency', currency: 'CDF', minimumFractionDigits: 0 }).format(t.taux ?? 0)}`,
+    value: t.id,
+  }));
   const trajetOptions = [
     { label: 'Aller', value: 'aller' },
     { label: 'Retour', value: 'retour' },
@@ -84,8 +87,20 @@ export default function RecusPerceptionForm() {
 
   const handleSubmit = async (ev: React.FormEvent) => {
     ev.preventDefault();
-    if (!form.taxe_id) { setErrors({ taxe_id: 'Taxe requise' }); return; }
-    if (form.montant <= 0) { setErrors({ montant: 'Montant requis' }); return; }
+    const errs: Record<string, string> = {};
+    if (!form.taxe_id) errs.taxe_id = 'Taxe requise';
+    if (!form.montant || form.montant <= 0) errs.montant = 'Montant requis';
+    if (!form.date_emission) errs.date_emission = 'Date requise';
+
+    if (isVehicule) {
+      if (!form.chauffeur_nom?.trim()) errs.chauffeur_nom = 'Nom du chauffeur requis';
+    }
+    if (isChargement) {
+      if (!form.designation?.trim()) errs.designation = 'Désignation requise';
+      if (!form.conducteur_nom?.trim()) errs.conducteur_nom = 'Nom du conducteur requis';
+    }
+
+    if (Object.keys(errs).length > 0) { setErrors(errs); return; }
 
     setSaving(true);
     try {
@@ -176,7 +191,7 @@ export default function RecusPerceptionForm() {
                 <Input
                   label="Montant (FC) *"
                   type="number"
-                  value={form.montant || ''}
+                  value={form.montant ?? ''}
                   onChange={(e) => setField('montant', Number(e.target.value))}
                   error={errors.montant}
                 />
@@ -205,6 +220,7 @@ export default function RecusPerceptionForm() {
                   type="date"
                   value={form.date_emission}
                   onChange={(e) => setField('date_emission', e.target.value)}
+                  error={errors.date_emission}
                 />
                 <Input
                   label="Heure"
@@ -266,6 +282,7 @@ export default function RecusPerceptionForm() {
                     value={form.designation || ''}
                     onChange={(e) => setField('designation', e.target.value)}
                     placeholder="Ex: Sable, Gravier..."
+                    error={errors.designation}
                   />
                   <Input
                     label="Poids (tonnes)"
@@ -293,11 +310,12 @@ export default function RecusPerceptionForm() {
             </div>
             <div className="rounded-xl border border-slate-100 bg-slate-50/50 p-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Input
-                  label={isPeage ? 'Nom du chauffeur' : 'Nom du conducteur'}
-                  value={isPeage ? (form.chauffeur_nom || '') : (form.conducteur_nom || '')}
-                  onChange={(e) => isPeage ? setField('chauffeur_nom', e.target.value) : setField('conducteur_nom', e.target.value)}
-                />
+                  <Input
+                    label={isPeage ? 'Nom du chauffeur' : 'Nom du conducteur'}
+                    value={isPeage ? (form.chauffeur_nom || '') : (form.conducteur_nom || '')}
+                    onChange={(e) => isPeage ? setField('chauffeur_nom', e.target.value) : setField('conducteur_nom', e.target.value)}
+                    error={isPeage ? errors.chauffeur_nom : errors.conducteur_nom}
+                  />
                 {!isPeage && (
                   <Input
                     label="N° Pièce"

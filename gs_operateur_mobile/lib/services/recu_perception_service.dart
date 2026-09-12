@@ -77,6 +77,14 @@ class RecuPerceptionService {
     throw Exception(response['message'] ?? 'Erreur');
   }
 
+  Future<RecuPerception> valider(int id) async {
+    final response = await _api.post('/recus-perception/$id/valider');
+    if (response['success'] == true) {
+      return RecuPerception.fromJson(response['data']);
+    }
+    throw Exception(response['message'] ?? 'Erreur lors de la validation');
+  }
+
   Future<Map<String, dynamic>> qrcode(int id) async {
     final response = await _api.get('/recus-perception/$id/qrcode');
     if (response['success'] == true) {

@@ -68,8 +68,8 @@ class PaiementProvider extends ChangeNotifier {
     return declaration;
   }
 
-  Future<void> annuler(int id) async {
-    final declaration = await service.annuler(id);
+  Future<void> annuler(int id, String motifAnnulation) async {
+    final declaration = await service.annuler(id, motifAnnulation);
     final index = _declarations.indexWhere((d) => d.id == id);
     if (index != -1) {
       _declarations[index] = declaration;

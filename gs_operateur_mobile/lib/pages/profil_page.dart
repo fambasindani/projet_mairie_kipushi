@@ -170,7 +170,7 @@ class _ProfilPageState extends State<ProfilPage> {
               ),
             ),
             const SizedBox(height: 16),
-            Text('GS Opérateur v1.0.0', style: TextStyle(color: AppColors.textMuted, fontSize: 12)),
+            Text('I-KIPUSHI v1.0.0', style: TextStyle(color: AppColors.textMuted, fontSize: 12)),
             const SizedBox(height: 16),
           ],
         ),

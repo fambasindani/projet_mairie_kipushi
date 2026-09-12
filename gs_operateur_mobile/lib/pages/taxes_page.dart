@@ -178,8 +178,10 @@ class _TaxesPageState extends State<TaxesPage> {
     final delaiGraceCtrl = TextEditingController(text: taxe.delaiGraceJours?.toString() ?? '');
     final majorationMdmCtrl = TextEditingController(text: taxe.tauxMajorationApresMiseEnDemeure?.toString() ?? '');
     String categorie = taxe.categorie ?? 'patente';
-    String unite = taxe.unite ?? 'fixe';
+    String unite = taxe.unite ?? 'montant_fixe';
+    if (!['pourcentage', 'montant_fixe', 'par_unite'].contains(unite)) unite = 'montant_fixe';
     String periodicite = taxe.periodicite ?? 'mensuelle';
+    if (!['journaliere', 'hebdomadaire', 'mensuelle', 'trimestrielle', 'semestrielle', 'annuelle', 'evenementielle'].contains(periodicite)) periodicite = 'mensuelle';
 
     showModalBottomSheet(
       context: context,
@@ -235,6 +237,7 @@ class _TaxesPageState extends State<TaxesPage> {
                     AppDropdownItem(value: 'trimestrielle', label: 'Trimestrielle'),
                     AppDropdownItem(value: 'semestrielle', label: 'Semestrielle'),
                     AppDropdownItem(value: 'annuelle', label: 'Annuelle'),
+                    AppDropdownItem(value: 'evenementielle', label: 'Événementielle'),
                   ],
                   onChanged: (v) => setSheetState(() => periodicite = v ?? periodicite),
                 ),

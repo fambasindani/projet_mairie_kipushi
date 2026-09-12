@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\Validator;
 
 class RecuPerceptionController extends Controller
 {
-    /**
-     * Liste des reçus de perception
-     */
     public function index(Request $request)
     {
         $query = RecuPerception::with(['taxe', 'personne', 'percepteur']);
@@ -32,6 +29,9 @@ class RecuPerceptionController extends Controller
         if ($request->taxe_id) {
             $query->where('taxe_id', $request->taxe_id);
         }
+        if ($request->has('valide')) {
+            $query->where('valide', $request->boolean('valide'));
+        }
         if ($request->search) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
@@ -52,9 +52,6 @@ class RecuPerceptionController extends Controller
         ]);
     }
 
-    /**
-     * Détail d'un reçu
-     */
     public function show($id)
     {
         $recu = RecuPerception::with(['taxe', 'personne', 'percepteur'])->find($id);
@@ -66,9 +63,6 @@ class RecuPerceptionController extends Controller
         return response()->json(['success' => true, 'data' => $recu]);
     }
 
-    /**
-     * Créer un reçu de perception
-     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -94,8 +88,8 @@ class RecuPerceptionController extends Controller
         }
 
         $data = $validator->validated();
+        $data['valide'] = false;
 
-        // Préfixe selon le type
         $prefixes = [
             'peage_urbain' => 'PEA',
             'pont_bascule' => 'PON',
@@ -114,15 +108,16 @@ class RecuPerceptionController extends Controller
         return response()->json(['success' => true, 'data' => $recu], 201);
     }
 
-    /**
-     * Mettre à jour un reçu
-     */
     public function update(Request $request, $id)
     {
         $recu = RecuPerception::find($id);
 
         if (!$recu) {
             return response()->json(['success' => false, 'message' => 'Reçu non trouvé'], 404);
+        }
+
+        if ($recu->valide) {
+            return response()->json(['success' => false, 'message' => 'Ce reçu est déjà validé et ne peut plus être modifié'], 403);
         }
 
         $validator = Validator::make($request->all(), [
@@ -153,9 +148,6 @@ class RecuPerceptionController extends Controller
         return response()->json(['success' => true, 'data' => $recu]);
     }
 
-    /**
-     * Supprimer un reçu
-     */
     public function destroy($id)
     {
         $recu = RecuPerception::find($id);
@@ -164,14 +156,33 @@ class RecuPerceptionController extends Controller
             return response()->json(['success' => false, 'message' => 'Reçu non trouvé'], 404);
         }
 
+        if ($recu->valide) {
+            return response()->json(['success' => false, 'message' => 'Ce reçu est déjà validé et ne peut plus être supprimé'], 403);
+        }
+
         $recu->delete();
 
         return response()->json(['success' => true, 'message' => 'Reçu supprimé']);
     }
 
-    /**
-     * Prochain numéro de série
-     */
+    public function valider($id)
+    {
+        $recu = RecuPerception::find($id);
+
+        if (!$recu) {
+            return response()->json(['success' => false, 'message' => 'Reçu non trouvé'], 404);
+        }
+
+        if ($recu->valide) {
+            return response()->json(['success' => false, 'message' => 'Ce reçu est déjà validé'], 422);
+        }
+
+        $recu->update(['valide' => true]);
+        $recu->load(['taxe', 'personne', 'percepteur']);
+
+        return response()->json(['success' => true, 'message' => 'Reçu validé', 'data' => $recu]);
+    }
+
     public function prochainNumero(Request $request)
     {
         $type = $request->type_perception ?? 'peage_urbain';
@@ -191,9 +202,6 @@ class RecuPerceptionController extends Controller
         ]);
     }
 
-    /**
-     * Statistiques des reçus
-     */
     public function stats(Request $request)
     {
         $query = RecuPerception::query();
@@ -215,6 +223,8 @@ class RecuPerceptionController extends Controller
 
         $total = (clone $query)->count();
         $montantTotal = (clone $query)->sum('montant');
+        $valides = (clone $query)->where('valide', true)->count();
+        $nonValides = (clone $query)->where('valide', false)->count();
 
         $parType = (clone RecuPerception::query())
             ->select('type_perception')
@@ -228,14 +238,13 @@ class RecuPerceptionController extends Controller
             'data' => [
                 'total_recus' => $total,
                 'montant_total' => $montantTotal,
+                'valides' => $valides,
+                'non_valides' => $nonValides,
                 'par_type' => $parType,
             ],
         ]);
     }
 
-    /**
-     * Types de perception disponibles
-     */
     public function types()
     {
         return response()->json([
@@ -244,9 +253,6 @@ class RecuPerceptionController extends Controller
         ]);
     }
 
-    /**
-     * QR code d'un reçu
-     */
     public function qrcode($id)
     {
         $recu = RecuPerception::find($id);

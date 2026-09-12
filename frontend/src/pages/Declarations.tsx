@@ -81,6 +81,11 @@ export default function Declarations() {
   const [motifAnnulation, setMotifAnnulation] = useState('');
   const [sendingAnnulation, setSendingAnnulation] = useState(false);
 
+  const [exonerationModal, setExonerationModal] = useState<{ isOpen: boolean; item: DeclarationPaiement | null }>({ isOpen: false, item: null });
+  const [motifExoneration, setMotifExoneration] = useState('');
+  const [justificatifFile, setJustificatifFile] = useState<File | null>(null);
+  const [sendingExoneration, setSendingExoneration] = useState(false);
+
   const [printModal, setPrintModal] = useState<{ isOpen: boolean; item: DeclarationPaiement | null; qrDataUrl: string | null }>({ isOpen: false, item: null, qrDataUrl: null });
   const [openDropdown, setOpenDropdown] = useState<number | null>(null);
 
@@ -153,6 +158,12 @@ export default function Declarations() {
       setMotifAnnulation('');
       return;
     }
+    if (action === 'exonerer') {
+      setExonerationModal({ isOpen: true, item });
+      setMotifExoneration('');
+      setJustificatifFile(null);
+      return;
+    }
     setConfirmModal({ isOpen: true, item, action });
   };
 
@@ -162,9 +173,6 @@ export default function Declarations() {
       if (confirmModal.action === 'valider') {
         await declarationService.valider(confirmModal.item.id);
         toast.success('Déclaration validée');
-      } else if (confirmModal.action === 'exonerer') {
-        await declarationService.exonerer(confirmModal.item.id);
-        toast.success('Déclaration exonérée');
       }
       setConfirmModal({ isOpen: false, item: null, action: '' });
       fetchDeclarations(pagination.currentPage, pagination.perPage, search);
@@ -193,10 +201,27 @@ export default function Declarations() {
     }
   };
 
+  const handleExoneration = async () => {
+    if (!exonerationModal.item || !motifExoneration.trim() || !justificatifFile) return;
+    setSendingExoneration(true);
+    try {
+      await declarationService.exonerer(exonerationModal.item.id, motifExoneration.trim(), justificatifFile);
+      toast.success('Déclaration exonérée');
+      setExonerationModal({ isOpen: false, item: null });
+      setMotifExoneration('');
+      setJustificatifFile(null);
+      fetchDeclarations(pagination.currentPage, pagination.perPage, search);
+      fetchStats();
+    } catch (err: any) {
+      const msg = err?.message || 'Erreur lors de l\'exonération';
+      toast.error(msg);
+    } finally {
+      setSendingExoneration(false);
+    }
+  };
+
   const confirmMessages: Record<string, string> = {
     valider: 'Êtes-vous sûr de vouloir valider cette déclaration ?',
-    annuler: 'Êtes-vous sûr de vouloir annuler cette déclaration ?',
-    exonerer: 'Êtes-vous sûr de vouloir exonérer cette déclaration ?',
   };
 
   const handleCalculerPenalites = async (item: DeclarationPaiement) => {
@@ -349,12 +374,14 @@ export default function Declarations() {
               >
                 <Eye size={14} className="text-gray-400" /> Voir détail
               </button>
-              <button
-                onClick={() => handlePrint(item)}
-                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer"
-              >
-                <Printer size={14} className="text-gray-400" /> Imprimer
-              </button>
+              {item.statut === 'paye' && (
+                <button
+                  onClick={() => handlePrint(item)}
+                  className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer"
+                >
+                  <Printer size={14} className="text-gray-400" /> Imprimer
+                </button>
+              )}
               {!isOperateur && item.statut === 'en_attente' && (
                 <button
                   onClick={() => navigate(`/declarations/${item.id}/modifier`)}
@@ -540,6 +567,33 @@ export default function Declarations() {
               </div>
             )}
 
+            {viewModal.item.statut === 'exonere' && viewModal.item.motif_exoneration && (
+              <div className="border-t border-border pt-4">
+                <h4 className="text-sm font-semibold text-amber-600 mb-3 flex items-center gap-2">
+                  <CheckCircle size={16} />
+                  Exonération
+                </h4>
+                <div className="bg-amber-50 rounded-lg p-4 space-y-2">
+                  <div>
+                    <p className="text-xs text-gray-500 uppercase tracking-wider">Motif</p>
+                    <p className="text-sm text-gray-800 mt-1">{viewModal.item.motif_exoneration}</p>
+                  </div>
+                  {viewModal.item.justificatif_exoneration && (
+                    <div>
+                      <p className="text-xs text-gray-500 uppercase tracking-wider">Justificatif</p>
+                      <button
+                        onClick={() => declarationService.downloadJustificatifExoneration(viewModal.item!.id)}
+                        className="inline-flex items-center gap-1.5 text-sm text-primary-600 hover:text-primary-800 mt-1 cursor-pointer"
+                      >
+                        <FileText size={14} />
+                        Voir le justificatif
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
             {(viewModal.item.nombre_jours_retard > 0 || viewModal.item.penalites > 0) && (
               <div className="border-t border-border pt-4">
                 <h4 className="text-sm font-semibold text-red-600 mb-3 flex items-center gap-2">
@@ -640,6 +694,61 @@ export default function Declarations() {
                 disabled={!motifAnnulation.trim() || sendingAnnulation}
               >
                 {sendingAnnulation ? 'Annulation...' : 'Confirmer l\'annulation'}
+              </Button>
+            </div>
+          </div>
+        )}
+      </Modal>
+
+      <Modal
+        isOpen={exonerationModal.isOpen}
+        onClose={() => { setExonerationModal({ isOpen: false, item: null }); setMotifExoneration(''); setJustificatifFile(null); }}
+        title="Exonérer la déclaration"
+        size="md"
+      >
+        {exonerationModal.item && (
+          <div className="space-y-4">
+            <div className="bg-slate-50 rounded-lg p-4">
+              <p className="text-sm text-gray-600 mb-1">
+                <span className="font-medium">Opérateur :</span> {exonerationModal.item.personne ? `${exonerationModal.item.personne.nom} ${exonerationModal.item.personne.prenom ?? ''}`.trim() : ''}
+              </p>
+              <p className="text-sm text-gray-600 mb-1">
+                <span className="font-medium">Taxe :</span> {exonerationModal.item.taxe?.nom}
+              </p>
+              <p className="text-sm text-gray-600">
+                <span className="font-medium">Montant :</span> {new Intl.NumberFormat('fr-CD', { style: 'currency', currency: 'CDF', minimumFractionDigits: 0 }).format(exonerationModal.item.montant_total ?? 0)}
+              </p>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Motif de l'exonération <span className="text-red-500">*</span></label>
+              <textarea
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                rows={3}
+                placeholder="Saisissez le motif de l'exonération..."
+                value={motifExoneration}
+                onChange={(e) => setMotifExoneration(e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Justificatif <span className="text-red-500">*</span></label>
+              <input
+                type="file"
+                accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                onChange={(e) => setJustificatifFile(e.target.files?.[0] ?? null)}
+                className="w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100"
+              />
+              <p className="text-xs text-gray-400 mt-1">PDF, JPG, PNG, DOC — max 10 Mo</p>
+            </div>
+            <div className="flex justify-end gap-2 pt-4 border-t border-border">
+              <Button variant="secondary" onClick={() => { setExonerationModal({ isOpen: false, item: null }); setMotifExoneration(''); setJustificatifFile(null); }}>
+                Annuler
+              </Button>
+              <Button
+                variant="primary"
+                onClick={handleExoneration}
+                disabled={!motifExoneration.trim() || !justificatifFile || sendingExoneration}
+              >
+                {sendingExoneration ? 'Exonération...' : 'Confirmer l\'exonération'}
               </Button>
             </div>
           </div>

@@ -47,7 +47,7 @@ export function FactureDocument({ facture, qrDataUrl }: Props) {
         <View style={styles.header}>
           <View>
             <Text style={styles.title}>FACTURE</Text>
-            <Text style={styles.subtitle}>GS Opérateur — Système de gestion</Text>
+            <Text style={styles.subtitle}>I-KIPUSHI — Système de gestion</Text>
           </View>
           <View style={{ alignItems: 'flex-end' }}>
             <Text style={styles.infoValue}>N° {facture.numero_facture}</Text>
@@ -112,7 +112,7 @@ export function FactureDocument({ facture, qrDataUrl }: Props) {
         </View>
 
         <View style={styles.footer}>
-          <Text style={styles.footerText}>GS Opérateur — {now}</Text>
+          <Text style={styles.footerText}>I-KIPUSHI — {now}</Text>
           <Text style={styles.footerText}>Document généré automatiquement</Text>
         </View>
       </Page>

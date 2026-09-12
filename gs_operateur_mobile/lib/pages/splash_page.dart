@@ -57,17 +57,15 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                padding: const EdgeInsets.all(24),
-                decoration: BoxDecoration(
-                  color: AppColors.primary.withValues(alpha: 0.2),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(Icons.location_on, size: 64, color: AppColors.primary),
+              Image.asset(
+                'assets/images/logo.png',
+                width: 120,
+                height: 120,
+                fit: BoxFit.contain,
               ),
               const SizedBox(height: 24),
               const Text(
-                'GS Opérateur',
+                'I-KIPUSHI',
                 style: TextStyle(
                   color: AppColors.textPrimary,
                   fontSize: 28,

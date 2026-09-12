@@ -72,17 +72,15 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: AppColors.primary.withValues(alpha: 0.2),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(Icons.location_on, size: 48, color: AppColors.primary),
+                    Image.asset(
+                      'assets/images/logo.png',
+                      width: 64,
+                      height: 64,
+                      fit: BoxFit.contain,
                     ),
                     const SizedBox(height: 16),
                     const Text(
-                      'GS Opérateur',
+                      'I-KIPUSHI',
                       style: TextStyle(color: AppColors.textPrimary, fontSize: 26, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),

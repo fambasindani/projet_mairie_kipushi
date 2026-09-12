@@ -69,8 +69,8 @@ export default function Login() {
 
         <div className="bg-white rounded-3xl shadow-2xl p-8">
           <div className="flex flex-col items-center mb-8">
-            <div className="w-16 h-16 rounded-2xl bg-primary-100 flex items-center justify-center mb-4">
-              <LayoutDashboard size={32} className="text-primary-600" />
+            <div className="w-16 h-16 flex items-center justify-center mb-4 overflow-hidden">
+              <img src="/src/assets/logo.png" alt="Logo" className="w-16 h-16 object-contain" />
             </div>
             <h1 className="text-2xl font-bold text-gray-800">Connexion</h1>
             <p className="text-sm text-gray-500 mt-1">Accédez à votre espace</p>
@@ -118,7 +118,7 @@ export default function Login() {
         </div>
 
         <p className="text-center text-sm text-white/70 mt-6">
-          &copy; 2026 GS Opérateur
+          &copy; 2026 I-KIPUSHI
         </p>
       </div>
     </div>

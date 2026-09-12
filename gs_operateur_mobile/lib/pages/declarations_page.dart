@@ -105,6 +105,58 @@ class _DeclarationsPageState extends State<DeclarationsPage> {
     );
   }
 
+  void _annulerDeclaration(DeclarationPaiement d) {
+    final motifCtrl = TextEditingController();
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => StatefulBuilder(
+        builder: (ctx, setSheetState) => Container(
+          padding: EdgeInsets.fromLTRB(16, 16, 16, MediaQuery.of(ctx).viewInsets.bottom + 16),
+          decoration: const BoxDecoration(
+            color: AppColors.bgDark,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Text('Annuler la Déclaration', style: TextStyle(color: AppColors.error, fontSize: 18, fontWeight: FontWeight.w600)),
+                const SizedBox(height: 16),
+                Text('Taxe: ${d.taxe?.nom ?? '-'}', style: const TextStyle(color: AppColors.textSecondary)),
+                Text('Montant: ${formatMontant(d.montantTotal)}', style: const TextStyle(color: AppColors.textSecondary)),
+                const SizedBox(height: 16),
+                AppInput(label: 'Motif de l\'annulation *', controller: motifCtrl, maxLines: 3),
+                const SizedBox(height: 20),
+                AppButton(
+                  label: 'Confirmer l\'annulation',
+                  icon: Icons.cancel,
+                  isExpanded: true,
+                  onPressed: () async {
+                    if (motifCtrl.text.trim().isEmpty) {
+                      showAppSnackBar(context, 'Le motif est obligatoire', isError: true);
+                      return;
+                    }
+                    Navigator.pop(ctx);
+                    try {
+                      await PaiementService().annuler(d.id, motifCtrl.text.trim());
+                      showAppSnackBar(context, 'Déclaration annulée');
+                      _load();
+                    } catch (e) {
+                      if (mounted) showAppSnackBar(context, 'Erreur: $e', isError: true);
+                    }
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   void _showDetails(DeclarationPaiement d) {
     final statut = d.statut;
     showModalBottomSheet(
@@ -142,6 +194,8 @@ class _DeclarationsPageState extends State<DeclarationsPage> {
               if (d.datePaiement != null) _buildDetail('Payé le', formatDate(d.datePaiement)),
               if (d.referencePaiement != null) _buildDetail('Réf. paiement', d.referencePaiement!),
               if (d.observations != null && d.observations!.isNotEmpty) _buildDetail('Observations', d.observations!),
+              if (d.motifAnnulation != null && d.motifAnnulation!.isNotEmpty) _buildDetail('Motif annulation', d.motifAnnulation!),
+              if (d.motifExoneration != null && d.motifExoneration!.isNotEmpty) _buildDetail('Motif exonération', d.motifExoneration!),
               const SizedBox(height: 20),
               if (statut == 'en_attente') ...[
                 Row(
@@ -191,6 +245,22 @@ class _DeclarationsPageState extends State<DeclarationsPage> {
                       ),
                     ),
                   ],
+                ),
+                const SizedBox(height: 8),
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    onPressed: () {
+                      Navigator.pop(ctx);
+                      _annulerDeclaration(d);
+                    },
+                    icon: const Icon(Icons.cancel_outlined, size: 18),
+                    label: const Text('Annuler'),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: AppColors.warning,
+                      minimumSize: const Size(double.infinity, 48),
+                    ),
+                  ),
                 ),
               ],
             ],

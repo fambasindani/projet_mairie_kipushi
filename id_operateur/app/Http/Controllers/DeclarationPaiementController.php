@@ -504,7 +504,7 @@ class DeclarationPaiementController extends Controller
     /**
      * Exonérer une déclaration
      */
-    public function exonerer($id)
+    public function exonerer(Request $request, $id)
     {
         $declaration = DeclarationPaiement::find($id);
 
@@ -522,17 +522,60 @@ class DeclarationPaiementController extends Controller
             ], 422);
         }
 
+        $validated = $request->validate([
+            'motif' => 'required|string|max:1000',
+            'justificatif' => 'required|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:10240',
+        ]);
+
+        $justificatifPath = null;
+        if ($request->hasFile('justificatif')) {
+            $file = $request->file('justificatif');
+            $filename = 'exoneration_' . $declaration->id . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $justificatifPath = $file->storeAs('exonerations', $filename, 'public');
+        }
+
         $declaration->update([
             'statut' => 'exonere',
             'montant_total' => 0,
             'montant_taxe' => 0,
             'penalites' => 0,
+            'motif_exoneration' => $validated['motif'],
+            'justificatif_exoneration' => $justificatifPath,
         ]);
 
         return response()->json([
             'success' => true,
             'message' => 'Déclaration exonérée avec succès',
             'data' => $declaration
+        ]);
+    }
+
+    public function justificatifExoneration($id)
+    {
+        $declaration = DeclarationPaiement::find($id);
+
+        if (!$declaration || !$declaration->justificatif_exoneration) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Document non trouvé'
+            ], 404);
+        }
+
+        $path = storage_path('app/public/' . $declaration->justificatif_exoneration);
+
+        if (!file_exists($path)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Fichier non trouvé sur le serveur'
+            ], 404);
+        }
+
+        $mime = mime_content_type($path);
+        $filename = basename($path);
+
+        return response()->file($path, [
+            'Content-Type' => $mime,
+            'Content-Disposition' => 'inline; filename="' . $filename . '"',
         ]);
     }
 

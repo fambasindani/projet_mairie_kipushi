@@ -188,8 +188,13 @@ class _DeclarationFormPageState extends State<DeclarationFormPage> {
                       label: 'Taxe *',
                       value: _selectedTaxe,
                       hint: 'Sélectionner une taxe',
-                      items: _taxes.map((t) => AppDropdownItem(value: t, label: '${t.nom} (${t.tauxFormate})')).toList(),
-                      onChanged: (v) => setState(() => _selectedTaxe = v),
+                      items: _taxes.map((t) => AppDropdownItem(value: t, label: '${t.nom} - ${formatMontant(t.taux)} ${t.uniteLabel}')).toList(),
+                      onChanged: (v) {
+                        setState(() => _selectedTaxe = v);
+                        if (v != null) {
+                          _montantTaxeCtrl.text = v.taux.toStringAsFixed(0);
+                        }
+                      },
                       validator: (v) => v == null ? 'Requis' : null,
                     ),
                     const SizedBox(height: 16),

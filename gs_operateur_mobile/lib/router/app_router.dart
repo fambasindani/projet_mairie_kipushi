@@ -9,7 +9,7 @@ import '../pages/operateur_form_page.dart';
 import '../pages/operateur_detail_page.dart';
 import '../pages/declarations_page.dart';
 import '../pages/declaration_form_page.dart';
-import '../pages/factures_page.dart';
+import '../pages/factures_perception_page.dart';
 import '../pages/paiements_page.dart';
 import '../pages/notifications_page.dart';
 import '../pages/profil_page.dart';
@@ -51,13 +51,14 @@ final GoRouter appRouter = GoRouter(
         GoRoute(path: '/operateurs/:id/modifier', builder: (_, state) => OperateurFormPage(id: int.parse(state.pathParameters['id']!))),
         GoRoute(path: '/declarations', builder: (_, __) => const DeclarationsPage()),
         GoRoute(path: '/declarations/ajouter', builder: (_, __) => const DeclarationFormPage()),
-        GoRoute(path: '/factures', builder: (_, __) => const FacturesPage()),
+        GoRoute(path: '/factures', builder: (_, __) => const FacturesPerceptionPage()),
         GoRoute(path: '/paiements', builder: (_, __) => const PaiementsPage()),
         GoRoute(path: '/taxes', builder: (_, __) => const TaxesPage()),
         GoRoute(path: '/documents', builder: (_, __) => const DocumentsPage()),
         GoRoute(path: '/notifications', builder: (_, __) => const NotificationsPage()),
         GoRoute(path: '/recus-perception', builder: (_, __) => const RecusPerceptionPage()),
         GoRoute(path: '/recus-perception/ajouter', builder: (_, __) => const RecuPerceptionFormPage()),
+        GoRoute(path: '/recus-perception/:id/modifier', builder: (_, state) => RecuPerceptionFormPage(id: int.parse(state.pathParameters['id']!))),
         GoRoute(path: '/profil', builder: (_, __) => const ProfilPage()),
       ],
     ),

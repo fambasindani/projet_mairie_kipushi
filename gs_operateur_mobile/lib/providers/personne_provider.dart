@@ -20,7 +20,11 @@ class PersonneProvider extends ChangeNotifier {
   String? get statutInscription => _statutInscription;
 
   Future<void> load({String? search, String? statutInscription, bool refresh = false}) async {
-    if (statutInscription != null) _statutInscription = statutInscription;
+    if (statutInscription != null) {
+      _statutInscription = statutInscription;
+    } else if (refresh) {
+      _statutInscription = null;
+    }
     if (refresh) {
       _currentPage = 1;
       _hasMore = true;

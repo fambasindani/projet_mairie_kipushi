@@ -63,9 +63,14 @@ class _FacturePdfPageState extends State<FacturePdfPage> {
       padding: const EdgeInsets.all(24),
       child: Column(
         children: [
-          const Icon(Icons.location_on, size: 40, color: AppColors.primary),
+          Image.asset(
+            'assets/images/logo.png',
+            width: 56,
+            height: 56,
+            fit: BoxFit.contain,
+          ),
           const SizedBox(height: 8),
-          const Text('GS OPÉRATEUR', style: TextStyle(color: AppColors.textPrimary, fontSize: 20, fontWeight: FontWeight.bold)),
+          const Text('I-KIPUSHI', style: TextStyle(color: AppColors.textPrimary, fontSize: 20, fontWeight: FontWeight.bold)),
           const Text('Reçu de Paiement', style: TextStyle(color: AppColors.textSecondary, fontSize: 14)),
           const Divider(color: AppColors.border, height: 30),
           _row('N° Reçu', num),

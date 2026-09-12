@@ -5,6 +5,7 @@ import '../models/recu_perception.dart';
 import '../services/recu_perception_service.dart';
 import '../widgets/widgets.dart';
 import '../utils/formatters.dart';
+import '../utils/helpers.dart';
 import 'recu_perception_pdf_page.dart';
 
 class RecusPerceptionPage extends StatefulWidget {
@@ -134,6 +135,7 @@ class _RecusPerceptionPageState extends State<RecusPerceptionPage> {
                           itemBuilder: (_, index) => _RecuTile(
                             recu: _recus[index],
                             onTap: () => _showDetails(_recus[index]),
+                            onValider: _recus[index].valide ? null : () => _validerRecu(_recus[index]),
                             onPrint: () => _printRecu(_recus[index]),
                           ),
                         ),
@@ -167,6 +169,26 @@ class _RecusPerceptionPageState extends State<RecusPerceptionPage> {
     Navigator.push(context, MaterialPageRoute(
       builder: (_) => RecuPerceptionPdfPage(recu: recu),
     ));
+  }
+
+  Future<void> _validerRecu(RecuPerception recu) async {
+    final confirmed = await showConfirmDialog(
+      context,
+      title: 'Valider le reçu ?',
+      message: 'Confirmer la validation du reçu ${recu.numero} ? Cette action est irréversible.',
+      confirmText: 'Valider',
+    );
+    if (!confirmed || !mounted) return;
+
+    try {
+      await _service.valider(recu.id);
+      if (!mounted) return;
+      showAppSnackBar(context, 'Reçu ${recu.numero} validé avec succès');
+      _load();
+    } catch (e) {
+      if (!mounted) return;
+      showAppSnackBar(context, 'Erreur: ${e.toString().replaceAll('Exception: ', '')}', isError: true);
+    }
   }
 
   void _showDetails(RecuPerception recu) {
@@ -220,51 +242,41 @@ class _RecusPerceptionPageState extends State<RecusPerceptionPage> {
                 if (recu.conducteurNom != null) _detail('Conducteur', recu.conducteurNom!),
               ],
               if (recu.observations != null && recu.observations!.isNotEmpty) _detail('Observations', recu.observations!),
+              const SizedBox(height: 16),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  color: (recu.valide ? AppColors.success : AppColors.warning).withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  recu.valide ? 'Validé' : 'En attente de validation',
+                  style: TextStyle(color: recu.valide ? AppColors.success : AppColors.warning, fontWeight: FontWeight.w600, fontSize: 13),
+                ),
+              ),
               const SizedBox(height: 20),
               Row(
                 children: [
-                  Expanded(
-                    child: AppButton(
-                      label: 'Imprimer',
-                      icon: Icons.print,
-                      isExpanded: true,
-                      onPressed: () { Navigator.pop(ctx); _printRecu(recu); },
+                  if (!recu.valide) ...[
+                    Expanded(
+                      child: AppButton(
+                        label: 'Valider',
+                        icon: Icons.check_circle,
+                        isExpanded: true,
+                        onPressed: () { Navigator.pop(ctx); _validerRecu(recu); },
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: AppButton(
-                      label: 'Supprimer',
-                      icon: Icons.delete_outline,
-                      isExpanded: true,
-                      isOutlined: true,
-                      onPressed: () async {
-                        final confirmed = await showDialog<bool>(
-                          context: context,
-                          builder: (_) => AlertDialog(
-                            title: const Text('Supprimer'),
-                            content: const Text('Supprimer ce reçu ?'),
-                            actions: [
-                              TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Annuler')),
-                              TextButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Supprimer', style: TextStyle(color: AppColors.error))),
-                            ],
-                          ),
-                        );
-                        if (confirmed == true && context.mounted) {
-                          Navigator.pop(ctx);
-                          try {
-                            await _service.delete(recu.id);
-                            _load();
-                            _loadStats();
-                          } catch (e) {
-                            if (mounted) ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Erreur: $e'), backgroundColor: AppColors.error),
-                            );
-                          }
-                        }
-                      },
+                  ],
+                  if (recu.valide) ...[
+                    Expanded(
+                      child: AppButton(
+                        label: 'Imprimer',
+                        icon: Icons.print,
+                        isExpanded: true,
+                        onPressed: () { Navigator.pop(ctx); _printRecu(recu); },
+                      ),
                     ),
-                  ),
+                  ],
                 ],
               ),
             ],
@@ -303,9 +315,10 @@ class _RecusPerceptionPageState extends State<RecusPerceptionPage> {
 class _RecuTile extends StatelessWidget {
   final RecuPerception recu;
   final VoidCallback onTap;
+  final VoidCallback? onValider;
   final VoidCallback onPrint;
 
-  const _RecuTile({required this.recu, required this.onTap, required this.onPrint});
+  const _RecuTile({required this.recu, required this.onTap, this.onValider, required this.onPrint});
 
   @override
   Widget build(BuildContext context) {
@@ -326,7 +339,23 @@ class _RecuTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(recu.numero, style: const TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.w600)),
+                Row(
+                  children: [
+                    Text(recu.numero, style: const TextStyle(color: AppColors.textPrimary, fontWeight: FontWeight.w600)),
+                    const SizedBox(width: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: (recu.valide ? AppColors.success : AppColors.warning).withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        recu.valide ? 'Validé' : 'Attente',
+                        style: TextStyle(color: recu.valide ? AppColors.success : AppColors.warning, fontSize: 10, fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ],
+                ),
                 Text(recu.typeLabel, style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
               ],
             ),
@@ -335,12 +364,26 @@ class _RecuTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(formatMontant(recu.montant), style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 15)),
-              IconButton(
-                onPressed: onPrint,
-                icon: const Icon(Icons.print, size: 18, color: AppColors.success),
-                tooltip: 'Imprimer',
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (onValider != null)
+                    IconButton(
+                      onPressed: onValider,
+                      icon: const Icon(Icons.check_circle, size: 18, color: AppColors.success),
+                      tooltip: 'Valider',
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                    ),
+                  if (recu.valide)
+                    IconButton(
+                      onPressed: onPrint,
+                      icon: const Icon(Icons.print, size: 18, color: AppColors.primary),
+                      tooltip: 'Imprimer',
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                    ),
+                ],
               ),
             ],
           ),

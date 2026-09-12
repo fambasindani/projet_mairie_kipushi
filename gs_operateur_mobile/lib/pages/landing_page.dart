@@ -43,21 +43,17 @@ class LandingPage extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [AppColors.primary, AppColors.secondary],
-                  ),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(Icons.account_balance, color: Colors.white, size: 20),
+              Image.asset(
+                'assets/images/logo.png',
+                width: 32,
+                height: 32,
+                fit: BoxFit.contain,
               ),
               const SizedBox(width: 12),
               const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('GS Opérateur', style: TextStyle(color: AppColors.textPrimary, fontSize: 16, fontWeight: FontWeight.bold)),
+                  Text('I-KIPUSHI', style: TextStyle(color: AppColors.textPrimary, fontSize: 16, fontWeight: FontWeight.bold)),
                   Text('Gestion fiscale locale', style: TextStyle(color: AppColors.textSecondary, fontSize: 11)),
                 ],
               ),
@@ -224,7 +220,7 @@ class LandingPage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 20),
       child: Column(
         children: [
-          const Text('Pourquoi utiliser GS Opérateur ?', style: TextStyle(color: AppColors.textPrimary, fontSize: 20, fontWeight: FontWeight.bold)),
+          const Text('Pourquoi utiliser I-KIPUSHI ?', style: TextStyle(color: AppColors.textPrimary, fontSize: 20, fontWeight: FontWeight.bold)),
           const SizedBox(height: 24),
           ...benefits.map((b) => Padding(
             padding: const EdgeInsets.only(bottom: 20),
@@ -274,14 +270,7 @@ class LandingPage extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Container(
-            padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(colors: [AppColors.primary, AppColors.secondary]),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: const Icon(Icons.account_balance, color: Colors.white, size: 28),
-          ),
+          Image.asset('assets/images/logo.png', width: 48, height: 48, fit: BoxFit.contain),
           const SizedBox(height: 16),
           const Text('Prêt à commencer ?', style: TextStyle(color: AppColors.textPrimary, fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
@@ -328,9 +317,9 @@ class LandingPage extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.account_balance, color: AppColors.primary.withValues(alpha: 0.5), size: 14),
+              Image.asset('assets/images/logo.png', width: 16, height: 16, fit: BoxFit.contain),
               const SizedBox(width: 8),
-              const Text('GS Opérateur — Gestion fiscale locale', style: TextStyle(color: AppColors.textMuted, fontSize: 12)),
+              const Text('I-KIPUSHI — Gestion fiscale locale', style: TextStyle(color: AppColors.textMuted, fontSize: 12)),
             ],
           ),
           const SizedBox(height: 6),
