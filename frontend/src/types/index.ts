@@ -418,7 +418,17 @@ export interface LogAudit {
 // ─── Dashboard ───
 export interface DashboardGlobal {
   operateurs?: { total?: number; actifs?: number; formalises?: number; nouveaux_mois?: number };
-  finances?: { total_collecte?: number; en_attente?: number; en_retard?: number; nb_factures?: number; penalites?: number };
+  finances?: { total_collecte?: number; en_attente?: number; en_retard?: number; nb_factures?: number; penalites?: number; collecte_perception?: number };
+  perception?: {
+    total?: number;
+    valides?: number;
+    en_attente?: number;
+    montant_total?: number;
+    montant_valide?: number;
+    aujourd_hui?: number;
+    montant_aujourd_hui?: number;
+    par_type?: { type_perception: string; total: number; montant: number }[];
+  };
   taxes?: { total?: number; actives?: number; categories?: { categorie: string; total: number }[] };
   utilisateurs?: { total?: number; actifs?: number; par_role?: { nom: string; total: number }[] };
   evolution?: { dernier_mois?: number; mois_precedent?: number };
@@ -431,6 +441,14 @@ export interface DashboardFinances {
   par_taxe: { taxe_id: number; montant: number; total: number; taxe?: Taxe }[];
   recouvrement: { taux: number; objectif: number };
   factures: { total: number; montant_total: number; montant_moyen: number };
+  perception?: {
+    total: number;
+    montant_total: number;
+    montant_valide: number;
+    montant_moyen: number;
+    par_type: { type_perception: string; total: number; montant: number }[];
+    par_mois: { mois: string; montant: number; total: number }[];
+  };
 }
 
 // ─── Pagination ───

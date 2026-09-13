@@ -61,7 +61,7 @@ async function api<T = unknown>(endpoint: string, options: RequestOptions = {}):
     ...((fetchOptions.headers as Record<string, string>) || {}),
   };
 
-  if (token && !isPublic) {
+  if (token) {
     headers["Authorization"] = `Bearer ${token}`;
   }
 

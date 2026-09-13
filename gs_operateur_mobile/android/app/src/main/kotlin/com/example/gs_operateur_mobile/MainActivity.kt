@@ -315,17 +315,7 @@ class MainActivity : FlutterActivity() {
                 }
             }
 
-            // Try addBarcode for QR code
-            if (_qrUrl != null) {
-                _printLog.add("=== QR Code via addBarcode ===")
-                val qrPrinted = tryAddBarcode(inst, _qrUrl!!)
-                if (qrPrinted) {
-                    try {
-                        val m = findMethod(inst.javaClass, "printString", emptyArray<Any>())
-                        if (m != null) { m.isAccessible = true; m.invoke(inst); _printLog.add("OK: printString(QR)") }
-                    } catch (_: Exception) {}
-                }
-            }
+            // (QR désactivé : impression texte uniquement)
 
             for (name in listOf("paperCut", "cutPaper")) {
                 try {

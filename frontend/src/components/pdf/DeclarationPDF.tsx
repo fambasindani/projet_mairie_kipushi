@@ -1,5 +1,6 @@
 import React from 'react';
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
+import { formatMontant } from '../../utils/format';
 
 const styles = StyleSheet.create({
   page: {
@@ -221,12 +222,12 @@ export const DeclarationPDF = ({ data }: { data: DeclarationPDFData }) => {
             <View style={styles.tableColRight}>
               <View style={styles.cellContainer}>
                 <Text style={[styles.cellLabel, { width: 50 }]}>Montant:</Text>
-                <Text style={styles.cellValue}>{data.montant_taxe?.toLocaleString('fr-FR')} FC</Text>
+                <Text style={styles.cellValue}>{formatMontant(data.montant_taxe, 'FC')}</Text>
               </View>
               {data.penalites > 0 && (
                 <View style={styles.cellContainer}>
                   <Text style={[styles.cellLabel, { width: 50 }]}>Penalites:</Text>
-                  <Text style={styles.cellValue}>{data.penalites?.toLocaleString('fr-FR')} FC</Text>
+                  <Text style={styles.cellValue}>{formatMontant(data.penalites, 'FC')}</Text>
                 </View>
               )}
             </View>
@@ -238,7 +239,7 @@ export const DeclarationPDF = ({ data }: { data: DeclarationPDFData }) => {
               <View style={[styles.cellContainer, { height: 35 }]}>
                 <Text style={styles.cellLabel}>TOTAL DU :</Text>
                 <Text style={styles.cellValue}>
-                  {data.montant_total?.toLocaleString('fr-FR')} FC
+                  {formatMontant(data.montant_total, 'FC')}
                   {data.nombre_jours_retard ? ` (${data.nombre_jours_retard}j retard)` : ''}
                 </Text>
               </View>

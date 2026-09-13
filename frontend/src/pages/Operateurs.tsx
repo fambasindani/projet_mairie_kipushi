@@ -21,10 +21,19 @@ import Button from '../components/ui/Button';
 import { personneService } from '../services/personneService';
 import { FicheOperateurDocument } from '../components/FicheOperateurPDF';
 import QRCode from 'qrcode';
+import { useAuth } from '../context/AuthContext';
+import { isAdminUser, userPermissionSet } from '../config/permissions';
 import type { Personne, PaginatedResponse } from '../types';
 
 export default function Operateurs() {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const isAdmin = isAdminUser(user);
+  const isOperateur = user?.roles?.some((r) => r.nom === 'Operateur') ?? false;
+  const permissions = userPermissionSet(user);
+  const canCreate = !isOperateur && (isAdmin || permissions.has('operateur:create'));
+  const canUpdate = !isOperateur && (isAdmin || permissions.has('operateur:update'));
+  const canDelete = !isOperateur && (isAdmin || permissions.has('operateur:delete'));
   const [operateurs, setOperateurs] = useState<Personne[]>([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({
@@ -210,13 +219,15 @@ export default function Operateurs() {
           >
             <Eye size={16} />
           </button>
-          <button
-            onClick={(e) => { e.stopPropagation(); navigate(`/operateurs/${item.id}/modifier`); }}
-            className="p-1.5 rounded-lg hover:bg-blue-50 text-gray-500 hover:text-blue-600 transition-colors cursor-pointer"
-            title="Modifier"
-          >
-            <Pencil size={16} />
-          </button>
+          {canUpdate && (
+            <button
+              onClick={(e) => { e.stopPropagation(); navigate(`/operateurs/${item.id}/modifier`); }}
+              className="p-1.5 rounded-lg hover:bg-blue-50 text-gray-500 hover:text-blue-600 transition-colors cursor-pointer"
+              title="Modifier"
+            >
+              <Pencil size={16} />
+            </button>
+          )}
           <button
             onClick={(e) => { e.stopPropagation(); handlePrintFiche(item); }}
             className="p-1.5 rounded-lg hover:bg-violet-50 text-gray-500 hover:text-violet-600 transition-colors cursor-pointer"
@@ -224,21 +235,25 @@ export default function Operateurs() {
           >
             <Printer size={16} />
           </button>
-          <button
-            onClick={(e) => { e.stopPropagation(); handleToggle(item); }}
-            disabled={toggleLoading === item.id}
-            className="p-1.5 rounded-lg hover:bg-amber-50 text-gray-500 hover:text-amber-600 transition-colors cursor-pointer disabled:opacity-40"
-            title="Basculer statut"
-          >
-            <ToggleLeft size={16} />
-          </button>
-          <button
-            onClick={(e) => { e.stopPropagation(); openDelete(item); }}
-            className="p-1.5 rounded-lg hover:bg-red-50 text-gray-500 hover:text-red-600 transition-colors cursor-pointer"
-            title="Supprimer"
-          >
-            <Trash2 size={16} />
-          </button>
+          {canUpdate && (
+            <button
+              onClick={(e) => { e.stopPropagation(); handleToggle(item); }}
+              disabled={toggleLoading === item.id}
+              className="p-1.5 rounded-lg hover:bg-amber-50 text-gray-500 hover:text-amber-600 transition-colors cursor-pointer disabled:opacity-40"
+              title="Basculer statut"
+            >
+              <ToggleLeft size={16} />
+            </button>
+          )}
+          {canDelete && (
+            <button
+              onClick={(e) => { e.stopPropagation(); openDelete(item); }}
+              className="p-1.5 rounded-lg hover:bg-red-50 text-gray-500 hover:text-red-600 transition-colors cursor-pointer"
+              title="Supprimer"
+            >
+              <Trash2 size={16} />
+            </button>
+          )}
         </div>
       ),
     },
@@ -250,9 +265,11 @@ export default function Operateurs() {
         title="Opérateurs"
         subtitle="Gestion des personnes physiques et morales"
         actions={
-          <Button icon={<UserPlus size={16} />} onClick={() => navigate('/operateurs/nouveau')}>
-            Nouvel opérateur
-          </Button>
+          canCreate ? (
+            <Button icon={<UserPlus size={16} />} onClick={() => navigate('/operateurs/nouveau')}>
+              Nouvel opérateur
+            </Button>
+          ) : undefined
         }
       />
 

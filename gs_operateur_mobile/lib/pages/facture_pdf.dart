@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/rendering.dart';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 import 'package:qr_flutter/qr_flutter.dart';
 import '../config/theme.dart';
 import '../models/declaration.dart';
@@ -16,6 +19,19 @@ class FacturePdfPage extends StatefulWidget {
 
 class _FacturePdfPageState extends State<FacturePdfPage> {
   bool _printing = false;
+  final GlobalKey _qrKey = GlobalKey();
+
+  Future<Uint8List?> _captureQr() async {
+    try {
+      final boundary = _qrKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+      if (boundary == null) return null;
+      final image = await boundary.toImage(pixelRatio: 4);
+      final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+      return byteData?.buffer.asUint8List();
+    } catch (_) {
+      return null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,13 +110,16 @@ class _FacturePdfPageState extends State<FacturePdfPage> {
           ),
           const SizedBox(height: 16),
           Center(
-            child: QrImageView(
-              data: qrData,
-              version: QrVersions.auto,
-              size: 120,
-              backgroundColor: Colors.white,
-              eyeStyle: const QrEyeStyle(color: AppColors.textPrimary),
-              dataModuleStyle: const QrDataModuleStyle(color: AppColors.textPrimary),
+            child: RepaintBoundary(
+              key: _qrKey,
+              child: QrImageView(
+                data: qrData,
+                version: QrVersions.auto,
+                size: 120,
+                backgroundColor: Colors.white,
+                eyeStyle: const QrEyeStyle(color: AppColors.textPrimary),
+                dataModuleStyle: const QrDataModuleStyle(color: AppColors.textPrimary),
+              ),
             ),
           ),
           const SizedBox(height: 8),

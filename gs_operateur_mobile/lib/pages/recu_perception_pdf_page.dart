@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+import 'package:qr_flutter/qr_flutter.dart';
 import '../config/theme.dart';
 import '../models/recu_perception.dart';
 import '../services/printer_service.dart';
@@ -14,6 +18,19 @@ class RecuPerceptionPdfPage extends StatefulWidget {
 
 class _RecuPerceptionPdfPageState extends State<RecuPerceptionPdfPage> {
   bool _printing = false;
+  final GlobalKey _qrKey = GlobalKey();
+
+  Future<Uint8List?> _captureQr() async {
+    try {
+      final boundary = _qrKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+      if (boundary == null) return null;
+      final image = await boundary.toImage(pixelRatio: 4);
+      final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+      return byteData?.buffer.asUint8List();
+    } catch (_) {
+      return null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +39,11 @@ class _RecuPerceptionPdfPageState extends State<RecuPerceptionPdfPage> {
       appBar: AppBar(
         title: Text('Reçu ${recu.numero}'),
         actions: [
+          IconButton(
+            onPressed: _scanPrinter,
+            icon: const Icon(Icons.search),
+            tooltip: 'Scanner imprimante',
+          ),
           IconButton(
             onPressed: _printing ? null : _printThermal,
             icon: _printing
@@ -39,6 +61,7 @@ class _RecuPerceptionPdfPageState extends State<RecuPerceptionPdfPage> {
   }
 
   Widget _buildReceipt(RecuPerception recu) {
+    final qrData = 'https://totalconceptrdc.org/id_operateur/verifier-recu/${recu.numero}';
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -96,6 +119,22 @@ class _RecuPerceptionPdfPageState extends State<RecuPerceptionPdfPage> {
             ],
           ),
           const SizedBox(height: 16),
+          Center(
+            child: RepaintBoundary(
+              key: _qrKey,
+              child: QrImageView(
+                data: qrData,
+                version: QrVersions.auto,
+                size: 120,
+                backgroundColor: Colors.white,
+                eyeStyle: const QrEyeStyle(color: AppColors.textPrimary),
+                dataModuleStyle: const QrDataModuleStyle(color: AppColors.textPrimary),
+              ),
+            ),
+          ),
+          const SizedBox(height: 6),
+          const Text('Scanner pour vérifier', style: TextStyle(color: AppColors.textMuted, fontSize: 10)),
+          const SizedBox(height: 12),
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(color: AppColors.success.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8)),
@@ -130,6 +169,32 @@ class _RecuPerceptionPdfPageState extends State<RecuPerceptionPdfPage> {
         ],
       ),
     );
+  }
+
+  Future<void> _scanPrinter() async {
+    final info = await PrinterService.scanPrinter();
+    if (mounted) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Scanner Imprimante'),
+          content: SizedBox(
+            width: double.maxFinite,
+            height: 400,
+            child: ListView.builder(
+              itemCount: info.length,
+              itemBuilder: (ctx, i) => Text(info[i], style: TextStyle(
+                fontSize: 11,
+                color: info[i].contains('FOUND') || info[i].contains('OK:') ? Colors.green.shade700 : Colors.grey.shade700,
+              )),
+            ),
+          ),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Fermer')),
+          ],
+        ),
+      );
+    }
   }
 
   Future<void> _printThermal() async {

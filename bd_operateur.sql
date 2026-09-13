@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `activites_economiques` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `activites_economiques_code_unique` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table bd_operateur.activites_economiques : ~4 rows (environ)
 INSERT INTO `activites_economiques` (`id`, `code`, `nom`, `secteur`, `description`, `est_actif`, `created_at`, `updated_at`) VALUES
@@ -63,9 +63,9 @@ CREATE TABLE IF NOT EXISTS `biens_immobiliers` (
   KEY `biens_immobiliers_id_quartier_foreign` (`id_quartier`),
   CONSTRAINT `biens_immobiliers_id_quartier_foreign` FOREIGN KEY (`id_quartier`) REFERENCES `quartiers` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT,
   CONSTRAINT `biens_immobiliers_proprietaire_id_foreign` FOREIGN KEY (`proprietaire_id`) REFERENCES `personnes` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.biens_immobiliers : ~6 rows (environ)
+-- Listage des données de la table bd_operateur.biens_immobiliers : ~8 rows (environ)
 INSERT INTO `biens_immobiliers` (`id`, `proprietaire_id`, `adresse`, `quartier`, `commune`, `id_quartier`, `parcelle_id`, `type_bien`, `superficie`, `valeur_locative`, `valeur_venale`, `classement`, `est_actif`, `created_at`, `updated_at`) VALUES
 	(1, 1, '123 Nouvelle Adresse', 'Nouveau Quartier', 'Gombe', NULL, 'PAR-001-2024', 'terrain', 500.50, 1000000.00, 15000000.00, 2, 1, '2026-09-03 06:57:54', '2026-09-03 07:08:19'),
 	(2, 1, '45 Boulevard du 30 Juin', 'Limete', 'Limete', NULL, 'PAR-002-2024', 'maison', 200.00, 1500000.00, 25000000.00, 1, 1, '2026-09-03 07:03:05', '2026-09-03 07:03:05'),
@@ -142,9 +142,9 @@ CREATE TABLE IF NOT EXISTS `declarations_paiements` (
   CONSTRAINT `declarations_paiements_personne_id_foreign` FOREIGN KEY (`personne_id`) REFERENCES `personnes` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `declarations_paiements_taxe_id_foreign` FOREIGN KEY (`taxe_id`) REFERENCES `taxes` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `declarations_paiements_vehicule_id_foreign` FOREIGN KEY (`vehicule_id`) REFERENCES `vehicules` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.declarations_paiements : ~9 rows (environ)
+-- Listage des données de la table bd_operateur.declarations_paiements : ~10 rows (environ)
 INSERT INTO `declarations_paiements` (`id`, `personne_id`, `taxe_id`, `bien_immobilier_id`, `vehicule_id`, `permis_id`, `exercice`, `periode_debut`, `periode_fin`, `montant_base`, `montant_taxe`, `penalites`, `montant_total`, `date_limite_paiement`, `date_paiement`, `statut`, `reference_paiement`, `justificatif`, `observations`, `motif_annulation`, `motif_exoneration`, `justificatif_exoneration`, `date_dernier_calcul_penalites`, `nombre_jours_retard`, `majoration_retard`, `interet_retard`, `mise_en_demeure_envoyee`, `date_mise_en_demeure`, `created_at`, `updated_at`) VALUES
 	(1, 1, 1, NULL, NULL, NULL, '2024', '2024-01-01', '2024-12-31', 500000.00, 80000.00, 0.00, 580000.00, '2026-12-31', '2026-09-02', 'paye', 'PAY-2024-001', 'recu_001.jpg', 'Patente 2024 - Grand commerce', NULL, NULL, NULL, NULL, 0, 0.00, 0.00, 0, NULL, '2026-09-02 20:16:51', '2026-09-02 20:18:20'),
 	(2, 13, 3, NULL, NULL, NULL, '2026', '2026-09-04', '2026-10-12', 1000.00, 0.00, 0.00, 0.00, '2026-10-12', NULL, 'exonere', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0.00, 0.00, 0, NULL, '2026-09-03 16:16:37', '2026-09-03 16:16:53'),
@@ -172,9 +172,9 @@ CREATE TABLE IF NOT EXISTS `documents` (
   KEY `documents_personne_id_index` (`personne_id`),
   KEY `documents_type_document_index` (`type_document`),
   CONSTRAINT `documents_personne_id_foreign` FOREIGN KEY (`personne_id`) REFERENCES `personnes` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.documents : ~6 rows (environ)
+-- Listage des données de la table bd_operateur.documents : ~8 rows (environ)
 INSERT INTO `documents` (`id`, `personne_id`, `type_document`, `numero`, `fichier`, `date_expiration`, `est_valide`, `created_at`, `updated_at`) VALUES
 	(1, 1, 'CNI', 'CNI-001234567', 'documents/1/c4I03EGRhV3DpQ5SpzW3J34PMMQTjHIdKxdljiSs.pdf', '2025-12-31', 1, '2026-09-03 07:34:02', '2026-09-03 07:34:02'),
 	(2, 23, 'CNI', '77777', 'documents/23/OXU84VCrCO4CI2aClVy6vy3cac2L9BocoLaATAwz.pdf', NULL, 1, '2026-09-03 17:06:10', '2026-09-03 17:06:10'),
@@ -182,7 +182,8 @@ INSERT INTO `documents` (`id`, `personne_id`, `type_document`, `numero`, `fichie
 	(4, 24, 'QUITTANCE', 'QT-58745', 'documents/24/4R2mJuA0NH72ewFdS5zGAVISmpCMfznx5ndRR6rD.pdf', NULL, 1, '2026-09-03 18:14:42', '2026-09-03 18:14:42'),
 	(5, 1, 'PATENTE', 'mp-667', 'documents/1/9WPHxLNWHitSKJZCcRvepHRdDSh1o9NP7Te9ffCh.jpg', NULL, 1, '2026-09-04 08:06:51', '2026-09-04 08:06:51'),
 	(6, 1, 'CNI', 'cart-6555', 'documents/1/Bxmi80mQq0fLxseovP974T8812znyqgUGPlcSNuW.jpg', NULL, 1, '2026-09-04 16:44:46', '2026-09-04 16:44:46'),
-	(7, 25, 'CNI', 'CR-6544', 'documents/25/dAOPWCLC3rcxUcnOJzEay4Px13l6EhrxBKIwpPoX.jpg', NULL, 1, '2026-09-04 17:01:28', '2026-09-04 17:01:28');
+	(7, 25, 'CNI', 'CR-6544', 'documents/25/dAOPWCLC3rcxUcnOJzEay4Px13l6EhrxBKIwpPoX.jpg', NULL, 1, '2026-09-04 17:01:28', '2026-09-04 17:01:28'),
+	(9, 31, 'CNI', 'N-56541', 'documents/31/oiwjd5arQi9Jdh9E4z7wpDFIJPVHVykoQJDPbYDV.pdf', NULL, 1, '2026-09-13 16:00:17', '2026-09-13 16:00:17');
 
 -- Listage de la structure de table bd_operateur. factures
 CREATE TABLE IF NOT EXISTS `factures` (
@@ -234,9 +235,9 @@ CREATE TABLE IF NOT EXISTS `identifiants_officiels` (
   UNIQUE KEY `identifiants_officiels_type_identifiant_valeur_unique` (`type_identifiant`,`valeur`),
   KEY `identifiants_officiels_personne_id_index` (`personne_id`),
   CONSTRAINT `identifiants_officiels_personne_id_foreign` FOREIGN KEY (`personne_id`) REFERENCES `personnes` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.identifiants_officiels : ~2 rows (environ)
+-- Listage des données de la table bd_operateur.identifiants_officiels : ~5 rows (environ)
 INSERT INTO `identifiants_officiels` (`id`, `personne_id`, `type_identifiant`, `valeur`, `province_delivrance`, `date_delivrance`, `date_expiration`, `est_actif`, `created_at`, `updated_at`) VALUES
 	(1, 1, 'RCCM', 'RCCM-2024-001', 'Kinshasa', '2024-01-01', '2025-12-31', 1, '2026-09-03 07:23:31', '2026-09-03 07:23:31'),
 	(2, 1, 'IDNAT', 'CNI-001234567', 'Kinshasa', '2020-06-15', '2025-06-15', 1, '2026-09-03 07:23:59', '2026-09-03 07:23:59'),
@@ -262,9 +263,9 @@ CREATE TABLE IF NOT EXISTS `logs_audit` (
   KEY `logs_audit_action_index` (`action`),
   KEY `logs_audit_table_cible_index` (`table_cible`),
   CONSTRAINT `logs_audit_utilisateur_id_foreign` FOREIGN KEY (`utilisateur_id`) REFERENCES `utilisateurs` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=354 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=443 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.logs_audit : ~279 rows (environ)
+-- Listage des données de la table bd_operateur.logs_audit : ~440 rows (environ)
 INSERT INTO `logs_audit` (`id`, `utilisateur_id`, `action`, `table_cible`, `enregistrement_id`, `anciennes_valeurs`, `nouvelles_valeurs`, `adresse_ip`, `user_agent`, `created_at`, `updated_at`) VALUES
 	(1, NULL, 'CREATE', 'personnes', 23, NULL, '{"id": 23, "nom": "Dupont", "sexe": "M", "type": "physique", "prenom": "Jean", "created_at": "2026-09-03 17:55:04", "updated_at": "2026-09-03 17:55:04"}', '127.0.0.1', 'Symfony', '2026-09-03 15:55:04', '2026-09-03 15:55:04'),
 	(2, NULL, 'CREATE', 'personnes', 24, NULL, '{"id": 24, "nom": "Martin", "sexe": "F", "type": "physique", "prenom": "Marie", "created_at": "2026-09-03 17:55:04", "updated_at": "2026-09-03 17:55:04"}', '127.0.0.1', 'Symfony', '2026-09-03 15:55:04', '2026-09-03 15:55:04'),
@@ -616,7 +617,96 @@ INSERT INTO `logs_audit` (`id`, `utilisateur_id`, `action`, `table_cible`, `enre
 	(350, 1, 'UPDATE', 'taxes', 7, '{"updated_at": "2026-09-08T18:22:36.000000Z", "description": null}', '{"updated_at": "2026-09-12 21:48:10", "description": "ras"}', '10.23.10.161', 'Dart/3.9 (dart:io)', '2026-09-12 19:48:10', '2026-09-12 19:48:10'),
 	(351, 1, 'LOGOUT', 'utilisateurs', 1, '{"email": "pierrepapy@gmail.com"}', NULL, '10.23.10.161', 'Dart/3.9 (dart:io)', '2026-09-12 20:04:12', '2026-09-12 20:04:12'),
 	(352, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-12T21:46:03.000000Z", "derniere_connexion": "2026-09-12T21:46:03.000000Z"}', '{"updated_at": "2026-09-12 22:04:39", "derniere_connexion": "2026-09-12 22:04:39"}', '10.23.10.161', 'Dart/3.9 (dart:io)', '2026-09-12 20:04:39', '2026-09-12 20:04:39'),
-	(353, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.23.10.161', 'Dart/3.9 (dart:io)', '2026-09-12 20:04:39', '2026-09-12 20:04:39');
+	(353, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.23.10.161', 'Dart/3.9 (dart:io)', '2026-09-12 20:04:39', '2026-09-12 20:04:39'),
+	(354, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-12T22:04:39.000000Z", "derniere_connexion": "2026-09-12T22:04:39.000000Z"}', '{"updated_at": "2026-09-12 22:34:25", "derniere_connexion": "2026-09-12 22:34:25"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-12 20:34:25', '2026-09-12 20:34:25'),
+	(355, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-12 20:34:25', '2026-09-12 20:34:25'),
+	(356, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-12T22:34:25.000000Z", "derniere_connexion": "2026-09-12T22:34:25.000000Z"}', '{"updated_at": "2026-09-13 13:31:13", "derniere_connexion": "2026-09-13 13:31:13"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 11:31:13', '2026-09-13 11:31:13'),
+	(357, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 11:31:13', '2026-09-13 11:31:13'),
+	(358, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-13T13:31:13.000000Z", "derniere_connexion": "2026-09-13T13:31:13.000000Z"}', '{"updated_at": "2026-09-13 17:36:00", "derniere_connexion": "2026-09-13 17:36:00"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 15:36:00', '2026-09-13 15:36:00'),
+	(359, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 15:36:00', '2026-09-13 15:36:00'),
+	(360, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-13T17:36:00.000000Z", "derniere_connexion": "2026-09-13T17:36:00.000000Z"}', '{"updated_at": "2026-09-13 17:46:39", "derniere_connexion": "2026-09-13 17:46:39"}', '10.23.10.50', 'Dart/3.9 (dart:io)', '2026-09-13 15:46:39', '2026-09-13 15:46:39'),
+	(361, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.23.10.50', 'Dart/3.9 (dart:io)', '2026-09-13 15:46:39', '2026-09-13 15:46:39'),
+	(362, NULL, 'UPDATE', 'utilisateurs', 7, '{"updated_at": "2026-09-08T20:35:01.000000Z", "derniere_connexion": "2026-09-08T20:35:01.000000Z"}', '{"updated_at": "2026-09-13 18:08:59", "derniere_connexion": "2026-09-13 18:08:59"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 16:08:59', '2026-09-13 16:08:59'),
+	(363, 7, 'LOGIN', 'utilisateurs', 7, NULL, '{"email": "salama@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 16:08:59', '2026-09-13 16:08:59'),
+	(364, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-13T17:46:39.000000Z", "derniere_connexion": "2026-09-13T17:46:39.000000Z"}', '{"updated_at": "2026-09-13 18:14:56", "derniere_connexion": "2026-09-13 18:14:56"}', '10.23.10.50', 'Dart/3.9 (dart:io)', '2026-09-13 16:14:56', '2026-09-13 16:14:56'),
+	(365, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.23.10.50', 'Dart/3.9 (dart:io)', '2026-09-13 16:14:56', '2026-09-13 16:14:56'),
+	(366, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-13T18:14:56.000000Z", "derniere_connexion": "2026-09-13T18:14:56.000000Z"}', '{"updated_at": "2026-09-13 18:30:51", "derniere_connexion": "2026-09-13 18:30:51"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 16:30:51', '2026-09-13 16:30:51'),
+	(367, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 16:30:51', '2026-09-13 16:30:51'),
+	(368, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-13T18:30:51.000000Z", "derniere_connexion": "2026-09-13T18:30:51.000000Z"}', '{"updated_at": "2026-09-13 18:45:42", "derniere_connexion": "2026-09-13 18:45:42"}', '10.23.10.50', 'Dart/3.9 (dart:io)', '2026-09-13 16:45:42', '2026-09-13 16:45:42'),
+	(369, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.23.10.50', 'Dart/3.9 (dart:io)', '2026-09-13 16:45:42', '2026-09-13 16:45:42'),
+	(370, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-13T18:45:42.000000Z", "derniere_connexion": "2026-09-13T18:45:42.000000Z"}', '{"updated_at": "2026-09-13 19:05:14", "derniere_connexion": "2026-09-13 19:05:14"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:05:14', '2026-09-13 17:05:14'),
+	(371, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:05:15', '2026-09-13 17:05:15'),
+	(372, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-13T19:05:14.000000Z", "derniere_connexion": "2026-09-13T19:05:14.000000Z"}', '{"updated_at": "2026-09-13 19:08:01", "derniere_connexion": "2026-09-13 19:08:01"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:08:01', '2026-09-13 17:08:01'),
+	(373, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:08:02', '2026-09-13 17:08:02'),
+	(374, NULL, 'UPDATE', 'utilisateurs', 7, '{"updated_at": "2026-09-13T18:08:59.000000Z", "derniere_connexion": "2026-09-13T18:08:59.000000Z"}', '{"updated_at": "2026-09-13 19:11:35", "derniere_connexion": "2026-09-13 19:11:35"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:11:35', '2026-09-13 17:11:35'),
+	(375, 7, 'LOGIN', 'utilisateurs', 7, NULL, '{"email": "salama@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:11:35', '2026-09-13 17:11:35'),
+	(376, 7, 'UPDATE', 'personnes', 25, '{"avatar": null, "updated_at": "2026-09-03T21:40:05.000000Z"}', '{"avatar": "avatars/7/2AJNCVwYQ8INdUP0nDsRsKHwzxmYjVmlh4IIrdTh.png", "updated_at": "2026-09-13 19:11:50"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:11:50', '2026-09-13 17:11:50'),
+	(377, NULL, 'UPDATE', 'utilisateurs', 7, '{"updated_at": "2026-09-13T19:11:35.000000Z", "derniere_connexion": "2026-09-13T19:11:35.000000Z"}', '{"updated_at": "2026-09-13 19:12:05", "derniere_connexion": "2026-09-13 19:12:05"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:12:05', '2026-09-13 17:12:05'),
+	(378, 7, 'LOGIN', 'utilisateurs', 7, NULL, '{"email": "salama@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:12:05', '2026-09-13 17:12:05'),
+	(379, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-13T19:08:01.000000Z", "derniere_connexion": "2026-09-13T19:08:01.000000Z"}', '{"updated_at": "2026-09-13 19:15:55", "derniere_connexion": "2026-09-13 19:15:55"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:15:55', '2026-09-13 17:15:55'),
+	(380, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:15:55', '2026-09-13 17:15:55'),
+	(381, NULL, 'UPDATE', 'utilisateurs', 4, '{"tentatives_connexion": 0}', '{"tentatives_connexion": 1}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:17:29', '2026-09-13 17:17:29'),
+	(382, NULL, 'UPDATE', 'utilisateurs', 4, '{"tentatives_connexion": 1}', '{"tentatives_connexion": 2}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:17:34', '2026-09-13 17:17:34'),
+	(383, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-13T19:15:55.000000Z", "derniere_connexion": "2026-09-13T19:15:55.000000Z"}', '{"updated_at": "2026-09-13 19:17:59", "derniere_connexion": "2026-09-13 19:17:59"}', '10.23.10.161', 'Dart/3.9 (dart:io)', '2026-09-13 17:17:59', '2026-09-13 17:17:59'),
+	(384, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.23.10.161', 'Dart/3.9 (dart:io)', '2026-09-13 17:17:59', '2026-09-13 17:17:59'),
+	(385, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-13T19:17:59.000000Z", "derniere_connexion": "2026-09-13T19:17:59.000000Z"}', '{"updated_at": "2026-09-13 19:18:40", "derniere_connexion": "2026-09-13 19:18:40"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:18:40', '2026-09-13 17:18:40'),
+	(386, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:18:40', '2026-09-13 17:18:40'),
+	(387, NULL, 'UPDATE', 'utilisateurs', 8, '{"tentatives_connexion": 0}', '{"tentatives_connexion": 1}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:20:17', '2026-09-13 17:20:17'),
+	(388, NULL, 'UPDATE', 'utilisateurs', 8, '{"tentatives_connexion": 1}', '{"tentatives_connexion": 2}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:20:30', '2026-09-13 17:20:30'),
+	(389, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-13T19:18:40.000000Z", "derniere_connexion": "2026-09-13T19:18:40.000000Z"}', '{"updated_at": "2026-09-13 19:20:42", "derniere_connexion": "2026-09-13 19:20:42"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:20:42', '2026-09-13 17:20:42'),
+	(390, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:20:42', '2026-09-13 17:20:42'),
+	(391, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-13T19:20:42.000000Z", "derniere_connexion": "2026-09-13T19:20:42.000000Z"}', '{"updated_at": "2026-09-13 19:24:28", "derniere_connexion": "2026-09-13 19:24:28"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:24:28', '2026-09-13 17:24:28'),
+	(392, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:24:28', '2026-09-13 17:24:28'),
+	(393, NULL, 'UPDATE', 'utilisateurs', 8, '{"updated_at": "2026-09-13T19:20:30.000000Z", "mot_de_passe_hash": "$2y$12$ws/x4b6bK1CrNJ6V6wVsZOQofXkznSAd6H2jVxJDuWKbjrclc72k2", "tentatives_connexion": 2}', '{"updated_at": "2026-09-13 19:27:53", "mot_de_passe_hash": "$2y$12$eugsTAb.CgQLNHYeJgu0autp5vnjKlGuR3Pv5g3ku.Z8x/KkGln1C", "tentatives_connexion": 0}', '127.0.0.1', 'Symfony', '2026-09-13 17:27:53', '2026-09-13 17:27:53'),
+	(394, NULL, 'UPDATE', 'utilisateurs', 8, '{"updated_at": "2026-09-13T19:27:53.000000Z", "derniere_connexion": null}', '{"updated_at": "2026-09-13 19:28:07", "derniere_connexion": "2026-09-13 19:28:07"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT; Windows NT 10.0; fr-FR) WindowsPowerShell/5.1.26100.9444', '2026-09-13 17:28:07', '2026-09-13 17:28:07'),
+	(395, 8, 'LOGIN', 'utilisateurs', 8, NULL, '{"email": "sindani@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT; Windows NT 10.0; fr-FR) WindowsPowerShell/5.1.26100.9444', '2026-09-13 17:28:07', '2026-09-13 17:28:07'),
+	(396, NULL, 'UPDATE', 'utilisateurs', 8, '{"updated_at": "2026-09-13T19:28:07.000000Z", "derniere_connexion": "2026-09-13T19:28:07.000000Z"}', '{"updated_at": "2026-09-13 19:28:57", "derniere_connexion": "2026-09-13 19:28:57"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:28:57', '2026-09-13 17:28:57'),
+	(397, 8, 'LOGIN', 'utilisateurs', 8, NULL, '{"email": "sindani@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:28:57', '2026-09-13 17:28:57'),
+	(398, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-13T19:24:28.000000Z", "derniere_connexion": "2026-09-13T19:24:28.000000Z"}', '{"updated_at": "2026-09-13 19:30:20", "derniere_connexion": "2026-09-13 19:30:20"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:30:20', '2026-09-13 17:30:20'),
+	(399, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:30:20', '2026-09-13 17:30:20'),
+	(400, NULL, 'UPDATE', 'utilisateurs', 8, '{"updated_at": "2026-09-13T19:28:57.000000Z", "derniere_connexion": "2026-09-13T19:28:57.000000Z"}', '{"updated_at": "2026-09-13 19:31:39", "derniere_connexion": "2026-09-13 19:31:39"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:31:39', '2026-09-13 17:31:39'),
+	(401, 8, 'LOGIN', 'utilisateurs', 8, NULL, '{"email": "sindani@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 17:31:39', '2026-09-13 17:31:39'),
+	(402, 1, 'LOGOUT', 'utilisateurs', 1, '{"email": "pierrepapy@gmail.com"}', NULL, '10.23.10.161', 'Dart/3.9 (dart:io)', '2026-09-13 17:33:00', '2026-09-13 17:33:00'),
+	(403, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-13T19:30:20.000000Z", "derniere_connexion": "2026-09-13T19:30:20.000000Z"}', '{"updated_at": "2026-09-13 19:39:10", "derniere_connexion": "2026-09-13 19:39:10"}', '10.23.10.50', 'Dart/3.9 (dart:io)', '2026-09-13 17:39:10', '2026-09-13 17:39:10'),
+	(404, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.23.10.50', 'Dart/3.9 (dart:io)', '2026-09-13 17:39:10', '2026-09-13 17:39:10'),
+	(405, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-13T19:39:10.000000Z", "derniere_connexion": "2026-09-13T19:39:10.000000Z"}', '{"updated_at": "2026-09-13 20:04:41", "derniere_connexion": "2026-09-13 20:04:41"}', '10.23.10.50', 'Dart/3.9 (dart:io)', '2026-09-13 18:04:41', '2026-09-13 18:04:41'),
+	(406, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.23.10.50', 'Dart/3.9 (dart:io)', '2026-09-13 18:04:41', '2026-09-13 18:04:41'),
+	(407, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-13T20:04:41.000000Z", "derniere_connexion": "2026-09-13T20:04:41.000000Z"}', '{"updated_at": "2026-09-13 20:11:46", "derniere_connexion": "2026-09-13 20:11:46"}', '10.23.10.161', 'Dart/3.9 (dart:io)', '2026-09-13 18:11:46', '2026-09-13 18:11:46'),
+	(408, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.23.10.161', 'Dart/3.9 (dart:io)', '2026-09-13 18:11:46', '2026-09-13 18:11:46'),
+	(409, 1, 'LOGOUT', 'utilisateurs', 1, '{"email": "pierrepapy@gmail.com"}', NULL, '10.23.10.161', 'Dart/3.9 (dart:io)', '2026-09-13 18:34:02', '2026-09-13 18:34:02'),
+	(410, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-13T20:11:46.000000Z", "derniere_connexion": "2026-09-13T20:11:46.000000Z"}', '{"updated_at": "2026-09-13 20:34:13", "derniere_connexion": "2026-09-13 20:34:13"}', '10.23.10.161', 'Dart/3.9 (dart:io)', '2026-09-13 18:34:13', '2026-09-13 18:34:13'),
+	(411, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.23.10.161', 'Dart/3.9 (dart:io)', '2026-09-13 18:34:13', '2026-09-13 18:34:13'),
+	(412, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-13T20:34:13.000000Z", "derniere_connexion": "2026-09-13T20:34:13.000000Z"}', '{"updated_at": "2026-09-13 20:35:58", "derniere_connexion": "2026-09-13 20:35:58"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 18:35:58', '2026-09-13 18:35:58'),
+	(413, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 18:35:58', '2026-09-13 18:35:58'),
+	(414, 1, 'LOGOUT', 'utilisateurs', 1, '{"email": "pierrepapy@gmail.com"}', NULL, '10.23.10.161', 'Dart/3.9 (dart:io)', '2026-09-13 18:49:20', '2026-09-13 18:49:20'),
+	(415, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-13T20:35:58.000000Z", "derniere_connexion": "2026-09-13T20:35:58.000000Z"}', '{"updated_at": "2026-09-13 20:50:19", "derniere_connexion": "2026-09-13 20:50:19"}', '10.23.10.50', 'Dart/3.9 (dart:io)', '2026-09-13 18:50:19', '2026-09-13 18:50:19'),
+	(416, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.23.10.50', 'Dart/3.9 (dart:io)', '2026-09-13 18:50:19', '2026-09-13 18:50:19'),
+	(417, NULL, 'UPDATE', 'utilisateurs', 7, '{"updated_at": "2026-09-13T19:12:05.000000Z", "derniere_connexion": "2026-09-13T19:12:05.000000Z"}', '{"updated_at": "2026-09-13 20:56:34", "derniere_connexion": "2026-09-13 20:56:34"}', '10.23.10.161', 'Dart/3.9 (dart:io)', '2026-09-13 18:56:34', '2026-09-13 18:56:34'),
+	(418, 7, 'LOGIN', 'utilisateurs', 7, NULL, '{"email": "salama@gmail.com"}', '10.23.10.161', 'Dart/3.9 (dart:io)', '2026-09-13 18:56:34', '2026-09-13 18:56:34'),
+	(419, 1, 'CREATE', 'personnes', 35, NULL, '{"id": 35, "nom": "m", "sexe": "M", "type": "physique", "ville": "Kinshasa", "prenom": "l", "adresse": "lmm", "commune": "Kinshasa", "id_ville": 2, "province": "Kinshasa", "quartier": "Gombe", "est_actif": true, "telephone": "1458", "created_at": "2026-09-13 21:03:31", "updated_at": "2026-09-13 21:03:31", "id_province": 1, "id_quartier": 1, "nationalite": "m", "telephone_2": "55", "est_formalise": false, "date_naissance": "1999-02-02 00:00:00", "lieu_naissance": "l"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 19:03:31', '2026-09-13 19:03:31'),
+	(420, 1, 'UPDATE', 'personnes', 35, '{"prenom": "l", "updated_at": "2026-09-13T21:03:31.000000Z"}', '{"prenom": "lkkkkkkkkk", "updated_at": "2026-09-13 21:03:54"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 19:03:54', '2026-09-13 19:03:54'),
+	(421, 1, 'DELETE', 'personnes', 35, '{"id": 35, "nom": "m", "sexe": "M", "type": "physique", "email": null, "ville": "Kinshasa", "avatar": null, "prenom": "lkkkkkkkkk", "adresse": "lmm", "commune": "Kinshasa", "id_ville": 2, "latitude": null, "province": "Kinshasa", "quartier": "Gombe", "site_web": null, "est_actif": 1, "longitude": null, "telephone": "1458", "cni_numero": null, "created_at": "2026-09-13 21:03:31", "updated_at": "2026-09-13 21:03:54", "id_province": 1, "id_quartier": 1, "nationalite": "m", "telephone_2": "55", "date_creation": null, "est_formalise": 0, "date_naissance": "1999-02-02", "lieu_naissance": "l", "forme_juridique": null, "date_formalisation": null, "denomination_sociale": null}', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 19:04:02', '2026-09-13 19:04:02'),
+	(422, 1, 'CREATE', 'activites_economiques', 6, NULL, '{"id": 6, "nom": "M", "code": "M", "secteur": "M", "est_actif": true, "created_at": "2026-09-13 21:15:13", "updated_at": "2026-09-13 21:15:13", "description": null}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 19:15:13', '2026-09-13 19:15:13'),
+	(423, 1, 'DELETE', 'activites_economiques', 6, '{"id": 6, "nom": "M", "code": "M", "secteur": "M", "est_actif": 1, "created_at": "2026-09-13 21:15:13", "updated_at": "2026-09-13 21:15:13", "description": null, "personnes_count": 0}', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 19:15:38', '2026-09-13 19:15:38'),
+	(424, 1, 'CREATE', 'utilisateurs', 15, NULL, '{"id": 15, "email": "K@gmail.com", "est_actif": true, "created_at": "2026-09-13 21:17:39", "updated_at": "2026-09-13 21:17:39", "personne_id": 9, "nom_utilisateur": "K", "mot_de_passe_hash": "$2y$12$Gi5ELjN740KzHj.ip/ynve7gWfeNjMZjZTq3zPVbzo8zU0ea4S.zG"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 19:17:39', '2026-09-13 19:17:39'),
+	(425, 1, 'DELETE', 'utilisateurs', 15, '{"id": 15, "email": "K@gmail.com", "est_actif": 1, "created_at": "2026-09-13 21:17:39", "updated_at": "2026-09-13 21:17:39", "motif_rejet": null, "personne_id": 9, "est_verrouille": 0, "nom_utilisateur": "K", "date_inscription": null, "mot_de_passe_hash": "$2y$12$Gi5ELjN740KzHj.ip/ynve7gWfeNjMZjZTq3zPVbzo8zU0ea4S.zG", "derniere_connexion": null, "statut_inscription": "approuve", "tentatives_connexion": 0, "date_expiration_mot_de_passe": null}', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 19:17:48', '2026-09-13 19:17:48'),
+	(426, 1, 'CREATE', 'taxes', 8, NULL, '{"id": 8, "nom": "m", "code": "m", "taux": 500, "unite": "pourcentage", "categorie": "autre", "est_actif": true, "created_at": "2026-09-13 21:22:39", "est_locale": false, "updated_at": "2026-09-13 21:22:39", "description": null, "periodicite": "evenementielle", "delai_grace_jours": 0, "taux_interet_mensuel": 2, "taux_majoration_retard": 25, "taux_majoration_apres_mise_en_demeure": 100}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 19:22:39', '2026-09-13 19:22:39'),
+	(427, 1, 'DELETE', 'taxes', 8, '{"id": 8, "nom": "m", "code": "m", "taux": "500.0000", "unite": "pourcentage", "bareme": null, "categorie": "autre", "est_actif": 1, "created_at": "2026-09-13 21:22:39", "est_locale": 0, "updated_at": "2026-09-13 21:22:39", "description": null, "periodicite": "evenementielle", "delai_grace_jours": 0, "taux_interet_mensuel": "2.00", "taux_majoration_retard": "25.00", "declarations_paiements_count": 0, "taux_majoration_apres_mise_en_demeure": "100.00"}', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 19:22:54', '2026-09-13 19:22:54'),
+	(428, NULL, 'UPDATE', 'utilisateurs', 1, '{"tentatives_connexion": 0}', '{"tentatives_connexion": 1}', '10.23.10.50', 'Dart/3.9 (dart:io)', '2026-09-13 19:26:43', '2026-09-13 19:26:43'),
+	(429, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-13T21:26:43.000000Z", "derniere_connexion": "2026-09-13T20:50:19.000000Z", "tentatives_connexion": 1}', '{"updated_at": "2026-09-13 21:26:56", "derniere_connexion": "2026-09-13 21:26:56", "tentatives_connexion": 0}', '10.23.10.50', 'Dart/3.9 (dart:io)', '2026-09-13 19:26:56', '2026-09-13 19:26:56'),
+	(430, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.23.10.50', 'Dart/3.9 (dart:io)', '2026-09-13 19:26:56', '2026-09-13 19:26:56'),
+	(431, 1, 'CREATE', 'biens_immobiliers', 9, NULL, '{"id": 9, "adresse": "mm", "commune": null, "quartier": null, "est_actif": true, "type_bien": "appartement", "classement": 2, "created_at": "2026-09-13 21:31:18", "superficie": null, "updated_at": "2026-09-13 21:31:18", "id_quartier": null, "parcelle_id": "m", "valeur_venale": null, "proprietaire_id": 29, "valeur_locative": null}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 19:31:18', '2026-09-13 19:31:18'),
+	(432, 1, 'DELETE', 'biens_immobiliers', 9, '{"id": 9, "adresse": "mm", "commune": null, "quartier": null, "est_actif": 1, "type_bien": "appartement", "classement": 2, "created_at": "2026-09-13 21:31:18", "superficie": null, "updated_at": "2026-09-13 21:31:18", "id_quartier": null, "parcelle_id": "m", "valeur_venale": null, "proprietaire_id": 29, "valeur_locative": null, "declarations_paiements_count": 0}', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 19:31:38', '2026-09-13 19:31:38'),
+	(433, 1, 'CREATE', 'vehicules', 7, NULL, '{"id": 7, "poids": null, "marque": null, "modele": null, "couleur": null, "est_actif": true, "created_at": "2026-09-13 21:32:28", "updated_at": "2026-09-13 21:32:28", "nombre_places": null, "type_vehicule": "taxi", "proprietaire_id": 31, "annee_fabrication": null, "plaque_immatriculation": "M"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 19:32:28', '2026-09-13 19:32:28'),
+	(434, 1, 'DELETE', 'vehicules', 7, '{"id": 7, "poids": null, "marque": null, "modele": null, "couleur": null, "est_actif": 1, "created_at": "2026-09-13 21:32:28", "updated_at": "2026-09-13 21:32:28", "nombre_places": null, "type_vehicule": "taxi", "proprietaire_id": 31, "annee_fabrication": null, "plaque_immatriculation": "M", "declarations_paiements_count": 0}', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 19:32:36', '2026-09-13 19:32:36'),
+	(435, 1, 'CREATE', 'permis_autorisations', 4, NULL, '{"id": 4, "numero": "m", "created_at": "2026-09-13 21:33:17", "est_valide": true, "updated_at": "2026-09-13 21:33:17", "personne_id": 31, "type_permis": "transport", "est_renouvele": false, "date_delivrance": "2026-09-07 00:00:00", "date_expiration": "2026-12-04 00:00:00"}', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 19:33:17', '2026-09-13 19:33:17'),
+	(436, 1, 'DELETE', 'permis_autorisations', 4, '{"id": 4, "numero": "m", "created_at": "2026-09-13 21:33:17", "est_valide": 1, "updated_at": "2026-09-13 21:33:17", "personne_id": 31, "type_permis": "transport", "document_scan": null, "est_renouvele": 0, "date_delivrance": "2026-09-07", "date_expiration": "2026-12-04", "declarations_paiements_count": 0}', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0', '2026-09-13 19:33:26', '2026-09-13 19:33:26'),
+	(437, 1, 'LOGOUT', 'utilisateurs', 1, '{"email": "pierrepapy@gmail.com"}', NULL, '10.23.10.50', 'Dart/3.9 (dart:io)', '2026-09-13 19:35:04', '2026-09-13 19:35:04'),
+	(438, NULL, 'CREATE', 'personnes', 36, NULL, '{"id": 36, "nom": "g", "sexe": "M", "type": "physique", "email": "d@cd.com", "prenom": "f", "adresse": "g", "telephone": "66", "created_at": "2026-09-13 21:37:10", "updated_at": "2026-09-13 21:37:10", "id_quartier": null, "nationalite": "Congolaise", "date_naissance": "1999-01-02 00:00:00", "lieu_naissance": "hj", "forme_juridique": null, "denomination_sociale": null}', '10.23.10.50', 'Dart/3.9 (dart:io)', '2026-09-13 19:37:10', '2026-09-13 19:37:10'),
+	(439, NULL, 'CREATE', 'utilisateurs', 16, NULL, '{"id": 16, "email": "d@cd.com", "est_actif": false, "created_at": "2026-09-13 21:37:11", "updated_at": "2026-09-13 21:37:11", "personne_id": 36, "nom_utilisateur": "d@cd.com", "date_inscription": "2026-09-13 00:00:00", "mot_de_passe_hash": "$2y$12$Xq/RbtA3SwWe3tdrPvYa6ONn3Jzt8rgUs.HRuU./gX9WhmaCyp.yG", "statut_inscription": "en_attente"}', '10.23.10.50', 'Dart/3.9 (dart:io)', '2026-09-13 19:37:11', '2026-09-13 19:37:11'),
+	(440, NULL, 'UPDATE', 'utilisateurs', 1, '{"updated_at": "2026-09-13T21:26:56.000000Z", "derniere_connexion": "2026-09-13T21:26:56.000000Z"}', '{"updated_at": "2026-09-13 21:38:13", "derniere_connexion": "2026-09-13 21:38:13"}', '10.23.10.50', 'Dart/3.9 (dart:io)', '2026-09-13 19:38:13', '2026-09-13 19:38:13'),
+	(441, 1, 'LOGIN', 'utilisateurs', 1, NULL, '{"email": "pierrepapy@gmail.com"}', '10.23.10.50', 'Dart/3.9 (dart:io)', '2026-09-13 19:38:13', '2026-09-13 19:38:13'),
+	(442, 1, 'DELETE', 'personnes', 36, '{"id": 36, "nom": "g", "sexe": "M", "type": "physique", "email": "d@cd.com", "ville": null, "avatar": null, "prenom": "f", "adresse": "g", "commune": null, "id_ville": null, "latitude": null, "province": null, "quartier": null, "site_web": null, "est_actif": 1, "longitude": null, "telephone": "66", "cni_numero": null, "created_at": "2026-09-13 21:37:10", "updated_at": "2026-09-13 21:37:10", "id_province": null, "id_quartier": null, "nationalite": "Congolaise", "telephone_2": null, "date_creation": null, "est_formalise": 0, "date_naissance": "1999-01-02", "lieu_naissance": "hj", "forme_juridique": null, "date_formalisation": null, "denomination_sociale": null}', NULL, '10.23.10.50', 'Dart/3.9 (dart:io)', '2026-09-13 19:38:46', '2026-09-13 19:38:46');
 
 -- Listage de la structure de table bd_operateur. migrations
 CREATE TABLE IF NOT EXISTS `migrations` (
@@ -850,7 +940,7 @@ CREATE TABLE IF NOT EXISTS `permis_autorisations` (
   KEY `permis_autorisations_personne_id_index` (`personne_id`),
   KEY `permis_autorisations_est_valide_index` (`est_valide`),
   CONSTRAINT `permis_autorisations_personne_id_foreign` FOREIGN KEY (`personne_id`) REFERENCES `personnes` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table bd_operateur.permis_autorisations : ~3 rows (environ)
 INSERT INTO `permis_autorisations` (`id`, `personne_id`, `type_permis`, `numero`, `date_delivrance`, `date_expiration`, `est_valide`, `est_renouvele`, `document_scan`, `created_at`, `updated_at`) VALUES
@@ -873,9 +963,9 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=143 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=173 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.personal_access_tokens : ~99 rows (environ)
+-- Listage des données de la table bd_operateur.personal_access_tokens : ~141 rows (environ)
 INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `name`, `token`, `abilities`, `last_used_at`, `expires_at`, `created_at`, `updated_at`) VALUES
 	(1, 'App\\Models\\Utilisateur', 1, 'auth_token', 'cc3ff7200e91b5d307867389b08ec044bf5642abcaaf7bf5cf3c1b27417794e7', '["*"]', '2026-09-03 07:35:20', NULL, '2026-09-02 18:37:51', '2026-09-03 07:35:20'),
 	(2, 'App\\Models\\Utilisateur', 1, 'auth_token', 'd31b65da4681481dea82c13c20bb1fa0a82928013c08431d6f8cef073920a771', '["*"]', NULL, NULL, '2026-09-02 18:46:08', '2026-09-02 18:46:08'),
@@ -991,7 +1081,33 @@ INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `n
 	(136, 'App\\Models\\Utilisateur', 1, 'auth_token', '1c38738a3c7656865538a582f632a00af12a178a8f135f5a4e7c11ba5582a6bb', '["*"]', '2026-09-12 16:48:24', NULL, '2026-09-12 16:48:00', '2026-09-12 16:48:24'),
 	(139, 'App\\Models\\Utilisateur', 1, 'auth_token', '6308c16ff6e1989482766f4b873fa99b0b172735f719993a50f82284e253fe4a', '["*"]', '2026-09-12 19:33:48', NULL, '2026-09-12 17:30:22', '2026-09-12 19:33:48'),
 	(140, 'App\\Models\\Utilisateur', 1, 'auth_token', 'ac816ca912b1c830ed265bdef012dc093535f81d8247ce888a6383ab45a4c94f', '["*"]', '2026-09-12 19:58:33', NULL, '2026-09-12 19:43:07', '2026-09-12 19:58:33'),
-	(142, 'App\\Models\\Utilisateur', 1, 'auth_token', '4762c720de48696934dc1ea0aac3533c0fd9f87e816c232520e4d5801d087bba', '["*"]', '2026-09-12 20:05:45', NULL, '2026-09-12 20:04:39', '2026-09-12 20:05:45');
+	(142, 'App\\Models\\Utilisateur', 1, 'auth_token', '4762c720de48696934dc1ea0aac3533c0fd9f87e816c232520e4d5801d087bba', '["*"]', '2026-09-12 20:05:45', NULL, '2026-09-12 20:04:39', '2026-09-12 20:05:45'),
+	(143, 'App\\Models\\Utilisateur', 1, 'auth_token', '6629e84d7d17a3118e8392770e5a8f0bb0d5995406e7480d15f83247b1a26bf0', '["*"]', '2026-09-13 08:48:37', NULL, '2026-09-12 20:34:25', '2026-09-13 08:48:37'),
+	(144, 'App\\Models\\Utilisateur', 1, 'auth_token', '939f5904c871ad0c311b4b5cbfb3b74aaf267d5c2416b481665ecaff17daf36f', '["*"]', '2026-09-13 15:31:08', NULL, '2026-09-13 11:31:13', '2026-09-13 15:31:08'),
+	(145, 'App\\Models\\Utilisateur', 1, 'auth_token', '53142707d9d46db04e1288319e1df28e850ecb5dbb436005c3c1773b4124c66f', '["*"]', '2026-09-13 16:08:50', NULL, '2026-09-13 15:36:00', '2026-09-13 16:08:50'),
+	(146, 'App\\Models\\Utilisateur', 1, 'auth_token', '169a0a46ffb510c92ec974b18da9ab870146758045720820b2fd63fccf516c21', '["*"]', '2026-09-13 15:46:43', NULL, '2026-09-13 15:46:39', '2026-09-13 15:46:43'),
+	(147, 'App\\Models\\Utilisateur', 7, 'auth_token', 'c415edca5bb9513d717aa4998934d97f4e38c497d31484d7d7ab720e6e4c954a', '["*"]', '2026-09-13 16:30:25', NULL, '2026-09-13 16:08:59', '2026-09-13 16:30:25'),
+	(148, 'App\\Models\\Utilisateur', 1, 'auth_token', '4b838261af1bbc27f65d866cb4e8e3d80140feaab3608f2786a581de76a2f995', '["*"]', '2026-09-13 16:15:01', NULL, '2026-09-13 16:14:56', '2026-09-13 16:15:01'),
+	(149, 'App\\Models\\Utilisateur', 1, 'auth_token', '655e2e1627c405f34c70cc0cedade836b26d01f930d6f15e5b4639f779695a4e', '["*"]', '2026-09-13 17:04:48', NULL, '2026-09-13 16:30:51', '2026-09-13 17:04:48'),
+	(150, 'App\\Models\\Utilisateur', 1, 'auth_token', '7577ad3ffd1d1d96abd56230fa847e4b3243a9d1e846177b7453d0aadf1bc358', '["*"]', '2026-09-13 16:45:46', NULL, '2026-09-13 16:45:42', '2026-09-13 16:45:46'),
+	(151, 'App\\Models\\Utilisateur', 1, 'auth_token', 'c1d24fd937744e69cc9df8cd6e065b4ff1adf46dec2dde54dde6d4a980d869cc', '["*"]', '2026-09-13 17:07:59', NULL, '2026-09-13 17:05:15', '2026-09-13 17:07:59'),
+	(152, 'App\\Models\\Utilisateur', 1, 'auth_token', 'a666e3497f6adb5e292eecd0f40bd305e8d32e149469082e2d0b53e55c6b69d6', '["*"]', '2026-09-13 17:11:06', NULL, '2026-09-13 17:08:02', '2026-09-13 17:11:06'),
+	(153, 'App\\Models\\Utilisateur', 7, 'auth_token', '762e1d90013cc204394a11e255dbf49a442793b6b55c9ba95d29bd5b419df9cd', '["*"]', '2026-09-13 17:11:50', NULL, '2026-09-13 17:11:35', '2026-09-13 17:11:50'),
+	(154, 'App\\Models\\Utilisateur', 7, 'auth_token', '95fd79975b733532be8339ec2476734fdea7de2a54b067889ca0ecd2df992bc7', '["*"]', '2026-09-13 17:15:39', NULL, '2026-09-13 17:12:05', '2026-09-13 17:15:39'),
+	(155, 'App\\Models\\Utilisateur', 1, 'auth_token', 'cd304e84fb3dc5b09170a8941b90d7bb2999e3e53e704d98f4de96acc7f449a9', '["*"]', '2026-09-13 17:17:09', NULL, '2026-09-13 17:15:55', '2026-09-13 17:17:09'),
+	(157, 'App\\Models\\Utilisateur', 1, 'auth_token', '2caefb743384aac5f28ebb4c7c06cf8d7555ccf0d5b10fcfe0d29ae834cff7ff', '["*"]', '2026-09-13 17:19:51', NULL, '2026-09-13 17:18:40', '2026-09-13 17:19:51'),
+	(158, 'App\\Models\\Utilisateur', 1, 'auth_token', 'fbf9e1eb3397c2b6e56b1a33cf2e80dd5278b19fddeeafa094e7f17b4930e73c', '["*"]', '2026-09-13 17:23:49', NULL, '2026-09-13 17:20:42', '2026-09-13 17:23:49'),
+	(159, 'App\\Models\\Utilisateur', 1, 'auth_token', 'a78471552d8746b999be0dde45416dc8b932cf0f41849ed26497ba12fa3f8a1b', '["*"]', '2026-09-13 17:28:35', NULL, '2026-09-13 17:24:28', '2026-09-13 17:28:35'),
+	(160, 'App\\Models\\Utilisateur', 8, 'auth_token', '2eb8a3627f92ef489f27f4fe2c4d9251796d83749c77416a1a2bf7c11f4a926e', '["*"]', NULL, NULL, '2026-09-13 17:28:07', '2026-09-13 17:28:07'),
+	(161, 'App\\Models\\Utilisateur', 8, 'auth_token', '10490c2f0f461fd033e388dd9ab543b29600a4910ed6faaf368ed1399e702c81', '["*"]', '2026-09-13 17:30:18', NULL, '2026-09-13 17:28:57', '2026-09-13 17:30:18'),
+	(162, 'App\\Models\\Utilisateur', 1, 'auth_token', '5784c6aabbd7141a5a6d23843f7b4781bdcf2827a44ac3e4959fc2d794b741cb', '["*"]', '2026-09-13 17:31:29', NULL, '2026-09-13 17:30:20', '2026-09-13 17:31:29'),
+	(163, 'App\\Models\\Utilisateur', 8, 'auth_token', 'c2a65f0deb28208d746eb199bdc93db12d4c49335b8cf6e53961cb16b4ecfb9d', '["*"]', '2026-09-13 17:57:34', NULL, '2026-09-13 17:31:39', '2026-09-13 17:57:34'),
+	(164, 'App\\Models\\Utilisateur', 1, 'auth_token', 'd1d4f85fe0f680bc7053d35e6d832f801fbc87a1a3a67f9c2efe47c4da9fa663', '["*"]', '2026-09-13 17:39:17', NULL, '2026-09-13 17:39:10', '2026-09-13 17:39:17'),
+	(165, 'App\\Models\\Utilisateur', 1, 'auth_token', '5a835c7b731ac089b32013f68273c2d24d0301a3d3c3a32839aa6d371752dcbf', '["*"]', '2026-09-13 18:07:49', NULL, '2026-09-13 18:04:41', '2026-09-13 18:07:49'),
+	(168, 'App\\Models\\Utilisateur', 1, 'auth_token', 'c75de4d88e8aaddddcdb7cd4eb0e962d33b5258ac3e499f68b3b098eb1685635', '["*"]', '2026-09-13 19:45:07', NULL, '2026-09-13 18:35:58', '2026-09-13 19:45:07'),
+	(169, 'App\\Models\\Utilisateur', 1, 'auth_token', 'f1f1052ff6abec19c334d79ba2d77c0777e23ba3a89356c62ef860fe0be3703c', '["*"]', '2026-09-13 18:50:24', NULL, '2026-09-13 18:50:19', '2026-09-13 18:50:24'),
+	(170, 'App\\Models\\Utilisateur', 7, 'auth_token', 'e732eec5f6ddd53b375afa897fc7460584f7766b2400165a755992a510c9e86a', '["*"]', '2026-09-13 18:59:37', NULL, '2026-09-13 18:56:34', '2026-09-13 18:59:37'),
+	(172, 'App\\Models\\Utilisateur', 1, 'auth_token', '437d743257168e1a5df5c7e73e22b9d84daa7f416f4482dcb42297ba80b821b9', '["*"]', '2026-09-13 19:43:04', NULL, '2026-09-13 19:38:13', '2026-09-13 19:43:04');
 
 -- Listage de la structure de table bd_operateur. personnes
 CREATE TABLE IF NOT EXISTS `personnes` (
@@ -1039,7 +1155,7 @@ CREATE TABLE IF NOT EXISTS `personnes` (
   CONSTRAINT `personnes_id_province_foreign` FOREIGN KEY (`id_province`) REFERENCES `provinces` (`id`) ON DELETE SET NULL,
   CONSTRAINT `personnes_id_quartier_foreign` FOREIGN KEY (`id_quartier`) REFERENCES `quartiers` (`id`) ON DELETE SET NULL,
   CONSTRAINT `personnes_id_ville_foreign` FOREIGN KEY (`id_ville`) REFERENCES `villes` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table bd_operateur.personnes : ~13 rows (environ)
 INSERT INTO `personnes` (`id`, `type`, `nom`, `prenom`, `date_naissance`, `lieu_naissance`, `nationalite`, `sexe`, `cni_numero`, `denomination_sociale`, `forme_juridique`, `date_creation`, `adresse`, `quartier`, `id_quartier`, `id_province`, `id_ville`, `commune`, `ville`, `province`, `telephone`, `telephone_2`, `email`, `site_web`, `est_actif`, `est_formalise`, `date_formalisation`, `latitude`, `longitude`, `avatar`, `created_at`, `updated_at`) VALUES
@@ -1052,7 +1168,7 @@ INSERT INTO `personnes` (`id`, `type`, `nom`, `prenom`, `date_naissance`, `lieu_
 	(13, 'physique', 'NGUZA', 'David', '1992-02-02', 'Kolwezi', 'Congolaise', 'M', NULL, NULL, NULL, NULL, 'KWANGO 45', 'Misau', 2, 1, 2, 'Kintambo', 'Kinshasa', 'Kinshasa', '0978596501', '5478', 'nguza@gmail.com', NULL, 1, 0, NULL, NULL, NULL, NULL, '2026-09-03 11:40:04', '2026-09-03 12:01:12'),
 	(23, 'physique', 'Dupont', 'Jean', NULL, NULL, NULL, 'M', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, '2026-09-03 15:55:04', '2026-09-03 15:55:04'),
 	(24, 'physique', 'Martin', 'Marie', NULL, NULL, NULL, 'F', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, NULL, NULL, NULL, NULL, '2026-09-03 15:55:04', '2026-09-03 15:55:04'),
-	(25, 'physique', 'SALAMA', 'Pascal', '1992-04-02', 'Goma', 'Congolaise', 'M', NULL, NULL, NULL, NULL, 'KWANGO 45', 'Misau', 2, 1, 2, 'Kintambo', 'Kinshasa', 'Kinshasa', '0898596501', NULL, 'salama@gmail.com', NULL, 1, 0, NULL, NULL, NULL, NULL, '2026-09-03 19:40:05', '2026-09-03 19:40:05'),
+	(25, 'physique', 'SALAMA', 'Pascal', '1992-04-02', 'Goma', 'Congolaise', 'M', NULL, NULL, NULL, NULL, 'KWANGO 45', 'Misau', 2, 1, 2, 'Kintambo', 'Kinshasa', 'Kinshasa', '0898596501', NULL, 'salama@gmail.com', NULL, 1, 0, NULL, NULL, NULL, 'avatars/7/2AJNCVwYQ8INdUP0nDsRsKHwzxmYjVmlh4IIrdTh.png', '2026-09-03 19:40:05', '2026-09-13 17:11:50'),
 	(28, 'physique', 'SINDANI', 'Josiane', '1992-01-06', 'Kinshasa', 'Congolaise', 'F', NULL, NULL, NULL, NULL, 'KINGU 52', NULL, 3, NULL, NULL, NULL, NULL, NULL, '+2438985458', NULL, 'sindani@gmail.com', NULL, 1, 0, NULL, NULL, NULL, NULL, '2026-09-08 12:09:51', '2026-09-08 12:12:50'),
 	(29, 'physique', 'TEST', 'User', '1990-01-01', NULL, 'Congolaise', 'M', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '+243999999999', NULL, 'test_inscription_20260908220309@test.com', NULL, 1, 0, NULL, NULL, NULL, NULL, '2026-09-08 18:03:10', '2026-09-08 18:03:10'),
 	(31, 'physique', 'KAMOYA', NULL, '1995-02-02', NULL, 'Congolaise', 'F', NULL, 'KAMOYA', 'SARL', NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, NULL, '+24369875412', NULL, 'kamoya@gmail.com', NULL, 1, 0, NULL, NULL, NULL, NULL, '2026-09-08 18:23:17', '2026-09-08 18:23:17');
@@ -1072,14 +1188,15 @@ CREATE TABLE IF NOT EXISTS `personne_activites` (
   CONSTRAINT `personne_activites_personne_id_foreign` FOREIGN KEY (`personne_id`) REFERENCES `personnes` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.personne_activites : ~6 rows (environ)
+-- Listage des données de la table bd_operateur.personne_activites : ~7 rows (environ)
 INSERT INTO `personne_activites` (`personne_id`, `activite_id`, `est_principale`, `date_debut`, `date_fin`, `created_at`, `updated_at`) VALUES
 	(1, 1, 1, '2024-01-01', NULL, '2026-09-03 07:47:22', '2026-09-03 07:47:22'),
 	(1, 2, 0, '2024-06-01', NULL, '2026-09-03 07:47:22', '2026-09-03 07:47:22'),
 	(9, 1, 0, NULL, NULL, '2026-09-02 19:33:21', '2026-09-02 19:33:21'),
 	(9, 2, 0, NULL, NULL, '2026-09-02 19:33:21', '2026-09-02 19:33:21'),
 	(25, 4, 0, '2026-09-08', NULL, '2026-09-08 09:52:53', '2026-09-08 09:52:53'),
-	(28, 1, 0, '2025-01-02', NULL, '2026-09-08 12:09:52', '2026-09-08 12:09:52');
+	(28, 1, 0, '2025-01-02', NULL, '2026-09-08 12:09:52', '2026-09-08 12:09:52'),
+	(31, 1, 0, '2026-09-13', NULL, '2026-09-13 15:59:49', '2026-09-13 15:59:49');
 
 -- Listage de la structure de table bd_operateur. provinces
 CREATE TABLE IF NOT EXISTS `provinces` (
@@ -1150,9 +1267,9 @@ CREATE TABLE IF NOT EXISTS `recus_perception` (
   KEY `recus_perception_type_perception_index` (`type_perception`),
   KEY `recus_perception_date_emission_index` (`date_emission`),
   KEY `recus_perception_numero_index` (`numero`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.recus_perception : ~0 rows (environ)
+-- Listage des données de la table bd_operateur.recus_perception : ~3 rows (environ)
 INSERT INTO `recus_perception` (`id`, `taxe_id`, `personne_id`, `percepteur_id`, `valide`, `type_perception`, `numero`, `date_emission`, `heure_emission`, `categorie_vehicule`, `plaque_immatriculation`, `montant`, `trajet`, `chauffeur_nom`, `conducteur_nom`, `Numero_Piece`, `designation`, `poids`, `observations`, `created_at`, `updated_at`) VALUES
 	(1, 7, NULL, 1, 0, 'pont_bascule', 'PON/001', '2026-09-08', '20:18:00', 'camion', '2555444', 5000.00, 'aller', NULL, 'NGOLA', 'HK-52142', NULL, NULL, 'ok', '2026-09-08 16:26:04', '2026-09-12 17:27:10'),
 	(2, 7, NULL, 1, 1, 'peage_urbain', 'PEA/001', '2026-09-12', '20:29:00', 'camion', '126544456', 5000.00, 'aller', 'Musa', NULL, NULL, NULL, NULL, NULL, '2026-09-12 17:31:10', '2026-09-12 18:47:48'),
@@ -1190,7 +1307,7 @@ CREATE TABLE IF NOT EXISTS `roles_permissions` (
   CONSTRAINT `roles_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.roles_permissions : ~109 rows (environ)
+-- Listage des données de la table bd_operateur.roles_permissions : ~97 rows (environ)
 INSERT INTO `roles_permissions` (`role_id`, `permission_id`, `created_at`, `updated_at`) VALUES
 	(1, 1, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
 	(1, 2, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
@@ -1241,30 +1358,16 @@ INSERT INTO `roles_permissions` (`role_id`, `permission_id`, `created_at`, `upda
 	(1, 84, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
 	(1, 85, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
 	(1, 86, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
-	(2, 1, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
 	(2, 2, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
-	(2, 3, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
-	(2, 5, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
-	(2, 6, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
 	(2, 7, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
-	(2, 8, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
-	(2, 9, '2026-09-03 15:30:17', '2026-09-03 15:30:17'),
-	(2, 10, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
 	(2, 11, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
-	(2, 12, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
-	(2, 14, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
 	(2, 15, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
-	(2, 16, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
-	(2, 17, '2026-09-03 15:29:40', '2026-09-03 15:29:40'),
-	(2, 18, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
 	(2, 19, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
-	(2, 20, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
 	(2, 23, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
 	(2, 26, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
 	(2, 27, '2026-09-03 15:29:40', '2026-09-03 15:29:40'),
 	(2, 65, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
 	(2, 74, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
-	(2, 75, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
 	(2, 77, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
 	(3, 1, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
 	(3, 2, '2026-09-05 09:42:27', '2026-09-05 09:42:27'),
@@ -1327,7 +1430,7 @@ CREATE TABLE IF NOT EXISTS `taxes` (
   UNIQUE KEY `taxes_code_unique` (`code`),
   KEY `taxes_categorie_index` (`categorie`),
   KEY `taxes_est_actif_index` (`est_actif`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table bd_operateur.taxes : ~5 rows (environ)
 INSERT INTO `taxes` (`id`, `code`, `nom`, `categorie`, `description`, `taux`, `taux_majoration_retard`, `taux_interet_mensuel`, `delai_grace_jours`, `taux_majoration_apres_mise_en_demeure`, `unite`, `periodicite`, `bareme`, `est_actif`, `est_locale`, `created_at`, `updated_at`) VALUES
@@ -1359,16 +1462,16 @@ CREATE TABLE IF NOT EXISTS `utilisateurs` (
   UNIQUE KEY `utilisateurs_nom_utilisateur_unique` (`nom_utilisateur`),
   UNIQUE KEY `utilisateurs_email_unique` (`email`),
   CONSTRAINT `utilisateurs_personne_id_foreign` FOREIGN KEY (`personne_id`) REFERENCES `personnes` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table bd_operateur.utilisateurs : ~7 rows (environ)
 INSERT INTO `utilisateurs` (`id`, `personne_id`, `nom_utilisateur`, `mot_de_passe_hash`, `email`, `statut_inscription`, `motif_rejet`, `date_inscription`, `est_actif`, `est_verrouille`, `tentatives_connexion`, `derniere_connexion`, `date_expiration_mot_de_passe`, `created_at`, `updated_at`) VALUES
-	(1, 1, 'admin', '$2y$12$AG4Vzn7EV73AlATnG9FKGexUHP0CAW/7mdbslHE1mL9HL4fSbhnye', 'pierrepapy@gmail.com', 'approuve', NULL, NULL, 1, 0, 0, '2026-09-12 22:04:39', NULL, '2026-09-02 18:29:47', '2026-09-12 20:04:39'),
+	(1, 1, 'admin', '$2y$12$AG4Vzn7EV73AlATnG9FKGexUHP0CAW/7mdbslHE1mL9HL4fSbhnye', 'pierrepapy@gmail.com', 'approuve', NULL, NULL, 1, 0, 0, '2026-09-13 21:38:13', NULL, '2026-09-02 18:29:47', '2026-09-13 19:38:13'),
 	(2, 2, 'jean.dupont', '$2y$12$9w6qMZGMUDoBCG.8FuP8HOAdSYk1OGLQMSZgaR7oJWE0KuwGrSyIC', 'jean.dupont@email.com', 'approuve', NULL, NULL, 1, 0, 0, '2026-09-08 12:02:10', NULL, '2026-09-02 18:35:49', '2026-09-08 10:02:10'),
 	(3, 3, 'marie.mbala', '$2y$12$Armb/thc0jcIs0DjEfWZkeHsVYRvSYFUbHykRr19TgCqp8v.0QXnK', 'marie.mbala@email.com', 'approuve', NULL, NULL, 1, 0, 3, NULL, NULL, '2026-09-02 18:35:49', '2026-09-08 18:38:43'),
-	(4, 13, 'NGOMA Paul', '$2y$12$TstGZHCHUJivND1oCcWjauM3t3qwYLaRVKEsBaLq/gs9JxXSxW16i', 'ngoma@gmail.com', 'approuve', NULL, NULL, 1, 0, 0, NULL, NULL, '2026-09-02 18:53:45', '2026-09-03 12:08:02'),
-	(7, 25, 'salama', '$2y$12$Eyy1aKAHCMPE0GX1lWMjOOKCTZXG4P0SXG2S1H2oRmtRANWLI0gJ.', 'salama@gmail.com', 'approuve', NULL, NULL, 1, 0, 0, '2026-09-08 20:35:01', NULL, '2026-09-03 19:45:08', '2026-09-08 18:35:01'),
-	(8, 28, 'sindani@gmail.com', '$2y$12$ws/x4b6bK1CrNJ6V6wVsZOQofXkznSAd6H2jVxJDuWKbjrclc72k2', 'sindani@gmail.com', 'approuve', NULL, '2026-09-08', 1, 0, 0, NULL, NULL, '2026-09-08 12:09:52', '2026-09-08 17:57:52'),
+	(4, 13, 'NGOMA Paul', '$2y$12$TstGZHCHUJivND1oCcWjauM3t3qwYLaRVKEsBaLq/gs9JxXSxW16i', 'ngoma@gmail.com', 'approuve', NULL, NULL, 1, 0, 2, NULL, NULL, '2026-09-02 18:53:45', '2026-09-13 17:17:34'),
+	(7, 25, 'salama', '$2y$12$Eyy1aKAHCMPE0GX1lWMjOOKCTZXG4P0SXG2S1H2oRmtRANWLI0gJ.', 'salama@gmail.com', 'approuve', NULL, NULL, 1, 0, 0, '2026-09-13 20:56:34', NULL, '2026-09-03 19:45:08', '2026-09-13 18:56:34'),
+	(8, 28, 'sindani@gmail.com', '$2y$12$eugsTAb.CgQLNHYeJgu0autp5vnjKlGuR3Pv5g3ku.Z8x/KkGln1C', 'sindani@gmail.com', 'approuve', NULL, '2026-09-08', 1, 0, 0, '2026-09-13 19:31:39', NULL, '2026-09-08 12:09:52', '2026-09-13 17:31:39'),
 	(11, 31, 'kamoya@gmail.com', '$2y$12$d8mxcUW6iCKxuGqhduDOye/sHbBjbTi5/FHnlcgN7uYZcJl6DmFK.', 'kamoya@gmail.com', 'en_attente', NULL, '2026-09-08', 0, 0, 0, NULL, NULL, '2026-09-08 18:23:18', '2026-09-08 18:23:18');
 
 -- Listage de la structure de table bd_operateur. utilisateurs_roles
@@ -1383,14 +1486,14 @@ CREATE TABLE IF NOT EXISTS `utilisateurs_roles` (
   CONSTRAINT `utilisateurs_roles_utilisateur_id_foreign` FOREIGN KEY (`utilisateur_id`) REFERENCES `utilisateurs` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.utilisateurs_roles : ~5 rows (environ)
+-- Listage des données de la table bd_operateur.utilisateurs_roles : ~6 rows (environ)
 INSERT INTO `utilisateurs_roles` (`utilisateur_id`, `role_id`, `created_at`, `updated_at`) VALUES
 	(1, 1, '2026-09-02 18:47:17', '2026-09-02 18:47:17'),
 	(2, 5, '2026-09-08 10:00:09', '2026-09-08 10:00:09'),
 	(3, 5, '2026-09-02 18:35:49', '2026-09-02 18:35:49'),
 	(4, 2, '2026-09-02 18:53:45', '2026-09-02 18:53:45'),
 	(7, 5, '2026-09-03 19:45:08', '2026-09-03 19:45:08'),
-	(8, 5, '2026-09-08 12:18:41', '2026-09-08 12:18:41');
+	(8, 2, '2026-09-13 17:19:49', '2026-09-13 17:19:49');
 
 -- Listage de la structure de table bd_operateur. vehicules
 CREATE TABLE IF NOT EXISTS `vehicules` (
@@ -1411,9 +1514,9 @@ CREATE TABLE IF NOT EXISTS `vehicules` (
   UNIQUE KEY `vehicules_plaque_immatriculation_unique` (`plaque_immatriculation`),
   KEY `vehicules_proprietaire_id_index` (`proprietaire_id`),
   CONSTRAINT `vehicules_proprietaire_id_foreign` FOREIGN KEY (`proprietaire_id`) REFERENCES `personnes` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bd_operateur.vehicules : ~4 rows (environ)
+-- Listage des données de la table bd_operateur.vehicules : ~5 rows (environ)
 INSERT INTO `vehicules` (`id`, `proprietaire_id`, `plaque_immatriculation`, `marque`, `modele`, `annee_fabrication`, `couleur`, `type_vehicule`, `nombre_places`, `poids`, `est_actif`, `created_at`, `updated_at`) VALUES
 	(1, 1, 'AA 1234 BC', 'Toyota', 'Land Cruiser', '2022', 'Noir', 'voiture', 8, 2500.50, 1, '2026-09-02 21:01:41', '2026-09-02 21:04:15'),
 	(2, 1, 'BB 5678 DE', 'Honda', 'CBR 500', '2023', 'Rouge', 'moto', 2, 200.00, 1, '2026-09-02 21:02:14', '2026-09-02 21:02:14'),

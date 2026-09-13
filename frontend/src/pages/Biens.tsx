@@ -19,6 +19,7 @@ import Button from '../components/ui/Button';
 import { bienService } from '../services/bienService';
 import type { BienImmobilier, PaginatedResponse } from '../types';
 import { useAuth } from '../context/AuthContext';
+import { formatCdf } from '../utils/format';
 
 const typeBienBadge: Record<string, 'info' | 'success' | 'warning' | 'danger' | 'neutral'> = {
   terrain: 'info',
@@ -41,9 +42,7 @@ const typeBienLabels: Record<string, string> = {
 };
 
 const formatMontant = (val: number | string | null) =>
-  val != null
-    ? new Intl.NumberFormat('fr-CD', { style: 'currency', currency: 'CDF', currencyDisplay: 'code', minimumFractionDigits: 0 }).format(Number(val) || 0)
-    : '-';
+  val != null ? formatCdf(val) : '-';
 
 export default function Biens() {
   const navigate = useNavigate();

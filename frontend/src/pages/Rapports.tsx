@@ -37,11 +37,13 @@ import {
   Line,
   Area,
   AreaChart,
+  ComposedChart,
 } from 'recharts';
 import Badge from '../components/ui/Badge';
 import Skeleton from 'react-loading-skeleton';
 import Button from '../components/ui/Button';
 import { post } from '../services/api';
+import { formatCdf } from '../utils/format';
 
 interface RapportParCommune {
   commune: string;
@@ -98,13 +100,19 @@ interface RapportData {
   paiements?: RapportData;
   taxes?: RapportData;
   factures?: RapportData;
-  resume?: { total_operateurs?: number; total_collecte?: number; total_factures?: number; taux_recouvrement_global?: number };
+  recus_perception?: RapportData;
+  valides?: number;
+  en_attente?: number;
+  montant_valide?: number;
+  par_type?: { type_perception: string; libelle?: string; total: number; montant: number }[];
+  resume?: { total_operateurs?: number; total_collecte?: number; total_factures?: number; total_recus_perception?: number; total_collecte_perception?: number; taux_recouvrement_global?: number };
 }
 
 const rapportTypes = [
   { key: 'global', label: 'Rapport global', icon: BarChart3, description: "Vue d'ensemble de toutes les activités", color: 'from-indigo-500 to-indigo-600' },
   { key: 'operateurs', label: 'Opérateurs', icon: Users, description: 'Statistiques sur les opérateurs enregistrés', color: 'from-blue-500 to-blue-600' },
   { key: 'paiements', label: 'Paiements', icon: Receipt, description: 'Analyse des déclarations et paiements', color: 'from-emerald-500 to-emerald-600' },
+  { key: 'recus_perception', label: 'Reçus perception', icon: Receipt, description: 'Analyse des reçus de perception (péage, pont bascule…)', color: 'from-cyan-500 to-cyan-600' },
   { key: 'taxes', label: 'Taxes', icon: FileText, description: 'Collecte par type de taxe', color: 'from-amber-500 to-amber-600' },
   { key: 'factures', label: 'Factures', icon: FileText, description: 'Statistiques de facturation', color: 'from-purple-500 to-purple-600' },
 ];
@@ -116,16 +124,6 @@ function formatMonth(mois: string): string {
   if (parts.length < 2) return mois;
   const idx = parseInt(parts[1], 10) - 1;
   return `${monthNames[idx] || parts[1]} ${parts[0]}`;
-}
-
-function formatCdf(value: number): string {
-  return new Intl.NumberFormat('fr-CD', {
-    style: 'currency',
-    currency: 'CDF',
-    currencyDisplay: 'code',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(value);
 }
 
 function formatNumber(value: number): string {
@@ -704,6 +702,143 @@ function FacturesReport({ data }: { data: RapportData }) {
   );
 }
 
+const typePerceptionLabels: Record<string, string> = {
+  peage_urbain: 'Péage urbain',
+  pont_bascule: 'Pont bascule',
+  etalage: 'Étalage',
+  chargement: 'Chargement',
+  dechargement: 'Déchargement',
+  autre: 'Autre',
+};
+
+function RecusPerceptionReport({ data }: { data: RapportData }) {
+  const typeRows = data.par_type ?? [];
+  const typePieData = typeRows.map((t, i) => ({
+    name: t.libelle ?? typePerceptionLabels[t.type_perception] ?? t.type_perception,
+    value: t.total,
+    color: chartColors[i % chartColors.length],
+  }));
+  const typeBarData = typeRows.map((t) => ({
+    name: t.libelle ?? typePerceptionLabels[t.type_perception] ?? t.type_perception,
+    montant: t.montant ?? 0,
+    total: t.total,
+  }));
+
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <StatCard icon={<Receipt size={20} />} label="Total reçus" value={formatNumber(data.total ?? 0)} color="from-cyan-500 to-cyan-600" subtitle={`${data.valides ?? 0} validés · ${data.en_attente ?? 0} en attente`} />
+        <StatCard icon={<DollarSign size={20} />} label="Montant total" value={formatCdf(data.montant_total ?? 0)} color="from-indigo-500 to-indigo-600" />
+        <StatCard icon={<CheckCircle size={20} />} label="Montant validé" value={formatCdf(data.montant_valide ?? 0)} color="from-emerald-500 to-emerald-600" />
+        <StatCard icon={<TrendingUp size={20} />} label="Montant moyen" value={formatCdf(data.montant_moyen ?? 0)} color="from-amber-500 to-amber-600" />
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="bg-white rounded-2xl border border-slate-200/60 p-5 shadow-sm flex items-center gap-4">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50"><CheckCircle size={18} className="text-emerald-600" /></div>
+          <div><p className="text-xs text-slate-500">Validés</p><p className="text-lg font-bold text-emerald-600">{formatNumber(data.valides ?? 0)}</p></div>
+        </div>
+        <div className="bg-white rounded-2xl border border-slate-200/60 p-5 shadow-sm flex items-center gap-4">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50"><Clock size={18} className="text-amber-600" /></div>
+          <div><p className="text-xs text-slate-500">En attente</p><p className="text-lg font-bold text-amber-600">{formatNumber(data.en_attente ?? 0)}</p></div>
+        </div>
+        <div className="bg-white rounded-2xl border border-slate-200/60 p-5 shadow-sm flex items-center gap-4">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-50"><DollarSign size={18} className="text-slate-600" /></div>
+          <div><p className="text-xs text-slate-500">En attente (montant)</p><p className="text-lg font-bold text-slate-700">{formatCdf(data.montant_en_attente ?? 0)}</p></div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {typePieData.length > 0 && (
+          <ResultSection title="Répartition par type" icon={<PieChartIcon size={16} />}>
+            <div className="h-72">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie data={typePieData} cx="50%" cy="50%" innerRadius={50} outerRadius={85} paddingAngle={4} dataKey="value">
+                    {typePieData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} stroke="none" />
+                    ))}
+                  </Pie>
+                  <Tooltip content={<PieTooltip />} />
+                  <Legend verticalAlign="bottom" height={36} formatter={(value) => <span className="text-xs text-slate-600">{value}</span>} />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </ResultSection>
+        )}
+
+        {typeBarData.length > 0 && (
+          <ResultSection title="Montant par type" icon={<BarChart3 size={16} />}>
+            <div className="h-72">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={typeBarData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }} layout="vertical">
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" horizontal={false} />
+                  <XAxis type="number" tick={{ fontSize: 11, fill: '#94a3b8' }} axisLine={false} tickLine={false} tickFormatter={(v) => formatCdf(v)} />
+                  <YAxis type="category" dataKey="name" tick={{ fontSize: 12, fill: '#64748b' }} axisLine={false} tickLine={false} width={120} />
+                  <Tooltip content={<ChartTooltip />} cursor={{ fill: 'rgba(6, 182, 212, 0.06)' }} />
+                  <Bar dataKey="montant" name="Montant CDF" radius={[0, 8, 8, 0]} maxBarSize={30}>
+                    {typeBarData.map((_: any, index: number) => (
+                      <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </ResultSection>
+        )}
+      </div>
+
+      {data.evolution && data.evolution.length > 0 && (
+        <ResultSection title="Évolution mensuelle des reçus de perception" icon={<TrendingUp size={16} />}>
+          <p className="text-xs text-slate-400 -mt-2 mb-4">
+            Barres : montant collecté (axe gauche, CDF) · Ligne : nombre de reçus (axe droit)
+          </p>
+          <div className="h-72">
+            <ResponsiveContainer width="100%" height="100%">
+              <ComposedChart data={data.evolution.map(e => ({ ...e, name: formatMonth(e.mois ?? e.periode ?? '') }))} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
+                <XAxis dataKey="name" tick={{ fontSize: 12, fill: '#64748b' }} axisLine={false} tickLine={false} />
+                <YAxis yAxisId="left" tick={{ fontSize: 11, fill: '#94a3b8' }} axisLine={false} tickLine={false} tickFormatter={(v) => formatCdf(v)} width={80} />
+                <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 11, fill: '#94a3b8' }} axisLine={false} tickLine={false} allowDecimals={false} width={40} />
+                <Tooltip content={<ChartTooltip />} cursor={{ fill: 'rgba(6, 182, 212, 0.06)' }} />
+                <Legend verticalAlign="top" height={30} formatter={(value) => <span className="text-xs text-slate-600">{value}</span>} />
+                <Bar yAxisId="left" dataKey="montant" name="Montant collecté (CDF)" fill="#06b6d4" radius={[6, 6, 0, 0]} maxBarSize={60} />
+                <Line yAxisId="right" type="monotone" dataKey="total" name="Nombre de reçus" stroke="#6366f1" strokeWidth={3} dot={{ fill: '#6366f1', r: 4 }} activeDot={{ r: 7 }} />
+              </ComposedChart>
+            </ResponsiveContainer>
+          </div>
+        </ResultSection>
+      )}
+
+      {typeRows.length > 0 && (
+        <ResultSection title="Détail par type de perception" icon={<FileText size={16} />}>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead><tr className="border-b border-slate-200">
+                <th className="text-left text-xs font-bold uppercase tracking-wider text-slate-500 px-4 py-3">Type</th>
+                <th className="text-right text-xs font-bold uppercase tracking-wider text-slate-500 px-4 py-3">Nombre</th>
+                <th className="text-right text-xs font-bold uppercase tracking-wider text-slate-500 px-4 py-3">Montant</th>
+              </tr></thead>
+              <tbody className="divide-y divide-slate-100">
+                {typeRows.map((t, i) => (
+                  <tr key={t.type_perception} className="hover:bg-slate-50 transition">
+                    <td className="px-4 py-3 text-sm font-medium text-slate-800 flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full" style={{ backgroundColor: chartColors[i % chartColors.length] }} />
+                      {t.libelle ?? typePerceptionLabels[t.type_perception] ?? t.type_perception}
+                    </td>
+                    <td className="px-4 py-3 text-sm font-bold text-slate-900 text-right">{formatNumber(t.total)}</td>
+                    <td className="px-4 py-3 text-sm font-bold text-emerald-600 text-right">{formatCdf(t.montant)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </ResultSection>
+      )}
+    </div>
+  );
+}
+
 function GlobalReport({ data }: { data: RapportData }) {
   return (
     <div className="space-y-6">
@@ -737,6 +872,12 @@ function GlobalReport({ data }: { data: RapportData }) {
       {data.factures && (
         <ResultSection title="Section Factures" icon={<FileText size={16} />}>
           <FacturesReport data={data.factures} />
+        </ResultSection>
+      )}
+
+      {data.recus_perception && (
+        <ResultSection title="Section Reçus de perception" icon={<Receipt size={16} />}>
+          <RecusPerceptionReport data={data.recus_perception} />
         </ResultSection>
       )}
     </div>
@@ -775,6 +916,7 @@ export default function Rapports() {
   const renderReport = () => {
     if (!result) return null;
     if (result.operateurs && result.paiements) return <GlobalReport data={result} />;
+    if (result.par_type && result.montant_valide !== undefined) return <RecusPerceptionReport data={result} />;
     if (result.par_commune || result.formalises !== undefined) return <OperateursReport data={result} />;
     if (result.par_statut && (result.montant_paye !== undefined || result.montant_en_attente !== undefined)) return <PaiementsReport data={result} />;
     if (result.par_categorie || result.collecte_par_taxe) return <TaxesReport data={result} />;

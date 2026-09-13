@@ -1,30 +1,41 @@
 import { Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
+import logoBase64Raw from '../assets/logo_base64.txt?raw';
 import type { Personne } from '../types';
 
+const LOGO_SRC = `data:image/png;base64,${logoBase64Raw.replace(/\s/g, '')}`;
+
 const styles = StyleSheet.create({
-  page: { padding: 30, fontFamily: 'Helvetica', backgroundColor: '#f8fafc' },
-  card: { backgroundColor: '#ffffff', borderRadius: 12, padding: 24, border: '1 solid #e2e8f0' },
-  header: { flexDirection: 'row', alignItems: 'center', marginBottom: 20, borderBottomWidth: 2, borderBottomColor: '#4f46e5', paddingBottom: 16 },
-  logoBox: { width: 50, height: 50, backgroundColor: '#4f46e5', borderRadius: 12, alignItems: 'center', justifyContent: 'center', marginRight: 16 },
-  logoText: { fontSize: 18, fontWeight: 'bold', color: '#ffffff' },
-  headerTitle: { fontSize: 18, fontWeight: 'bold', color: '#1e293b' },
-  headerSubtitle: { fontSize: 9, color: '#64748b', marginTop: 2 },
-  photoSection: { flexDirection: 'row', marginBottom: 20, gap: 20 },
-  photoBox: { width: 110, height: 130, borderWidth: 2, borderColor: '#e2e8f0', borderRadius: 8, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
-  photoImage: { width: 110, height: 130 },
-  photoPlaceholder: { fontSize: 32, fontWeight: 'bold', color: '#4f46e5' },
+  page: { padding: 18, fontFamily: 'Helvetica', backgroundColor: '#f8fafc' },
+  card: { backgroundColor: '#ffffff', borderRadius: 10, padding: 16, border: '1 solid #e2e8f0' },
+  header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8, borderBottomWidth: 1, borderBottomColor: '#000000', paddingBottom: 8 },
+  logoImg: { width: 44, height: 44, objectFit: 'contain' },
+  headerCenter: { flex: 1, alignItems: 'center', paddingHorizontal: 6 },
+  headerSpacer: { width: 44 },
+  republicText: { fontSize: 9, fontWeight: 'bold', textAlign: 'center' },
+  subRepublicText: { fontSize: 8, textAlign: 'center' },
+  cityText: { fontSize: 10, fontWeight: 'bold', textAlign: 'center', marginTop: 1 },
+  bureauText: { fontSize: 7, textAlign: 'center', fontStyle: 'italic' },
+  titleContainer: { backgroundColor: '#EEF2FF', borderWidth: 1, borderColor: '#c7d2fe', borderRadius: 6, padding: 6, marginBottom: 10 },
+  titleText: { fontSize: 11, fontWeight: 'bold', textAlign: 'center', color: '#1e293b' },
+  titleSub: { fontSize: 7, textAlign: 'center', color: '#64748b', marginTop: 1 },
+  photoSection: { flexDirection: 'row', marginBottom: 12, gap: 14 },
+  photoBox: { width: 90, height: 105, borderWidth: 2, borderColor: '#e2e8f0', borderRadius: 8, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
+  photoImage: { width: 90, height: 105 },
+  photoPlaceholder: { fontSize: 26, fontWeight: 'bold', color: '#4f46e5' },
   infoSection: { flex: 1 },
-  nameLabel: { fontSize: 16, fontWeight: 'bold', color: '#1e293b' },
-  roleLabel: { fontSize: 10, color: '#4f46e5', marginTop: 2, textTransform: 'uppercase', letterSpacing: 1 },
-  detailGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, marginTop: 12 },
-  detailItem: { width: '48%', marginBottom: 8 },
-  detailLabel: { fontSize: 8, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: 0.5 },
-  detailValue: { fontSize: 11, color: '#1e293b', fontWeight: 'bold', marginTop: 2 },
-  sectionTitle: { fontSize: 11, fontWeight: 'bold', color: '#4f46e5', marginTop: 16, marginBottom: 8, borderBottomWidth: 1, borderBottomColor: '#e2e8f0', paddingBottom: 4 },
-  qrSection: { alignItems: 'center', marginTop: 20, paddingTop: 16, borderTopWidth: 1, borderTopColor: '#e2e8f0' },
-  qrLabel: { fontSize: 8, color: '#64748b', marginTop: 6 },
-  footer: { position: 'absolute', bottom: 20, left: 30, right: 30, flexDirection: 'row', justifyContent: 'space-between', borderTopWidth: 0.5, borderTopColor: '#cbd5e1', paddingTop: 8 },
-  footerText: { fontSize: 7, color: '#94a3b8' },
+  nameLabel: { fontSize: 14, fontWeight: 'bold', color: '#1e293b' },
+  roleLabel: { fontSize: 9, color: '#4f46e5', marginTop: 1, textTransform: 'uppercase', letterSpacing: 1 },
+  detailGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 6 },
+  detailItem: { width: '48%', marginBottom: 5 },
+  detailLabel: { fontSize: 7, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: 0.5 },
+  detailValue: { fontSize: 9, color: '#1e293b', fontWeight: 'bold', marginTop: 1 },
+  sectionTitle: { fontSize: 10, fontWeight: 'bold', color: '#4f46e5', marginTop: 9, marginBottom: 4, borderBottomWidth: 1, borderBottomColor: '#e2e8f0', paddingBottom: 2 },
+  qrSection: { alignItems: 'center', marginTop: 10, paddingTop: 8, borderTopWidth: 1, borderTopColor: '#e2e8f0' },
+  qrLabel: { fontSize: 7, color: '#64748b', marginTop: 4 },
+  footer: { position: 'absolute', bottom: 12, left: 18, right: 18, borderTopWidth: 0.5, borderTopColor: '#cbd5e1', paddingTop: 5 },
+  footerAddress: { fontSize: 6, color: '#64748b', textAlign: 'center', marginBottom: 2 },
+  footerRow: { flexDirection: 'row', justifyContent: 'space-between' },
+  footerText: { fontSize: 6.5, color: '#94a3b8' },
 });
 
 function formatDate(dateStr: string | null | undefined): string {
@@ -51,13 +62,19 @@ export function FicheOperateurDocument({ personne: p, qrDataUrl, photoDataUrl }:
       <Page size="A4" style={styles.page}>
         <View style={styles.card}>
           <View style={styles.header}>
-            <View style={styles.logoBox}>
-              <Text style={styles.logoText}>GS</Text>
+            <Image src={LOGO_SRC} style={styles.logoImg} />
+            <View style={styles.headerCenter}>
+              <Text style={styles.republicText}>REPUBLIQUE DEMOCRATIQUE DU CONGO</Text>
+              <Text style={styles.subRepublicText}>PROVINCE DU HAUT-KATANGA</Text>
+              <Text style={styles.cityText}>VILLE DE KIPUSHI</Text>
+              <Text style={styles.bureauText}>BUREAU DU MAIRE</Text>
             </View>
-            <View>
-              <Text style={styles.headerTitle}>FICHE IDENTIFICATION OPÉRATEUR</Text>
-              <Text style={styles.headerSubtitle}>Système de Gestion I-KIPUSHI</Text>
-            </View>
+            <View style={styles.headerSpacer} />
+          </View>
+
+          <View style={styles.titleContainer}>
+            <Text style={styles.titleText}>FICHE D'IDENTIFICATION OPÉRATEUR / GESTIONNAIRE</Text>
+            <Text style={styles.titleSub}>Système de Gestion I-KIPUSHI</Text>
           </View>
 
           <View style={styles.photoSection}>
@@ -224,14 +241,19 @@ export function FicheOperateurDocument({ personne: p, qrDataUrl, photoDataUrl }:
 
           {/* QR Code */}
           <View style={styles.qrSection}>
-            <Image src={qrDataUrl} style={{ width: 100, height: 100 }} />
+            <Image src={qrDataUrl} style={{ width: 80, height: 80 }} />
             <Text style={styles.qrLabel}>Scannez pour vérifier l'identité</Text>
           </View>
         </View>
 
         <View style={styles.footer}>
-          <Text style={styles.footerText}>I-KIPUSHI — Fiche d'identification — {now}</Text>
-          <Text style={styles.footerText}>N° {p.id}</Text>
+          <Text style={styles.footerAddress}>
+            Avenue Pajero, Quartier Kasengaise, Ville de Kipushi, Haut-Katanga, RDC — Tél : +243820747471 / +2438870563 — Email : contact@kipushi.cd
+          </Text>
+          <View style={styles.footerRow}>
+            <Text style={styles.footerText}>I-KIPUSHI — Fiche d'identification — {now}</Text>
+            <Text style={styles.footerText}>N° {p.id}</Text>
+          </View>
         </View>
       </Page>
     </Document>

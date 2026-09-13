@@ -1,5 +1,6 @@
 import React from 'react';
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
+import { formatMontant } from '../../utils/format';
 
 const styles = StyleSheet.create({
   page: {
@@ -239,7 +240,7 @@ export const RecuPerceptionPDF = ({ data }: { data: RecuPDFData }) => {
                   </View>
                   <View style={styles.cellContainer}>
                     <Text style={[styles.cellLabel, { width: 50 }]}>Montant:</Text>
-                    <Text style={styles.cellValue}>{data.montant?.toLocaleString('fr-FR')} FC</Text>
+                    <Text style={styles.cellValue}>{formatMontant(data.montant, 'FC')}</Text>
                   </View>
                 </>
               ) : (
@@ -250,7 +251,7 @@ export const RecuPerceptionPDF = ({ data }: { data: RecuPDFData }) => {
                   </View>
                   <View style={styles.cellContainer}>
                     <Text style={[styles.cellLabel, { width: 50 }]}>Montant:</Text>
-                    <Text style={styles.cellValue}>{data.montant?.toLocaleString('fr-FR')} FC</Text>
+                    <Text style={styles.cellValue}>{formatMontant(data.montant, 'FC')}</Text>
                   </View>
                 </>
               )}

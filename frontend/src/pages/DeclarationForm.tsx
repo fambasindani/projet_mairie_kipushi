@@ -10,6 +10,7 @@ import { declarationService } from '../services/declarationService';
 import { personneService } from '../services/personneService';
 import { taxeService } from '../services/taxeService';
 import { FormSkeleton } from '../components/ui/Skeletons';
+import { formatMontant } from '../utils/format';
 import type { Taxe } from '../types';
 
 interface DeclarationFormState {
@@ -339,7 +340,7 @@ export default function DeclarationForm() {
                     const taxe = taxesData.find((t) => t.id === Number(form.taxe_id));
                     if (!taxe) return null;
                     if (taxe.unite === 'montant_fixe') {
-                      return <p className="text-xs text-slate-400 mt-1">Montant fixe : {Number(taxe.taux).toLocaleString('fr-FR')} CDF</p>;
+                      return <p className="text-xs text-slate-400 mt-1">Montant fixe : {formatMontant(taxe.taux)}</p>;
                     }
                     if (taxe.unite === 'pourcentage') {
                       return <p className="text-xs text-slate-400 mt-1">{taxe.taux}% du montant de base</p>;
@@ -352,7 +353,7 @@ export default function DeclarationForm() {
                 <div className="mt-4 rounded-lg bg-red-50 border border-red-100 p-3">
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-medium text-red-700">Pénalités appliquées :</span>
-                    <span className="text-sm font-bold text-red-800">{Number(form.penalites).toLocaleString('fr-FR')} CDF</span>
+                    <span className="text-sm font-bold text-red-800">{formatMontant(form.penalites)}</span>
                   </div>
                   <p className="text-xs text-red-500 mt-1">Les pénalités sont calculées automatiquement selon le retard de paiement.</p>
                 </div>

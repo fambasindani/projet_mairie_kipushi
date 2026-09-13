@@ -18,6 +18,7 @@ import DataTable from '../components/ui/DataTable';
 import ConfirmModal from '../components/ui/ConfirmModal';
 import Button from '../components/ui/Button';
 import { taxeService } from '../services/taxeService';
+import { formatCdf } from '../utils/format';
 import type { Taxe, PaginatedResponse } from '../types';
 
 const categorieLabels: Record<string, string> = {
@@ -167,12 +168,7 @@ export default function Taxes() {
   const formatMontant = (taxe: Taxe): string => {
     if (taxe.unite === 'pourcentage') return `${taxe.taux ?? 0}%`;
     if (taxe.unite === 'montant_fixe') {
-      return new Intl.NumberFormat('fr-CD', {
-        style: 'currency',
-        currency: 'CDF',
-        currencyDisplay: 'code',
-        minimumFractionDigits: 0,
-      }).format(taxe.taux ?? 0);
+      return formatCdf(taxe.taux ?? 0);
     }
     return `${taxe.taux ?? 0} / unité`;
   };

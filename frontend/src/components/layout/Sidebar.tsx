@@ -16,6 +16,8 @@ import {
   UserCircle,
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
+import { operateurAllowedChildren, operateurAllowedStandalone, pathPermissionMap } from "../../config/permissions";
+import logo from "../../assets/logo.png";
 
 interface SubItem {
   label: string;
@@ -139,32 +141,6 @@ function getOpenGroup(pathname: string): string {
   return "dashboard";
 }
 
-const SYSTEM_ROLES = ['Administrateur', 'Operateur'];
-
-const pathPermissionMap: Record<string, string> = {
-  '/declarations': 'paiement:read',
-  '/recus-perception': 'paiement:read',
-  '/taxes': 'taxe:read',
-  '/biens': 'operateur:read',
-  '/vehicules': 'operateur:read',
-  '/permis': 'permis:read',
-  '/operateurs': 'operateur:read',
-  '/activites': 'operateur:read',
-  '/documents': 'document:read',
-  '/identifiants': 'identifiant:read',
-  '/utilisateurs': 'utilisateur:read',
-  '/roles': 'role:read',
-  '/permissions': 'permission:read',
-  '/audit': 'audit:read',
-  '/parametres': 'parametre:read',
-  '/rapports': 'rapport:read',
-  '/notifications': 'notification:read',
-  '/provinces': 'operateur:read',
-  '/villes': 'operateur:read',
-  '/communes': 'operateur:read',
-  '/quartiers': 'operateur:read',
-};
-
 export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
   const location = useLocation();
   const { user } = useAuth();
@@ -181,13 +157,6 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
     const required = pathPermissionMap[path];
     return !required || userPermissions.has(required);
   };
-
-  const operateurAllowedChildren: Record<string, string[]> = {
-    operateurs: ['/operateurs'],
-    fiscalite: ['/declarations', '/recus-perception'],
-  };
-
-  const operateurAllowedStandalone = ['/notifications', '/profil'];
 
   const isGroupVisible = (g: NavGroup) => {
     if (isAdmin) return true;
@@ -267,7 +236,7 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
         <div className="flex items-center justify-between px-5 h-16 shrink-0 border-b border-white/5">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 flex items-center justify-center overflow-hidden">
-              <img src="/src/assets/logo.png" alt="Logo" className="w-9 h-9 object-contain" />
+              <img src={logo} alt="Logo" className="w-9 h-9 object-contain" />
             </div>
             <span className="text-white font-semibold text-[15px] tracking-tight whitespace-nowrap">
               I-KIPUSHI

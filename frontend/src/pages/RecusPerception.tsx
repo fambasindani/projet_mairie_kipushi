@@ -31,6 +31,7 @@ import {
 } from '../services/recuPerceptionService';
 import { taxeService } from '../services/taxeService';
 import { useAuth } from '../context/AuthContext';
+import { formatCdf } from '../utils/format';
 import type { Taxe } from '../types';
 
 const typeBadge: Record<string, 'info' | 'success' | 'warning' | 'danger' | 'neutral'> = {
@@ -41,8 +42,6 @@ const typeBadge: Record<string, 'info' | 'success' | 'warning' | 'danger' | 'neu
   dechargement: 'danger',
   autre: 'neutral',
 };
-
-const formatCdf = (v: number) => new Intl.NumberFormat('fr-CD', { style: 'currency', currency: 'CDF', currencyDisplay: 'code', minimumFractionDigits: 0 }).format(v);
 
 export default function RecusPerception() {
   const navigate = useNavigate();

@@ -424,20 +424,23 @@ class PersonneController extends Controller
     public function statistiques(Request $request)
     {
         try {
+            $base = Personne::query();
+            $this->scopeOperateur($base, $request, 'id');
+
             $stats = [
-                'total' => Personne::count(),
-                'actifs' => Personne::where('est_actif', true)->count(),
-                'inactifs' => Personne::where('est_actif', false)->count(),
-                'formalises' => Personne::where('est_formalise', true)->count(),
-                'non_formalises' => Personne::where('est_formalise', false)->count(),
-                'physiques' => Personne::where('type', 'physique')->count(),
-                'morales' => Personne::where('type', 'morale')->count(),
+                'total' => (clone $base)->count(),
+                'actifs' => (clone $base)->where('est_actif', true)->count(),
+                'inactifs' => (clone $base)->where('est_actif', false)->count(),
+                'formalises' => (clone $base)->where('est_formalise', true)->count(),
+                'non_formalises' => (clone $base)->where('est_formalise', false)->count(),
+                'physiques' => (clone $base)->where('type', 'physique')->count(),
+                'morales' => (clone $base)->where('type', 'morale')->count(),
                 'par_sexe' => [
-                    'M' => Personne::where('sexe', 'M')->count(),
-                    'F' => Personne::where('sexe', 'F')->count(),
-                    'Non_renseigne' => Personne::whereNull('sexe')->count(),
+                    'M' => (clone $base)->where('sexe', 'M')->count(),
+                    'F' => (clone $base)->where('sexe', 'F')->count(),
+                    'Non_renseigne' => (clone $base)->whereNull('sexe')->count(),
                 ],
-                'par_commune' => Personne::select('commune')
+                'par_commune' => (clone $base)->select('commune')
                     ->selectRaw('count(*) as total')
                     ->whereNotNull('commune')
                     ->where('commune', '!=', '')
@@ -446,16 +449,16 @@ class PersonneController extends Controller
                     ->limit(10)
                     ->get(),
                 'par_type' => [
-                    'physique' => Personne::where('type', 'physique')->count(),
-                    'morale' => Personne::where('type', 'morale')->count(),
+                    'physique' => (clone $base)->where('type', 'physique')->count(),
+                    'morale' => (clone $base)->where('type', 'morale')->count(),
                 ],
-                'nouveaux_mois' => Personne::selectRaw('DATE_FORMAT(created_at, "%Y-%m") as mois')
+                'nouveaux_mois' => (clone $base)->selectRaw('DATE_FORMAT(created_at, "%Y-%m") as mois')
                     ->selectRaw('count(*) as total')
                     ->groupBy('mois')
                     ->orderBy('mois', 'desc')
                     ->limit(12)
                     ->get(),
-                'formalisation_mois' => Personne::selectRaw('DATE_FORMAT(date_formalisation, "%Y-%m") as mois')
+                'formalisation_mois' => (clone $base)->selectRaw('DATE_FORMAT(date_formalisation, "%Y-%m") as mois')
                     ->selectRaw('count(*) as total')
                     ->whereNotNull('date_formalisation')
                     ->groupBy('mois')

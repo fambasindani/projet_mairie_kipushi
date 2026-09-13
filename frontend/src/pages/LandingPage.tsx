@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Building2, FileText, Shield, Clock, CheckCircle, ArrowRight, Landmark, Users } from 'lucide-react';
+import logo from '../assets/logo.png';
 
 export default function LandingPage() {
   return (
@@ -10,7 +11,7 @@ export default function LandingPage() {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center overflow-hidden">
-                <img src="/src/assets/logo.png" alt="Logo" className="w-10 h-10 object-contain" />
+                <img src={logo} alt="Logo" className="w-10 h-10 object-contain" />
               </div>
               <div>
                 <h1 className="text-lg font-bold text-slate-900">I-KIPUSHI</h1>
@@ -111,7 +112,7 @@ export default function LandingPage() {
             <div className="bg-white/5 backdrop-blur-sm rounded-3xl border border-white/10 p-8">
               <div className="text-center">
                 <div className="flex h-16 w-16 items-center justify-center mx-auto mb-5 overflow-hidden">
-                  <img src="/src/assets/logo.png" alt="Logo" className="w-16 h-16 object-contain" />
+                  <img src={logo} alt="Logo" className="w-16 h-16 object-contain" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-3">Prêt à commencer ?</h3>
                 <p className="text-sm text-slate-400 mb-6">Créez votre compte et commencez à gérer vos obligations fiscales en ligne.</p>
@@ -130,7 +131,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2 text-sm text-slate-500">
-              <img src="/src/assets/logo.png" alt="Logo" className="w-4 h-4 object-contain" />
+              <img src={logo} alt="Logo" className="w-4 h-4 object-contain" />
               I-KIPUSHI — Gestion fiscale locale
             </div>
             <p className="text-xs text-slate-400">&copy; 2026 Mairie. Tous droits réservés.</p>

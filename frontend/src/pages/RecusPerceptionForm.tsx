@@ -7,6 +7,7 @@ import Input from '../components/ui/Input';
 import Select from '../components/ui/Select';
 import { recuPerceptionService, type RecuPerceptionCreate, type TypePerception, typePerceptionLabels } from '../services/recuPerceptionService';
 import { taxeService } from '../services/taxeService';
+import { formatCdf } from '../utils/format';
 import type { Taxe } from '../types';
 import { FormSkeleton } from '../components/ui/Skeletons';
 
@@ -76,7 +77,7 @@ export default function RecusPerceptionForm() {
 
   const typeOptions = (Object.entries(typePerceptionLabels) as [TypePerception, string][]).map(([k, v]) => ({ label: v, value: k }));
   const taxeOptions = taxes.map(t => ({
-    label: `${t.nom} — ${t.unite === 'pourcentage' ? t.taux + '%' : new Intl.NumberFormat('fr-CD', { style: 'currency', currency: 'CDF', minimumFractionDigits: 0 }).format(t.taux ?? 0)}`,
+    label: `${t.nom} — ${t.unite === 'pourcentage' ? t.taux + '%' : formatCdf(t.taux ?? 0)}`,
     value: t.id,
   }));
   const trajetOptions = [

@@ -59,6 +59,22 @@ class Personne extends Model
     }
 
     /**
+     * Alias de relation (compatibilité API)
+     */
+    public function identifiants()
+    {
+        return $this->hasMany(IdentifiantOfficiel::class);
+    }
+
+    /**
+     * Alias de relation (compatibilité API)
+     */
+    public function quartier()
+    {
+        return $this->belongsTo(Quartier::class, 'id_quartier');
+    }
+
+    /**
      * Relation avec les activités économiques
      * Spécification explicite des clés pour éviter les erreurs
      */

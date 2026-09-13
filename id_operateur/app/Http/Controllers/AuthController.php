@@ -84,7 +84,10 @@ class AuthController extends Controller
         ]);
 
         // Charger les relations
-        $utilisateur->load(['personne', 'roles']);
+        $utilisateur->load(['personne', 'roles.permissions']);
+        if ($utilisateur->personne) {
+            $utilisateur->personne->setAttribute('avatar_url', $this->avatarDataUrl($utilisateur->personne->avatar));
+        }
 
         return response()->json([
             'success' => true,
@@ -133,23 +136,8 @@ class AuthController extends Controller
         $utilisateur->load(['personne', 'roles.permissions']);
 
         $personneData = $utilisateur->personne ? $utilisateur->personne->toArray() : null;
-        $avatarUrl = null;
-        if ($personneData && !empty($personneData['avatar'])) {
-            try {
-                $diskPath = Storage::disk('public')->path($personneData['avatar']);
-                if (Storage::disk('public')->exists($personneData['avatar'])) {
-                    $file = Storage::disk('public')->get($personneData['avatar']);
-                    $mime = Storage::disk('public')->mimeType($personneData['avatar']);
-                    $avatarUrl = 'data:' . $mime . ';base64,' . base64_encode($file);
-                } else {
-                    \Log::warning('Avatar file not found: ' . $diskPath);
-                }
-            } catch (\Exception $e) {
-                \Log::error('Avatar read error: ' . $e->getMessage());
-            }
-        }
         if ($personneData) {
-            $personneData['avatar_url'] = $avatarUrl;
+            $personneData['avatar_url'] = $this->avatarDataUrl($personneData['avatar'] ?? null);
         }
 
         return response()->json([
@@ -166,6 +154,28 @@ class AuthController extends Controller
                 })
             ]
         ]);
+    }
+
+    /**
+     * Construit une URL de données (base64) pour l'avatar d'une personne.
+     */
+    private function avatarDataUrl(?string $avatar): ?string
+    {
+        if (empty($avatar)) {
+            return null;
+        }
+        try {
+            if (!Storage::disk('public')->exists($avatar)) {
+                \Log::warning('Avatar file not found: ' . $avatar);
+                return null;
+            }
+            $file = Storage::disk('public')->get($avatar);
+            $mime = Storage::disk('public')->mimeType($avatar);
+            return 'data:' . $mime . ';base64,' . base64_encode($file);
+        } catch (\Exception $e) {
+            \Log::error('Avatar read error: ' . $e->getMessage());
+            return null;
+        }
     }
 
     // Changer le mot de passe

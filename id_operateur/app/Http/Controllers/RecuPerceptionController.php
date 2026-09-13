@@ -52,9 +52,16 @@ class RecuPerceptionController extends Controller
         ]);
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $recu = RecuPerception::with(['taxe', 'personne', 'percepteur'])->find($id);
+        $query = RecuPerception::with(['taxe', 'personne', 'percepteur']);
+
+        $user = $request->user();
+        if ($user && $user->hasRole('Operateur')) {
+            $query->where('percepteur_id', $user->id);
+        }
+
+        $recu = $query->find($id);
 
         if (!$recu) {
             return response()->json(['success' => false, 'message' => 'Reçu non trouvé'], 404);
@@ -226,7 +233,7 @@ class RecuPerceptionController extends Controller
         $valides = (clone $query)->where('valide', true)->count();
         $nonValides = (clone $query)->where('valide', false)->count();
 
-        $parType = (clone RecuPerception::query())
+        $parType = (clone $query)
             ->select('type_perception')
             ->selectRaw('count(*) as total, sum(montant) as montant')
             ->groupBy('type_perception')

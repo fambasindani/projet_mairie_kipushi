@@ -24,6 +24,7 @@ import { FactureDocument } from '../components/PDFFacture';
 import { factureService } from '../services/factureService';
 import type { Facture, PaginatedResponse } from '../types';
 import { useAuth } from '../context/AuthContext';
+import { formatMontant } from '../utils/format';
 
 const statutBadge: Record<string, 'info' | 'success' | 'neutral'> = {
   emise: 'info',
@@ -36,14 +37,6 @@ const statutLabels: Record<string, string> = {
   payee: 'Payée',
   annulee: 'Annulée',
 };
-
-const formatMontant = (val: number | string, devise = 'CDF') =>
-  new Intl.NumberFormat('fr-CD', {
-    style: 'currency',
-    currency: devise,
-    currencyDisplay: 'code',
-    minimumFractionDigits: 0,
-  }).format(Number(val) || 0);
 
 export default function Factures() {
   const navigate = useNavigate();

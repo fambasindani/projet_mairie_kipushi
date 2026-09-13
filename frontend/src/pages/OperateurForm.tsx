@@ -364,8 +364,8 @@ export default function OperateurForm() {
             <Users className="text-white" size={22} />
           </div>
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900">{isEdit ? 'Modifier l\'opérateur' : 'Nouvel opérateur'}</h1>
-            <p className="mt-1 text-sm text-slate-500">{isEdit ? `Modification de ${form.nom} ${form.prenom ?? ''}`.trim() : 'Créer un nouvel opérateur'}</p>
+            <h1 className="text-2xl font-bold tracking-tight text-slate-900">{isEdit ? 'Modifier l\'opérateur/Gestionnaire' : 'Nouvel opérateur/Gestionnaire'}</h1>
+            <p className="mt-1 text-sm text-slate-500">{isEdit ? `Modification de ${form.nom} ${form.prenom ?? ''}`.trim() : 'Créer un nouvel opérateur/Gestionnaire'}</p>
           </div>
         </div>
         <nav className="flex items-center gap-2 text-sm">

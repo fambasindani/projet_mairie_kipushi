@@ -18,6 +18,8 @@ import { identifiantService } from '../services/identifiantService';
 import { activiteService } from '../services/activiteService';
 import { documentService } from '../services/documentService';
 import { get } from '../services/api';
+import { useAuth } from '../context/AuthContext';
+import { isAdminUser, userPermissionSet } from '../config/permissions';
 import type { Personne, ActiviteEconomique, IdentifiantOfficiel, Document } from '../types';
 
 type Tab = 'apercu' | 'activites' | 'identifiants' | 'documents';
@@ -54,6 +56,11 @@ const identTypeLabels: Record<string, string> = {
 export default function OperateurDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const isAdmin = isAdminUser(user);
+  const isOperateur = user?.roles?.some((r) => r.nom === 'Operateur') ?? false;
+  const permissions = userPermissionSet(user);
+  const can = (perm: string) => !isOperateur && (isAdmin || permissions.has(perm));
   const [operateur, setOperateur] = useState<Personne | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<Tab>('apercu');
@@ -350,7 +357,7 @@ export default function OperateurDetail() {
             <p className="text-xs text-slate-400">{activites.length} assignée(s)</p>
           </div>
         </div>
-        {!showAddActivite && availableActivites.length > 0 && (
+        {can('operateur:update') && !showAddActivite && availableActivites.length > 0 && (
           <Button icon={<Plus size={14} />} size="sm" onClick={() => setShowAddActivite(true)}>Ajouter</Button>
         )}
       </div>
@@ -367,8 +374,8 @@ export default function OperateurDetail() {
                 </div>
               </div>
               <div className="flex items-center gap-1">
-                <button onClick={() => setEditingActivite(a)} className="p-2 rounded-lg hover:bg-amber-50 text-slate-400 hover:text-amber-600 transition cursor-pointer" title="Modifier"><Pencil size={14} /></button>
-                <button onClick={() => setConfirmActivite(a)} className="p-2 rounded-lg hover:bg-red-50 text-slate-400 hover:text-red-600 transition cursor-pointer" title="Supprimer"><Trash2 size={14} /></button>
+                {can('operateur:update') && <button onClick={() => setEditingActivite(a)} className="p-2 rounded-lg hover:bg-amber-50 text-slate-400 hover:text-amber-600 transition cursor-pointer" title="Modifier"><Pencil size={14} /></button>}
+                {can('operateur:delete') && <button onClick={() => setConfirmActivite(a)} className="p-2 rounded-lg hover:bg-red-50 text-slate-400 hover:text-red-600 transition cursor-pointer" title="Supprimer"><Trash2 size={14} /></button>}
               </div>
             </div>
           ))}
@@ -426,8 +433,8 @@ export default function OperateurDetail() {
                     </div>
                   </div>
                   <div className="flex items-center gap-1">
-                    <button onClick={() => setEditingIdentifiant(ident)} className="p-2 rounded-lg hover:bg-amber-50 text-slate-400 hover:text-amber-600 transition cursor-pointer" title="Modifier"><Pencil size={14} /></button>
-                    <button onClick={() => setConfirmIdentifiant(ident)} className="p-2 rounded-lg hover:bg-red-50 text-slate-400 hover:text-red-600 transition cursor-pointer" title="Supprimer"><Trash2 size={14} /></button>
+                    {can('identifiant:update') && <button onClick={() => setEditingIdentifiant(ident)} className="p-2 rounded-lg hover:bg-amber-50 text-slate-400 hover:text-amber-600 transition cursor-pointer" title="Modifier"><Pencil size={14} /></button>}
+                    {can('identifiant:delete') && <button onClick={() => setConfirmIdentifiant(ident)} className="p-2 rounded-lg hover:bg-red-50 text-slate-400 hover:text-red-600 transition cursor-pointer" title="Supprimer"><Trash2 size={14} /></button>}
                   </div>
                 </div>
               ))}
@@ -437,6 +444,7 @@ export default function OperateurDetail() {
           )}
         </div>
 
+        {can('identifiant:create') && (
         <div className="rounded-2xl bg-white shadow-sm ring-1 ring-slate-200/60 p-6">
           <div className="flex items-center gap-3 mb-5">
             <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 ring-1 ring-emerald-100"><Plus className="text-sm" /></span>
@@ -452,12 +460,14 @@ export default function OperateurDetail() {
             <Button icon={<Plus size={14} />} size="sm" onClick={handleAddIdentifiant}>Enregistrer</Button>
           </div>
         </div>
+        )}
       </div>
     );
   };
 
   const renderDocuments = () => (
     <div className="space-y-6">
+      {can('document:create') && (
       <div className="rounded-2xl bg-white shadow-sm ring-1 ring-slate-200/60 p-6">
         <div className="flex items-center gap-3 mb-5">
           <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-50 text-indigo-600 ring-1 ring-indigo-100"><Upload className="text-sm" /></span>
@@ -478,6 +488,7 @@ export default function OperateurDetail() {
           </div>
         </div>
       </div>
+      )}
 
       <div className="rounded-2xl bg-white shadow-sm ring-1 ring-slate-200/60 p-6">
         <div className="flex items-center gap-3 mb-5">
@@ -505,7 +516,7 @@ export default function OperateurDetail() {
                 <div className="flex items-center gap-1">
                   <Badge variant={doc.est_valide ? 'success' : 'danger'}>{doc.est_valide ? 'Valide' : 'Invalide'}</Badge>
                   <button onClick={() => handleDownloadDoc(doc)} className="p-2 rounded-lg hover:bg-blue-50 text-slate-400 hover:text-blue-600 transition cursor-pointer" title="Télécharger"><Download size={15} /></button>
-                  <button onClick={() => setConfirmDocument(doc)} className="p-2 rounded-lg hover:bg-red-50 text-slate-400 hover:text-red-600 transition cursor-pointer" title="Supprimer"><Trash2 size={15} /></button>
+                  {can('document:delete') && <button onClick={() => setConfirmDocument(doc)} className="p-2 rounded-lg hover:bg-red-50 text-slate-400 hover:text-red-600 transition cursor-pointer" title="Supprimer"><Trash2 size={15} /></button>}
                 </div>
               </div>
             ))}
@@ -554,7 +565,9 @@ export default function OperateurDetail() {
             </div>
           </div>
         </div>
-        <Button icon={<Pencil size={16} />} onClick={() => navigate(`/operateurs/${operateur.id}/modifier`)}>Modifier</Button>
+        {can('operateur:update') && (
+          <Button icon={<Pencil size={16} />} onClick={() => navigate(`/operateurs/${operateur.id}/modifier`)}>Modifier</Button>
+        )}
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6">

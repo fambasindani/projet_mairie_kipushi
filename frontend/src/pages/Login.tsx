@@ -7,6 +7,7 @@ import { authService } from '../services/authService';
 import { ApiError } from '../services/api';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
+import logo from '../assets/logo.png';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -70,7 +71,7 @@ export default function Login() {
         <div className="bg-white rounded-3xl shadow-2xl p-8">
           <div className="flex flex-col items-center mb-8">
             <div className="w-16 h-16 flex items-center justify-center mb-4 overflow-hidden">
-              <img src="/src/assets/logo.png" alt="Logo" className="w-16 h-16 object-contain" />
+              <img src={logo} alt="Logo" className="w-16 h-16 object-contain" />
             </div>
             <h1 className="text-2xl font-bold text-gray-800">Connexion</h1>
             <p className="text-sm text-gray-500 mt-1">Accédez à votre espace</p>

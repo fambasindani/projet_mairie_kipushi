@@ -1,5 +1,5 @@
 class Env {
-  static const String apiBaseUrl = 'http://10.23.10.117:8000/api';
+  static const String apiBaseUrl = 'https://totalconceptrdc.org/id_operateur/api';
   static const String appName = 'I-KIPUSHI';
   static const String appVersion = '1.0.0';
 

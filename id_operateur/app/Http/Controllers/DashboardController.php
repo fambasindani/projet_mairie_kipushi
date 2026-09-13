@@ -6,6 +6,7 @@ use App\Models\Personne;
 use App\Models\Taxe;
 use App\Models\DeclarationPaiement;
 use App\Models\Facture;
+use App\Models\RecuPerception;
 use App\Models\Utilisateur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -31,6 +32,21 @@ class DashboardController extends Controller
                 'en_attente' => DeclarationPaiement::where('statut', 'en_attente')->sum('montant_total'),
                 'en_retard' => DeclarationPaiement::where('statut', 'en_retard')->sum('montant_total'),
                 'nb_factures' => Facture::count(),
+                'collecte_perception' => RecuPerception::where('valide', true)->sum('montant'),
+            ],
+            'perception' => [
+                'total' => RecuPerception::count(),
+                'valides' => RecuPerception::where('valide', true)->count(),
+                'en_attente' => RecuPerception::where('valide', false)->count(),
+                'montant_total' => RecuPerception::sum('montant'),
+                'montant_valide' => RecuPerception::where('valide', true)->sum('montant'),
+                'aujourd_hui' => RecuPerception::whereDate('date_emission', now()->toDateString())->count(),
+                'montant_aujourd_hui' => RecuPerception::whereDate('date_emission', now()->toDateString())->sum('montant'),
+                'par_type' => RecuPerception::select('type_perception')
+                    ->selectRaw('count(*) as total, sum(montant) as montant')
+                    ->groupBy('type_perception')
+                    ->orderBy('montant', 'desc')
+                    ->get(),
             ],
             'taxes' => [
                 'total' => Taxe::count(),
@@ -167,6 +183,26 @@ class DashboardController extends Controller
                 'montant_total' => Facture::whereBetween('created_at', [$debut, $fin])->sum('montant_total'),
                 'montant_moyen' => Facture::whereBetween('created_at', [$debut, $fin])->avg('montant_total'),
             ],
+            'perception' => [
+                'total' => RecuPerception::whereBetween('date_emission', [$debut, $fin])->count(),
+                'montant_total' => RecuPerception::whereBetween('date_emission', [$debut, $fin])->sum('montant'),
+                'montant_valide' => RecuPerception::whereBetween('date_emission', [$debut, $fin])
+                    ->where('valide', true)
+                    ->sum('montant'),
+                'montant_moyen' => RecuPerception::whereBetween('date_emission', [$debut, $fin])->avg('montant'),
+                'par_type' => RecuPerception::select('type_perception')
+                    ->selectRaw('count(*) as total, sum(montant) as montant')
+                    ->whereBetween('date_emission', [$debut, $fin])
+                    ->groupBy('type_perception')
+                    ->orderBy('montant', 'desc')
+                    ->get(),
+                'par_mois' => RecuPerception::selectRaw('DATE_FORMAT(date_emission, "%Y-%m") as mois')
+                    ->selectRaw('SUM(montant) as montant, COUNT(*) as total')
+                    ->whereBetween('date_emission', [$debut, $fin])
+                    ->groupBy('mois')
+                    ->orderBy('mois', 'asc')
+                    ->get(),
+            ],
         ];
 
         return response()->json([
@@ -295,10 +331,30 @@ class DashboardController extends Controller
                 ];
             });
 
+        // Derniers reçus de perception
+        $recus = RecuPerception::with(['taxe', 'personne'])
+            ->orderBy('created_at', 'desc')
+            ->limit($limit)
+            ->get()
+            ->map(function ($item) {
+                $nom = $item->personne
+                    ? ($item->personne->nom_complet ?? $item->personne->denomination_sociale)
+                    : ($item->chauffeur_nom ?? $item->conducteur_nom ?? '—');
+                return [
+                    'type' => 'recu_perception',
+                    'id' => $item->id,
+                    'message' => 'Reçu perception ' . $item->numero . ' (' . $item->type_perception_label . ') - ' . $nom,
+                    'montant' => $item->montant,
+                    'statut' => $item->valide ? 'paye' : 'en_attente',
+                    'created_at' => $item->created_at,
+                ];
+            });
+
         // Fusionner et trier par date
         $activites = collect($declarations)
             ->concat($personnes)
             ->concat($factures)
+            ->concat($recus)
             ->sortByDesc('created_at')
             ->take($limit)
             ->values();

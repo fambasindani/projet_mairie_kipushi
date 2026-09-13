@@ -1,4 +1,5 @@
 import { Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
+import { formatCdf } from '../utils/format';
 import type { Facture } from '../types';
 
 const styles = StyleSheet.create({
@@ -21,14 +22,6 @@ const styles = StyleSheet.create({
   qrSection: { alignItems: 'center', marginTop: 20 },
   qrLabel: { fontSize: 8, color: '#6b7280', marginTop: 4 },
 });
-
-const formatCdf = (val: number | string) => {
-  const num = Math.round(Number(val) || 0);
-  const str = num.toString();
-  const parts = str.split('.');
-  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  return parts.join('.') + ' CDF';
-};
 
 interface Props {
   facture: Facture;

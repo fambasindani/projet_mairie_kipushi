@@ -19,6 +19,7 @@ import {
   CircleDot,
   Loader2,
   Filter,
+  Receipt,
 } from 'lucide-react';
 import {
   BarChart,
@@ -37,13 +38,33 @@ import { dashboardService } from '../services/dashboardService';
 import { declarationService } from '../services/declarationService';
 import { notificationService } from '../services/notificationService';
 import type { DeclarationPaiement, Notification, DashboardGlobal, DashboardFinances } from '../types';
+import { formatCdf, formatCdfShort } from '../utils/format';
 
 interface DashboardData {
   operateurs?: { total?: number; actifs?: number; formalises?: number };
-  finances?: { total_collecte?: number; en_attente?: number; en_retard?: number; nb_factures?: number };
+  finances?: { total_collecte?: number; en_attente?: number; en_retard?: number; nb_factures?: number; collecte_perception?: number };
+  perception?: {
+    total?: number;
+    valides?: number;
+    en_attente?: number;
+    montant_total?: number;
+    montant_valide?: number;
+    aujourd_hui?: number;
+    montant_aujourd_hui?: number;
+    par_type?: { type_perception: string; total: number; montant: number }[];
+  };
   taxes?: { total?: number; actives?: number };
   utilisateurs?: { total?: number };
 }
+
+const typePerceptionLabels: Record<string, string> = {
+  peage_urbain: 'Péage urbain',
+  pont_bascule: 'Pont bascule',
+  etalage: 'Étalage',
+  chargement: 'Chargement',
+  dechargement: 'Déchargement',
+  autre: 'Autre',
+};
 
 const statutBadge: Record<string, { variant: 'success' | 'danger' | 'warning' | 'info' | 'neutral'; label: string }> = {
   paye: { variant: 'success', label: 'Payé' },
@@ -62,22 +83,6 @@ const statutColors: Record<string, string> = {
   annule: '#94a3b8',
   exonere: '#8b5cf6',
 };
-
-function formatCdf(value: number): string {
-  return new Intl.NumberFormat('fr-CD', {
-    style: 'currency',
-    currency: 'CDF',
-    currencyDisplay: 'code',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(value);
-}
-
-function formatCdfShort(value: number): string {
-  if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}M CDF`;
-  if (value >= 1_000) return `${(value / 1_000).toFixed(0)}K CDF`;
-  return `${value.toLocaleString('fr-CD')} CDF`;
-}
 
 function timeAgo(dateStr: string): string {
   const diff = Date.now() - new Date(dateStr).getTime();
@@ -306,6 +311,63 @@ export default function Dashboard() {
           )}
         </div>
 
+        {/* Perception */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <StatCard
+            icon={<Receipt size={22} />}
+            gradient="from-cyan-500 to-cyan-600"
+            glow="shadow-cyan-500/20"
+            title="Reçus de perception"
+            value={stats?.perception?.total ?? 0}
+            subtitle={`${stats?.perception?.valides ?? 0} validés · ${stats?.perception?.en_attente ?? 0} en attente`}
+          />
+          <StatCard
+            icon={<DollarSign size={22} />}
+            gradient="from-teal-500 to-teal-600"
+            glow="shadow-teal-500/20"
+            title="Collecte perception"
+            value={stats?.perception?.montant_valide ? formatCdf(stats.perception.montant_valide) : '0 CDF'}
+            subtitle={`Total : ${stats?.perception?.montant_total ? formatCdf(stats.perception.montant_total) : '0 CDF'}`}
+          />
+          <StatCard
+            icon={<Calendar size={22} />}
+            gradient="from-sky-500 to-sky-600"
+            glow="shadow-sky-500/20"
+            title="Perception aujourd'hui"
+            value={stats?.perception?.aujourd_hui ?? 0}
+            subtitle={stats?.perception?.montant_aujourd_hui ? formatCdf(stats.perception.montant_aujourd_hui) : '0 CDF'}
+          />
+          <StatCard
+            icon={<CreditCard size={22} />}
+            gradient="from-violet-500 to-violet-600"
+            glow="shadow-violet-500/20"
+            title="Montant moyen / reçu"
+            value={stats?.perception?.total ? formatCdf((stats.perception.montant_total ?? 0) / stats.perception.total) : '0 CDF'}
+            subtitle="Reçus de perception"
+          />
+        </div>
+
+        {/* Perception par type */}
+        {stats?.perception?.par_type && stats.perception.par_type.length > 0 && (
+          <div className="bg-white rounded-2xl border border-slate-200/60 p-6 shadow-sm">
+            <h2 className="text-sm font-semibold text-slate-800 flex items-center gap-2 mb-4">
+              <Receipt size={18} className="text-cyan-500" />
+              Perception par type
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {stats.perception.par_type.map((t) => (
+                <div key={t.type_perception} className="flex items-center justify-between p-3 rounded-xl bg-slate-50/80">
+                  <div>
+                    <p className="text-sm font-medium text-slate-700">{typePerceptionLabels[t.type_perception] ?? t.type_perception}</p>
+                    <p className="text-xs text-slate-400">{t.total} reçu(s)</p>
+                  </div>
+                  <p className="text-sm font-bold text-slate-800">{formatCdf(t.montant)}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Chart & Quick Stats */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Bar Chart */}
@@ -465,6 +527,12 @@ export default function Dashboard() {
                 icon={<FileText size={18} className="text-amber-500" />}
                 label="Factures"
                 value={stats?.finances?.nb_factures ?? 0}
+              />
+              <QuickStat
+                icon={<Receipt size={18} className="text-cyan-500" />}
+                label="Reçus perception"
+                value={stats?.perception?.total ?? 0}
+                total={stats?.perception?.valides}
               />
               <QuickStat
                 icon={<CreditCard size={18} className="text-purple-500" />}

@@ -33,6 +33,7 @@ import { declarationService } from '../services/declarationService';
 import { penaliteService, type PenaliteCalculation } from '../services/penaliteService';
 import type { DeclarationPaiement, PaginatedResponse } from '../types';
 import { useAuth } from '../context/AuthContext';
+import { formatMontant } from '../utils/format';
 
 const statutBadge: Record<string, 'warning' | 'success' | 'danger' | 'neutral' | 'info'> = {
   en_attente: 'warning',
@@ -51,9 +52,6 @@ const statutLabels: Record<string, string> = {
   annule: 'Annulé',
   exonere: 'Exonéré',
 };
-
-const formatMontant = (val: number | string) =>
-  new Intl.NumberFormat('fr-CD', { style: 'currency', currency: 'CDF', currencyDisplay: 'code', minimumFractionDigits: 0 }).format(Number(val) || 0);
 
 export default function Declarations() {
   const navigate = useNavigate();
@@ -716,7 +714,7 @@ export default function Declarations() {
                 <span className="font-medium">Taxe :</span> {exonerationModal.item.taxe?.nom}
               </p>
               <p className="text-sm text-gray-600">
-                <span className="font-medium">Montant :</span> {new Intl.NumberFormat('fr-CD', { style: 'currency', currency: 'CDF', minimumFractionDigits: 0 }).format(exonerationModal.item.montant_total ?? 0)}
+                <span className="font-medium">Montant :</span> {formatMontant(exonerationModal.item.montant_total ?? 0)}
               </p>
             </div>
             <div>

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import PermissionRoute from "./components/PermissionRoute";
 import Layout from "./components/layout/Layout";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
@@ -19,6 +20,8 @@ import Declarations from "./pages/Declarations";
 import DeclarationForm from "./pages/DeclarationForm";
 import RecusPerception from "./pages/RecusPerception";
 import RecusPerceptionForm from "./pages/RecusPerceptionForm";
+import Factures from "./pages/Factures";
+import FactureForm from "./pages/FactureForm";
 import Biens from "./pages/Biens";
 import BienForm from "./pages/BienForm";
 import Vehicules from "./pages/Vehicules";
@@ -53,7 +56,7 @@ function OperateurRedirect() {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, "") || "/"}>
       <AuthProvider>
         <Toaster
           position="top-right"
@@ -80,7 +83,8 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/inscription" element={<Inscription />} />
           <Route element={<ProtectedRoute />}>
-            <Route element={<Layout />}>
+            <Route element={<PermissionRoute />}>
+              <Route element={<Layout />}>
               <Route path="/dashboard" element={<OperateurRedirect />} />
               <Route path="/operateurs" element={<Operateurs />} />
               <Route path="/operateurs/nouveau" element={<OperateurForm />} />
@@ -102,6 +106,8 @@ export default function App() {
               <Route path="/recus-perception" element={<RecusPerception />} />
               <Route path="/recus-perception/nouveau" element={<RecusPerceptionForm />} />
               <Route path="/recus-perception/:id/modifier" element={<RecusPerceptionForm />} />
+              <Route path="/factures" element={<Factures />} />
+              <Route path="/factures/nouveau" element={<FactureForm />} />
               <Route path="/biens" element={<Biens />} />
               <Route path="/biens/nouveau" element={<BienForm />} />
               <Route path="/biens/:id/modifier" element={<BienForm />} />
@@ -127,6 +133,7 @@ export default function App() {
               <Route path="/inscriptions" element={<Inscriptions />} />
               <Route path="/inscriptions/:id" element={<InscriptionDetail />} />
               <Route path="/rapports" element={<Rapports />} />
+            </Route>
             </Route>
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />

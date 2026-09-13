@@ -6,6 +6,7 @@ use App\Models\Personne;
 use App\Models\DeclarationPaiement;
 use App\Models\Taxe;
 use App\Models\Facture;
+use App\Models\RecuPerception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +19,7 @@ class RapportPersonnaliseController extends Controller
     public function generer(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'type' => 'required|in:operateurs,paiements,taxes,factures,global',
+            'type' => 'required|in:operateurs,paiements,taxes,factures,recus_perception,global',
             'periode_debut' => 'nullable|date',
             'periode_fin' => 'nullable|date|after_or_equal:periode_debut',
             'group_by' => 'nullable|in:jour,mois,annee,categorie,type,statut',
@@ -50,6 +51,9 @@ class RapportPersonnaliseController extends Controller
                 break;
             case 'factures':
                 $data = $this->rapportFactures($periodeDebut, $periodeFin, $filtres);
+                break;
+            case 'recus_perception':
+                $data = $this->rapportRecusPerception($periodeDebut, $periodeFin, $filtres);
                 break;
             case 'global':
                 $data = $this->rapportGlobal($periodeDebut, $periodeFin);
@@ -305,6 +309,65 @@ class RapportPersonnaliseController extends Controller
     }
 
     /**
+     * Rapport des reçus de perception
+     */
+    private function rapportRecusPerception($debut, $fin, $filtres)
+    {
+        $query = RecuPerception::query();
+
+        if ($debut) {
+            $query->whereDate('date_emission', '>=', $debut);
+        }
+        if ($fin) {
+            $query->whereDate('date_emission', '<=', $fin);
+        }
+
+        if (isset($filtres['type_perception'])) {
+            $query->where('type_perception', $filtres['type_perception']);
+        }
+
+        if (isset($filtres['valide'])) {
+            $query->where('valide', filter_var($filtres['valide'], FILTER_VALIDATE_BOOLEAN));
+        }
+
+        return [
+            'total' => (clone $query)->count(),
+            'valides' => (clone $query)->where('valide', true)->count(),
+            'en_attente' => (clone $query)->where('valide', false)->count(),
+            'montant_total' => (clone $query)->sum('montant'),
+            'montant_valide' => (clone $query)->where('valide', true)->sum('montant'),
+            'montant_en_attente' => (clone $query)->where('valide', false)->sum('montant'),
+            'montant_moyen' => (clone $query)->avg('montant'),
+            'par_type' => (clone $query)->select('type_perception')
+                ->selectRaw('count(*) as total, sum(montant) as montant')
+                ->groupBy('type_perception')
+                ->orderBy('montant', 'desc')
+                ->get()
+                ->map(function ($row) {
+                    return [
+                        'type_perception' => $row->type_perception,
+                        'libelle' => RecuPerception::TYPES[$row->type_perception] ?? $row->type_perception,
+                        'total' => $row->total,
+                        'montant' => $row->montant,
+                    ];
+                }),
+            'par_taxe' => (clone $query)->with('taxe')
+                ->select('taxe_id')
+                ->selectRaw('count(*) as total, sum(montant) as montant')
+                ->groupBy('taxe_id')
+                ->orderBy('montant', 'desc')
+                ->limit(10)
+                ->get(),
+            'evolution' => (clone $query)->selectRaw('DATE_FORMAT(date_emission, "%Y-%m") as mois')
+                ->selectRaw('count(*) as total, sum(montant) as montant')
+                ->groupBy('mois')
+                ->orderBy('mois', 'asc')
+                ->limit(12)
+                ->get(),
+        ];
+    }
+
+    /**
      * Rapport global
      */
     private function rapportGlobal($debut, $fin)
@@ -314,10 +377,13 @@ class RapportPersonnaliseController extends Controller
             'paiements' => $this->rapportPaiements($debut, $fin, 'mois', []),
             'taxes' => $this->rapportTaxes($debut, $fin, []),
             'factures' => $this->rapportFactures($debut, $fin, []),
+            'recus_perception' => $this->rapportRecusPerception($debut, $fin, []),
             'resume' => [
                 'total_operateurs' => Personne::count(),
                 'total_collecte' => DeclarationPaiement::where('statut', 'paye')->sum('montant_total'),
                 'total_factures' => Facture::count(),
+                'total_recus_perception' => RecuPerception::count(),
+                'total_collecte_perception' => RecuPerception::where('valide', true)->sum('montant'),
                 'taux_recouvrement_global' => $this->calculerTauxRecouvrementGlobal(),
             ]
         ];
